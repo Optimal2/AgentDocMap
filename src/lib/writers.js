@@ -2,8 +2,15 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { isRuntimeEntrypointPath } from './projectSignals.js';
 
+const DEFAULT_MODULE_NAME = 'root';
+const MAX_IMPORTANT_FILES_DISPLAY = 12;
+const MAX_IMPORT_HUBS_DISPLAY = 20;
+const MAX_REPORT_ITEMS = 15;
+const MAX_IMPORTS_DISPLAY = 12;
+const MAX_SYMBOLS_PER_FILE_DISPLAY = 12;
+
 function safeFileName(value) {
-  return String(value ?? 'root').replace(/[^a-z0-9._-]+/gi, '_');
+  return String(value ?? DEFAULT_MODULE_NAME).replace(/[^a-z0-9._-]+/gi, '_');
 }
 
 export async function writeAgentDocs({ outDir, map, clean }) {
@@ -73,7 +80,7 @@ function renderAgentContext(map) {
     '',
     '## High-Signal Files',
     '',
-    ...map.importantFiles.slice(0, 12).map((file) => `- \`${file.path}\` - ${file.summary}`),
+    ...map.importantFiles.slice(0, MAX_IMPORTANT_FILES_DISPLAY).map((file) => `- \`${file.path}\` - ${file.summary}`),
     '',
   ];
 
@@ -160,7 +167,7 @@ function renderEntrypoints(map) {
   const entrypointFiles = map.files.filter((file) => isRuntimeEntrypointPath(file.path));
   const importHubs = [...map.files]
     .sort((fileA, fileB) => fileB.incomingLocalImports - fileA.incomingLocalImports || fileA.path.localeCompare(fileB.path))
-    .slice(0, 20);
+    .slice(0, MAX_IMPORT_HUBS_DISPLAY);
 
   const lines = [
     '# Entrypoints And Hubs',
@@ -223,8 +230,8 @@ function renderModules(map) {
 
 function renderReport(map) {
   const undocumented = map.files.filter((file) => file.doclets.length === 0);
-  const largest = [...map.files].sort((fileA, fileB) => (fileB.lines || 0) - (fileA.lines || 0)).slice(0, 15);
-  const importHubs = [...map.files].sort((fileA, fileB) => fileB.incomingLocalImports - fileA.incomingLocalImports).slice(0, 15);
+  const largest = [...map.files].sort((fileA, fileB) => (fileB.lines || 0) - (fileA.lines || 0)).slice(0, MAX_REPORT_ITEMS);
+  const importHubs = [...map.files].sort((fileA, fileB) => fileB.incomingLocalImports - fileA.incomingLocalImports).slice(0, MAX_REPORT_ITEMS);
 
   const lines = [
     '# AgentDocMap Report',
@@ -282,11 +289,11 @@ function renderModuleChunk(map, module) {
     }
     if (file.localImports.length > 0) {
       const imports = file.localImports.map((item) => item.resolved || item.source).filter(Boolean);
-      lines.push(`Local imports: ${imports.slice(0, 12).join(', ')}`, '');
+      lines.push(`Local imports: ${imports.slice(0, MAX_IMPORTS_DISPLAY).join(', ')}`, '');
     }
     if (file.doclets.length > 0) {
       lines.push('Symbols:', '');
-      for (const doclet of file.doclets.slice(0, 12)) {
+      for (const doclet of file.doclets.slice(0, MAX_SYMBOLS_PER_FILE_DISPLAY)) {
         lines.push(`- \`${doclet.longname || doclet.name}\` (${doclet.kind || 'symbol'}) - ${doclet.description || 'No description.'}`);
       }
       lines.push('');
