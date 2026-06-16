@@ -100,7 +100,7 @@ function renderDependencies(map) {
     '| --- | --- | ---: | --- |',
   ];
 
-  for (const [name, version] of Object.entries(runtimeDeps).sort(([left], [right]) => left.localeCompare(right))) {
+  for (const [name, version] of Object.entries(runtimeDeps).sort(([leftName], [rightName]) => leftName.localeCompare(rightName))) {
     const usage = usageByName.get(name);
     lines.push(`| \`${name}\` | \`${version}\` | ${usage?.importCount || 0} | ${formatUsageFiles(usage)} |`);
   }
@@ -108,7 +108,7 @@ function renderDependencies(map) {
   lines.push('', '## Development Dependencies', '');
   lines.push('| Package | Version | Observed source imports |');
   lines.push('| --- | --- | ---: |');
-  for (const [name, version] of Object.entries(devDeps).sort(([left], [right]) => left.localeCompare(right))) {
+  for (const [name, version] of Object.entries(devDeps).sort(([leftName], [rightName]) => leftName.localeCompare(rightName))) {
     const usage = usageByName.get(name);
     lines.push(`| \`${name}\` | \`${version}\` | ${usage?.importCount || 0} |`);
   }
@@ -137,7 +137,7 @@ function renderFileMap(map) {
   ];
 
   for (const file of map.files) {
-    lines.push(`| \`${file.path}\` | ${file.lines ?? ''} | ${file.incomingLocalImports} | ${file.doclets.length} | ${escapeTable(file.summary)} |`);
+    lines.push(`| \`${file.path}\` | ${file.lines ?? ''} | ${file.incomingLocalImports} | ${file.doclets.length} | ${escapeMarkdownTableCell(file.summary)} |`);
   }
 
   lines.push('');
@@ -159,7 +159,7 @@ function renderEntrypoints(map) {
   const scripts = map.project.packageScripts || {};
   const entrypointFiles = map.files.filter((file) => isRuntimeEntrypointPath(file.path));
   const importHubs = [...map.files]
-    .sort((left, right) => right.incomingLocalImports - left.incomingLocalImports || left.path.localeCompare(right.path))
+    .sort((fileA, fileB) => fileB.incomingLocalImports - fileA.incomingLocalImports || fileA.path.localeCompare(fileB.path))
     .slice(0, 20);
 
   const lines = [
@@ -200,7 +200,7 @@ function renderSymbolIndex(map) {
   ];
 
   for (const symbol of map.symbols) {
-    lines.push(`| \`${symbol.longname || symbol.name}\` | ${symbol.kind || ''} | \`${symbol.file}${symbol.line ? `:${symbol.line}` : ''}\` | ${escapeTable(symbol.description || '')} |`);
+    lines.push(`| \`${symbol.longname || symbol.name}\` | ${symbol.kind || ''} | \`${symbol.file}${symbol.line ? `:${symbol.line}` : ''}\` | ${escapeMarkdownTableCell(symbol.description || '')} |`);
   }
 
   return finishMarkdown(lines);
@@ -223,8 +223,8 @@ function renderModules(map) {
 
 function renderReport(map) {
   const undocumented = map.files.filter((file) => file.doclets.length === 0);
-  const largest = [...map.files].sort((left, right) => (right.lines || 0) - (left.lines || 0)).slice(0, 15);
-  const importHubs = [...map.files].sort((left, right) => right.incomingLocalImports - left.incomingLocalImports).slice(0, 15);
+  const largest = [...map.files].sort((fileA, fileB) => (fileB.lines || 0) - (fileA.lines || 0)).slice(0, 15);
+  const importHubs = [...map.files].sort((fileA, fileB) => fileB.incomingLocalImports - fileA.incomingLocalImports).slice(0, 15);
 
   const lines = [
     '# AgentDocMap Report',
@@ -296,8 +296,25 @@ function renderModuleChunk(map, module) {
   return finishMarkdown(lines);
 }
 
-function escapeTable(value) {
-  return String(value || '').replace(/\|/g, '\\|').replace(/\r?\n/g, ' ');
+function escapeMarkdownTableCell(value) {
+  const replacements = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+    '\\': '\\\\',
+    '|': '\\|',
+    '`': '\\`',
+    '[': '\\[',
+    ']': '\\]',
+    '(': '\\(',
+    ')': '\\)',
+  };
+
+  return String(value || '')
+    .replace(/\r?\n/g, ' ')
+    .replace(/[&<>"'\\|`[\]()]/g, (character) => replacements[character]);
 }
 
 function toJsonString(data) {
