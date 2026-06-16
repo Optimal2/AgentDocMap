@@ -16,17 +16,17 @@ export async function generateAgentDocs(options) {
   const projectName = options.projectName || packageJson?.name || path.basename(targetRoot);
   const jsdocConfigPath = path.join(targetRoot, 'jsdoc.json');
   const jsdocConfig = await readJsonIfExists(jsdocConfigPath);
+  const git = await getGitInfo(targetRoot);
 
   const sourceFiles = await collectSourceFiles({ targetRoot, jsdocConfig });
   const sourceAnalysis = await analyzeSources({ targetRoot, sourceFiles });
   const doclets = await collectJsdocDoclets({ projectRoot, targetRoot, jsdocConfigPath });
-  const git = await getGitInfo(targetRoot);
 
   const map = buildAgentMap({
     projectName,
     targetRoot,
     generatedBy: 'AgentDocMap',
-    generatedAtUtc: new Date().toISOString(),
+    generatedAtUtc: options.generatedAt || git.commitDate || new Date().toISOString(),
     git,
     packageJson,
     sourceAnalysis,

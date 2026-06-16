@@ -15,6 +15,7 @@ Options:
   --target <path>        Target repository root.
   --out <path>           Output directory.
   --project-name <name>  Display name used in generated docs.
+  --generated-at <iso>   Timestamp override. Defaults to target commit date.
   --no-clean             Do not delete the output directory before writing.
   -h, --help             Show help.
 `);
@@ -33,6 +34,8 @@ function parseArgs(argv) {
       options.out = args[++i];
     } else if (arg === '--project-name') {
       options.projectName = args[++i];
+    } else if (arg === '--generated-at') {
+      options.generatedAt = args[++i];
     } else if (arg === '--no-clean') {
       options.clean = false;
     } else if (arg === '-h' || arg === '--help') {

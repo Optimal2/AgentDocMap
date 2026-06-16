@@ -34,6 +34,8 @@ Options:
 - `--target <path>`: Target repository root.
 - `--out <path>`: Output directory for the generated packet.
 - `--project-name <name>`: Optional display name.
+- `--generated-at <iso>`: Optional timestamp override. Defaults to the target
+  commit date when available, which keeps generated output stable.
 - `--no-clean`: Keep existing files in the output directory.
 
 ## Output Files

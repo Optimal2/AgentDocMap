@@ -34,3 +34,11 @@ real validation target.
   exports and declarations.
 - Cleaned the report wording so it distinguishes JSDoc-backed summaries from
   source-derived summaries.
+
+## Iteration 5 - Reproducible packets
+
+- Changed the default generated timestamp to the target repository commit date
+  when available.
+- Kept a `--generated-at` CLI override for explicit timestamping.
+- This keeps committed example packets stable when the target source commit has
+  not changed.
