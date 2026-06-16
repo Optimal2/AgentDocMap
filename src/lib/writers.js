@@ -296,6 +296,18 @@ function renderModuleChunk(map, module) {
   return finishMarkdown(lines);
 }
 
+/**
+ * Escapes a value for safe display inside a Markdown table cell.
+ *
+ * Strategy:
+ * - HTML-encode characters with special meaning in HTML (`&`, `<`, `>`, `"`, `'`).
+ * - Backslash-escape Markdown syntax characters used by tables/inline formatting
+ *   (`\\`, `|`, `` ` ``, `[`, `]`, `(`, `)`).
+ * - Normalize line breaks to spaces so a cell stays on one table row.
+ *
+ * @param {unknown} value
+ * @returns {string}
+ */
 function escapeMarkdownTableCell(value) {
   const replacements = {
     '&': '&amp;',
