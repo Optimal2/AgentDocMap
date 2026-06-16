@@ -34,8 +34,11 @@ Options:
 - `--target <path>`: Target repository root.
 - `--out <path>`: Output directory for the generated packet.
 - `--project-name <name>`: Optional display name.
-- `--generated-at <iso>`: Optional timestamp override. Defaults to the target
-  commit date when available, which keeps generated output stable.
+- `--generated-at <text>`: Optional timestamp or label override. Defaults to the
+  target commit date when available, which keeps generated output stable.
+- `--source-metadata <git|none>`: Include or omit target Git metadata. Use
+  `none` for documentation committed into the same target repository, where the
+  current commit hash would otherwise make the generated files unstable.
 - `--no-clean`: Keep existing files in the output directory.
 
 ## Output Files
@@ -59,3 +62,14 @@ Options:
 - JSON should carry the full structured detail.
 - Generated output should point agents to the right files quickly instead of
   trying to replace source inspection.
+
+## Repository Quality
+
+This public repository keeps the same basic hygiene expected from the other
+public project repositories:
+
+- CI runs the fixture test and regenerates the OpenDocViewer example packet.
+- `SECURITY.md` describes the supported version line and reporting flow.
+- `CONTRIBUTING.md` describes validation and generated example expectations.
+- `docs/ITERATION_LOG.md` records the agent-feedback iterations that shaped the
+  generator.

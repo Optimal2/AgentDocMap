@@ -49,3 +49,13 @@ real validation target.
   source imports.
 - Added package usage data to `agent-map.json` so an agent can quickly determine
   where external package behavior enters the codebase.
+
+## Iteration 7 - Repository quality and stable metadata controls
+
+- Added shared entrypoint detection so Markdown writers and map builders use the
+  same source of truth.
+- Added `--source-metadata none` for generated docs committed into the same
+  target repository, where embedding the current Git commit would create
+  unavoidable churn.
+- Added public repository baseline files: `LICENSE`, `SECURITY.md`,
+  `CONTRIBUTING.md`, and CI.

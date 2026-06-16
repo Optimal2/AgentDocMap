@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out AgentDocMap
+        uses: actions/checkout@v4
+        with:
+          path: AgentDocMap
+
+      - name: Check out OpenDocViewer example target
+        uses: actions/checkout@v4
+        with:
+          repository: Optimal2/OpenDocViewer
+          path: OpenDocViewer
+
+      - name: Use Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.18.0'
+          cache: 'npm'
+          cache-dependency-path: AgentDocMap/package-lock.json
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        working-directory: AgentDocMap
+        run: npm ci --no-audit --fund=false
+
+      - name: Validate
+        working-directory: AgentDocMap
+        run: npm run validate

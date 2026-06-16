@@ -1,15 +1,6 @@
 import path from 'node:path';
 import { firstSentence, normalizeRelativePath, toPosixPath, truncateText } from './fsUtils.js';
-
-const ENTRYPOINT_NAMES = new Set([
-  'index.js',
-  'index.jsx',
-  'main.js',
-  'main.jsx',
-  'App.js',
-  'App.jsx',
-  'vite.config.js',
-]);
+import { ENTRYPOINT_NAMES } from './projectSignals.js';
 
 export function buildAgentMap({
   projectName,

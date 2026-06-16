@@ -2,20 +2,42 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+AgentDocMap is early-stage software. Security fixes are made on the `main`
+branch first.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+| Version | Supported |
+| ------- | --------- |
+| 0.1.x   | Yes       |
+| < 0.1   | No        |
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+Please report vulnerabilities through GitHub's private vulnerability reporting
+or security advisory flow for this repository when available. If that is not
+available, open a minimal public issue that asks for a private contact path
+without including exploit details.
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+Include:
+
+- affected version or commit
+- operating system and Node.js version
+- the command that processes untrusted input
+- the smallest safe reproduction you can share
+
+Do not include secrets, private source code, customer data, or generated
+documentation from private repositories in public reports.
+
+## Security Model
+
+AgentDocMap reads source files and JSDoc comments from a target repository and
+writes generated documentation. It does not execute target application code.
+However, it does run the JSDoc parser over target files, so treat target source
+trees as input that should come from repositories you trust.
+
+Recommended use:
+
+- run AgentDocMap in a normal developer or CI workspace
+- review generated output before publishing it
+- avoid generating public docs from private repositories unless that is
+  explicitly intended
+- do not pass secrets or deployment payloads into generated documentation
