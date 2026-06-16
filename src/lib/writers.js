@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { isRuntimeEntrypointPath } from './projectSignals.js';
 
 export async function writeAgentDocs({ outDir, map, clean }) {
   if (clean) {
@@ -152,11 +153,7 @@ function renderFileMap(map) {
 
 function renderEntrypoints(map) {
   const scripts = map.project.packageScripts || {};
-  const entrypointFiles = map.files.filter((file) => {
-    const name = path.posix.basename(file.path);
-    return ['index.js', 'index.jsx', 'main.js', 'main.jsx', 'App.js', 'App.jsx', 'vite.config.js'].includes(name) ||
-      file.path.startsWith('server/');
-  });
+  const entrypointFiles = map.files.filter((file) => isRuntimeEntrypointPath(file.path));
   const importHubs = [...map.files]
     .sort((left, right) => right.incomingLocalImports - left.incomingLocalImports || left.path.localeCompare(right.path))
     .slice(0, 20);

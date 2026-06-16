@@ -16,7 +16,10 @@ export async function generateAgentDocs(options) {
   const projectName = options.projectName || packageJson?.name || path.basename(targetRoot);
   const jsdocConfigPath = path.join(targetRoot, 'jsdoc.json');
   const jsdocConfig = await readJsonIfExists(jsdocConfigPath);
-  const git = await getGitInfo(targetRoot);
+  const sourceMetadata = options.sourceMetadata || 'git';
+  const git = sourceMetadata === 'none'
+    ? { commit: null, commitDate: null, branch: null, dirty: null }
+    : await getGitInfo(targetRoot);
 
   const sourceFiles = await collectSourceFiles({ targetRoot, jsdocConfig });
   const sourceAnalysis = await analyzeSources({ targetRoot, sourceFiles });

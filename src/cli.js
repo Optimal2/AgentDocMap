@@ -15,7 +15,9 @@ Options:
   --target <path>        Target repository root.
   --out <path>           Output directory.
   --project-name <name>  Display name used in generated docs.
-  --generated-at <iso>   Timestamp override. Defaults to target commit date.
+  --generated-at <text>  Timestamp/label override. Defaults to target commit date.
+  --source-metadata <mode>
+                         Source metadata mode: git or none. Defaults to git.
   --no-clean             Do not delete the output directory before writing.
   -h, --help             Show help.
 `);
@@ -36,6 +38,8 @@ function parseArgs(argv) {
       options.projectName = args[++i];
     } else if (arg === '--generated-at') {
       options.generatedAt = args[++i];
+    } else if (arg === '--source-metadata') {
+      options.sourceMetadata = args[++i];
     } else if (arg === '--no-clean') {
       options.clean = false;
     } else if (arg === '-h' || arg === '--help') {
@@ -65,6 +69,10 @@ async function main() {
 
   if (!options.out) {
     throw new Error('Missing required option: --out');
+  }
+
+  if (options.sourceMetadata && !['git', 'none'].includes(options.sourceMetadata)) {
+    throw new Error("--source-metadata must be either 'git' or 'none'.");
   }
 
   const result = await generateAgentDocs(options);
