@@ -22,8 +22,8 @@ export async function writeAgentDocs({ outDir, map, clean }) {
     ['SYMBOL_INDEX.md', renderSymbolIndex(map)],
     ['MODULES.md', renderModules(map)],
     ['REPORT.md', renderReport(map)],
-    ['agent-map.json', `${JSON.stringify(map, null, 2)}\n`],
-    ['symbol-index.json', `${JSON.stringify(map.symbols, null, 2)}\n`],
+    ['agent-map.json', toJsonString(map)],
+    ['symbol-index.json', toJsonString(map.symbols)],
   ]);
 
   for (const module of map.modules) {
@@ -297,7 +297,11 @@ function renderModuleChunk(map, module) {
 }
 
 function escapeTable(value) {
-  return String(value || '').replaceAll('|', '\\|').replace(/\r?\n/g, ' ');
+  return String(value || '').replace(/\|/g, '\\|').replace(/\r?\n/g, ' ');
+}
+
+function toJsonString(data) {
+  return `${JSON.stringify(data, null, 2)}\n`;
 }
 
 function formatSourceCommit(generated) {
@@ -317,9 +321,10 @@ function formatUsageFiles(usage) {
 }
 
 function finishMarkdown(lines) {
-  while (lines.length > 0 && lines[lines.length - 1] === '') {
-    lines.pop();
+  let end = lines.length;
+  while (end > 0 && lines[end - 1] === '') {
+    end -= 1;
   }
 
-  return `${lines.join('\n')}\n`;
+  return `${lines.slice(0, end).join('\n')}\n`;
 }
