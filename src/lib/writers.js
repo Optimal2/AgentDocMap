@@ -1,4 +1,5 @@
 import fs from 'node:fs/promises';
+import os from 'node:os';
 import path from 'node:path';
 import { isRuntimeEntrypointPath } from './projectSignals.js';
 
@@ -8,6 +9,15 @@ const MAX_IMPORT_HUBS_DISPLAY = 20;
 const MAX_REPORT_ITEMS = 15;
 const MAX_IMPORTS_DISPLAY = 12;
 const MAX_SYMBOLS_PER_FILE_DISPLAY = 12;
+const ALLOWED_OUTPUT_DIRECTORY_NAMES = new Set(['docs-agent', 'opendocviewer-agent-docs']);
+const TEMP_OUTPUT_DIRECTORY_PREFIX = 'agentdocmap-';
+const TABLE_CELL_ESCAPE_PATTERN = /\r\n|\r|\n|[&<>"'\\|`[\]()]/g;
+const SENSITIVE_OUTPUT_PATHS = new Set([
+  path.parse(process.cwd()).root,
+  process.cwd(),
+  process.env.HOME,
+  process.env.USERPROFILE,
+].filter(Boolean).map((item) => path.resolve(item).toLowerCase()));
 
 function safeFileName(value) {
   return String(value ?? DEFAULT_MODULE_NAME).replace(/[^a-z0-9._-]+/gi, '_');
@@ -15,6 +25,7 @@ function safeFileName(value) {
 
 export async function writeAgentDocs({ outDir, map, clean }) {
   if (clean) {
+    assertSafeCleanOutputDirectory(outDir);
     await fs.rm(outDir, { recursive: true, force: true });
   }
 
@@ -285,7 +296,7 @@ function renderModuleChunk(map, module) {
     lines.push(`## ${file.path}`, '');
     lines.push(file.summary, '');
     if (file.exports.length > 0) {
-      lines.push(`Exports: ${file.exports.map((item) => item.name).filter(Boolean).join(', ')}`, '');
+      lines.push(`Exports: ${file.exports.map((item) => item.name).filter((name) => name != null).join(', ')}`, '');
     }
     if (file.localImports.length > 0) {
       const imports = file.localImports.map((item) => item.resolved || item.source).filter(Boolean);
@@ -334,7 +345,21 @@ function escapeMarkdownTableCell(value) {
     ')': '\\)',
   };
 
-  return String(value ?? '').replace(/\r\n|\r|\n|[&<>"'\\|`[\]()]/g, (match) => replacements[match]);
+  return String(value ?? '').replace(TABLE_CELL_ESCAPE_PATTERN, (match) => replacements[match]);
+}
+
+function assertSafeCleanOutputDirectory(outDir) {
+  const resolved = path.resolve(outDir);
+  const normalized = resolved.toLowerCase();
+  const directoryName = path.basename(resolved);
+  const tempRoot = path.resolve(os.tmpdir()).toLowerCase();
+  const isAllowedNamedOutput = ALLOWED_OUTPUT_DIRECTORY_NAMES.has(directoryName);
+  const isAllowedTemporaryOutput = directoryName.startsWith(TEMP_OUTPUT_DIRECTORY_PREFIX)
+    && path.dirname(resolved).toLowerCase() === tempRoot;
+
+  if (SENSITIVE_OUTPUT_PATHS.has(normalized) || (!isAllowedNamedOutput && !isAllowedTemporaryOutput)) {
+    throw new Error(`Refusing to clean unsafe AgentDocMap output directory: ${resolved}`);
+  }
 }
 
 function toJsonString(data) {
