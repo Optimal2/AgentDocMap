@@ -65,6 +65,7 @@ export function buildAgentMap({
     file.importanceScore = scoreFile(file);
   }
 
+  const packageUsage = countPackageUsage(files);
   files.sort((left, right) => left.path.localeCompare(right.path));
   const importantFiles = [...files]
     .sort((left, right) => right.importanceScore - left.importanceScore || left.path.localeCompare(right.path))
@@ -84,6 +85,8 @@ export function buildAgentMap({
       packageVersion: packageJson?.version || null,
       description: packageJson?.description || null,
       packageScripts: packageJson?.scripts || {},
+      dependencies: packageJson?.dependencies || {},
+      devDependencies: packageJson?.devDependencies || {},
     },
     generated: {
       by: generatedBy,
@@ -101,11 +104,53 @@ export function buildAgentMap({
       devDependencyCount: Object.keys(packageJson?.devDependencies || {}).length,
     },
     recommendations: buildRecommendations(files, symbols),
+    packageUsage,
     importantFiles,
     modules,
     files,
     symbols,
   };
+}
+
+function countPackageUsage(files) {
+  const usage = new Map();
+  for (const file of files) {
+    for (const item of file.packageImports || []) {
+      const packageName = packageNameFromImport(item.source);
+      if (!packageName) {
+        continue;
+      }
+
+      if (!usage.has(packageName)) {
+        usage.set(packageName, { packageName, importCount: 0, files: new Set() });
+      }
+
+      const entry = usage.get(packageName);
+      entry.importCount += 1;
+      entry.files.add(file.path);
+    }
+  }
+
+  return [...usage.values()]
+    .map((entry) => ({
+      packageName: entry.packageName,
+      importCount: entry.importCount,
+      files: [...entry.files].sort(),
+    }))
+    .sort((left, right) => right.importCount - left.importCount || left.packageName.localeCompare(right.packageName));
+}
+
+function packageNameFromImport(value) {
+  if (!value || value.startsWith('node:')) {
+    return null;
+  }
+
+  if (value.startsWith('@')) {
+    const parts = value.split('/');
+    return parts.length >= 2 ? `${parts[0]}/${parts[1]}` : value;
+  }
+
+  return value.split('/')[0];
 }
 
 function createVirtualFile(filePath) {

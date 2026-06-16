@@ -11,6 +11,7 @@ export async function writeAgentDocs({ outDir, map, clean }) {
 
   const outputs = new Map([
     ['AGENT_CONTEXT.md', renderAgentContext(map)],
+    ['DEPENDENCIES.md', renderDependencies(map)],
     ['ENTRYPOINTS.md', renderEntrypoints(map)],
     ['FILE_MAP.md', renderFileMap(map)],
     ['SYMBOL_INDEX.md', renderSymbolIndex(map)],
@@ -54,8 +55,9 @@ function renderAgentContext(map) {
     '2. Open `MODULES.md` for top-level structure.',
     '3. Open `FILE_MAP.md` only for the area you need.',
     '4. Open `ENTRYPOINTS.md` when you need startup, package scripts, or import hubs.',
-    '5. Use `SYMBOL_INDEX.md` for JSDoc-backed APIs.',
-    '6. Use `agent-map.json` for tool-driven navigation.',
+    '5. Open `DEPENDENCIES.md` when external package behavior matters.',
+    '6. Use `SYMBOL_INDEX.md` for JSDoc-backed APIs.',
+    '7. Use `agent-map.json` for tool-driven navigation.',
     '',
     '## Stats',
     '',
@@ -73,6 +75,47 @@ function renderAgentContext(map) {
   if (map.recommendations.length > 0) {
     lines.push('## Agent Notes', '');
     lines.push(...map.recommendations.map((item) => `- ${item}`), '');
+  }
+
+  return finishMarkdown(lines);
+}
+
+function renderDependencies(map) {
+  const runtimeDeps = map.project.dependencies || {};
+  const devDeps = map.project.devDependencies || {};
+  const usageByName = new Map(map.packageUsage.map((item) => [item.packageName, item]));
+  const lines = [
+    '# Dependencies',
+    '',
+    'This file combines package.json declarations with observed source imports.',
+    '',
+    '## Runtime Dependencies',
+    '',
+    '| Package | Version | Imports | Used In |',
+    '| --- | --- | ---: | --- |',
+  ];
+
+  for (const [name, version] of Object.entries(runtimeDeps).sort(([left], [right]) => left.localeCompare(right))) {
+    const usage = usageByName.get(name);
+    lines.push(`| \`${name}\` | \`${version}\` | ${usage?.importCount || 0} | ${formatUsageFiles(usage)} |`);
+  }
+
+  lines.push('', '## Development Dependencies', '');
+  lines.push('| Package | Version | Observed source imports |');
+  lines.push('| --- | --- | ---: |');
+  for (const [name, version] of Object.entries(devDeps).sort(([left], [right]) => left.localeCompare(right))) {
+    const usage = usageByName.get(name);
+    lines.push(`| \`${name}\` | \`${version}\` | ${usage?.importCount || 0} |`);
+  }
+
+  const undeclared = map.packageUsage.filter((item) => !runtimeDeps[item.packageName] && !devDeps[item.packageName]);
+  lines.push('', '## Imported But Not Declared Directly', '');
+  if (undeclared.length === 0) {
+    lines.push('No undeclared package imports were detected.');
+  } else {
+    for (const item of undeclared) {
+      lines.push(`- \`${item.packageName}\`: ${item.importCount} imports in ${item.files.length} files`);
+    }
   }
 
   return finishMarkdown(lines);
@@ -254,6 +297,14 @@ function renderModuleChunk(map, module) {
 
 function escapeTable(value) {
   return String(value || '').replaceAll('|', '\\|').replace(/\r?\n/g, ' ');
+}
+
+function formatUsageFiles(usage) {
+  if (!usage || usage.files.length === 0) {
+    return '';
+  }
+
+  return usage.files.slice(0, 5).map((file) => `\`${file}\``).join('<br>');
 }
 
 function safeFileName(value) {

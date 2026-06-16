@@ -41,6 +41,7 @@ Options:
 ## Output Files
 
 - `AGENT_CONTEXT.md`: shortest useful entry point for a new AI agent.
+- `DEPENDENCIES.md`: declared packages combined with observed import usage.
 - `ENTRYPOINTS.md`: package scripts, startup files, and import hubs.
 - `agent-map.json`: structured project map for tools and agents.
 - `symbol-index.json`: normalized JSDoc symbol list.

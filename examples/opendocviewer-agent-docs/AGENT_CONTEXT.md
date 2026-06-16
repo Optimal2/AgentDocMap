@@ -15,8 +15,9 @@ Source commit: 0dadad64998674185a431c941c3e787313449d72
 2. Open `MODULES.md` for top-level structure.
 3. Open `FILE_MAP.md` only for the area you need.
 4. Open `ENTRYPOINTS.md` when you need startup, package scripts, or import hubs.
-5. Use `SYMBOL_INDEX.md` for JSDoc-backed APIs.
-6. Use `agent-map.json` for tool-driven navigation.
+5. Open `DEPENDENCIES.md` when external package behavior matters.
+6. Use `SYMBOL_INDEX.md` for JSDoc-backed APIs.
+7. Use `agent-map.json` for tool-driven navigation.
 
 ## Stats
 

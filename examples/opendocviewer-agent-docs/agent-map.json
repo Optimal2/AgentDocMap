@@ -24,6 +24,48 @@
       "release:patch": "npm version patch -m \"chore(release): %s\"",
       "release:minor": "npm version minor -m \"chore(release): %s\"",
       "release:major": "npm version major -m \"chore(release): %s\""
+    },
+    "dependencies": {
+      "axios": "^1.18.0",
+      "cors": "^2.8.6",
+      "dompurify": "^3.4.10",
+      "dotenv": "^17.4.2",
+      "express": "^5.2.1",
+      "express-rate-limit": "^8.5.2",
+      "file-type": "^22.0.1",
+      "helmet": "^8.2.0",
+      "i18next": "^26.3.1",
+      "i18next-http-backend": "^4.0.0",
+      "i18next-icu": "^2.4.3",
+      "jspdf": "^4.2.1",
+      "material-icons": "^1.13.14",
+      "morgan": "^1.11.0",
+      "pdf-lib": "^1.17.1",
+      "pdfjs-dist": "^6.0.227",
+      "prop-types": "^15.8.1",
+      "react": "^19.2.7",
+      "react-dom": "^19.2.7",
+      "react-i18next": "^17.0.8",
+      "utif2": "^4.1.0"
+    },
+    "devDependencies": {
+      "@babel/core": "^8.0.0",
+      "@babel/plugin-transform-runtime": "^8.0.0",
+      "@babel/runtime": "^8.0.0",
+      "@eslint/js": "^10.0.1",
+      "@rolldown/plugin-babel": "^0.2.3",
+      "@vitejs/plugin-react": "^6.0.2",
+      "concurrently": "^10.0.3",
+      "cross-env": "^10.1.0",
+      "docdash": "^2.0.2",
+      "eslint": "^10.5.0",
+      "eslint-plugin-react-hooks": "^7.1.1",
+      "eslint-plugin-react-refresh": "^0.5.3",
+      "globals": "^17.6.0",
+      "jsdoc": "^4.0.5",
+      "prettier": "^3.8.4",
+      "rolldown": "^1.1.1",
+      "vite": "^8.0.16"
     }
   },
   "generated": {
@@ -44,6 +86,270 @@
   "recommendations": [
     "4 files have no JSDoc doclets; AgentDocMap uses source-derived summaries for them.",
     "Use AGENT_CONTEXT.md first, then SYMBOL_INDEX.md by file path to avoid loading the whole symbol JSON."
+  ],
+  "packageUsage": [
+    {
+      "packageName": "react",
+      "importCount": 52,
+      "files": [
+        "src/ErrorBoundary.jsx",
+        "src/PerformanceMonitor.jsx",
+        "src/app/AppBootstrap.jsx",
+        "src/app/OpenDocViewer.jsx",
+        "src/components/CanvasRenderer.jsx",
+        "src/components/DocumentConsumerWrapper.jsx",
+        "src/components/DocumentLoader/DemoControls.jsx",
+        "src/components/DocumentLoader/DocumentLoader.js",
+        "src/components/DocumentLoader/LoadPressureDialog.jsx",
+        "src/components/DocumentMetadataMatrixOverlayDialog.jsx",
+        "src/components/DocumentMetadataOverlayDialog.jsx",
+        "src/components/DocumentRender.jsx",
+        "src/components/DocumentSelectionPanel.jsx",
+        "src/components/DocumentThumbnailList.jsx",
+        "src/components/DocumentToolbar/AboutOverlayDialog.jsx",
+        "src/components/DocumentToolbar/DocumentToolbar.jsx",
+        "src/components/DocumentToolbar/HelpMenuButton.jsx",
+        "src/components/DocumentToolbar/HelpOverlayDialog.jsx",
+        "src/components/DocumentToolbar/LanguageMenuButton.jsx",
+        "src/components/DocumentToolbar/ManualOverlayDialog.jsx",
+        "src/components/DocumentToolbar/PageNavigationButtons.jsx",
+        "src/components/DocumentToolbar/PrintRangeDialog.jsx",
+        "src/components/DocumentToolbar/SplitToolbarButton.jsx",
+        "src/components/DocumentToolbar/ThemeMenuButton.jsx",
+        "src/components/DocumentToolbar/ThemeToggleButton.jsx",
+        "src/components/DocumentToolbar/ZoomButtons.jsx",
+        "src/components/DocumentToolbar/usePdfPrebuildAllPages.js",
+        "src/components/DocumentToolbar/usePrintRangeDialog.js",
+        "src/components/DocumentViewer/CompareZoomOverlay.jsx",
+        "src/components/DocumentViewer/DocumentViewer.jsx",
+        "src/components/DocumentViewer/DocumentViewerRender.jsx",
+        "src/components/DocumentViewer/DocumentViewerThumbnails.jsx",
+        "src/components/DocumentViewer/DocumentViewerToolbar.jsx",
+        "src/components/DocumentViewer/hooks/useViewerEffects.js",
+        "src/components/DocumentViewer/hooks/useViewerPostZoom.js",
+        "src/components/DocumentViewer/useDocumentViewer.js",
+        "src/components/ImageRenderer.jsx",
+        "src/components/LoadingMessage.jsx",
+        "src/components/LoadingSpinner.jsx",
+        "src/components/PrintSelectionWorkspace.jsx",
+        "src/components/Resizer.jsx",
+        "src/components/ViewerProblemNotice.jsx",
+        "src/components/common/StatusLed.jsx",
+        "src/contexts/ThemeProvider.jsx",
+        "src/contexts/ViewerProvider.jsx",
+        "src/contexts/themeContext.js",
+        "src/contexts/viewerContext.js",
+        "src/hooks/useAcceleratingHoldRepeat.js",
+        "src/hooks/useNavigationModifierState.js",
+        "src/hooks/usePageNavigation.js",
+        "src/hooks/usePageTimer.js",
+        "src/index.jsx"
+      ]
+    },
+    {
+      "packageName": "react-i18next",
+      "importCount": 33,
+      "files": [
+        "src/PerformanceMonitor.jsx",
+        "src/app/AppBootstrap.jsx",
+        "src/components/DocumentConsumerWrapper.jsx",
+        "src/components/DocumentLoader/DemoControls.jsx",
+        "src/components/DocumentLoader/DocumentLoader.js",
+        "src/components/DocumentLoader/LoadPressureDialog.jsx",
+        "src/components/DocumentMetadataMatrixOverlayDialog.jsx",
+        "src/components/DocumentMetadataOverlayDialog.jsx",
+        "src/components/DocumentRender.jsx",
+        "src/components/DocumentSelectionPanel.jsx",
+        "src/components/DocumentThumbnailList.jsx",
+        "src/components/DocumentToolbar/AboutOverlayDialog.jsx",
+        "src/components/DocumentToolbar/DocumentToolbar.jsx",
+        "src/components/DocumentToolbar/HelpMenuButton.jsx",
+        "src/components/DocumentToolbar/HelpOverlayDialog.jsx",
+        "src/components/DocumentToolbar/LanguageMenuButton.jsx",
+        "src/components/DocumentToolbar/ManualOverlayDialog.jsx",
+        "src/components/DocumentToolbar/PageNavigationButtons.jsx",
+        "src/components/DocumentToolbar/PrintRangeDialog.jsx",
+        "src/components/DocumentToolbar/ThemeMenuButton.jsx",
+        "src/components/DocumentToolbar/ThemeToggleButton.jsx",
+        "src/components/DocumentToolbar/ZoomButtons.jsx",
+        "src/components/DocumentViewer/CompareZoomOverlay.jsx",
+        "src/components/DocumentViewer/DocumentViewer.jsx",
+        "src/components/DocumentViewer/DocumentViewerRender.jsx",
+        "src/components/DocumentViewer/DocumentViewerThumbnails.jsx",
+        "src/components/ImageRenderer.jsx",
+        "src/components/LoadingMessage.jsx",
+        "src/components/LoadingSpinner.jsx",
+        "src/components/PrintSelectionWorkspace.jsx",
+        "src/components/Resizer.jsx",
+        "src/components/ViewerProblemNotice.jsx",
+        "src/i18n.js"
+      ]
+    },
+    {
+      "packageName": "prop-types",
+      "importCount": 32,
+      "files": [
+        "src/PerformanceMonitor.jsx",
+        "src/app/OpenDocViewer.jsx",
+        "src/components/CanvasRenderer.jsx",
+        "src/components/DocumentConsumerWrapper.jsx",
+        "src/components/DocumentLoader/LoadPressureDialog.jsx",
+        "src/components/DocumentMetadataMatrixOverlayDialog.jsx",
+        "src/components/DocumentMetadataOverlayDialog.jsx",
+        "src/components/DocumentSelectionPanel.jsx",
+        "src/components/DocumentThumbnailList.jsx",
+        "src/components/DocumentToolbar/AboutOverlayDialog.jsx",
+        "src/components/DocumentToolbar/DocumentToolbar.jsx",
+        "src/components/DocumentToolbar/HelpMenuButton.jsx",
+        "src/components/DocumentToolbar/HelpOverlayDialog.jsx",
+        "src/components/DocumentToolbar/LanguageMenuButton.jsx",
+        "src/components/DocumentToolbar/ManualOverlayDialog.jsx",
+        "src/components/DocumentToolbar/PageNavigationButtons.jsx",
+        "src/components/DocumentToolbar/PrintRangeDialog.jsx",
+        "src/components/DocumentToolbar/SplitToolbarButton.jsx",
+        "src/components/DocumentToolbar/ThemeMenuButton.jsx",
+        "src/components/DocumentToolbar/ThemeToggleButton.jsx",
+        "src/components/DocumentToolbar/ZoomButtons.jsx",
+        "src/components/DocumentViewer/CompareZoomOverlay.jsx",
+        "src/components/DocumentViewer/DocumentViewerRender.jsx",
+        "src/components/DocumentViewer/DocumentViewerThumbnails.jsx",
+        "src/components/DocumentViewer/DocumentViewerToolbar.jsx",
+        "src/components/ImageRenderer.jsx",
+        "src/components/LoadingMessage.jsx",
+        "src/components/LoadingSpinner.jsx",
+        "src/components/PrintSelectionWorkspace.jsx",
+        "src/components/Resizer.jsx",
+        "src/components/ViewerProblemNotice.jsx",
+        "src/components/common/StatusLed.jsx"
+      ]
+    },
+    {
+      "packageName": "pdfjs-dist",
+      "importCount": 8,
+      "files": [
+        "src/components/DocumentLoader/documentLoaderUtils.js",
+        "src/components/DocumentLoader/mainThreadRenderer.js",
+        "src/utils/pageAssetRenderer.js",
+        "src/workers/pdfPageWorker.js"
+      ]
+    },
+    {
+      "packageName": "i18next",
+      "importCount": 5,
+      "files": [
+        "src/ErrorBoundary.jsx",
+        "src/i18n.js",
+        "src/utils/printDom.js",
+        "src/utils/printParse.js",
+        "src/utils/printPdf.js"
+      ]
+    },
+    {
+      "packageName": "utif2",
+      "importCount": 3,
+      "files": [
+        "src/components/DocumentLoader/documentLoaderUtils.js",
+        "src/components/DocumentLoader/mainThreadRenderer.js",
+        "src/utils/pageAssetRenderer.js"
+      ]
+    },
+    {
+      "packageName": "dompurify",
+      "importCount": 2,
+      "files": [
+        "src/components/DocumentToolbar/ManualOverlayDialog.jsx",
+        "src/utils/printPdf.js"
+      ]
+    },
+    {
+      "packageName": "dotenv",
+      "importCount": 2,
+      "files": [
+        "server/system-log-server.js",
+        "server/user-log-server.js"
+      ]
+    },
+    {
+      "packageName": "express",
+      "importCount": 2,
+      "files": [
+        "server/system-log-server.js",
+        "server/user-log-server.js"
+      ]
+    },
+    {
+      "packageName": "express-rate-limit",
+      "importCount": 2,
+      "files": [
+        "server/system-log-server.js",
+        "server/user-log-server.js"
+      ]
+    },
+    {
+      "packageName": "helmet",
+      "importCount": 2,
+      "files": [
+        "server/system-log-server.js",
+        "server/user-log-server.js"
+      ]
+    },
+    {
+      "packageName": "morgan",
+      "importCount": 2,
+      "files": [
+        "server/system-log-server.js",
+        "server/user-log-server.js"
+      ]
+    },
+    {
+      "packageName": "axios",
+      "importCount": 1,
+      "files": [
+        "src/logging/systemLogger.js"
+      ]
+    },
+    {
+      "packageName": "cors",
+      "importCount": 1,
+      "files": [
+        "server/system-log-server.js"
+      ]
+    },
+    {
+      "packageName": "file-type",
+      "importCount": 1,
+      "files": [
+        "src/components/DocumentLoader/DocumentLoader.js"
+      ]
+    },
+    {
+      "packageName": "i18next-http-backend",
+      "importCount": 1,
+      "files": [
+        "src/i18n.js"
+      ]
+    },
+    {
+      "packageName": "i18next-icu",
+      "importCount": 1,
+      "files": [
+        "src/i18n.js"
+      ]
+    },
+    {
+      "packageName": "material-icons",
+      "importCount": 1,
+      "files": [
+        "src/index.jsx"
+      ]
+    },
+    {
+      "packageName": "react-dom",
+      "importCount": 1,
+      "files": [
+        "src/index.jsx"
+      ]
+    }
   ],
   "importantFiles": [
     {

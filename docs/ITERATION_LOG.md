@@ -42,3 +42,10 @@ real validation target.
 - Kept a `--generated-at` CLI override for explicit timestamping.
 - This keeps committed example packets stable when the target source commit has
   not changed.
+
+## Iteration 6 - Dependency surface
+
+- Added `DEPENDENCIES.md` to combine `package.json` declarations with observed
+  source imports.
+- Added package usage data to `agent-map.json` so an agent can quickly determine
+  where external package behavior enters the codebase.
