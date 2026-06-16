@@ -29,6 +29,7 @@ export async function generateAgentDocs(options) {
     projectName,
     targetRoot,
     generatedBy: 'AgentDocMap',
+    sourceMetadata,
     generatedAtUtc: options.generatedAt || git.commitDate || new Date().toISOString(),
     git,
     packageJson,

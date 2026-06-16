@@ -1,6 +1,6 @@
 # OpenDocViewer / src/components/DocumentViewer
 
-Files: 8. Lines: 4717. JSDoc symbols: 106.
+File count: 8. Line count: 4717. JSDoc symbol count: 106.
 
 ## src/components/DocumentViewer/CompareZoomOverlay.jsx
 
@@ -103,13 +103,13 @@ Symbols:
 
 ## src/components/DocumentViewer/hooks/useViewerPostZoom.js
 
-File: src/components/DocumentViewer/hooks/useViewerPostZoom.js Encapsulates per-pane "post-zoom" state & handlers used only in compare mode.
+File: src/components/DocumentViewer/hooks/useViewerPostZoom.js Encapsulates per-pane &quot;post-zoom&quot; state &amp; handlers used only in compare mode.
 
 Exports: useViewerPostZoom
 
 Symbols:
 
-- `module:useViewerPostZoom` (module) - File: src/components/DocumentViewer/hooks/useViewerPostZoom.js Encapsulates per-pane "post-zoom" state & handlers used only in compare mode.
+- `module:useViewerPostZoom` (module) - File: src/components/DocumentViewer/hooks/useViewerPostZoom.js Encapsulates per-pane &quot;post-zoom&quot; state &amp; handlers used only in compare mode.
 - `module:useViewerPostZoom~clamp` (function) - Clamp a numeric value to [min, max].
 - `module:useViewerPostZoom~round1` (function) - Round to one decimal place (avoids float drift when stepping by 0.1).
 - `module:useViewerPostZoom.useViewerPostZoom` (function) - Hook managing per-pane post-zoom factors for compare mode.

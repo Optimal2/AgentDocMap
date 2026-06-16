@@ -1,6 +1,6 @@
 # OpenDocViewer / src/components/DocumentLoader
 
-Files: 8. Lines: 3984. JSDoc symbols: 107.
+File count: 8. Line count: 3984. JSDoc symbol count: 107.
 
 ## src/components/DocumentLoader/batchHandler.js
 

@@ -13,6 +13,7 @@
       "lint:fix": "eslint \"src/**/*.{js,jsx}\" --fix",
       "format": "prettier --write \"src/**/*.{js,jsx,css,scss,md}\"",
       "doc": "jsdoc -c jsdoc.json",
+      "doc:agent": "node scripts/generate-agent-docs.mjs",
       "start:system-log": "node server/system-log-server.js",
       "start:user-log": "node server/user-log-server.js",
       "start:logs": "concurrently -n sys,user -c auto \"npm run start:system-log\" \"npm run start:user-log\"",
@@ -70,10 +71,11 @@
   },
   "generated": {
     "by": "AgentDocMap",
-    "atUtc": "2026-06-16T20:04:29+02:00",
-    "sourceCommit": "0dadad64998674185a431c941c3e787313449d72",
-    "sourceBranch": "main",
-    "sourceDirty": false
+    "atUtc": "example",
+    "sourceMetadata": "none",
+    "sourceCommit": null,
+    "sourceBranch": null,
+    "sourceDirty": null
   },
   "stats": {
     "fileCount": 109,
@@ -516,9 +518,9 @@
   "modules": [
     {
       "name": "server",
-      "files": 2,
-      "lines": 508,
-      "doclets": 7,
+      "fileCount": 2,
+      "lineCount": 508,
+      "docletCount": 7,
       "importantFiles": [
         {
           "path": "server/system-log-server.js",
@@ -540,9 +542,9 @@
     },
     {
       "name": "src/app",
-      "files": 3,
-      "lines": 731,
-      "doclets": 20,
+      "fileCount": 3,
+      "lineCount": 731,
+      "docletCount": 20,
       "importantFiles": [
         {
           "path": "src/app/AppBootstrap.jsx",
@@ -572,9 +574,9 @@
     },
     {
       "name": "src/components",
-      "files": 13,
-      "lines": 6527,
-      "doclets": 82,
+      "fileCount": 13,
+      "lineCount": 6527,
+      "docletCount": 82,
       "importantFiles": [
         {
           "path": "src/components/DocumentThumbnailList.jsx",
@@ -644,9 +646,9 @@
     },
     {
       "name": "src/components/common",
-      "files": 1,
-      "lines": 36,
-      "doclets": 1,
+      "fileCount": 1,
+      "lineCount": 36,
+      "docletCount": 1,
       "importantFiles": [
         {
           "path": "src/components/common/StatusLed.jsx",
@@ -660,9 +662,9 @@
     },
     {
       "name": "src/components/DocumentLoader",
-      "files": 8,
-      "lines": 3984,
-      "doclets": 107,
+      "fileCount": 8,
+      "lineCount": 3984,
+      "docletCount": 107,
       "importantFiles": [
         {
           "path": "src/components/DocumentLoader/documentLoaderUtils.js",
@@ -732,9 +734,9 @@
     },
     {
       "name": "src/components/DocumentToolbar",
-      "files": 14,
-      "lines": 6326,
-      "doclets": 90,
+      "fileCount": 14,
+      "lineCount": 6326,
+      "docletCount": 90,
       "importantFiles": [
         {
           "path": "src/components/DocumentToolbar/usePrintRangeDialog.js",
@@ -804,9 +806,9 @@
     },
     {
       "name": "src/components/DocumentViewer",
-      "files": 8,
-      "lines": 4717,
-      "doclets": 106,
+      "fileCount": 8,
+      "lineCount": 4717,
+      "docletCount": 106,
       "importantFiles": [
         {
           "path": "src/components/DocumentViewer/useDocumentViewer.js",
@@ -838,7 +840,7 @@
           "lines": 86,
           "incomingLocalImports": 1,
           "doclets": 7,
-          "summary": "File: src/components/DocumentViewer/hooks/useViewerPostZoom.js Encapsulates per-pane \"post-zoom\" state & handlers used only in compare mode."
+          "summary": "File: src/components/DocumentViewer/hooks/useViewerPostZoom.js Encapsulates per-pane &quot;post-zoom&quot; state &amp; handlers used only in compare mode."
         },
         {
           "path": "src/components/DocumentViewer/DocumentViewerToolbar.jsx",
@@ -876,9 +878,9 @@
     },
     {
       "name": "src/contexts",
-      "files": 4,
-      "lines": 2997,
-      "doclets": 81,
+      "fileCount": 4,
+      "lineCount": 2997,
+      "docletCount": 81,
       "importantFiles": [
         {
           "path": "src/contexts/viewerContext.js",
@@ -916,9 +918,9 @@
     },
     {
       "name": "src/ErrorBoundary.jsx",
-      "files": 1,
-      "lines": 297,
-      "doclets": 12,
+      "fileCount": 1,
+      "lineCount": 297,
+      "docletCount": 12,
       "importantFiles": [
         {
           "path": "src/ErrorBoundary.jsx",
@@ -932,9 +934,9 @@
     },
     {
       "name": "src/hooks",
-      "files": 4,
-      "lines": 650,
-      "doclets": 23,
+      "fileCount": 4,
+      "lineCount": 650,
+      "docletCount": 23,
       "importantFiles": [
         {
           "path": "src/hooks/useNavigationModifierState.js",
@@ -972,9 +974,9 @@
     },
     {
       "name": "src/i18n.js",
-      "files": 1,
-      "lines": 566,
-      "doclets": 21,
+      "fileCount": 1,
+      "lineCount": 566,
+      "docletCount": 21,
       "importantFiles": [
         {
           "path": "src/i18n.js",
@@ -988,9 +990,9 @@
     },
     {
       "name": "src/index.jsx",
-      "files": 1,
-      "lines": 59,
-      "doclets": 2,
+      "fileCount": 1,
+      "lineCount": 59,
+      "docletCount": 2,
       "importantFiles": [
         {
           "path": "src/index.jsx",
@@ -1004,9 +1006,9 @@
     },
     {
       "name": "src/integrations",
-      "files": 7,
-      "lines": 2073,
-      "doclets": 52,
+      "fileCount": 7,
+      "lineCount": 2073,
+      "docletCount": 52,
       "importantFiles": [
         {
           "path": "src/integrations/parentBridge.js",
@@ -1068,9 +1070,9 @@
     },
     {
       "name": "src/logging",
-      "files": 2,
-      "lines": 740,
-      "doclets": 46,
+      "fileCount": 2,
+      "lineCount": 740,
+      "docletCount": 46,
       "importantFiles": [
         {
           "path": "src/logging/systemLogger.js",
@@ -1092,9 +1094,9 @@
     },
     {
       "name": "src/PerformanceMonitor.jsx",
-      "files": 1,
-      "lines": 1346,
-      "doclets": 20,
+      "fileCount": 1,
+      "lineCount": 1346,
+      "docletCount": 20,
       "importantFiles": [
         {
           "path": "src/PerformanceMonitor.jsx",
@@ -1108,9 +1110,9 @@
     },
     {
       "name": "src/schemas",
-      "files": 1,
-      "lines": 363,
-      "doclets": 18,
+      "fileCount": 1,
+      "lineCount": 363,
+      "docletCount": 18,
       "importantFiles": [
         {
           "path": "src/schemas/portableBundle.js",
@@ -1124,9 +1126,9 @@
     },
     {
       "name": "src/types",
-      "files": 1,
-      "lines": 101,
-      "doclets": 13,
+      "fileCount": 1,
+      "lineCount": 101,
+      "docletCount": 13,
       "importantFiles": [
         {
           "path": "src/types/jsdoc-types.js",
@@ -1134,15 +1136,15 @@
           "lines": 101,
           "incomingLocalImports": 0,
           "doclets": 13,
-          "summary": "Generic React-like state setter for numbers: accepts either a number or an updater function (number)->number."
+          "summary": "Generic React-like state setter for numbers: accepts either a number or an updater function (number)-&gt;number."
         }
       ]
     },
     {
       "name": "src/utils",
-      "files": 34,
-      "lines": 14530,
-      "doclets": 562,
+      "fileCount": 34,
+      "lineCount": 14530,
+      "docletCount": 562,
       "importantFiles": [
         {
           "path": "src/utils/documentLoadingConfig.js",
@@ -1212,9 +1214,9 @@
     },
     {
       "name": "src/workers",
-      "files": 3,
-      "lines": 1549,
-      "doclets": 3,
+      "fileCount": 3,
+      "lineCount": 1549,
+      "docletCount": 3,
       "importantFiles": [
         {
           "path": "src/workers/pdfWorker.js",
@@ -2372,7 +2374,7 @@
               "name": "props.extension",
               "type": "string",
               "optional": true,
-              "description": "Pattern mode: file extension (e.g., \"jpg\")"
+              "description": "Pattern mode: file extension (e.g., &quot;jpg&quot;)"
             },
             {
               "name": "props.endNumber",
@@ -2854,7 +2856,7 @@
               "name": "props.extension",
               "type": "string",
               "optional": true,
-              "description": "Pattern mode: file extension (e.g., \"png\", \"tiff\")"
+              "description": "Pattern mode: file extension (e.g., &quot;png&quot;, &quot;tiff&quot;)"
             },
             {
               "name": "props.endNumber",
@@ -5628,7 +5630,7 @@
               "name": "extension",
               "type": "string",
               "optional": false,
-              "description": "File extension (e.g., \"jpg\", \"png\", \"tiff\")."
+              "description": "File extension (e.g., &quot;jpg&quot;, &quot;png&quot;, &quot;tiff&quot;)."
             },
             {
               "name": "endNumber",
@@ -10807,7 +10809,7 @@
           "scope": "inner",
           "file": "src/components/DocumentToolbar/DocumentToolbar.jsx",
           "line": 766,
-          "description": "Build a compact \"pages\" descriptor for logging.",
+          "description": "Build a compact &quot;pages&quot; descriptor for logging.",
           "params": [
             {
               "name": "detail",
@@ -10819,7 +10821,7 @@
           "returns": [
             {
               "type": "string|null",
-              "description": "A string like \"all\", \"3\", \"2-5\", or \"7,6,5\"."
+              "description": "A string like &quot;all&quot;, &quot;3&quot;, &quot;2-5&quot;, or &quot;7,6,5&quot;."
             }
           ],
           "examples": 0
@@ -16609,7 +16611,7 @@
           "scope": null,
           "file": "src/components/DocumentViewer/hooks/useViewerPostZoom.js",
           "line": 2,
-          "description": "File: src/components/DocumentViewer/hooks/useViewerPostZoom.js Encapsulates per-pane \"post-zoom\" state & handlers used only in compare mode.",
+          "description": "File: src/components/DocumentViewer/hooks/useViewerPostZoom.js Encapsulates per-pane &quot;post-zoom&quot; state &amp; handlers used only in compare mode.",
           "params": [],
           "returns": [],
           "examples": 0
@@ -16770,7 +16772,7 @@
       ],
       "incomingLocalImports": 1,
       "importanceScore": 34,
-      "summary": "File: src/components/DocumentViewer/hooks/useViewerPostZoom.js Encapsulates per-pane \"post-zoom\" state & handlers used only in compare mode."
+      "summary": "File: src/components/DocumentViewer/hooks/useViewerPostZoom.js Encapsulates per-pane &quot;post-zoom&quot; state &amp; handlers used only in compare mode."
     },
     {
       "path": "src/components/DocumentViewer/useDocumentViewer.js",
@@ -18574,7 +18576,7 @@
               "name": "props.pageStatus",
               "type": "number",
               "optional": false,
-              "description": "Status of the page loading. (-1 => error; otherwise \"loading\")"
+              "description": "Status of the page loading. (-1 =&gt; error; otherwise &quot;loading&quot;)"
             },
             {
               "name": "props.loadingText",
@@ -23183,7 +23185,7 @@
               "name": "totalPages",
               "type": "number",
               "optional": false,
-              "description": "Total number of pages (must be >= 1 for next/last)."
+              "description": "Total number of pages (must be &gt;= 1 for next/last)."
             }
           ],
           "returns": [
@@ -23876,7 +23878,7 @@
           "scope": "global",
           "file": "src/i18n.js",
           "line": 217,
-          "description": "Compute app config & defaults safely.",
+          "description": "Compute app config &amp; defaults safely.",
           "params": [],
           "returns": [
             {
@@ -26060,7 +26062,7 @@
               "name": "name",
               "type": "string",
               "optional": false,
-              "description": "Event name (recommend a namespace like \"odv:*\")."
+              "description": "Event name (recommend a namespace like &quot;odv:*&quot;)."
             },
             {
               "name": "detail",
@@ -26418,7 +26420,7 @@
           "scope": "global",
           "file": "src/logging/systemLogger.js",
           "line": 163,
-          "description": "Resolve an explicit \"enabled\" boolean if one exists.",
+          "description": "Resolve an explicit &quot;enabled&quot; boolean if one exists.",
           "params": [],
           "returns": [
             {
@@ -26461,7 +26463,7 @@
           "scope": "global",
           "file": "src/logging/systemLogger.js",
           "line": 186,
-          "description": "Compare two log levels (is a >= b ?).",
+          "description": "Compare two log levels (is a &gt;= b ?).",
           "params": [
             {
               "name": "a",
@@ -26834,7 +26836,7 @@
               "name": "message",
               "type": "string",
               "optional": false,
-              "description": "@param {Object.<string, *>} [context] @returns {Promise. }"
+              "description": "@param {Object.&lt;string, *&gt;} [context] @returns {Promise. }"
             }
           ],
           "returns": [],
@@ -26854,7 +26856,7 @@
               "name": "message",
               "type": "string",
               "optional": false,
-              "description": "@param {Object.<string, *>} [context] @returns {Promise. }"
+              "description": "@param {Object.&lt;string, *&gt;} [context] @returns {Promise. }"
             }
           ],
           "returns": [],
@@ -26874,7 +26876,7 @@
               "name": "message",
               "type": "string",
               "optional": false,
-              "description": "@param {Object.<string, *>} [context] @returns {Promise. }"
+              "description": "@param {Object.&lt;string, *&gt;} [context] @returns {Promise. }"
             }
           ],
           "returns": [],
@@ -26894,7 +26896,7 @@
               "name": "message",
               "type": "string",
               "optional": false,
-              "description": "@param {Object.<string, *>} [context] @returns {Promise. }"
+              "description": "@param {Object.&lt;string, *&gt;} [context] @returns {Promise. }"
             }
           ],
           "returns": [],
@@ -27103,7 +27105,7 @@
           "scope": "global",
           "file": "src/logging/userLogger.js",
           "line": 100,
-          "description": "Return timezone offset as \"+HH:MM\" or \"-HH:MM\".",
+          "description": "Return timezone offset as &quot;+HH:MM&quot; or &quot;-HH:MM&quot;.",
           "params": [],
           "returns": [],
           "examples": 0
@@ -27129,7 +27131,7 @@
           "scope": "global",
           "file": "src/logging/userLogger.js",
           "line": 120,
-          "description": "Async SHA-256 of a string → \"sha256- \" (or null).",
+          "description": "Async SHA-256 of a string → &quot;sha256- &quot; (or null).",
           "params": [],
           "returns": [],
           "examples": 0
@@ -27220,7 +27222,7 @@
           "scope": "instance",
           "file": "src/logging/userLogger.js",
           "line": 189,
-          "description": "Submit a \"print\" user-log event.",
+          "description": "Submit a &quot;print&quot; user-log event.",
           "params": [
             {
               "name": "payload",
@@ -28557,7 +28559,7 @@
           "scope": "global",
           "file": "src/types/jsdoc-types.js",
           "line": 7,
-          "description": "Generic React-like state setter for numbers: accepts either a number or an updater function (number)->number.",
+          "description": "Generic React-like state setter for numbers: accepts either a number or an updater function (number)-&gt;number.",
           "params": [
             {
               "name": "next",
@@ -28657,7 +28659,7 @@
           "scope": "global",
           "file": "src/types/jsdoc-types.js",
           "line": 36,
-          "description": "React-like state setter for booleans: accepts a boolean or an updater (boolean)->boolean.",
+          "description": "React-like state setter for booleans: accepts a boolean or an updater (boolean)-&gt;boolean.",
           "params": [
             {
               "name": "next",
@@ -28682,7 +28684,7 @@
           "scope": "global",
           "file": "src/types/jsdoc-types.js",
           "line": 44,
-          "description": "React-like state setter for page number: accepts a number or an updater (number)->number.",
+          "description": "React-like state setter for page number: accepts a number or an updater (number)-&gt;number.",
           "params": [
             {
               "name": "next",
@@ -28770,7 +28772,7 @@
           "scope": "global",
           "file": "src/types/jsdoc-types.js",
           "line": 73,
-          "description": "Generic \"ref-like\" object (for places where React.MutableRefObject is too specific).",
+          "description": "Generic &quot;ref-like&quot; object (for places where React.MutableRefObject is too specific).",
           "params": [],
           "returns": [],
           "examples": 0
@@ -28832,7 +28834,7 @@
       "packageImports": [],
       "incomingLocalImports": 0,
       "importanceScore": 24,
-      "summary": "Generic React-like state setter for numbers: accepts either a number or an updater function (number)->number."
+      "summary": "Generic React-like state setter for numbers: accepts either a number or an updater function (number)-&gt;number."
     },
     {
       "path": "src/utils/documentLoadingConfig.js",
@@ -30926,7 +30928,7 @@
           "scope": "global",
           "file": "src/utils/navigationUtils.js",
           "line": 43,
-          "description": "Check whether totalPages looks valid (>= 1).",
+          "description": "Check whether totalPages looks valid (&gt;= 1).",
           "params": [
             {
               "name": "totalPages",
@@ -31019,7 +31021,7 @@
               "name": "totalPages",
               "type": "number",
               "optional": false,
-              "description": "Total number of pages (must be >= 1)."
+              "description": "Total number of pages (must be &gt;= 1)."
             }
           ],
           "returns": [
@@ -31075,7 +31077,7 @@
               "name": "totalPages",
               "type": "number",
               "optional": false,
-              "description": "Total number of pages (must be >= 1)."
+              "description": "Total number of pages (must be &gt;= 1)."
             }
           ],
           "returns": [
@@ -36677,7 +36679,7 @@
           "scope": "global",
           "file": "src/utils/printCore.js",
           "line": 65,
-          "description": "Internal: candidate node for \"largest visible\" heuristics.",
+          "description": "Internal: candidate node for &quot;largest visible&quot; heuristics.",
           "params": [],
           "returns": [],
           "examples": 0
@@ -38171,7 +38173,7 @@
           "scope": "global",
           "file": "src/utils/printParse.js",
           "line": 48,
-          "description": "Parse \"Custom pages\" into a sequence.",
+          "description": "Parse &quot;Custom pages&quot; into a sequence.",
           "params": [
             {
               "name": "text",
@@ -38208,7 +38210,7 @@
       ],
       "incomingLocalImports": 1,
       "importanceScore": 22,
-      "summary": "Parse \"Custom pages\" into a sequence."
+      "summary": "Parse &quot;Custom pages&quot; into a sequence."
     },
     {
       "path": "src/utils/printPdf.js",
@@ -39113,7 +39115,7 @@
           "returns": [
             {
               "type": "boolean",
-              "description": "True for bold/bolder or numeric weights >= BOLD_FONT_WEIGHT_THRESHOLD."
+              "description": "True for bold/bolder or numeric weights &gt;= BOLD_FONT_WEIGHT_THRESHOLD."
             }
           ],
           "examples": 0
@@ -42331,7 +42333,7 @@
           "scope": "global",
           "file": "src/utils/printTemplate.js",
           "line": 252,
-          "description": "Resolve a dotted-path property from an object (e.g., \"doc.title\").",
+          "description": "Resolve a dotted-path property from an object (e.g., &quot;doc.title&quot;).",
           "params": [
             {
               "name": "obj",
@@ -42834,7 +42836,7 @@
           "scope": "global",
           "file": "src/utils/printTemplate.js",
           "line": 720,
-          "description": "Resolve conditional blocks of the form [[{{path}}, \"content\"]].",
+          "description": "Resolve conditional blocks of the form [[{{path}}, &quot;content&quot;]].",
           "params": [
             {
               "name": "tpl",
@@ -50011,7 +50013,7 @@
           "name": "props.extension",
           "type": "string",
           "optional": true,
-          "description": "Pattern mode: file extension (e.g., \"jpg\")"
+          "description": "Pattern mode: file extension (e.g., &quot;jpg&quot;)"
         },
         {
           "name": "props.endNumber",
@@ -50239,7 +50241,7 @@
           "name": "props.extension",
           "type": "string",
           "optional": true,
-          "description": "Pattern mode: file extension (e.g., \"png\", \"tiff\")"
+          "description": "Pattern mode: file extension (e.g., &quot;png&quot;, &quot;tiff&quot;)"
         },
         {
           "name": "props.endNumber",
@@ -52290,7 +52292,7 @@
           "name": "extension",
           "type": "string",
           "optional": false,
-          "description": "File extension (e.g., \"jpg\", \"png\", \"tiff\")."
+          "description": "File extension (e.g., &quot;jpg&quot;, &quot;png&quot;, &quot;tiff&quot;)."
         },
         {
           "name": "endNumber",
@@ -55806,7 +55808,7 @@
       "scope": "inner",
       "file": "src/components/DocumentToolbar/DocumentToolbar.jsx",
       "line": 766,
-      "description": "Build a compact \"pages\" descriptor for logging.",
+      "description": "Build a compact &quot;pages&quot; descriptor for logging.",
       "params": [
         {
           "name": "detail",
@@ -55818,7 +55820,7 @@
       "returns": [
         {
           "type": "string|null",
-          "description": "A string like \"all\", \"3\", \"2-5\", or \"7,6,5\"."
+          "description": "A string like &quot;all&quot;, &quot;3&quot;, &quot;2-5&quot;, or &quot;7,6,5&quot;."
         }
       ],
       "examples": 0
@@ -58837,7 +58839,7 @@
       "scope": null,
       "file": "src/components/DocumentViewer/hooks/useViewerPostZoom.js",
       "line": 2,
-      "description": "File: src/components/DocumentViewer/hooks/useViewerPostZoom.js Encapsulates per-pane \"post-zoom\" state & handlers used only in compare mode.",
+      "description": "File: src/components/DocumentViewer/hooks/useViewerPostZoom.js Encapsulates per-pane &quot;post-zoom&quot; state &amp; handlers used only in compare mode.",
       "params": [],
       "returns": [],
       "examples": 0
@@ -60250,7 +60252,7 @@
           "name": "props.pageStatus",
           "type": "number",
           "optional": false,
-          "description": "Status of the page loading. (-1 => error; otherwise \"loading\")"
+          "description": "Status of the page loading. (-1 =&gt; error; otherwise &quot;loading&quot;)"
         },
         {
           "name": "props.loadingText",
@@ -63258,7 +63260,7 @@
           "name": "totalPages",
           "type": "number",
           "optional": false,
-          "description": "Total number of pages (must be >= 1 for next/last)."
+          "description": "Total number of pages (must be &gt;= 1 for next/last)."
         }
       ],
       "returns": [
@@ -63546,7 +63548,7 @@
       "scope": "global",
       "file": "src/i18n.js",
       "line": 217,
-      "description": "Compute app config & defaults safely.",
+      "description": "Compute app config &amp; defaults safely.",
       "params": [],
       "returns": [
         {
@@ -64745,7 +64747,7 @@
           "name": "name",
           "type": "string",
           "optional": false,
-          "description": "Event name (recommend a namespace like \"odv:*\")."
+          "description": "Event name (recommend a namespace like &quot;odv:*&quot;)."
         },
         {
           "name": "detail",
@@ -64919,7 +64921,7 @@
           "name": "message",
           "type": "string",
           "optional": false,
-          "description": "@param {Object.<string, *>} [context] @returns {Promise. }"
+          "description": "@param {Object.&lt;string, *&gt;} [context] @returns {Promise. }"
         }
       ],
       "returns": [],
@@ -64964,7 +64966,7 @@
           "name": "message",
           "type": "string",
           "optional": false,
-          "description": "@param {Object.<string, *>} [context] @returns {Promise. }"
+          "description": "@param {Object.&lt;string, *&gt;} [context] @returns {Promise. }"
         }
       ],
       "returns": [],
@@ -64984,7 +64986,7 @@
           "name": "message",
           "type": "string",
           "optional": false,
-          "description": "@param {Object.<string, *>} [context] @returns {Promise. }"
+          "description": "@param {Object.&lt;string, *&gt;} [context] @returns {Promise. }"
         }
       ],
       "returns": [],
@@ -64998,7 +65000,7 @@
       "scope": "global",
       "file": "src/logging/systemLogger.js",
       "line": 186,
-      "description": "Compare two log levels (is a >= b ?).",
+      "description": "Compare two log levels (is a &gt;= b ?).",
       "params": [
         {
           "name": "a",
@@ -65260,7 +65262,7 @@
       "scope": "global",
       "file": "src/logging/systemLogger.js",
       "line": 163,
-      "description": "Resolve an explicit \"enabled\" boolean if one exists.",
+      "description": "Resolve an explicit &quot;enabled&quot; boolean if one exists.",
       "params": [],
       "returns": [
         {
@@ -65527,7 +65529,7 @@
           "name": "message",
           "type": "string",
           "optional": false,
-          "description": "@param {Object.<string, *>} [context] @returns {Promise. }"
+          "description": "@param {Object.&lt;string, *&gt;} [context] @returns {Promise. }"
         }
       ],
       "returns": [],
@@ -65710,7 +65712,7 @@
       "scope": "global",
       "file": "src/logging/userLogger.js",
       "line": 120,
-      "description": "Async SHA-256 of a string → \"sha256- \" (or null).",
+      "description": "Async SHA-256 of a string → &quot;sha256- &quot; (or null).",
       "params": [],
       "returns": [],
       "examples": 0
@@ -65723,7 +65725,7 @@
       "scope": "instance",
       "file": "src/logging/userLogger.js",
       "line": 189,
-      "description": "Submit a \"print\" user-log event.",
+      "description": "Submit a &quot;print&quot; user-log event.",
       "params": [
         {
           "name": "payload",
@@ -65756,7 +65758,7 @@
       "scope": "global",
       "file": "src/logging/userLogger.js",
       "line": 100,
-      "description": "Return timezone offset as \"+HH:MM\" or \"-HH:MM\".",
+      "description": "Return timezone offset as &quot;+HH:MM&quot; or &quot;-HH:MM&quot;.",
       "params": [],
       "returns": [],
       "examples": 0
@@ -66785,7 +66787,7 @@
       "scope": "global",
       "file": "src/types/jsdoc-types.js",
       "line": 73,
-      "description": "Generic \"ref-like\" object (for places where React.MutableRefObject is too specific).",
+      "description": "Generic &quot;ref-like&quot; object (for places where React.MutableRefObject is too specific).",
       "params": [],
       "returns": [],
       "examples": 0
@@ -66798,7 +66800,7 @@
       "scope": "global",
       "file": "src/types/jsdoc-types.js",
       "line": 36,
-      "description": "React-like state setter for booleans: accepts a boolean or an updater (boolean)->boolean.",
+      "description": "React-like state setter for booleans: accepts a boolean or an updater (boolean)-&gt;boolean.",
       "params": [
         {
           "name": "next",
@@ -66848,7 +66850,7 @@
       "scope": "global",
       "file": "src/types/jsdoc-types.js",
       "line": 7,
-      "description": "Generic React-like state setter for numbers: accepts either a number or an updater function (number)->number.",
+      "description": "Generic React-like state setter for numbers: accepts either a number or an updater function (number)-&gt;number.",
       "params": [
         {
           "name": "next",
@@ -66873,7 +66875,7 @@
       "scope": "global",
       "file": "src/types/jsdoc-types.js",
       "line": 44,
-      "description": "React-like state setter for page number: accepts a number or an updater (number)->number.",
+      "description": "React-like state setter for page number: accepts a number or an updater (number)-&gt;number.",
       "params": [
         {
           "name": "next",
@@ -68405,7 +68407,7 @@
           "name": "totalPages",
           "type": "number",
           "optional": false,
-          "description": "Total number of pages (must be >= 1)."
+          "description": "Total number of pages (must be &gt;= 1)."
         }
       ],
       "returns": [
@@ -68436,7 +68438,7 @@
           "name": "totalPages",
           "type": "number",
           "optional": false,
-          "description": "Total number of pages (must be >= 1)."
+          "description": "Total number of pages (must be &gt;= 1)."
         }
       ],
       "returns": [
@@ -68480,7 +68482,7 @@
       "scope": "global",
       "file": "src/utils/navigationUtils.js",
       "line": 43,
-      "description": "Check whether totalPages looks valid (>= 1).",
+      "description": "Check whether totalPages looks valid (&gt;= 1).",
       "params": [
         {
           "name": "totalPages",
@@ -72813,7 +72815,7 @@
       "scope": "global",
       "file": "src/utils/printCore.js",
       "line": 65,
-      "description": "Internal: candidate node for \"largest visible\" heuristics.",
+      "description": "Internal: candidate node for &quot;largest visible&quot; heuristics.",
       "params": [],
       "returns": [],
       "examples": 0
@@ -73642,7 +73644,7 @@
       "scope": "global",
       "file": "src/utils/printParse.js",
       "line": 48,
-      "description": "Parse \"Custom pages\" into a sequence.",
+      "description": "Parse &quot;Custom pages&quot; into a sequence.",
       "params": [
         {
           "name": "text",
@@ -75244,7 +75246,7 @@
       "returns": [
         {
           "type": "boolean",
-          "description": "True for bold/bolder or numeric weights >= BOLD_FONT_WEIGHT_THRESHOLD."
+          "description": "True for bold/bolder or numeric weights &gt;= BOLD_FONT_WEIGHT_THRESHOLD."
         }
       ],
       "examples": 0
@@ -76539,7 +76541,7 @@
       "scope": "global",
       "file": "src/utils/printTemplate.js",
       "line": 720,
-      "description": "Resolve conditional blocks of the form [[{{path}}, \"content\"]].",
+      "description": "Resolve conditional blocks of the form [[{{path}}, &quot;content&quot;]].",
       "params": [
         {
           "name": "tpl",
@@ -76838,7 +76840,7 @@
       "scope": "global",
       "file": "src/utils/printTemplate.js",
       "line": 252,
-      "description": "Resolve a dotted-path property from an object (e.g., \"doc.title\").",
+      "description": "Resolve a dotted-path property from an object (e.g., &quot;doc.title&quot;).",
       "params": [
         {
           "name": "obj",

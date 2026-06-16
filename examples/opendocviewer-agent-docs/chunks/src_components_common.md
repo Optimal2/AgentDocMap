@@ -1,6 +1,6 @@
 # OpenDocViewer / src/components/common
 
-Files: 1. Lines: 36. JSDoc symbols: 1.
+File count: 1. Line count: 36. JSDoc symbol count: 1.
 
 ## src/components/common/StatusLed.jsx
 

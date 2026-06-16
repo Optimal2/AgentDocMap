@@ -1,6 +1,6 @@
 # OpenDocViewer / src/schemas
 
-Files: 1. Lines: 363. JSDoc symbols: 18.
+File count: 1. Line count: 363. JSDoc symbol count: 18.
 
 ## src/schemas/portableBundle.js
 

@@ -1,6 +1,6 @@
 # OpenDocViewer / src/integrations
 
-Files: 7. Lines: 2073. JSDoc symbols: 52.
+File count: 7. Line count: 2073. JSDoc symbol count: 52.
 
 ## src/integrations/bootstrapRuntime.js
 

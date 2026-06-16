@@ -1,6 +1,6 @@
 # OpenDocViewer / src/utils
 
-Files: 34. Lines: 14530. JSDoc symbols: 562.
+File count: 34. Line count: 14530. JSDoc symbol count: 562.
 
 ## src/utils/documentLoadingConfig.js
 
@@ -100,7 +100,7 @@ Local imports: src/logging/systemLogger.js
 Symbols:
 
 - `toPositiveInt` (function) - Coerce a value to a positive integer (minimum 1).
-- `isValidTotalPages` (function) - Check whether totalPages looks valid (>= 1).
+- `isValidTotalPages` (function) - Check whether totalPages looks valid (&gt;= 1).
 - `clampPage` (function) - Clamp a page number into [1, totalPages].
 - `handlePrevPage` (constant) - Navigate to the previous page (no-op if already at page 1).
 - `handleNextPage` (constant) - Navigate to the next page (no-op if already at the last page).
@@ -320,7 +320,7 @@ Symbols:
 - `PrintOptions` (typedef) - Options for single-page printing.
 - `PageRange` (typedef) - A 1-based inclusive page range.
 - `PrintAllOptions` (typedef) - Options for printing multiple pages (all/range/sequence).
-- `PrintCandidate` (typedef) - Internal: candidate node for "largest visible" heuristics.
+- `PrintCandidate` (typedef) - Internal: candidate node for &quot;largest visible&quot; heuristics.
 - `PrintHeaderCfg` (typedef) - Print header config (runtime) consumed by the print overlay logic.
 - `HiddenIframe` (typedef) - Return type for the hidden-iframe factory.
 - `isVisiblyMeasurable` (function) - Check whether a candidate element is both present in layout and not hidden by basic CSS visibility.
@@ -355,7 +355,7 @@ Symbols:
 
 ## src/utils/printParse.js
 
-Parse "Custom pages" into a sequence.
+Parse &quot;Custom pages&quot; into a sequence.
 
 Exports: parsePrintSequence
 
@@ -363,7 +363,7 @@ Symbols:
 
 - `ParseResult` (typedef) - Result of parsing a custom pages string.
 - `tr` (function) - Tiny helper to translate with safe fallback.
-- `parsePrintSequence` (function) - Parse "Custom pages" into a sequence.
+- `parsePrintSequence` (function) - Parse &quot;Custom pages&quot; into a sequence.
 
 ## src/utils/printPdf.js
 

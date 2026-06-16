@@ -1,6 +1,6 @@
 # OpenDocViewer / src/PerformanceMonitor.jsx
 
-Files: 1. Lines: 1346. JSDoc symbols: 20.
+File count: 1. Line count: 1346. JSDoc symbol count: 20.
 
 ## src/PerformanceMonitor.jsx
 

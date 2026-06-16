@@ -1,6 +1,6 @@
 # OpenDocViewer / src/ErrorBoundary.jsx
 
-Files: 1. Lines: 297. JSDoc symbols: 12.
+File count: 1. Line count: 297. JSDoc symbol count: 12.
 
 ## src/ErrorBoundary.jsx
 

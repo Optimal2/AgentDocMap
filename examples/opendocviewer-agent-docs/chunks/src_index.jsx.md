@@ -1,6 +1,6 @@
 # OpenDocViewer / src/index.jsx
 
-Files: 1. Lines: 59. JSDoc symbols: 2.
+File count: 1. Line count: 59. JSDoc symbol count: 2.
 
 ## src/index.jsx
 

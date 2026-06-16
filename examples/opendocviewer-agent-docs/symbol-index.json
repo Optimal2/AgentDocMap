@@ -353,7 +353,7 @@
         "name": "props.extension",
         "type": "string",
         "optional": true,
-        "description": "Pattern mode: file extension (e.g., \"jpg\")"
+        "description": "Pattern mode: file extension (e.g., &quot;jpg&quot;)"
       },
       {
         "name": "props.endNumber",
@@ -581,7 +581,7 @@
         "name": "props.extension",
         "type": "string",
         "optional": true,
-        "description": "Pattern mode: file extension (e.g., \"png\", \"tiff\")"
+        "description": "Pattern mode: file extension (e.g., &quot;png&quot;, &quot;tiff&quot;)"
       },
       {
         "name": "props.endNumber",
@@ -2632,7 +2632,7 @@
         "name": "extension",
         "type": "string",
         "optional": false,
-        "description": "File extension (e.g., \"jpg\", \"png\", \"tiff\")."
+        "description": "File extension (e.g., &quot;jpg&quot;, &quot;png&quot;, &quot;tiff&quot;)."
       },
       {
         "name": "endNumber",
@@ -6148,7 +6148,7 @@
     "scope": "inner",
     "file": "src/components/DocumentToolbar/DocumentToolbar.jsx",
     "line": 766,
-    "description": "Build a compact \"pages\" descriptor for logging.",
+    "description": "Build a compact &quot;pages&quot; descriptor for logging.",
     "params": [
       {
         "name": "detail",
@@ -6160,7 +6160,7 @@
     "returns": [
       {
         "type": "string|null",
-        "description": "A string like \"all\", \"3\", \"2-5\", or \"7,6,5\"."
+        "description": "A string like &quot;all&quot;, &quot;3&quot;, &quot;2-5&quot;, or &quot;7,6,5&quot;."
       }
     ],
     "examples": 0
@@ -9179,7 +9179,7 @@
     "scope": null,
     "file": "src/components/DocumentViewer/hooks/useViewerPostZoom.js",
     "line": 2,
-    "description": "File: src/components/DocumentViewer/hooks/useViewerPostZoom.js Encapsulates per-pane \"post-zoom\" state & handlers used only in compare mode.",
+    "description": "File: src/components/DocumentViewer/hooks/useViewerPostZoom.js Encapsulates per-pane &quot;post-zoom&quot; state &amp; handlers used only in compare mode.",
     "params": [],
     "returns": [],
     "examples": 0
@@ -10592,7 +10592,7 @@
         "name": "props.pageStatus",
         "type": "number",
         "optional": false,
-        "description": "Status of the page loading. (-1 => error; otherwise \"loading\")"
+        "description": "Status of the page loading. (-1 =&gt; error; otherwise &quot;loading&quot;)"
       },
       {
         "name": "props.loadingText",
@@ -13600,7 +13600,7 @@
         "name": "totalPages",
         "type": "number",
         "optional": false,
-        "description": "Total number of pages (must be >= 1 for next/last)."
+        "description": "Total number of pages (must be &gt;= 1 for next/last)."
       }
     ],
     "returns": [
@@ -13888,7 +13888,7 @@
     "scope": "global",
     "file": "src/i18n.js",
     "line": 217,
-    "description": "Compute app config & defaults safely.",
+    "description": "Compute app config &amp; defaults safely.",
     "params": [],
     "returns": [
       {
@@ -15087,7 +15087,7 @@
         "name": "name",
         "type": "string",
         "optional": false,
-        "description": "Event name (recommend a namespace like \"odv:*\")."
+        "description": "Event name (recommend a namespace like &quot;odv:*&quot;)."
       },
       {
         "name": "detail",
@@ -15261,7 +15261,7 @@
         "name": "message",
         "type": "string",
         "optional": false,
-        "description": "@param {Object.<string, *>} [context] @returns {Promise. }"
+        "description": "@param {Object.&lt;string, *&gt;} [context] @returns {Promise. }"
       }
     ],
     "returns": [],
@@ -15306,7 +15306,7 @@
         "name": "message",
         "type": "string",
         "optional": false,
-        "description": "@param {Object.<string, *>} [context] @returns {Promise. }"
+        "description": "@param {Object.&lt;string, *&gt;} [context] @returns {Promise. }"
       }
     ],
     "returns": [],
@@ -15326,7 +15326,7 @@
         "name": "message",
         "type": "string",
         "optional": false,
-        "description": "@param {Object.<string, *>} [context] @returns {Promise. }"
+        "description": "@param {Object.&lt;string, *&gt;} [context] @returns {Promise. }"
       }
     ],
     "returns": [],
@@ -15340,7 +15340,7 @@
     "scope": "global",
     "file": "src/logging/systemLogger.js",
     "line": 186,
-    "description": "Compare two log levels (is a >= b ?).",
+    "description": "Compare two log levels (is a &gt;= b ?).",
     "params": [
       {
         "name": "a",
@@ -15602,7 +15602,7 @@
     "scope": "global",
     "file": "src/logging/systemLogger.js",
     "line": 163,
-    "description": "Resolve an explicit \"enabled\" boolean if one exists.",
+    "description": "Resolve an explicit &quot;enabled&quot; boolean if one exists.",
     "params": [],
     "returns": [
       {
@@ -15869,7 +15869,7 @@
         "name": "message",
         "type": "string",
         "optional": false,
-        "description": "@param {Object.<string, *>} [context] @returns {Promise. }"
+        "description": "@param {Object.&lt;string, *&gt;} [context] @returns {Promise. }"
       }
     ],
     "returns": [],
@@ -16052,7 +16052,7 @@
     "scope": "global",
     "file": "src/logging/userLogger.js",
     "line": 120,
-    "description": "Async SHA-256 of a string → \"sha256- \" (or null).",
+    "description": "Async SHA-256 of a string → &quot;sha256- &quot; (or null).",
     "params": [],
     "returns": [],
     "examples": 0
@@ -16065,7 +16065,7 @@
     "scope": "instance",
     "file": "src/logging/userLogger.js",
     "line": 189,
-    "description": "Submit a \"print\" user-log event.",
+    "description": "Submit a &quot;print&quot; user-log event.",
     "params": [
       {
         "name": "payload",
@@ -16098,7 +16098,7 @@
     "scope": "global",
     "file": "src/logging/userLogger.js",
     "line": 100,
-    "description": "Return timezone offset as \"+HH:MM\" or \"-HH:MM\".",
+    "description": "Return timezone offset as &quot;+HH:MM&quot; or &quot;-HH:MM&quot;.",
     "params": [],
     "returns": [],
     "examples": 0
@@ -17127,7 +17127,7 @@
     "scope": "global",
     "file": "src/types/jsdoc-types.js",
     "line": 73,
-    "description": "Generic \"ref-like\" object (for places where React.MutableRefObject is too specific).",
+    "description": "Generic &quot;ref-like&quot; object (for places where React.MutableRefObject is too specific).",
     "params": [],
     "returns": [],
     "examples": 0
@@ -17140,7 +17140,7 @@
     "scope": "global",
     "file": "src/types/jsdoc-types.js",
     "line": 36,
-    "description": "React-like state setter for booleans: accepts a boolean or an updater (boolean)->boolean.",
+    "description": "React-like state setter for booleans: accepts a boolean or an updater (boolean)-&gt;boolean.",
     "params": [
       {
         "name": "next",
@@ -17190,7 +17190,7 @@
     "scope": "global",
     "file": "src/types/jsdoc-types.js",
     "line": 7,
-    "description": "Generic React-like state setter for numbers: accepts either a number or an updater function (number)->number.",
+    "description": "Generic React-like state setter for numbers: accepts either a number or an updater function (number)-&gt;number.",
     "params": [
       {
         "name": "next",
@@ -17215,7 +17215,7 @@
     "scope": "global",
     "file": "src/types/jsdoc-types.js",
     "line": 44,
-    "description": "React-like state setter for page number: accepts a number or an updater (number)->number.",
+    "description": "React-like state setter for page number: accepts a number or an updater (number)-&gt;number.",
     "params": [
       {
         "name": "next",
@@ -18747,7 +18747,7 @@
         "name": "totalPages",
         "type": "number",
         "optional": false,
-        "description": "Total number of pages (must be >= 1)."
+        "description": "Total number of pages (must be &gt;= 1)."
       }
     ],
     "returns": [
@@ -18778,7 +18778,7 @@
         "name": "totalPages",
         "type": "number",
         "optional": false,
-        "description": "Total number of pages (must be >= 1)."
+        "description": "Total number of pages (must be &gt;= 1)."
       }
     ],
     "returns": [
@@ -18822,7 +18822,7 @@
     "scope": "global",
     "file": "src/utils/navigationUtils.js",
     "line": 43,
-    "description": "Check whether totalPages looks valid (>= 1).",
+    "description": "Check whether totalPages looks valid (&gt;= 1).",
     "params": [
       {
         "name": "totalPages",
@@ -23155,7 +23155,7 @@
     "scope": "global",
     "file": "src/utils/printCore.js",
     "line": 65,
-    "description": "Internal: candidate node for \"largest visible\" heuristics.",
+    "description": "Internal: candidate node for &quot;largest visible&quot; heuristics.",
     "params": [],
     "returns": [],
     "examples": 0
@@ -23984,7 +23984,7 @@
     "scope": "global",
     "file": "src/utils/printParse.js",
     "line": 48,
-    "description": "Parse \"Custom pages\" into a sequence.",
+    "description": "Parse &quot;Custom pages&quot; into a sequence.",
     "params": [
       {
         "name": "text",
@@ -25586,7 +25586,7 @@
     "returns": [
       {
         "type": "boolean",
-        "description": "True for bold/bolder or numeric weights >= BOLD_FONT_WEIGHT_THRESHOLD."
+        "description": "True for bold/bolder or numeric weights &gt;= BOLD_FONT_WEIGHT_THRESHOLD."
       }
     ],
     "examples": 0
@@ -26881,7 +26881,7 @@
     "scope": "global",
     "file": "src/utils/printTemplate.js",
     "line": 720,
-    "description": "Resolve conditional blocks of the form [[{{path}}, \"content\"]].",
+    "description": "Resolve conditional blocks of the form [[{{path}}, &quot;content&quot;]].",
     "params": [
       {
         "name": "tpl",
@@ -27180,7 +27180,7 @@
     "scope": "global",
     "file": "src/utils/printTemplate.js",
     "line": 252,
-    "description": "Resolve a dotted-path property from an object (e.g., \"doc.title\").",
+    "description": "Resolve a dotted-path property from an object (e.g., &quot;doc.title&quot;).",
     "params": [
       {
         "name": "obj",

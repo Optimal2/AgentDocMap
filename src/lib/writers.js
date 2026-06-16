@@ -2,6 +2,10 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { isRuntimeEntrypointPath } from './projectSignals.js';
 
+function safeFileName(value) {
+  return String(value || 'root').replace(/[^a-z0-9._-]+/gi, '_');
+}
+
 export async function writeAgentDocs({ outDir, map, clean }) {
   if (clean) {
     await fs.rm(outDir, { recursive: true, force: true });
@@ -42,7 +46,7 @@ function renderAgentContext(map) {
     `# ${map.project.name} Agent Context`,
     '',
     `Generated: ${map.generated.atUtc}`,
-    `Source commit: ${map.generated.sourceCommit || 'unknown'}${map.generated.sourceDirty ? ' (dirty)' : ''}`,
+    `Source commit: ${formatSourceCommit(map.generated)}`,
     '',
     '## Project',
     '',
@@ -207,7 +211,7 @@ function renderModules(map) {
 
   for (const module of map.modules) {
     lines.push(`## ${module.name}`, '');
-    lines.push(`Files: ${module.files}. Lines: ${module.lines}. JSDoc symbols: ${module.doclets}.`, '');
+    lines.push(`File count: ${module.fileCount}. Line count: ${module.lineCount}. JSDoc symbol count: ${module.docletCount}.`, '');
     for (const file of module.importantFiles) {
       lines.push(`- \`${file.path}\` - ${file.summary}`);
     }
@@ -266,7 +270,7 @@ function renderModuleChunk(map, module) {
   const lines = [
     `# ${map.project.name} / ${module.name}`,
     '',
-    `Files: ${module.files}. Lines: ${module.lines}. JSDoc symbols: ${module.doclets}.`,
+    `File count: ${module.fileCount}. Line count: ${module.lineCount}. JSDoc symbol count: ${module.docletCount}.`,
     '',
   ];
 
@@ -296,16 +300,20 @@ function escapeTable(value) {
   return String(value || '').replaceAll('|', '\\|').replace(/\r?\n/g, ' ');
 }
 
+function formatSourceCommit(generated) {
+  if (generated.sourceMetadata === 'none') {
+    return 'not embedded';
+  }
+
+  return `${generated.sourceCommit || 'unknown'}${generated.sourceDirty ? ' (dirty)' : ''}`;
+}
+
 function formatUsageFiles(usage) {
   if (!usage || usage.files.length === 0) {
     return '';
   }
 
   return usage.files.slice(0, 5).map((file) => `\`${file}\``).join('<br>');
-}
-
-function safeFileName(value) {
-  return String(value || 'root').replace(/[^a-z0-9._-]+/gi, '_');
 }
 
 function finishMarkdown(lines) {
