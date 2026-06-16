@@ -3,7 +3,7 @@ import path from 'node:path';
 import { isRuntimeEntrypointPath } from './projectSignals.js';
 
 function safeFileName(value) {
-  return String(value || 'root').replace(/[^a-z0-9._-]+/gi, '_');
+  return String(value ?? 'root').replace(/[^a-z0-9._-]+/gi, '_');
 }
 
 export async function writeAgentDocs({ outDir, map, clean }) {
@@ -100,7 +100,7 @@ function renderDependencies(map) {
     '| --- | --- | ---: | --- |',
   ];
 
-  for (const [name, version] of Object.entries(runtimeDeps).sort(([leftName], [rightName]) => leftName.localeCompare(rightName))) {
+  for (const [name, version] of Object.entries(runtimeDeps).sort(([nameA], [nameB]) => nameA.localeCompare(nameB))) {
     const usage = usageByName.get(name);
     lines.push(`| \`${name}\` | \`${version}\` | ${usage?.importCount || 0} | ${formatUsageFiles(usage)} |`);
   }
@@ -108,7 +108,7 @@ function renderDependencies(map) {
   lines.push('', '## Development Dependencies', '');
   lines.push('| Package | Version | Observed source imports |');
   lines.push('| --- | --- | ---: |');
-  for (const [name, version] of Object.entries(devDeps).sort(([leftName], [rightName]) => leftName.localeCompare(rightName))) {
+  for (const [name, version] of Object.entries(devDeps).sort(([nameA], [nameB]) => nameA.localeCompare(nameB))) {
     const usage = usageByName.get(name);
     lines.push(`| \`${name}\` | \`${version}\` | ${usage?.importCount || 0} |`);
   }
@@ -324,9 +324,13 @@ function escapeMarkdownTableCell(value) {
     ')': '\\)',
   };
 
-  return String(value || '')
-    .replace(/\r?\n/g, ' ')
-    .replace(/[&<>"'\\|`[\]()]/g, (character) => replacements[character]);
+  return String(value ?? '').replace(/\r\n?|\n|[&<>"'\\|`[\]()]/g, (match) => {
+    if (match === '\n' || match === '\r' || match === '\r\n') {
+      return ' ';
+    }
+
+    return replacements[match];
+  });
 }
 
 function toJsonString(data) {
