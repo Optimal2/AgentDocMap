@@ -1,6 +1,6 @@
 # OpenDocViewer / src/components
 
-Files: 13. Lines: 6527. JSDoc symbols: 82.
+File count: 13. Line count: 6527. JSDoc symbol count: 82.
 
 ## src/components/CanvasRenderer.jsx
 

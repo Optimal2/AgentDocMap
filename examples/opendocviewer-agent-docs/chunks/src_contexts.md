@@ -1,6 +1,6 @@
 # OpenDocViewer / src/contexts
 
-Files: 4. Lines: 2997. JSDoc symbols: 81.
+File count: 4. Line count: 2997. JSDoc symbol count: 81.
 
 ## src/contexts/themeContext.js
 

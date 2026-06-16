@@ -2,14 +2,14 @@
 
 ## server
 
-Files: 2. Lines: 508. JSDoc symbols: 7.
+File count: 2. Line count: 508. JSDoc symbol count: 7.
 
 - `server/system-log-server.js` - Token auth middleware
 - `server/user-log-server.js` - Resolve user identity without cookies.
 
 ## src/app
 
-Files: 3. Lines: 731. JSDoc symbols: 20.
+File count: 3. Line count: 731. JSDoc symbol count: 20.
 
 - `src/app/AppBootstrap.jsx` - Session metadata for a bundle.
 - `src/app/OpenDocViewer.jsx` - OpenDocViewer — Top-level component.
@@ -17,7 +17,7 @@ Files: 3. Lines: 731. JSDoc symbols: 20.
 
 ## src/components
 
-Files: 13. Lines: 6527. JSDoc symbols: 82.
+File count: 13. Line count: 6527. JSDoc symbol count: 82.
 
 - `src/components/DocumentThumbnailList.jsx` - Build a center-out thumbnail warm-up order so the pane feels responsive around the user's current scroll target instead of always starting from page 1.
 - `src/components/DocumentRender.jsx` - Reset the per-page blob-URL retry tracker after a successful load or when the target page changes.
@@ -30,13 +30,13 @@ Files: 13. Lines: 6527. JSDoc symbols: 82.
 
 ## src/components/common
 
-Files: 1. Lines: 36. JSDoc symbols: 1.
+File count: 1. Line count: 36. JSDoc symbol count: 1.
 
 - `src/components/common/StatusLed.jsx` - Exports StatusLed.
 
 ## src/components/DocumentLoader
 
-Files: 8. Lines: 3984. JSDoc symbols: 107.
+File count: 8. Line count: 3984. JSDoc symbol count: 107.
 
 - `src/components/DocumentLoader/documentLoaderUtils.js` - Generate a list of document URLs using a simple pattern: 001..NNN + extension.
 - `src/components/DocumentLoader/DocumentLoader.js` - Resolve source type information with a cheap signature-first path.
@@ -49,7 +49,7 @@ Files: 8. Lines: 3984. JSDoc symbols: 107.
 
 ## src/components/DocumentToolbar
 
-Files: 14. Lines: 6326. JSDoc symbols: 90.
+File count: 14. Line count: 6326. JSDoc symbol count: 90.
 
 - `src/components/DocumentToolbar/usePrintRangeDialog.js` - Read the runtime configuration (merged defaults + site overrides).
 - `src/components/DocumentToolbar/DocumentToolbar.jsx` - Toolbar shell for page navigation, zoom, comparison, image adjustments, help, language, and print entry.
@@ -62,12 +62,12 @@ Files: 14. Lines: 6326. JSDoc symbols: 90.
 
 ## src/components/DocumentViewer
 
-Files: 8. Lines: 4717. JSDoc symbols: 106.
+File count: 8. Line count: 4717. JSDoc symbol count: 106.
 
 - `src/components/DocumentViewer/useDocumentViewer.js` - Hook that centralizes viewer UI state and event handlers.
 - `src/components/DocumentViewer/DocumentViewerRender.jsx` - DocumentViewerRender Renders the main document pane and, if enabled, a comparison pane.
 - `src/components/DocumentViewer/hooks/useViewerEffects.js` - File: src/components/DocumentViewer/hooks/useViewerEffects.js Cross-cutting viewer effects: Sync zoomState.scale from numeric zoom Sticky Fit recomputation on relevant changes Res...
-- `src/components/DocumentViewer/hooks/useViewerPostZoom.js` - File: src/components/DocumentViewer/hooks/useViewerPostZoom.js Encapsulates per-pane "post-zoom" state & handlers used only in compare mode.
+- `src/components/DocumentViewer/hooks/useViewerPostZoom.js` - File: src/components/DocumentViewer/hooks/useViewerPostZoom.js Encapsulates per-pane &quot;post-zoom&quot; state &amp; handlers used only in compare mode.
 - `src/components/DocumentViewer/DocumentViewerToolbar.jsx` - Renders the toolbar for the document viewer by delegating to .
 - `src/components/DocumentViewer/DocumentViewer.jsx` - Exports DocumentViewer.
 - `src/components/DocumentViewer/DocumentViewerThumbnails.jsx` - Exports DocumentViewerThumbnails.
@@ -75,7 +75,7 @@ Files: 8. Lines: 4717. JSDoc symbols: 106.
 
 ## src/contexts
 
-Files: 4. Lines: 2997. JSDoc symbols: 81.
+File count: 4. Line count: 2997. JSDoc symbol count: 81.
 
 - `src/contexts/viewerContext.js` - Exports ViewerContext.
 - `src/contexts/ViewerProvider.jsx` - Record that a page now has a reusable full-size asset available.
@@ -84,13 +84,13 @@ Files: 4. Lines: 2997. JSDoc symbols: 81.
 
 ## src/ErrorBoundary.jsx
 
-Files: 1. Lines: 297. JSDoc symbols: 12.
+File count: 1. Line count: 297. JSDoc symbol count: 12.
 
 - `src/ErrorBoundary.jsx` - Tiny helper to translate with safe fallback (NS: 'common').
 
 ## src/hooks
 
-Files: 4. Lines: 650. JSDoc symbols: 23.
+File count: 4. Line count: 650. JSDoc symbol count: 23.
 
 - `src/hooks/useNavigationModifierState.js` - Exports useNavigationModifierState.
 - `src/hooks/usePageTimer.js` - Custom hook to handle page change with a timer for continuous navigation.
@@ -99,19 +99,19 @@ Files: 4. Lines: 650. JSDoc symbols: 23.
 
 ## src/i18n.js
 
-Files: 1. Lines: 566. JSDoc symbols: 21.
+File count: 1. Line count: 566. JSDoc symbol count: 21.
 
 - `src/i18n.js` - Return browser window safely in browser, SSR, test, and documentation contexts.
 
 ## src/index.jsx
 
-Files: 1. Lines: 59. JSDoc symbols: 2.
+File count: 1. Line count: 59. JSDoc symbol count: 2.
 
 - `src/index.jsx` - Determine environment and set a sensible client-side log level.
 
 ## src/integrations
 
-Files: 7. Lines: 2073. JSDoc symbols: 52.
+File count: 7. Line count: 2073. JSDoc symbol count: 52.
 
 - `src/integrations/parentBridge.js` - Attempt to read a bootstrap object from a same-origin parent.
 - `src/integrations/normalizePortableBundle.js` - Normalize many incoming shapes to a neutral PortableDocumentBundle v1.
@@ -123,32 +123,32 @@ Files: 7. Lines: 2073. JSDoc symbols: 52.
 
 ## src/logging
 
-Files: 2. Lines: 740. JSDoc symbols: 46.
+File count: 2. Line count: 740. JSDoc symbol count: 46.
 
 - `src/logging/systemLogger.js` - Export a singleton instance (sufficient for app usage).
 - `src/logging/userLogger.js` - Export singleton instance.
 
 ## src/PerformanceMonitor.jsx
 
-Files: 1. Lines: 1346. JSDoc symbols: 20.
+File count: 1. Line count: 1346. JSDoc symbol count: 20.
 
 - `src/PerformanceMonitor.jsx` - PerformanceMonitor component.
 
 ## src/schemas
 
-Files: 1. Lines: 363. JSDoc symbols: 18.
+File count: 1. Line count: 363. JSDoc symbol count: 18.
 
 - `src/schemas/portableBundle.js` - Schema version of this portable bundle definition.
 
 ## src/types
 
-Files: 1. Lines: 101. JSDoc symbols: 13.
+File count: 1. Line count: 101. JSDoc symbol count: 13.
 
-- `src/types/jsdoc-types.js` - Generic React-like state setter for numbers: accepts either a number or an updater function (number)->number.
+- `src/types/jsdoc-types.js` - Generic React-like state setter for numbers: accepts either a number or an updater function (number)-&gt;number.
 
 ## src/utils
 
-Files: 34. Lines: 14530. JSDoc symbols: 562.
+File count: 34. Line count: 14530. JSDoc symbol count: 562.
 
 - `src/utils/documentLoadingConfig.js` - Count PDF pages in a page descriptor list.
 - `src/utils/runtimeConfig.js` - Read the merged runtime configuration from the browser environment.
@@ -161,7 +161,7 @@ Files: 34. Lines: 14530. JSDoc symbols: 562.
 
 ## src/workers
 
-Files: 3. Lines: 1549. JSDoc symbols: 3.
+File count: 3. Line count: 1549. JSDoc symbol count: 3.
 
 - `src/workers/pdfWorker.js` - OpenDocViewer - generated PDF worker.
 - `src/workers/imageWorker.js` - Creates an error that tells the caller this worker path is unsupported and should be retried on the main thread.

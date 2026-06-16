@@ -45,7 +45,7 @@ Files are sorted by path. Incoming imports and doclet counts are useful signals 
 | `src/components/DocumentViewer/DocumentViewerThumbnails.jsx` | 222 | 1 | 1 | Exports DocumentViewerThumbnails. |
 | `src/components/DocumentViewer/DocumentViewerToolbar.jsx` | 418 | 1 | 5 | Renders the toolbar for the document viewer by delegating to . |
 | `src/components/DocumentViewer/hooks/useViewerEffects.js` | 557 | 1 | 18 | File: src/components/DocumentViewer/hooks/useViewerEffects.js Cross-cutting viewer effects: Sync zoomState.scale from numeric zoom Sticky Fit recomputation on relevant changes Res... |
-| `src/components/DocumentViewer/hooks/useViewerPostZoom.js` | 86 | 1 | 7 | File: src/components/DocumentViewer/hooks/useViewerPostZoom.js Encapsulates per-pane "post-zoom" state & handlers used only in compare mode. |
+| `src/components/DocumentViewer/hooks/useViewerPostZoom.js` | 86 | 1 | 7 | File: src/components/DocumentViewer/hooks/useViewerPostZoom.js Encapsulates per-pane &quot;post-zoom&quot; state &amp; handlers used only in compare mode. |
 | `src/components/DocumentViewer/useDocumentViewer.js` | 1690 | 1 | 53 | Hook that centralizes viewer UI state and event handlers. |
 | `src/components/ImageRenderer.jsx` | 121 | 1 | 2 | ImageRenderer component. |
 | `src/components/LoadingMessage.jsx` | 90 | 1 | 1 | LoadingMessage component. |
@@ -75,7 +75,7 @@ Files are sorted by path. Incoming imports and doclet counts are useful signals 
 | `src/logging/userLogger.js` | 308 | 1 | 17 | Export singleton instance. |
 | `src/PerformanceMonitor.jsx` | 1346 | 1 | 20 | PerformanceMonitor component. |
 | `src/schemas/portableBundle.js` | 363 | 0 | 18 | Schema version of this portable bundle definition. |
-| `src/types/jsdoc-types.js` | 101 | 0 | 13 | Generic React-like state setter for numbers: accepts either a number or an updater function (number)->number. |
+| `src/types/jsdoc-types.js` | 101 | 0 | 13 | Generic React-like state setter for numbers: accepts either a number or an updater function (number)-&gt;number. |
 | `src/utils/documentLoadingConfig.js` | 1045 | 12 | 32 | Count PDF pages in a page descriptor list. |
 | `src/utils/documentMetadata.js` | 404 | 3 | 18 | Build a UI-friendly projection of one document's metadata. |
 | `src/utils/idUtils.js` | 64 | 1 | 4 | Create an opaque identifier fragment suitable for synthetic keys and document ids. |
@@ -95,7 +95,7 @@ Files are sorted by path. Incoming imports and doclet counts are useful signals 
 | `src/utils/performanceOverlayFlag.js` | 86 | 2 | 3 | Resolve a boolean flag from (precedence order): window. |
 | `src/utils/printCore.js` | 569 | 1 | 20 | Handles the print functionality for the CURRENT page/image. |
 | `src/utils/printDom.js` | 462 | 1 | 19 | Render a single-page print document in the given print iframe document. |
-| `src/utils/printParse.js` | 100 | 1 | 3 | Parse "Custom pages" into a sequence. |
+| `src/utils/printParse.js` | 100 | 1 | 3 | Parse &quot;Custom pages&quot; into a sequence. |
 | `src/utils/printPdf.js` | 2174 | 3 | 92 | Build a PDF blob from page image URLs and print metadata. |
 | `src/utils/printSanitize.js` | 23 | 3 | 1 | Allow-list image sources used for printing. |
 | `src/utils/printTemplate.js` | 809 | 3 | 34 | Resolve the configured copy/print-format marker text consistently across print backends. |

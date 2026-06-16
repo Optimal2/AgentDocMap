@@ -1,6 +1,6 @@
 # OpenDocViewer / server
 
-Files: 2. Lines: 508. JSDoc symbols: 7.
+File count: 2. Line count: 508. JSDoc symbol count: 7.
 
 ## server/system-log-server.js
 

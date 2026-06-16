@@ -1,6 +1,6 @@
 # OpenDocViewer / src/i18n.js
 
-Files: 1. Lines: 566. JSDoc symbols: 21.
+File count: 1. Line count: 566. JSDoc symbol count: 21.
 
 ## src/i18n.js
 

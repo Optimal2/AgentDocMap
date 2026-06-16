@@ -6,6 +6,7 @@ export function buildAgentMap({
   projectName,
   targetRoot,
   generatedBy,
+  sourceMetadata,
   generatedAtUtc,
   git,
   packageJson,
@@ -82,6 +83,7 @@ export function buildAgentMap({
     generated: {
       by: generatedBy,
       atUtc: generatedAtUtc,
+      sourceMetadata,
       sourceCommit: git.commit,
       sourceBranch: git.branch,
       sourceDirty: git.dirty,
@@ -205,11 +207,7 @@ function plainText(value) {
     .replace(/<br\s*\/?>/gi, ' ')
     .replace(/<\/p>/gi, ' ')
     .replace(/<[^>]+>/g, ' ')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
+    .replace(/&nbsp;|&#160;/gi, ' ')
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -320,17 +318,17 @@ function buildModules(files) {
     if (!modules.has(key)) {
       modules.set(key, {
         name: key,
-        files: 0,
-        lines: 0,
-        doclets: 0,
+        fileCount: 0,
+        lineCount: 0,
+        docletCount: 0,
         importantFiles: [],
       });
     }
 
     const module = modules.get(key);
-    module.files += 1;
-    module.lines += file.lines || 0;
-    module.doclets += file.doclets.length;
+    module.fileCount += 1;
+    module.lineCount += file.lines || 0;
+    module.docletCount += file.doclets.length;
     module.importantFiles.push(toFilePointer(file));
   }
 

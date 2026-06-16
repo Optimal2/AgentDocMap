@@ -12,7 +12,7 @@
     "node": ">=22.18.0"
   },
   "scripts": {
-    "build:odv": "node src/cli.js generate --target ../OpenDocViewer --out examples/opendocviewer-agent-docs --project-name OpenDocViewer",
+    "build:odv": "node src/cli.js generate --target ../OpenDocViewer --out examples/opendocviewer-agent-docs --project-name OpenDocViewer --generated-at example --source-metadata none",
     "test": "node --test test/*.test.js",
     "validate": "npm test && npm run build:odv"
   },

@@ -227,7 +227,7 @@
 | `SLIDER_CENTER_RANGE` | constant | `src/components/DocumentToolbar/DocumentToolbar.jsx:217` | Range (±) around 100% where sliders snap back to the neutral value. |
 | `DocumentToolbar~submitUserPrintLog` | constant | `src/components/DocumentToolbar/DocumentToolbar.jsx:886` | Fire-and-forget user print log. |
 | `DocumentToolbar~toggleAdjustmentMenu` | constant | `src/components/DocumentToolbar/DocumentToolbar.jsx:739` |  |
-| `DocumentToolbar~toPagesString` | constant | `src/components/DocumentToolbar/DocumentToolbar.jsx:766` | Build a compact "pages" descriptor for logging. |
+| `DocumentToolbar~toPagesString` | constant | `src/components/DocumentToolbar/DocumentToolbar.jsx:766` | Build a compact &quot;pages&quot; descriptor for logging. |
 | `ZoomState` | typedef | `src/components/DocumentToolbar/DocumentToolbar.jsx:129` | Zoom display state used by the newer toolbar UX paths. |
 | `<anonymous>~handleKeyDown` | function | `src/components/DocumentToolbar/HelpMenuButton.jsx:30` |  |
 | `<anonymous>~handlePointerDown` | function | `src/components/DocumentToolbar/HelpMenuButton.jsx:22` |  |
@@ -336,7 +336,7 @@
 | `module:useViewerPostZoom~clamp` | function | `src/components/DocumentViewer/hooks/useViewerPostZoom.js:20` | Clamp a numeric value to [min, max]. |
 | `module:useViewerPostZoom.useViewerPostZoom~resetPostZoom` | constant | `src/components/DocumentViewer/hooks/useViewerPostZoom.js:50` | Reset both per-pane factors to 1.0. |
 | `module:useViewerPostZoom~round1` | function | `src/components/DocumentViewer/hooks/useViewerPostZoom.js:29` | Round to one decimal place (avoids float drift when stepping by 0.1). |
-| `module:useViewerPostZoom` | module | `src/components/DocumentViewer/hooks/useViewerPostZoom.js:2` | File: src/components/DocumentViewer/hooks/useViewerPostZoom.js Encapsulates per-pane "post-zoom" state & handlers used only in compare mode. |
+| `module:useViewerPostZoom` | module | `src/components/DocumentViewer/hooks/useViewerPostZoom.js:2` | File: src/components/DocumentViewer/hooks/useViewerPostZoom.js Encapsulates per-pane &quot;post-zoom&quot; state &amp; handlers used only in compare mode. |
 | `module:useViewerPostZoom.useViewerPostZoom` | function | `src/components/DocumentViewer/hooks/useViewerPostZoom.js:45` | Hook managing per-pane post-zoom factors for compare mode. |
 | `useDocumentViewer~activateComparePane` | constant | `src/components/DocumentViewer/useDocumentViewer.js:1344` | Open compare mode when needed and make the right pane the default target. |
 | `useDocumentViewer~activatePrimaryPane` | constant | `src/components/DocumentViewer/useDocumentViewer.js:1336` |  |
@@ -540,7 +540,7 @@
 | `getImportMetaEnv` | function | `src/i18n.js:57` | Return Vite import.meta.env safely. |
 | `getNormalizedSupportedLanguages` | function | `src/i18n.js:257` | Normalize configured supported languages to non-empty base language codes. |
 | `getSafeWindow` | function | `src/i18n.js:40` | Return browser window safely in browser, SSR, test, and documentation contexts. |
-| `getStaticI18nDefaults` | function | `src/i18n.js:217` | Compute app config & defaults safely. |
+| `getStaticI18nDefaults` | function | `src/i18n.js:217` | Compute app config &amp; defaults safely. |
 | `getUnsupportedVersionPlaceholders` | function | `src/i18n.js:173` | Find malformed version-like placeholders in loadPath without extra array passes. |
 | `IS_DEV` | constant | `src/i18n.js:68` | Dev-mode detector (Vite + Node envs). |
 | `normalizeSupportedLanguage` | function | `src/i18n.js:272` | Normalize an arbitrary language candidate to a supported base language. |
@@ -611,7 +611,7 @@
 | `LogController#disableBackendLogging` | member | `src/logging/systemLogger.js:365` | Disable backend forwarding after a non-recoverable configuration/runtime failure. |
 | `LogController#error` | member | `src/logging/systemLogger.js:426` |  |
 | `LogController#info` | member | `src/logging/systemLogger.js:420` |  |
-| `levelGte` | function | `src/logging/systemLogger.js:186` | Compare two log levels (is a >= b ?). |
+| `levelGte` | function | `src/logging/systemLogger.js:186` | Compare two log levels (is a &gt;= b ?). |
 | `LogController#log` | member | `src/logging/systemLogger.js:338` | Log a message with a given level and optional context. |
 | `LOG_LEVELS` | constant | `src/logging/systemLogger.js:44` | Valid log levels in ascending verbosity. |
 | `LogController` | class | `src/logging/systemLogger.js:210` | LogController — small facade around console + optional HTTP forwarding. |
@@ -624,7 +624,7 @@
 | `readRuntimeConfig` | function | `src/logging/systemLogger.js:81` | Resolve a runtime config snapshot from runtime globals (SSR-safe). |
 | `resolveAuthToken` | function | `src/logging/systemLogger.js:146` | Resolve the shared auth token used for posting to /log. |
 | `resolveBackendUrl` | function | `src/logging/systemLogger.js:115` | Resolve a candidate backend URL using precedence rules and make it absolute relative to document.baseURI (SSR-safe). |
-| `resolveEnabledOverride` | function | `src/logging/systemLogger.js:163` | Resolve an explicit "enabled" boolean if one exists. |
+| `resolveEnabledOverride` | function | `src/logging/systemLogger.js:163` | Resolve an explicit &quot;enabled&quot; boolean if one exists. |
 | `LogController#sendLogToBackend` | member | `src/logging/systemLogger.js:383` | Attempt to POST the log to the backend, with simple linear retries. |
 | `LogController#setAuthToken` | member | `src/logging/systemLogger.js:311` | Update/replace the auth token used in 'x-log-token'. |
 | `LogController#setBackendUrl` | member | `src/logging/systemLogger.js:260` | Set the backend ingestion URL (absolute or relative). |
@@ -646,10 +646,10 @@
 | `PrintLogPayload` | typedef | `src/logging/userLogger.js:43` |  |
 | `UserLogController#setUserResolver` | function | `src/logging/userLogger.js:142` | Optional identity resolver supplied by host app. |
 | `UserLogController#setViewerVersion` | function | `src/logging/userLogger.js:150` | Optional viewer version to add in meta.viewerVersion. |
-| `sha256Base64` | function | `src/logging/userLogger.js:120` | Async SHA-256 of a string → "sha256- " (or null). |
-| `UserLogController#submitPrint` | function | `src/logging/userLogger.js:189` | Submit a "print" user-log event. |
+| `sha256Base64` | function | `src/logging/userLogger.js:120` | Async SHA-256 of a string → &quot;sha256- &quot; (or null). |
+| `UserLogController#submitPrint` | function | `src/logging/userLogger.js:189` | Submit a &quot;print&quot; user-log event. |
 | `toAbsoluteUrl` | function | `src/logging/userLogger.js:82` | Make absolute using document.baseURI when available. |
-| `tzOffset` | function | `src/logging/userLogger.js:100` | Return timezone offset as "+HH:MM" or "-HH:MM". |
+| `tzOffset` | function | `src/logging/userLogger.js:100` | Return timezone offset as &quot;+HH:MM&quot; or &quot;-HH:MM&quot;. |
 | `UserIdentity` | typedef | `src/logging/userLogger.js:31` |  |
 | `userLog` | constant | `src/logging/userLogger.js:306` | Export singleton instance. |
 | `analyzePageIntegrity` | function | `src/PerformanceMonitor.jsx:103` | Check the flat viewer page list for ordering mistakes that would be user-visible. |
@@ -695,11 +695,11 @@
 | `FallbackRenderer` | typedef | `src/types/jsdoc-types.js:58` | Render function signature for ErrorBoundary fallbacks. |
 | `PageDirection` | typedef | `src/types/jsdoc-types.js:52` | Direction token used by page timers / navigation. |
 | `PostZoomApi` | typedef | `src/types/jsdoc-types.js:91` | Per-pane post-zoom API that augments the document viewer hook. |
-| `RefLike` | typedef | `src/types/jsdoc-types.js:73` | Generic "ref-like" object (for places where React.MutableRefObject is too specific). |
-| `SetBooleanState` | typedef | `src/types/jsdoc-types.js:36` | React-like state setter for booleans: accepts a boolean or an updater (boolean)->boolean. |
+| `RefLike` | typedef | `src/types/jsdoc-types.js:73` | Generic &quot;ref-like&quot; object (for places where React.MutableRefObject is too specific). |
+| `SetBooleanState` | typedef | `src/types/jsdoc-types.js:36` | React-like state setter for booleans: accepts a boolean or an updater (boolean)-&gt;boolean. |
 | `SetNumber` | typedef | `src/types/jsdoc-types.js:22` | Simple number setter (no updater function). |
-| `SetNumberState` | typedef | `src/types/jsdoc-types.js:7` | Generic React-like state setter for numbers: accepts either a number or an updater function (number)->number. |
-| `SetPageNumber` | typedef | `src/types/jsdoc-types.js:44` | React-like state setter for page number: accepts a number or an updater (number)->number. |
+| `SetNumberState` | typedef | `src/types/jsdoc-types.js:7` | Generic React-like state setter for numbers: accepts either a number or an updater function (number)-&gt;number. |
+| `SetPageNumber` | typedef | `src/types/jsdoc-types.js:44` | React-like state setter for page number: accepts a number or an updater (number)-&gt;number. |
 | `SetString` | typedef | `src/types/jsdoc-types.js:29` | Simple string setter. |
 | `SetStringNullable` | typedef | `src/types/jsdoc-types.js:15` | Setter for string-or-null values. |
 | `ZoomMode` | typedef | `src/types/jsdoc-types.js:79` | Sticky zoom modes used by the viewer. |
@@ -774,7 +774,7 @@
 | `handleLastPage` | constant | `src/utils/navigationUtils.js:149` | Navigate to the last page (no-op if totalPages invalid). |
 | `handleNextPage` | constant | `src/utils/navigationUtils.js:94` | Navigate to the next page (no-op if already at the last page). |
 | `handlePrevPage` | constant | `src/utils/navigationUtils.js:69` | Navigate to the previous page (no-op if already at page 1). |
-| `isValidTotalPages` | function | `src/utils/navigationUtils.js:43` | Check whether totalPages looks valid (>= 1). |
+| `isValidTotalPages` | function | `src/utils/navigationUtils.js:43` | Check whether totalPages looks valid (&gt;= 1). |
 | `toPositiveInt` | function | `src/utils/navigationUtils.js:31` | Coerce a value to a positive integer (minimum 1). |
 | `createTrackedObjectUrl` | function | `src/utils/objectUrlRegistry.js:17` |  |
 | `getTrackedObjectUrlCount` | function | `src/utils/objectUrlRegistry.js:61` |  |
@@ -936,7 +936,7 @@
 | `PageRange` | typedef | `src/utils/printCore.js:45` | A 1-based inclusive page range. |
 | `pickLargestVisibleElement` | function | `src/utils/printCore.js:115` | Best-effort: pick the largest visible or inside a container (or document). |
 | `PrintAllOptions` | typedef | `src/utils/printCore.js:52` | Options for printing multiple pages (all/range/sequence). |
-| `PrintCandidate` | typedef | `src/utils/printCore.js:65` | Internal: candidate node for "largest visible" heuristics. |
+| `PrintCandidate` | typedef | `src/utils/printCore.js:65` | Internal: candidate node for &quot;largest visible&quot; heuristics. |
 | `PrintHeaderCfg` | typedef | `src/utils/printCore.js:72` | Print header config (runtime) consumed by the print overlay logic. |
 | `PrintOptions` | typedef | `src/utils/printCore.js:32` | Options for single-page printing. |
 | `resolveActiveNode` | function | `src/utils/printCore.js:212` | Attempt to resolve the currently active visual node to print. |
@@ -961,7 +961,7 @@
 | `TokenContext` | typedef | `src/utils/printDom.js:32` | Token context used by templates. |
 | `tr` | function | `src/utils/printDom.js:58` | Tiny helper to translate with safe fallback. |
 | `waitForImagesToLoad` | function | `src/utils/printDom.js:300` |  |
-| `parsePrintSequence` | function | `src/utils/printParse.js:48` | Parse "Custom pages" into a sequence. |
+| `parsePrintSequence` | function | `src/utils/printParse.js:48` | Parse &quot;Custom pages&quot; into a sequence. |
 | `ParseResult` | typedef | `src/utils/printParse.js:15` | Result of parsing a custom pages string. |
 | `tr` | function | `src/utils/printParse.js:30` | Tiny helper to translate with safe fallback. |
 | `addImageWithFallback` | function | `src/utils/printPdf.js:969` |  |
@@ -1058,7 +1058,7 @@
 | `yieldToBrowser` | function | `src/utils/printPdf.js:277` | Yield one browser paint opportunity so progress updates become visible before expensive synchronous jsPDF operations run on the main thread. |
 | `isSafeImageSrc` | function | `src/utils/printSanitize.js:16` | Allow-list image sources used for printing. |
 | `applyBraceTokensEscaped` | function | `src/utils/printTemplate.js:649` |  |
-| `applyConditionalBlocks` | function | `src/utils/printTemplate.js:720` | Resolve conditional blocks of the form [[{{path}}, "content"]]. |
+| `applyConditionalBlocks` | function | `src/utils/printTemplate.js:720` | Resolve conditional blocks of the form [[{{path}}, &quot;content&quot;]]. |
 | `applyLegacyTokensEscaped` | function | `src/utils/printTemplate.js:749` | Expand legacy ${...} tokens. |
 | `applyTemplateTokensEscaped` | function | `src/utils/printTemplate.js:798` | Perform safe token substitution for print templates. |
 | `buildMetadataTokenMap` | function | `src/utils/printTemplate.js:326` | Build a generic metadata lookup map from raw metadata, aliases and details. |
@@ -1069,7 +1069,7 @@
 | `findCaseInsensitiveKey` | function | `src/utils/printTemplate.js:222` |  |
 | `findFirstPresentText` | function | `src/utils/printTemplate.js:208` | Return the first present text value from an iterable collection. |
 | `formatDateTokens` | function | `src/utils/printTemplate.js:105` | Format the built-in print date tokens. |
-| `getByPath` | function | `src/utils/printTemplate.js:252` | Resolve a dotted-path property from an object (e.g., "doc.title"). |
+| `getByPath` | function | `src/utils/printTemplate.js:252` | Resolve a dotted-path property from an object (e.g., &quot;doc.title&quot;). |
 | `hasPrintableValue` | function | `src/utils/printTemplate.js:143` | Treat null-like host values as absent so conditional blocks suppress their whole label/value pair. |
 | `isPlainObject` | function | `src/utils/printTemplate.js:123` |  |
 | `isPresentText` | function | `src/utils/printTemplate.js:199` | Test whether optionalText returned a usable string. |
