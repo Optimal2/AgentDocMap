@@ -1,0 +1,5 @@
+node_modules/
+.agentdocmap/
+tmp/
+coverage/
+npm-debug.log*

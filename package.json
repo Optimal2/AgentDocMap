@@ -1,0 +1,23 @@
+{
+  "name": "agentdocmap",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Generate compact AI-agent documentation packets from existing JSDoc and source code.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "agentdocmap": "./src/cli.js"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "build:odv": "node src/cli.js generate --target ../OpenDocViewer --out examples/opendocviewer-agent-docs --project-name OpenDocViewer",
+    "test": "node --test test/*.test.js",
+    "validate": "npm test && npm run build:odv"
+  },
+  "dependencies": {
+    "@babel/parser": "^7.28.5",
+    "jsdoc": "^4.0.5"
+  }
+}

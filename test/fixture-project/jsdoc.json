@@ -1,0 +1,9 @@
+{
+  "source": {
+    "include": [
+      "src"
+    ],
+    "includePattern": "\\.(js|jsx)$",
+    "excludePattern": "(node_modules|docs)"
+  }
+}
