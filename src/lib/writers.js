@@ -310,6 +310,9 @@ function renderModuleChunk(map, module) {
  */
 function escapeMarkdownTableCell(value) {
   const replacements = {
+    '\r\n': ' ',
+    '\r': ' ',
+    '\n': ' ',
     '&': '&amp;',
     '<': '&lt;',
     '>': '&gt;',
@@ -324,13 +327,7 @@ function escapeMarkdownTableCell(value) {
     ')': '\\)',
   };
 
-  return String(value ?? '').replace(/\r\n?|\n|[&<>"'\\|`[\]()]/g, (match) => {
-    if (match === '\n' || match === '\r' || match === '\r\n') {
-      return ' ';
-    }
-
-    return replacements[match];
-  });
+  return String(value ?? '').replace(/\r\n|\r|\n|[&<>"'\\|`[\]()]/g, (match) => replacements[match]);
 }
 
 function toJsonString(data) {
