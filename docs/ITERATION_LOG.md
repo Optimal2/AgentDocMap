@@ -59,3 +59,16 @@ real validation target.
   unavoidable churn.
 - Added public repository baseline files: `LICENSE`, `SECURITY.md`,
   `CONTRIBUTING.md`, and CI.
+
+## Iteration 8 - Agent signal quality
+
+- Added summary confidence and source tracking so weak source-derived file
+  summaries are visible to agents instead of appearing equally reliable.
+- Added leading JSDoc fallback summaries for files with useful file-level
+  comments but no `@module` doclet.
+- Replaced hardcoded OpenDocViewer component grouping with neutral path-based
+  component-folder grouping.
+- Added `CROSS_CUTTING.md` for hooks, React contexts, workers, and built-in
+  risky source-pattern navigation.
+- Added `BUDGET.md` with rough generated-output token estimates so future
+  agents can understand context cost before loading large generated files.

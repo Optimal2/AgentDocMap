@@ -13,6 +13,24 @@ const PARSER_PLUGINS = [
   'topLevelAwait',
 ];
 
+const RISK_PATTERNS = Object.freeze([
+  {
+    key: 'dangerouslySetInnerHTML',
+    description: 'React raw HTML rendering',
+    pattern: /dangerouslySetInnerHTML/g,
+  },
+  {
+    key: 'eval',
+    description: 'Dynamic code execution',
+    pattern: /\beval\s*\(/g,
+  },
+  {
+    key: 'innerHTML',
+    description: 'Direct DOM HTML assignment or access',
+    pattern: /\.innerHTML\b/g,
+  },
+]);
+
 export async function analyzeSources({ targetRoot, sourceFiles }) {
   const files = [];
 
@@ -32,10 +50,15 @@ async function analyzeFile({ targetRoot, sourceFile }) {
     lines: lineCount,
     extension: path.extname(sourceFile.relativePath),
     jsdocBlockCount,
+    sourceSummary: extractLeadingJsdocSummary(text),
     imports: [],
     exports: [],
     declarations: [],
     parseError: null,
+    signals: {
+      roles: [],
+      riskPatterns: [],
+    },
   };
 
   let ast;
@@ -99,6 +122,7 @@ async function analyzeFile({ targetRoot, sourceFile }) {
     }
   });
 
+  result.signals = collectFileSignals(text, result);
   return result;
 }
 
@@ -199,6 +223,101 @@ function returnsJsx(node) {
     }
   });
   return found;
+}
+
+function collectFileSignals(text, file) {
+  return {
+    roles: detectRoles(file),
+    riskPatterns: detectRiskPatterns(text),
+  };
+}
+
+function extractLeadingJsdocSummary(text) {
+  const match = String(text || '').match(/^\s*(?:(?:\/\/[^\n]*\n)+)?\s*\/\*\*([\s\S]*?)\*\//);
+  if (!match) {
+    return null;
+  }
+
+  const cleaned = match[1]
+    .split(/\r\n|\r|\n/)
+    .map((line) => line.replace(/^\s*\*\s?/, '').trim())
+    .filter((line) => line && !line.startsWith('@') && !line.startsWith('File:') && !isSectionHeading(line))
+    .join(' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  if (!cleaned) {
+    return null;
+  }
+
+  const sentence = cleaned.match(/^(.+?[.!?])\s/)?.[1] || cleaned;
+  return sentence.slice(0, 220).trim();
+}
+
+function isSectionHeading(value) {
+  return /^[A-Z][A-Z0-9 _/-]{2,}:?$/.test(value);
+}
+
+function detectRoles(file) {
+  const roles = new Set();
+  const fileName = path.basename(file.path);
+  const normalizedPath = file.path.toLowerCase();
+  const declarationNames = (file.declarations || []).map((item) => item.name).filter(Boolean);
+
+  if (/^use[A-Z]/.test(fileName) || declarationNames.some((name) => /^use[A-Z]/.test(name))) {
+    roles.add('hook');
+  }
+
+  if (normalizedPath.includes('/contexts/') || importsCreateContext(file)) {
+    roles.add('context');
+  }
+
+  if (normalizedPath.includes('worker')) {
+    roles.add('worker');
+  }
+
+  if (/\.(test|spec)\.[cm]?[jt]sx?$/i.test(file.path)) {
+    roles.add('test');
+  }
+
+  if (/(^|\/)(vite|webpack|rollup|eslint|prettier|jsdoc)\.config\./i.test(file.path) || fileName === 'package.json') {
+    roles.add('config');
+  }
+
+  return [...roles].sort();
+}
+
+function importsCreateContext(file) {
+  return (file.imports || []).some((item) => item.source === 'react' && (item.specifiers || []).includes('createContext'));
+}
+
+function detectRiskPatterns(text) {
+  const results = [];
+  for (const pattern of RISK_PATTERNS) {
+    const lines = findMatchingLines(text, pattern.pattern);
+    if (lines.length > 0) {
+      results.push({
+        key: pattern.key,
+        description: pattern.description,
+        lines,
+      });
+    }
+  }
+
+  return results;
+}
+
+function findMatchingLines(text, pattern) {
+  const lines = [];
+  const sourceLines = text.split(/\r\n|\r|\n/);
+  for (let index = 0; index < sourceLines.length; index += 1) {
+    pattern.lastIndex = 0;
+    if (pattern.test(sourceLines[index])) {
+      lines.push(index + 1);
+    }
+  }
+
+  return lines.slice(0, 12);
 }
 
 function walkAst(node, visitor) {
