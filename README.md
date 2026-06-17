@@ -44,6 +44,9 @@ Options:
 ## Output Files
 
 - `AGENT_CONTEXT.md`: shortest useful entry point for a new AI agent.
+- `BUDGET.md`: generated output size and rough token estimates.
+- `CROSS_CUTTING.md`: source-derived roles such as hooks, contexts, workers,
+  and risky source patterns.
 - `DEPENDENCIES.md`: declared packages combined with observed import usage.
 - `ENTRYPOINTS.md`: package scripts, startup files, and import hubs.
 - `agent-map.json`: structured project map for tools and agents.
@@ -62,6 +65,10 @@ Options:
 - JSON should carry the full structured detail.
 - Generated output should point agents to the right files quickly instead of
   trying to replace source inspection.
+- Summary confidence should make weak source-derived summaries visible instead
+  of pretending every file summary is equally reliable.
+- Output budget estimates should make token growth visible before the packet is
+  used as AI-agent context.
 
 ## Repository Quality
 

@@ -28,15 +28,20 @@ export function buildAgentMap({
     fileMap.get(doclet.file).doclets.push(doclet);
   }
 
-  const files = [...fileMap.values()].map((file) => ({
-    ...file,
-    moduleKey: moduleKeyForPath(file.path),
-    localImports: [],
-    packageImports: [],
-    incomingLocalImports: 0,
-    importanceScore: 0,
-    summary: summarizeFile(file),
-  }));
+  const files = [...fileMap.values()].map((file) => {
+    const summary = summarizeFile(file);
+    return {
+      ...file,
+      moduleKey: moduleKeyForPath(file.path),
+      localImports: [],
+      packageImports: [],
+      incomingLocalImports: 0,
+      importanceScore: 0,
+      summary: summary.text,
+      summaryConfidence: summary.confidence,
+      summarySource: summary.source,
+    };
+  });
 
   const filesByPath = new Map(files.map((file) => [file.path, file]));
   for (const file of files) {
@@ -65,9 +70,11 @@ export function buildAgentMap({
     .map(toFilePointer);
 
   const modules = buildModules(files);
+  const crossCutting = buildCrossCutting(files);
   const symbols = normalizedDoclets
     .filter((doclet) => doclet.name && doclet.file)
     .sort((left, right) => left.file.localeCompare(right.file) || left.name.localeCompare(right.name));
+  const sourceLineCount = files.reduce((sum, file) => sum + (file.lines || 0), 0);
 
   return {
     schemaVersion: 1,
@@ -90,15 +97,19 @@ export function buildAgentMap({
     },
     stats: {
       fileCount: files.length,
+      sourceLineCount,
       docletCount: symbols.length,
       documentedFileCount: files.filter((file) => file.doclets.length > 0).length,
+      lowConfidenceSummaryCount: files.filter((file) => file.summaryConfidence === 'low').length,
       parseErrorCount: files.filter((file) => file.parseError).length,
       packageDependencyCount: Object.keys(packageJson?.dependencies || {}).length,
       devDependencyCount: Object.keys(packageJson?.devDependencies || {}).length,
+      estimatedSourceTokens: estimateTokenCount(files.map((file) => `${file.path}\n${file.summary}`).join('\n')),
     },
     recommendations: buildRecommendations(files, symbols),
     packageUsage,
     importantFiles,
+    crossCutting,
     modules,
     files,
     symbols,
@@ -157,6 +168,7 @@ function createVirtualFile(filePath) {
     declarations: [],
     parseError: null,
     doclets: [],
+    sourceSummary: null,
   };
 }
 
@@ -249,37 +261,109 @@ function resolveLocalImport(fromFile, source, filesByPath) {
 
 function summarizeFile(file) {
   const exportedNames = new Set((file.exports || []).map((item) => item.name).filter(Boolean));
-  const primaryDoclet =
-    file.doclets.find((doclet) => doclet.kind === 'module' && doclet.description) ||
-    file.doclets.find((doclet) => exportedNames.has(doclet.name) && doclet.description) ||
-    file.doclets.find((doclet) => ['class', 'function', 'typedef'].includes(doclet.kind) && doclet.description) ||
-    file.doclets.find((doclet) => doclet.description) ||
-    file.doclets[0];
+  const declarationNames = new Set((file.declarations || []).map((item) => item.name).filter(Boolean));
+  const fileStem = path.posix.basename(file.path, path.posix.extname(file.path));
+  const moduleDoclet = (file.doclets || []).find((doclet) => doclet.kind === 'module' && doclet.description);
+  if (moduleDoclet) {
+    return {
+      text: moduleDoclet.description,
+      confidence: 'high',
+      source: 'module-doclet',
+    };
+  }
+
+  if (file.sourceSummary) {
+    return {
+      text: file.sourceSummary,
+      confidence: 'high',
+      source: 'leading-jsdoc',
+    };
+  }
+
+  const candidates = (file.doclets || [])
+    .filter((doclet) => doclet.description)
+    .map((doclet) => ({
+      doclet,
+      score: scoreSummaryDoclet({ doclet, exportedNames, declarationNames, fileStem }),
+    }))
+    .sort((left, right) => right.score - left.score);
+  const primaryDoclet = candidates[0]?.doclet;
+
   if (primaryDoclet?.description) {
-    return primaryDoclet.description;
+    return {
+      text: primaryDoclet.description,
+      confidence: candidates[0].score >= 80 ? 'high' : 'medium',
+      source: 'doclet',
+    };
   }
 
   const exportedList = [...exportedNames];
   if (exportedList.length > 0) {
     if (exportedList.length === 1 && exportedList[0] === 'default') {
-      const declarationNames = (file.declarations || []).map((item) => item.name).filter(Boolean);
-      if (declarationNames.length > 0) {
-        return `Default export for ${declarationNames[0]}.`;
+      const declarationList = [...declarationNames];
+      if (declarationList.length > 0) {
+        return {
+          text: `Default export for ${declarationList[0]}.`,
+          confidence: 'medium',
+          source: 'source-export',
+        };
       }
 
-      const stem = path.posix.basename(file.path, path.posix.extname(file.path));
-      return `Default export for ${stem}.`;
+      return {
+        text: `Default export for ${fileStem}.`,
+        confidence: 'low',
+        source: 'source-export',
+      };
     }
 
-    return `Exports ${exportedList.slice(0, 5).join(', ')}.`;
+    return {
+      text: `Exports ${exportedList.slice(0, 5).join(', ')}.`,
+      confidence: 'medium',
+      source: 'source-export',
+    };
   }
 
-  const declarations = (file.declarations || []).map((item) => item.name).filter(Boolean);
+  const declarations = [...declarationNames];
   if (declarations.length > 0) {
-    return `Defines ${declarations.slice(0, 5).join(', ')}.`;
+    return {
+      text: `Defines ${declarations.slice(0, 5).join(', ')}.`,
+      confidence: 'low',
+      source: 'source-declaration',
+    };
   }
 
-  return 'No summary available from JSDoc or exports.';
+  return {
+    text: 'No summary available from JSDoc or exports.',
+    confidence: 'low',
+    source: 'none',
+  };
+}
+
+function scoreSummaryDoclet({ doclet, exportedNames, declarationNames, fileStem }) {
+  let score = 0;
+  if (doclet.kind === 'module') {
+    score += 100;
+  }
+
+  if (exportedNames.has(doclet.name) || exportedNames.has(doclet.longname)) {
+    score += 80;
+  }
+
+  if (declarationNames.has(doclet.name) || declarationNames.has(doclet.longname)) {
+    score += 60;
+  }
+
+  if (doclet.name === fileStem || doclet.longname === fileStem || doclet.longname?.endsWith(`.${fileStem}`)) {
+    score += 50;
+  }
+
+  if (['class', 'function', 'component'].includes(doclet.kind)) {
+    score += 25;
+  } else if (doclet.kind === 'typedef') {
+    score += 10;
+  }
+
+  return score;
 }
 
 function scoreFile(file) {
@@ -308,6 +392,7 @@ function toFilePointer(file) {
     incomingLocalImports: file.incomingLocalImports,
     doclets: file.doclets.length,
     summary: file.summary,
+    summaryConfidence: file.summaryConfidence,
   };
 }
 
@@ -353,8 +438,7 @@ function moduleKeyForPath(filePath) {
   }
 
   if (parts[1] === 'components') {
-    const focusedComponentGroups = new Set(['DocumentLoader', 'DocumentToolbar', 'DocumentViewer', 'common']);
-    if (focusedComponentGroups.has(parts[2])) {
+    if (parts[2] && !path.posix.extname(parts[2])) {
       return `src/components/${parts[2]}`;
     }
 
@@ -368,9 +452,65 @@ function moduleKeyForPath(filePath) {
   return 'src/root';
 }
 
+function buildCrossCutting(files) {
+  const roles = new Map();
+  const riskPatterns = new Map();
+
+  for (const file of files) {
+    for (const role of file.signals?.roles || []) {
+      if (!roles.has(role)) {
+        roles.set(role, []);
+      }
+
+      roles.get(role).push(toCrossCuttingFile(file));
+    }
+
+    for (const pattern of file.signals?.riskPatterns || []) {
+      if (!riskPatterns.has(pattern.key)) {
+        riskPatterns.set(pattern.key, {
+          key: pattern.key,
+          description: pattern.description,
+          files: [],
+        });
+      }
+
+      riskPatterns.get(pattern.key).files.push({
+        path: file.path,
+        lines: pattern.lines,
+        summary: file.summary,
+      });
+    }
+  }
+
+  return {
+    roles: [...roles.entries()]
+      .map(([role, roleFiles]) => ({
+        role,
+        files: roleFiles.sort((left, right) => right.score - left.score || left.path.localeCompare(right.path)),
+      }))
+      .sort((left, right) => left.role.localeCompare(right.role)),
+    riskPatterns: [...riskPatterns.values()]
+      .map((pattern) => ({
+        ...pattern,
+        files: pattern.files.sort((left, right) => left.path.localeCompare(right.path)),
+      }))
+      .sort((left, right) => left.key.localeCompare(right.key)),
+  };
+}
+
+function toCrossCuttingFile(file) {
+  return {
+    path: file.path,
+    score: file.importanceScore,
+    lines: file.lines,
+    summary: file.summary,
+  };
+}
+
 function buildRecommendations(files, symbols) {
   const undocumentedFiles = files.filter((file) => file.doclets.length === 0).length;
   const parseErrors = files.filter((file) => file.parseError).length;
+  const lowConfidenceSummaries = files.filter((file) => file.summaryConfidence === 'low').length;
   const recommendations = [];
 
   if (undocumentedFiles > 0) {
@@ -381,9 +521,17 @@ function buildRecommendations(files, symbols) {
     recommendations.push(`${parseErrors} files could not be parsed by the source analyzer; check REPORT.md for details.`);
   }
 
+  if (lowConfidenceSummaries > 0) {
+    recommendations.push(`${lowConfidenceSummaries} files have low-confidence summaries; inspect REPORT.md before relying on them for task planning.`);
+  }
+
   if (symbols.length > 250) {
     recommendations.push('Use AGENT_CONTEXT.md first, then SYMBOL_INDEX.md by file path to avoid loading the whole symbol JSON.');
   }
 
   return recommendations;
+}
+
+function estimateTokenCount(value) {
+  return Math.ceil(String(value || '').length / 4);
 }

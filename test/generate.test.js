@@ -20,7 +20,23 @@ test('generateAgentDocs writes an agent packet from existing JSDoc comments', as
 
   const context = await fs.readFile(path.join(out, 'AGENT_CONTEXT.md'), 'utf8');
   assert.match(context, /FixtureProject Agent Context/);
+  assert.match(context, /CROSS_CUTTING\.md/);
+  assert.match(context, /BUDGET\.md/);
+
+  const fileMap = await fs.readFile(path.join(out, 'FILE_MAP.md'), 'utf8');
+  assert.match(fileMap, /\| File \| Lines \| In \| JSDoc \| Confidence \| Summary \|/);
+
+  const budget = await fs.readFile(path.join(out, 'BUDGET.md'), 'utf8');
+  assert.match(budget, /Estimated output tokens/);
+
+  const crossCutting = await fs.readFile(path.join(out, 'CROSS_CUTTING.md'), 'utf8');
+  assert.match(crossCutting, /Cross-Cutting Index/);
 
   const symbolIndex = JSON.parse(await fs.readFile(path.join(out, 'symbol-index.json'), 'utf8'));
   assert.equal(symbolIndex.some((symbol) => symbol.name === 'double'), true);
+
+  const agentMap = JSON.parse(await fs.readFile(path.join(out, 'agent-map.json'), 'utf8'));
+  assert.equal(agentMap.files.every((file) => typeof file.summaryConfidence === 'string'), true);
+  assert.equal(agentMap.stats.sourceLineCount > 0, true);
+  assert.equal(agentMap.stats.estimatedSourceTokens > 0, true);
 });
