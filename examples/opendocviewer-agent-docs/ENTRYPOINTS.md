@@ -24,9 +24,9 @@
 
 ## Runtime Entrypoints
 
-- `server/system-log-server.js` - System Log Server — Single-file, standalone (ESM) Responsibilities: - Expose POST /log for structured system logs (tiny JSON bodies) - Write NDJSON to daily-rotated files under ./logs/ - Keep access, ingestion, and error
-- `server/user-log-server.js` - User Action Log Server — Single-file, standalone (ESM) Endpoint: POST /userlog/record - Body: application/x-www-form-urlencoded or JSON - reason: string|null - forWhom: string|null - Response: 200 OK with body: true (JSO
-- `src/index.jsx` - OpenDocViewer — Application Entry - Load global styles (CSS variables + layout).
+- `server/system-log-server.js` - System Log Server — Single\-file, standalone \(ESM\) Responsibilities: \- Expose POST /log for structured system logs \(tiny JSON bodies\) \- Write NDJSON to daily\-rotated files under ./logs/ \- Keep access, ingestion, and error
+- `server/user-log-server.js` - User Action Log Server — Single\-file, standalone \(ESM\) Endpoint: POST /userlog/record \- Body: application/x\-www\-form\-urlencoded or JSON \- reason: string\|null \- forWhom: string\|null \- Response: 200 OK with body: true \(JSO
+- `src/index.jsx` - OpenDocViewer — Application Entry \- Load global styles \(CSS variables \+ layout\).
 
 ## Import Hubs
 
@@ -39,14 +39,14 @@
 - `src/utils/viewerPreferences.js`: 5 incoming local imports
 - `src/utils/pdfjsDocumentOptions.js`: 4 incoming local imports
 - `src/utils/pdfPrintCacheKey.js`: 4 incoming local imports
+- `src/utils/printSanitize.js`: 4 incoming local imports
 - `src/components/DocumentLoader/documentLoaderUtils.js`: 3 incoming local imports
 - `src/contexts/themeContext.js`: 3 incoming local imports
 - `src/utils/documentMetadata.js`: 3 incoming local imports
+- `src/utils/objectUrlRegistry.js`: 3 incoming local imports
 - `src/utils/printPdf.js`: 3 incoming local imports
-- `src/utils/printSanitize.js`: 3 incoming local imports
 - `src/utils/printTemplate.js`: 3 incoming local imports
 - `src/utils/supportDiagnostics.js`: 3 incoming local imports
 - `src/components/common/StatusLed.jsx`: 2 incoming local imports
 - `src/components/DocumentToolbar/SplitToolbarButton.jsx`: 2 incoming local imports
 - `src/hooks/useAcceleratingHoldRepeat.js`: 2 incoming local imports
-- `src/hooks/usePageTimer.js`: 2 incoming local imports

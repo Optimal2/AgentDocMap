@@ -4,6 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 import { generateAgentDocs } from '../src/index.js';
+import { writeAgentDocs } from '../src/lib/writers.js';
 
 test('generateAgentDocs writes an agent packet from existing JSDoc comments', async () => {
   const target = path.resolve('test/fixture-project');
@@ -39,4 +40,152 @@ test('generateAgentDocs writes an agent packet from existing JSDoc comments', as
   assert.equal(agentMap.files.every((file) => typeof file.summaryConfidence === 'string'), true);
   assert.equal(agentMap.stats.sourceLineCount > 0, true);
   assert.equal(agentMap.stats.estimatedSourceTokens > 0, true);
+});
+
+test('writeAgentDocs escapes Markdown-sensitive inline values', async () => {
+  const outDir = await fs.mkdtemp(path.join(os.tmpdir(), 'agentdocmap-'));
+
+  await writeAgentDocs({
+    outDir,
+    clean: true,
+    targetRoot: path.join(os.tmpdir(), 'agentdocmap-target'),
+    map: {
+      project: {
+        name: 'Fixture *Project*',
+        packageName: 'fixture-[pkg]',
+        packageVersion: '1.0.0',
+        description: 'Desc *bold* <tag>\nsecond line',
+        dependencies: {},
+        devDependencies: {},
+        packageScripts: {
+          start: 'node -e "console.log(`hi`)"',
+        },
+      },
+      generated: {
+        atUtc: 'example',
+        sourceMetadata: 'none',
+        sourceCommit: null,
+        sourceDirty: false,
+      },
+      stats: {
+        fileCount: 1,
+        sourceLineCount: 10,
+        docletCount: 1,
+        documentedFileCount: 1,
+        lowConfidenceSummaryCount: 1,
+        parseErrorCount: 1,
+        estimatedSourceTokens: 123,
+      },
+      importantFiles: [
+        {
+          path: 'src/index.js',
+          summary: 'Summary with `code` and [link](x) <b>tag</b>',
+        },
+      ],
+      recommendations: [
+        'Do *not* trust <b>raw</b> text',
+      ],
+      crossCutting: {
+        roles: [
+          {
+            role: 'hook',
+            files: [
+              {
+                path: 'src/index.js',
+                lines: 10,
+                summary: 'Role summary with `ticks` and _emphasis_',
+              },
+            ],
+          },
+        ],
+        riskPatterns: [
+          {
+            key: 'danger-*',
+            description: 'Risky <tag> [desc](x)',
+            files: [
+              {
+                path: 'src/index.js',
+                lines: [1, 2],
+                summary: 'Pattern summary with # heading',
+              },
+            ],
+          },
+        ],
+      },
+      packageUsage: [],
+      files: [
+        {
+          path: 'src/index.js',
+          lines: 10,
+          incomingLocalImports: 2,
+          doclets: [
+            {
+              longname: 'module:foo',
+              name: 'foo',
+              kind: 'function',
+              description: 'Doclet *summary* <x>',
+            },
+          ],
+          summaryConfidence: 'low',
+          summary: 'File summary with `code` and <tag>',
+          parseError: 'Unexpected `token` <bad>',
+          exports: [{ name: 'foo' }],
+          localImports: [{ resolved: 'src/dep.js' }],
+          moduleKey: 'root*module*',
+        },
+      ],
+      symbols: [
+        {
+          longname: 'module:foo',
+          name: 'foo',
+          kind: 'function',
+          file: 'src/index.js',
+          line: 1,
+          description: 'Doclet *summary* <x>',
+        },
+      ],
+      modules: [
+        {
+          name: 'root*module*',
+          fileCount: 1,
+          lineCount: 10,
+          docletCount: 1,
+          importantFiles: [
+            {
+              path: 'src/index.js',
+              summary: 'Module file summary with [x]',
+            },
+          ],
+        },
+      ],
+    },
+  });
+
+  const context = await fs.readFile(path.join(outDir, 'AGENT_CONTEXT.md'), 'utf8');
+  assert.equal(context.includes('# Fixture \\*Project\\* Agent Context'), true);
+  assert.equal(context.includes('Description: Desc \\*bold\\* &lt;tag&gt; second line'), true);
+  assert.equal(context.includes('Summary with \\`code\\` and \\[link\\]\\(x\\) &lt;b&gt;tag&lt;/b&gt;'), true);
+  assert.equal(context.includes('Do \\*not\\* trust &lt;b&gt;raw&lt;/b&gt; text'), true);
+  assert.equal(context.includes('Desc *bold* <tag>'), false);
+
+  const crossCutting = await fs.readFile(path.join(outDir, 'CROSS_CUTTING.md'), 'utf8');
+  assert.equal(crossCutting.includes('Role summary with \\`ticks\\` and \\_emphasis\\_'), true);
+  assert.equal(crossCutting.includes('Risky &lt;tag&gt; \\[desc\\]\\(x\\).'), true);
+  assert.equal(crossCutting.includes('Pattern summary with \\# heading'), true);
+
+  const entrypoints = await fs.readFile(path.join(outDir, 'ENTRYPOINTS.md'), 'utf8');
+  assert.equal(entrypoints.includes('``node -e "console.log(`hi`)"``'), true);
+  assert.equal(entrypoints.includes('File summary with \\`code\\` and &lt;tag&gt;'), true);
+
+  const fileMap = await fs.readFile(path.join(outDir, 'FILE_MAP.md'), 'utf8');
+  assert.equal(fileMap.includes('Unexpected \\`token\\` &lt;bad&gt;'), true);
+
+  const modules = await fs.readFile(path.join(outDir, 'MODULES.md'), 'utf8');
+  assert.equal(modules.includes('## root\\*module\\*'), true);
+  assert.equal(modules.includes('Module file summary with \\[x\\]'), true);
+
+  const chunk = await fs.readFile(path.join(outDir, 'chunks', 'root_module_.md'), 'utf8');
+  assert.equal(chunk.includes('# Fixture \\*Project\\* / root\\*module\\*'), true);
+  assert.equal(chunk.includes('File summary with \\`code\\` and &lt;tag&gt;'), true);
+  assert.equal(chunk.includes('Doclet \\*summary\\* &lt;x&gt;'), true);
 });
