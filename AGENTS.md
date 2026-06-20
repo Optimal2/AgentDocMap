@@ -23,6 +23,6 @@ development:
 npm run build:odv
 ```
 
-This command reads `..\OpenDocViewer\jsdoc.json`, uses the existing JSDoc
+This command reads `../OpenDocViewer/jsdoc.json`, uses the existing JSDoc
 comments as-is, and writes an agent-focused documentation packet below
 `examples/opendocviewer-agent-docs`.
