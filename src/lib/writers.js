@@ -13,20 +13,22 @@ const ALLOWED_OUTPUT_DIRECTORY_NAMES = new Set(['docs-agent']);
 const ALLOWED_OUTPUT_DIRECTORY_SUFFIX = '-agent-docs';
 const TEMP_OUTPUT_DIRECTORY_PREFIX = 'agentdocmap-';
 const TABLE_CELL_ESCAPE_PATTERN = /\r\n|\r|\n|[&<>"'\\|`[\]()]/g;
-const SENSITIVE_OUTPUT_PATHS = new Set([
-  path.parse(process.cwd()).root,
-  process.cwd(),
-  process.env.HOME,
-  process.env.USERPROFILE,
-].filter(Boolean).map((item) => path.resolve(item).toLowerCase()));
+const WINDOWS_SENSITIVE_OUTPUT_PATHS = [
+  process.env.LOCALAPPDATA,
+  process.env.APPDATA,
+  process.env.ProgramFiles,
+  process.env['ProgramFiles(x86)'],
+  process.env.SystemRoot,
+  process.env.SystemDrive ? `${process.env.SystemDrive}${path.sep}` : null,
+];
 
 function safeFileName(value) {
   return String(value ?? DEFAULT_MODULE_NAME).replace(/[^a-z0-9._-]+/gi, '_');
 }
 
-export async function writeAgentDocs({ outDir, map, clean }) {
+export async function writeAgentDocs({ outDir, map, clean, targetRoot }) {
   if (clean) {
-    assertSafeCleanOutputDirectory(outDir);
+    assertSafeCleanOutputDirectory(outDir, targetRoot);
     await fs.rm(outDir, { recursive: true, force: true });
   }
 
@@ -439,17 +441,49 @@ function escapeMarkdownTableCell(value) {
   return String(value ?? '').replace(TABLE_CELL_ESCAPE_PATTERN, (match) => replacements[match]);
 }
 
-function assertSafeCleanOutputDirectory(outDir) {
+function normalizePathForComparison(value) {
+  const resolved = path.resolve(value);
+  return process.platform === 'win32' ? resolved.toLowerCase() : resolved;
+}
+
+function isSameOrAncestorPath(candidateAncestor, candidateDescendant) {
+  const relativePath = path.relative(
+    normalizePathForComparison(candidateAncestor),
+    normalizePathForComparison(candidateDescendant),
+  );
+  return relativePath === '' || (!relativePath.startsWith('..') && !path.isAbsolute(relativePath));
+}
+
+function collectSensitiveOutputPaths(targetRoot) {
+  return new Set([
+    path.parse(process.cwd()).root,
+    process.cwd(),
+    process.env.HOME,
+    process.env.USERPROFILE,
+    os.homedir(),
+    path.parse(os.homedir()).root,
+    ...WINDOWS_SENSITIVE_OUTPUT_PATHS,
+    targetRoot,
+    targetRoot ? path.parse(targetRoot).root : null,
+  ].filter(Boolean).map(normalizePathForComparison));
+}
+
+function assertSafeCleanOutputDirectory(outDir, targetRoot) {
   const resolved = path.resolve(outDir);
-  const normalized = resolved.toLowerCase();
+  const normalized = normalizePathForComparison(resolved);
   const directoryName = path.basename(resolved);
-  const tempRoot = path.resolve(os.tmpdir()).toLowerCase();
+  const tempRoot = normalizePathForComparison(os.tmpdir());
+  const sensitiveOutputPaths = collectSensitiveOutputPaths(targetRoot);
   const isAllowedNamedOutput = ALLOWED_OUTPUT_DIRECTORY_NAMES.has(directoryName)
     || (directoryName.endsWith(ALLOWED_OUTPUT_DIRECTORY_SUFFIX) && /^[a-z0-9._-]+$/i.test(directoryName));
   const isAllowedTemporaryOutput = directoryName.startsWith(TEMP_OUTPUT_DIRECTORY_PREFIX)
-    && path.dirname(resolved).toLowerCase() === tempRoot;
+    && normalizePathForComparison(path.dirname(resolved)) === tempRoot;
 
-  if (SENSITIVE_OUTPUT_PATHS.has(normalized) || (!isAllowedNamedOutput && !isAllowedTemporaryOutput)) {
+  if (targetRoot && isSameOrAncestorPath(resolved, targetRoot)) {
+    throw new Error(`Refusing to clean AgentDocMap output directory because it overlaps the target repository root: ${resolved}`);
+  }
+
+  if (sensitiveOutputPaths.has(normalized) || (!isAllowedNamedOutput && !isAllowedTemporaryOutput)) {
     throw new Error(`Refusing to clean unsafe AgentDocMap output directory: ${resolved}`);
   }
 }
