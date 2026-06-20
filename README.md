@@ -26,7 +26,7 @@ agent should read before opening the detailed JSON or per-file maps.
 ## CLI
 
 ```powershell
-node src/cli.js generate --target ..\OpenDocViewer --out examples\opendocviewer-agent-docs --project-name OpenDocViewer
+node src/cli.js generate --target ../OpenDocViewer --out examples/opendocviewer-agent-docs --project-name OpenDocViewer
 ```
 
 Options:

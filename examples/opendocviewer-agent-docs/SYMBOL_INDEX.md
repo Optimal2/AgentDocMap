@@ -406,10 +406,10 @@
 | <code>LoadingSpinner</code> | function | <code>src/components/LoadingSpinner.jsx:55</code> | LoadingSpinner component. |
 | <code>LoadingSpinner.propTypes.size</code> | member | <code>src/components/LoadingSpinner.jsx:83</code> | Optional width/height; if omitted, CSS controls dimensions. |
 | <code>srOnlyStyle</code> | constant | <code>src/components/LoadingSpinner.jsx:33</code> | Inline “visually hidden” style for screen-reader-only text \(no CSS dependency\). |
-| <code>&lt;anonymous&gt;~handleDone</code> | function | <code>src/components/PrintSelectionWorkspace.jsx:1804</code> |  |
-| <code>&lt;anonymous&gt;~handleKeyDown</code> | function | <code>src/components/PrintSelectionWorkspace.jsx:1744</code> |  |
-| <code>&lt;anonymous&gt;~handleKeyDown</code> | function | <code>src/components/PrintSelectionWorkspace.jsx:1777</code> |  |
-| <code>&lt;anonymous&gt;~handleMove</code> | function | <code>src/components/PrintSelectionWorkspace.jsx:1797</code> |  |
+| <code>&lt;anonymous&gt;~handleDone</code> | function | <code>src/components/PrintSelectionWorkspace.jsx:1815</code> |  |
+| <code>&lt;anonymous&gt;~handleKeyDown</code> | function | <code>src/components/PrintSelectionWorkspace.jsx:1755</code> |  |
+| <code>&lt;anonymous&gt;~handleKeyDown</code> | function | <code>src/components/PrintSelectionWorkspace.jsx:1788</code> |  |
+| <code>&lt;anonymous&gt;~handleMove</code> | function | <code>src/components/PrintSelectionWorkspace.jsx:1808</code> |  |
 | <code>Resizer.propTypes.ariaLabel</code> | member | <code>src/components/Resizer.jsx:103</code> | Accessible name for assistive technologies. |
 | <code>Resizer.propTypes.className</code> | member | <code>src/components/Resizer.jsx:105</code> | Extra class names to append to the root element. |
 | <code>&lt;anonymous&gt;~handleKeyDown</code> | constant | <code>src/components/Resizer.jsx:70</code> | Keyboard handler \(Enter/Space\) to initiate the same flow as mouse down. |
