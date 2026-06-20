@@ -14,10 +14,29 @@ const ALLOWED_OUTPUT_DIRECTORY_SUFFIX = '-agent-docs';
 const TEMP_OUTPUT_DIRECTORY_PREFIX = 'agentdocmap-';
 const TABLE_CELL_ESCAPE_PATTERN = /\r\n|\r|\n|[&<>"'\\|`[\]()]/g;
 const INLINE_ESCAPE_PATTERN = /[&<>\\`*_{}[\]()#+\-=!|~]/g;
+const HTML_ESCAPE_PATTERN = /[&<>"']/g;
 const BACKTICK_RUN_PATTERN = /`+/g;
+const POSIX_SENSITIVE_OUTPUT_PATHS = [
+  '/bin',
+  '/boot',
+  '/dev',
+  '/etc',
+  '/lib',
+  '/lib64',
+  '/opt',
+  '/proc',
+  '/root',
+  '/run',
+  '/sbin',
+  '/srv',
+  '/sys',
+  '/usr',
+  '/var',
+];
 const WINDOWS_SENSITIVE_OUTPUT_PATHS = [
   process.env.LOCALAPPDATA,
   process.env.APPDATA,
+  process.env.ProgramData,
   process.env.ProgramFiles,
   process.env['ProgramFiles(x86)'],
   process.env.SystemRoot,
@@ -174,7 +193,7 @@ function renderDependencies(map) {
 
   for (const [name, version] of Object.entries(runtimeDeps).sort(([nameA], [nameB]) => nameA.localeCompare(nameB))) {
     const usage = usageByName.get(name);
-    lines.push(`| \`${name}\` | \`${version}\` | ${usage?.importCount || 0} | ${formatUsageFiles(usage)} |`);
+    lines.push(`| ${formatMarkdownTableCode(name)} | ${formatMarkdownTableCode(version)} | ${usage?.importCount || 0} | ${formatUsageFiles(usage)} |`);
   }
 
   lines.push('', '## Development Dependencies', '');
@@ -182,7 +201,7 @@ function renderDependencies(map) {
   lines.push('| --- | --- | ---: |');
   for (const [name, version] of Object.entries(devDeps).sort(([nameA], [nameB]) => nameA.localeCompare(nameB))) {
     const usage = usageByName.get(name);
-    lines.push(`| \`${name}\` | \`${version}\` | ${usage?.importCount || 0} |`);
+    lines.push(`| ${formatMarkdownTableCode(name)} | ${formatMarkdownTableCode(version)} | ${usage?.importCount || 0} |`);
   }
 
   const undeclared = map.packageUsage.filter((item) => !runtimeDeps[item.packageName] && !devDeps[item.packageName]);
@@ -209,7 +228,7 @@ function renderFileMap(map) {
   ];
 
   for (const file of map.files) {
-    lines.push(`| \`${file.path}\` | ${file.lines ?? ''} | ${file.incomingLocalImports} | ${file.doclets.length} | ${file.summaryConfidence || ''} | ${escapeMarkdownTableCell(file.summary)} |`);
+    lines.push(`| ${formatMarkdownTableCode(file.path)} | ${file.lines ?? ''} | ${file.incomingLocalImports} | ${file.doclets.length} | ${escapeMarkdownTableCell(file.summaryConfidence || '')} | ${escapeMarkdownTableCell(file.summary)} |`);
   }
 
   lines.push('');
@@ -272,7 +291,7 @@ function renderSymbolIndex(map) {
   ];
 
   for (const symbol of map.symbols) {
-    lines.push(`| \`${symbol.longname || symbol.name}\` | ${symbol.kind || ''} | \`${symbol.file}${symbol.line ? `:${symbol.line}` : ''}\` | ${escapeMarkdownTableCell(symbol.description || '')} |`);
+    lines.push(`| ${formatMarkdownTableCode(symbol.longname || symbol.name)} | ${escapeMarkdownTableCell(symbol.kind || '')} | ${formatMarkdownTableCode(`${symbol.file}${symbol.line ? `:${symbol.line}` : ''}`)} | ${escapeMarkdownTableCell(symbol.description || '')} |`);
   }
 
   return finishMarkdown(lines);
@@ -491,6 +510,19 @@ function escapeMarkdownInline(value) {
   return normalized.replace(INLINE_ESCAPE_PATTERN, (match) => replacements[match]);
 }
 
+function escapeHtmlText(value) {
+  const normalized = normalizeMarkdownInlineValue(value);
+  const replacements = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  };
+
+  return normalized.replace(HTML_ESCAPE_PATTERN, (match) => replacements[match]).replaceAll('|', '&#124;');
+}
+
 function formatMarkdownCode(value) {
   const normalized = normalizeMarkdownInlineValue(value);
   const backtickRuns = normalized.match(BACKTICK_RUN_PATTERN) || [];
@@ -499,6 +531,10 @@ function formatMarkdownCode(value) {
   const needsPadding = normalized.startsWith('`') || normalized.endsWith('`');
 
   return needsPadding ? `${fence} ${normalized} ${fence}` : `${fence}${normalized}${fence}`;
+}
+
+function formatMarkdownTableCode(value) {
+  return `<code>${escapeHtmlText(value)}</code>`;
 }
 
 function normalizePathForComparison(value) {
@@ -522,6 +558,7 @@ function collectSensitiveOutputPaths(targetRoot) {
     process.env.USERPROFILE,
     os.homedir(),
     path.parse(os.homedir()).root,
+    ...POSIX_SENSITIVE_OUTPUT_PATHS,
     ...WINDOWS_SENSITIVE_OUTPUT_PATHS,
     targetRoot,
     targetRoot ? path.parse(targetRoot).root : null,
@@ -612,7 +649,7 @@ function formatUsageFiles(usage) {
     return '';
   }
 
-  return usage.files.slice(0, 5).map((file) => formatMarkdownCode(file)).join('<br>');
+  return usage.files.slice(0, 5).map((file) => formatMarkdownTableCode(file)).join('<br>');
 }
 
 function finishMarkdown(lines) {
