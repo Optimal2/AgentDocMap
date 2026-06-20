@@ -94,3 +94,19 @@ test('writeAgentDocs still allows writing to docs-agent inside the target reposi
   assert.equal(result.length > 0, true);
   await assert.doesNotReject(fs.access(path.join(out, 'AGENT_CONTEXT.md')));
 });
+
+test('writeAgentDocs rejects cleaning common system directories', async () => {
+  const outDir = process.platform === 'win32'
+    ? (process.env.ProgramData || process.env.SystemRoot)
+    : '/usr';
+
+  await assert.rejects(
+    writeAgentDocs({
+      outDir,
+      clean: true,
+      targetRoot: path.join(os.tmpdir(), 'agentdocmap-target'),
+      map: createMinimalMap(),
+    }),
+    /Refusing to clean unsafe AgentDocMap output directory/,
+  );
+});

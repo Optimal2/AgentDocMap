@@ -36,7 +36,7 @@ File count: 1. Line count: 36. JSDoc symbol count: 1.
 
 ## src/components/DocumentLoader
 
-File count: 8. Line count: 3936. JSDoc symbol count: 106.
+File count: 8. Line count: 4101. JSDoc symbol count: 106.
 
 - `src/components/DocumentLoader/documentLoaderUtils.js` - OpenDocViewer — Loader Utilities Helper utilities used by the DocumentLoader pipeline: • Build document URL lists \(pattern mode and demo mode\) • Fetch as ArrayBuffer \(with optional AbortSignal\) • Page counting \(PDF / TIF
 - `src/components/DocumentLoader/DocumentLoader.js` - OpenDocViewer — Document loader orchestrator.
@@ -75,7 +75,7 @@ File count: 8. Line count: 4926. JSDoc symbol count: 113.
 
 ## src/contexts
 
-File count: 4. Line count: 2997. JSDoc symbol count: 81.
+File count: 4. Line count: 3018. JSDoc symbol count: 81.
 
 - `src/contexts/viewerContext.js` - Exports ViewerContext.
 - `src/contexts/ViewerProvider.jsx` - OpenDocViewer — Viewer state provider.
@@ -148,7 +148,7 @@ File count: 1. Line count: 101. JSDoc symbol count: 13.
 
 ## src/utils
 
-File count: 35. Line count: 14752. JSDoc symbol count: 564.
+File count: 35. Line count: 14796. JSDoc symbol count: 564.
 
 - `src/utils/documentLoadingConfig.js` - OpenDocViewer — runtime helpers for fetch/render/memory policies.
 - `src/utils/runtimeConfig.js` - Runtime configuration helpers.
