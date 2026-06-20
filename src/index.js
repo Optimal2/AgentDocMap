@@ -41,6 +41,7 @@ export async function generateAgentDocs(options) {
     outDir,
     map,
     clean: options.clean !== false,
+    targetRoot,
   });
 
   return {
