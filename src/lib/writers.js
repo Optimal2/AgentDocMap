@@ -13,6 +13,8 @@ const ALLOWED_OUTPUT_DIRECTORY_NAMES = new Set(['docs-agent']);
 const ALLOWED_OUTPUT_DIRECTORY_SUFFIX = '-agent-docs';
 const TEMP_OUTPUT_DIRECTORY_PREFIX = 'agentdocmap-';
 const TABLE_CELL_ESCAPE_PATTERN = /\r\n|\r|\n|[&<>"'\\|`[\]()]/g;
+const INLINE_ESCAPE_PATTERN = /[&<>\\`*_{}[\]()#+\-=!|~]/g;
+const BACKTICK_RUN_PATTERN = /`+/g;
 const WINDOWS_SENSITIVE_OUTPUT_PATHS = [
   process.env.LOCALAPPDATA,
   process.env.APPDATA,
@@ -68,16 +70,16 @@ export async function writeAgentDocs({ outDir, map, clean, targetRoot }) {
 
 function renderAgentContext(map) {
   const lines = [
-    `# ${map.project.name} Agent Context`,
+    `# ${escapeMarkdownInline(map.project.name)} Agent Context`,
     '',
-    `Generated: ${map.generated.atUtc}`,
-    `Source commit: ${formatSourceCommit(map.generated)}`,
+    `Generated: ${escapeMarkdownInline(map.generated.atUtc)}`,
+    `Source commit: ${escapeMarkdownInline(formatSourceCommit(map.generated))}`,
     '',
     '## Project',
     '',
-    `- Package: ${map.project.packageName || map.project.name}`,
-    `- Version: ${map.project.packageVersion || 'unknown'}`,
-    `- Description: ${map.project.description || 'No package description.'}`,
+    `- Package: ${escapeMarkdownInline(map.project.packageName || map.project.name)}`,
+    `- Version: ${escapeMarkdownInline(map.project.packageVersion || 'unknown')}`,
+    `- Description: ${escapeMarkdownInline(map.project.description || 'No package description.')}`,
     '',
     '## Read Order',
     '',
@@ -102,13 +104,15 @@ function renderAgentContext(map) {
     '',
     '## High-Signal Files',
     '',
-    ...map.importantFiles.slice(0, MAX_IMPORTANT_FILES_DISPLAY).map((file) => `- \`${file.path}\` - ${file.summary}`),
+    ...map.importantFiles
+      .slice(0, MAX_IMPORTANT_FILES_DISPLAY)
+      .map((file) => `- ${formatMarkdownCode(file.path)} - ${escapeMarkdownInline(file.summary)}`),
     '',
   ];
 
   if (map.recommendations.length > 0) {
     lines.push('## Agent Notes', '');
-    lines.push(...map.recommendations.map((item) => `- ${item}`), '');
+    lines.push(...map.recommendations.map((item) => `- ${escapeMarkdownInline(item)}`), '');
   }
 
   return finishMarkdown(lines);
@@ -128,9 +132,9 @@ function renderCrossCutting(map) {
     lines.push('No cross-cutting file roles were detected.', '');
   } else {
     for (const role of map.crossCutting.roles) {
-      lines.push(`### ${formatRoleName(role.role)}`, '');
+      lines.push(`### ${escapeMarkdownInline(formatRoleName(role.role))}`, '');
       for (const file of role.files.slice(0, MAX_REPORT_ITEMS)) {
-        lines.push(`- \`${file.path}\` (${file.lines ?? 'unknown'} lines) - ${file.summary}`);
+        lines.push(`- ${formatMarkdownCode(file.path)} (${file.lines ?? 'unknown'} lines) - ${escapeMarkdownInline(file.summary)}`);
       }
       lines.push('');
     }
@@ -141,10 +145,10 @@ function renderCrossCutting(map) {
     lines.push('No risky source patterns were detected by the built-in rules.');
   } else {
     for (const pattern of map.crossCutting.riskPatterns) {
-      lines.push(`### ${pattern.key}`, '');
-      lines.push(`${pattern.description}.`, '');
+      lines.push(`### ${escapeMarkdownInline(pattern.key)}`, '');
+      lines.push(`${escapeMarkdownInline(pattern.description)}.`, '');
       for (const file of pattern.files.slice(0, MAX_REPORT_ITEMS)) {
-        lines.push(`- \`${file.path}\` lines ${file.lines.join(', ')} - ${file.summary}`);
+        lines.push(`- ${formatMarkdownCode(file.path)} lines ${file.lines.join(', ')} - ${escapeMarkdownInline(file.summary)}`);
       }
       lines.push('');
     }
@@ -216,7 +220,7 @@ function renderFileMap(map) {
     lines.push('No parse errors.');
   } else {
     for (const file of parseErrors) {
-      lines.push(`- \`${file.path}\`: ${file.parseError}`);
+      lines.push(`- ${formatMarkdownCode(file.path)}: ${escapeMarkdownInline(file.parseError)}`);
     }
   }
 
@@ -241,14 +245,14 @@ function renderEntrypoints(map) {
     lines.push('No package scripts were found.', '');
   } else {
     for (const [name, command] of Object.entries(scripts)) {
-      lines.push(`- \`${name}\`: \`${command}\``);
+      lines.push(`- ${formatMarkdownCode(name)}: ${formatMarkdownCode(command)}`);
     }
     lines.push('');
   }
 
   lines.push('## Runtime Entrypoints', '');
   for (const file of entrypointFiles) {
-    lines.push(`- \`${file.path}\` - ${file.summary}`);
+    lines.push(`- ${formatMarkdownCode(file.path)} - ${escapeMarkdownInline(file.summary)}`);
   }
 
   lines.push('', '## Import Hubs', '');
@@ -278,10 +282,10 @@ function renderModules(map) {
   const lines = ['# Modules', ''];
 
   for (const module of map.modules) {
-    lines.push(`## ${module.name}`, '');
+    lines.push(`## ${escapeMarkdownInline(module.name)}`, '');
     lines.push(`File count: ${module.fileCount}. Line count: ${module.lineCount}. JSDoc symbol count: ${module.docletCount}.`, '');
     for (const file of module.importantFiles) {
-      lines.push(`- \`${file.path}\` - ${file.summary}`);
+      lines.push(`- ${formatMarkdownCode(file.path)} - ${escapeMarkdownInline(file.summary)}`);
     }
     lines.push('');
   }
@@ -331,7 +335,11 @@ function renderReport(map) {
     lines.push('- Low-confidence summaries are generated from source shape rather than primary JSDoc.');
     lines.push('');
     lines.push('Low-confidence summaries:');
-    lines.push(...lowConfidence.slice(0, MAX_REPORT_ITEMS).map((file) => `- \`${file.path}\`: ${file.summary}`));
+    lines.push(
+      ...lowConfidence
+        .slice(0, MAX_REPORT_ITEMS)
+        .map((file) => `- ${formatMarkdownCode(file.path)}: ${escapeMarkdownInline(file.summary)}`),
+    );
     lines.push('');
   }
 
@@ -379,26 +387,36 @@ function renderModuleChunk(map, module) {
   const files = map.files.filter((file) => file.moduleKey === module.name);
 
   const lines = [
-    `# ${map.project.name} / ${module.name}`,
+    `# ${escapeMarkdownInline(map.project.name)} / ${escapeMarkdownInline(module.name)}`,
     '',
     `File count: ${module.fileCount}. Line count: ${module.lineCount}. JSDoc symbol count: ${module.docletCount}.`,
     '',
   ];
 
   for (const file of files) {
-    lines.push(`## ${file.path}`, '');
-    lines.push(file.summary, '');
+    lines.push(`## ${escapeMarkdownInline(file.path)}`, '');
+    lines.push(escapeMarkdownInline(file.summary), '');
     if (file.exports.length > 0) {
-      lines.push(`Exports: ${file.exports.map((item) => item.name).filter((name) => name != null).join(', ')}`, '');
+      const exportsList = file.exports
+        .map((item) => item.name)
+        .filter((name) => name != null)
+        .map((name) => formatMarkdownCode(name))
+        .join(', ');
+      lines.push(`Exports: ${exportsList}`, '');
     }
     if (file.localImports.length > 0) {
-      const imports = file.localImports.map((item) => item.resolved || item.source).filter(Boolean);
+      const imports = file.localImports
+        .map((item) => item.resolved || item.source)
+        .filter(Boolean)
+        .map((item) => formatMarkdownCode(item));
       lines.push(`Local imports: ${imports.slice(0, MAX_IMPORTS_DISPLAY).join(', ')}`, '');
     }
     if (file.doclets.length > 0) {
       lines.push('Symbols:', '');
       for (const doclet of file.doclets.slice(0, MAX_SYMBOLS_PER_FILE_DISPLAY)) {
-        lines.push(`- \`${doclet.longname || doclet.name}\` (${doclet.kind || 'symbol'}) - ${doclet.description || 'No description.'}`);
+        lines.push(
+          `- ${formatMarkdownCode(doclet.longname || doclet.name)} (${escapeMarkdownInline(doclet.kind || 'symbol')}) - ${escapeMarkdownInline(doclet.description || 'No description.')}`,
+        );
       }
       lines.push('');
     }
@@ -439,6 +457,48 @@ function escapeMarkdownTableCell(value) {
   };
 
   return String(value ?? '').replace(TABLE_CELL_ESCAPE_PATTERN, (match) => replacements[match]);
+}
+
+function normalizeMarkdownInlineValue(value) {
+  return String(value ?? '').replace(/\r\n|\r|\n/g, ' ');
+}
+
+function escapeMarkdownInline(value) {
+  const normalized = normalizeMarkdownInlineValue(value);
+  const replacements = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '\\': '\\\\',
+    '`': '\\`',
+    '*': '\\*',
+    '_': '\\_',
+    '{': '\\{',
+    '}': '\\}',
+    '[': '\\[',
+    ']': '\\]',
+    '(': '\\(',
+    ')': '\\)',
+    '#': '\\#',
+    '+': '\\+',
+    '-': '\\-',
+    '=': '\\=',
+    '!': '\\!',
+    '|': '\\|',
+    '~': '\\~',
+  };
+
+  return normalized.replace(INLINE_ESCAPE_PATTERN, (match) => replacements[match]);
+}
+
+function formatMarkdownCode(value) {
+  const normalized = normalizeMarkdownInlineValue(value);
+  const backtickRuns = normalized.match(BACKTICK_RUN_PATTERN) || [];
+  const fenceLength = Math.max(1, ...backtickRuns.map((run) => run.length + 1));
+  const fence = '`'.repeat(fenceLength);
+  const needsPadding = normalized.startsWith('`') || normalized.endsWith('`');
+
+  return needsPadding ? `${fence} ${normalized} ${fence}` : `${fence}${normalized}${fence}`;
 }
 
 function normalizePathForComparison(value) {
@@ -552,7 +612,7 @@ function formatUsageFiles(usage) {
     return '';
   }
 
-  return usage.files.slice(0, 5).map((file) => `\`${file}\``).join('<br>');
+  return usage.files.slice(0, 5).map((file) => formatMarkdownCode(file)).join('<br>');
 }
 
 function finishMarkdown(lines) {
