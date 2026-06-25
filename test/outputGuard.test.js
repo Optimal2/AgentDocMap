@@ -84,6 +84,15 @@ test('assertSafeCleanOutputDirectory rejects cleaning common system directories'
   );
 });
 
+test('assertSafeCleanOutputDirectory rejects cleaning the current filesystem root', () => {
+  const outDir = path.parse(process.cwd()).root;
+
+  assert.throws(
+    () => assertSafeCleanOutputDirectory(outDir, path.join(os.tmpdir(), 'agentdocmap-target')),
+    /Refusing to clean unsafe AgentDocMap output directory/,
+  );
+});
+
 test('assertSafeCleanOutputDirectory allows cleaning a temporary agentdocmap-prefixed directory', async () => {
   await withTemporaryDirectory('agentdocmap-', async (out) => {
     assert.doesNotThrow(
