@@ -14,6 +14,19 @@ async function withTemporaryDirectory(prefix, callback) {
   }
 }
 
+async function assertDirectoryStillExists(directory) {
+  const stats = await fs.stat(directory);
+  assert.equal(stats.isDirectory(), true);
+}
+
+function getKnownSensitiveOutputPath() {
+  if (process.platform === 'win32') {
+    return process.env.ProgramData || process.env.SystemRoot || path.parse(os.homedir()).root;
+  }
+
+  return '/usr';
+}
+
 test('assertSafeCleanOutputDirectory rejects cleaning the target repository root even when the name is allowlisted', async () => {
   await withTemporaryDirectory('agentdocmap-guard-', async (sandbox) => {
     const target = path.join(sandbox, 'docs-agent');
@@ -43,16 +56,15 @@ test('assertSafeCleanOutputDirectory allows cleaning docs-agent inside the targe
   await withTemporaryDirectory('agentdocmap-guard-', async (sandbox) => {
     const target = path.join(sandbox, 'fixture-project');
     const out = path.join(target, 'docs-agent');
-    await fs.mkdir(target, { recursive: true });
+    await fs.mkdir(out, { recursive: true });
 
     assert.doesNotThrow(() => assertSafeCleanOutputDirectory(out, target));
+    await assertDirectoryStillExists(out);
   });
 });
 
 test('assertSafeCleanOutputDirectory rejects cleaning common system directories', () => {
-  const outDir = process.platform === 'win32'
-    ? (process.env.ProgramData || process.env.SystemRoot)
-    : '/usr';
+  const outDir = getKnownSensitiveOutputPath();
 
   assert.throws(
     () => assertSafeCleanOutputDirectory(outDir, path.join(os.tmpdir(), 'agentdocmap-target')),
@@ -65,6 +77,7 @@ test('assertSafeCleanOutputDirectory allows cleaning a temporary agentdocmap-pre
     assert.doesNotThrow(
       () => assertSafeCleanOutputDirectory(out, path.join(os.tmpdir(), 'agentdocmap-target')),
     );
+    await assertDirectoryStillExists(out);
   });
 });
 
