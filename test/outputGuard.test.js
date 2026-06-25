@@ -21,10 +21,18 @@ async function assertDirectoryStillExists(directory) {
 
 function getKnownSensitiveOutputPath() {
   if (process.platform === 'win32') {
-    return process.env.ProgramData || process.env.SystemRoot || path.parse(os.homedir()).root;
+    return process.env.ProgramData
+      || process.env.SystemRoot
+      || path.parse(os.homedir()).root
+      || path.parse(process.cwd()).root
+      || null;
   }
 
-  return '/usr';
+  if (['aix', 'darwin', 'freebsd', 'linux', 'openbsd', 'sunos'].includes(process.platform)) {
+    return '/usr';
+  }
+
+  return path.parse(os.homedir()).root || path.parse(process.cwd()).root || null;
 }
 
 test('assertSafeCleanOutputDirectory rejects cleaning the target repository root even when the name is allowlisted', async () => {
@@ -63,8 +71,12 @@ test('assertSafeCleanOutputDirectory allows cleaning docs-agent inside the targe
   });
 });
 
-test('assertSafeCleanOutputDirectory rejects cleaning common system directories', () => {
+test('assertSafeCleanOutputDirectory rejects cleaning common system directories', (t) => {
   const outDir = getKnownSensitiveOutputPath();
+  if (!outDir) {
+    t.skip(`No known sensitive output path for platform ${process.platform}.`);
+    return;
+  }
 
   assert.throws(
     () => assertSafeCleanOutputDirectory(outDir, path.join(os.tmpdir(), 'agentdocmap-target')),
