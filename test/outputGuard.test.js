@@ -19,20 +19,29 @@ async function assertDirectoryStillExists(directory) {
   assert.equal(stats.isDirectory(), true);
 }
 
+function getFallbackSensitiveOutputPath() {
+  return path.parse(os.homedir()).root || path.parse(process.cwd()).root || null;
+}
+
 function getKnownSensitiveOutputPath() {
   if (process.platform === 'win32') {
     return process.env.ProgramData
       || process.env.SystemRoot
-      || path.parse(os.homedir()).root
-      || path.parse(process.cwd()).root
-      || null;
+      || getFallbackSensitiveOutputPath();
   }
 
   if (['aix', 'darwin', 'freebsd', 'linux', 'openbsd', 'sunos'].includes(process.platform)) {
     return '/usr';
   }
 
-  return path.parse(os.homedir()).root || path.parse(process.cwd()).root || null;
+  return getFallbackSensitiveOutputPath();
+}
+
+function assertRejectedAsUnsafeOrOverlapping(candidate, targetRoot) {
+  assert.throws(
+    () => assertSafeCleanOutputDirectory(candidate, targetRoot),
+    /Refusing to clean (unsafe AgentDocMap output directory|AgentDocMap output directory because it overlaps the target repository root)/,
+  );
 }
 
 test('assertSafeCleanOutputDirectory rejects cleaning the target repository root even when the name is allowlisted', async () => {
@@ -78,19 +87,13 @@ test('assertSafeCleanOutputDirectory rejects cleaning common system directories'
     return;
   }
 
-  assert.throws(
-    () => assertSafeCleanOutputDirectory(outDir, path.join(os.tmpdir(), 'agentdocmap-target')),
-    /Refusing to clean unsafe AgentDocMap output directory/,
-  );
+  assertRejectedAsUnsafeOrOverlapping(outDir, path.join(os.tmpdir(), 'agentdocmap-target'));
 });
 
 test('assertSafeCleanOutputDirectory rejects cleaning the current filesystem root', () => {
   const outDir = path.parse(process.cwd()).root;
 
-  assert.throws(
-    () => assertSafeCleanOutputDirectory(outDir, path.join(os.tmpdir(), 'agentdocmap-target')),
-    /Refusing to clean unsafe AgentDocMap output directory/,
-  );
+  assertRejectedAsUnsafeOrOverlapping(outDir, path.join(os.tmpdir(), 'agentdocmap-target'));
 });
 
 test('assertSafeCleanOutputDirectory allows cleaning a temporary agentdocmap-prefixed directory', async () => {
