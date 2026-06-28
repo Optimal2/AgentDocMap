@@ -6,6 +6,37 @@ const DEFAULT_INCLUDE = ['src', 'server'];
 const DEFAULT_INCLUDE_PATTERN = /\.(js|jsx|mjs|cjs)$/i;
 const DEFAULT_EXCLUDE_PATTERN = /(node_modules|dist|docs|coverage|\.git)\//i;
 
+const SENSITIVE_NAME_PATTERNS = [
+  /^\.env/i,
+  /\.(key|pem|p12|pfx|crt|cer|der|keystore|jks)$/i,
+  /^id_(rsa|dsa|ecdsa|ed25519)/i,
+  /^(\.npmrc|\.yarnrc|\.pypirc|\.netrc|_netrc)$/i,
+  /^(secret|secrets|credential|credentials|password|passwords|token|tokens)\./i,
+  /\.local\.(json|js|mjs|cjs|yaml|yml|toml)$/i,
+  /^\.localrc$/i,
+];
+
+const SENSITIVE_DIRECTORY_NAMES = new Set([
+  '.env',
+  'secrets',
+  'secret',
+  'credentials',
+  'credential',
+  'passwords',
+  'password',
+  'tokens',
+  'token',
+]);
+
+export function isSensitiveFileName(fileName) {
+  return SENSITIVE_NAME_PATTERNS.some((pattern) => pattern.test(fileName));
+}
+
+function isSensitiveDirectoryName(directoryName) {
+  const lower = directoryName.toLowerCase();
+  return SENSITIVE_DIRECTORY_NAMES.has(lower) || isSensitiveFileName(directoryName);
+}
+
 export async function collectSourceFiles({ targetRoot, jsdocConfig }) {
   const includes = normalizeIncludes(jsdocConfig?.source?.include);
   const includePattern = toRegex(jsdocConfig?.source?.includePattern, DEFAULT_INCLUDE_PATTERN);
@@ -16,7 +47,8 @@ export async function collectSourceFiles({ targetRoot, jsdocConfig }) {
     const absolute = path.resolve(targetRoot, include);
     await walk(absolute, async (filePath) => {
       const relative = normalizeRelativePath(targetRoot, filePath);
-      if (includePattern.test(filePath) && !excludePattern.test(`${relative}/`)) {
+      const fileName = path.basename(filePath);
+      if (includePattern.test(filePath) && !excludePattern.test(`${relative}/`) && !isSensitiveFileName(fileName)) {
         files.push({ absolutePath: filePath, relativePath: relative });
       }
     });
@@ -52,7 +84,7 @@ async function walk(startPath, onFile) {
   for (const entry of entries) {
     const fullPath = path.join(startPath, entry.name);
     if (entry.isDirectory()) {
-      if (!['node_modules', 'dist', 'docs', 'coverage', '.git'].includes(entry.name)) {
+      if (!['node_modules', 'dist', 'docs', 'coverage', '.git'].includes(entry.name) && !isSensitiveDirectoryName(entry.name)) {
         await walk(fullPath, onFile);
       }
     } else if (entry.isFile()) {

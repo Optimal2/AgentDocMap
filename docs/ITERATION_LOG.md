@@ -72,3 +72,18 @@ real validation target.
   risky source-pattern navigation.
 - Added `BUDGET.md` with rough generated-output token estimates so future
   agents can understand context cost before loading large generated files.
+
+## Iteration 9 - Secret safety first pass
+
+- Excluded sensitive file names from source inventory and JSDoc doclets:
+  `.env*`, key/cert files, SSH keys, credential config files, literal
+  `secret/credential/password/token.*` files, and `*.local.*` local configs.
+- Skipped directories named `secrets`, `credentials`, `passwords`, `tokens`,
+  or `.env` to avoid scanning their contents.
+- Redacted npm scripts for common secret patterns before writing to
+  Markdown/JSON: environment variable assignments for tokens/secrets/passwords,
+  `Authorization` header values, URLs with embedded credentials, and npm
+  `_authToken` values.
+- Added focused tests for sensitive-file exclusion and script redaction.
+- Regenerated the OpenDocViewer example packet; ordinary public scripts remain
+  readable and `LOG_TOKEN` values are masked.

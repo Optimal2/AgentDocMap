@@ -1,6 +1,49 @@
 import path from 'node:path';
 import { firstSentence, normalizeRelativePath, toPosixPath, truncateText } from './fsUtils.js';
+import { isSensitiveFileName } from './fileInventory.js';
 import { ENTRYPOINT_NAMES } from './projectSignals.js';
+
+const SENSITIVE_SCRIPT_REPLACEMENTS = [
+  {
+    pattern: /([A-Za-z_]*(?:TOKEN|SECRET|PASSWORD|PASS|API[_-]?KEY|AUTH|CREDENTIAL|PRIVATE[_-]?KEY)[A-Za-z_0-9]*=)([^\s;`'"]+)/gi,
+    replacement: '$1***',
+  },
+  {
+    pattern: /((?:^|[^A-Za-z0-9_-])(?:Authorization|Auth)[\s]*[:=][\s]*(?:Bearer|Basic|Token)?[\s]*)([^\s'"]+)/gi,
+    replacement: '$1***',
+  },
+  {
+    pattern: /(https?:\/\/)([^:/@]+):([^@]+)@/gi,
+    replacement: '$1***:***@',
+  },
+  {
+    pattern: /(\/\/[^/\s]+\/:_authToken=)([^\s]+)/gi,
+    replacement: '$1***',
+  },
+];
+
+export function redactScript(script) {
+  if (typeof script !== 'string') {
+    return script;
+  }
+
+  return SENSITIVE_SCRIPT_REPLACEMENTS.reduce(
+    (value, { pattern, replacement }) => value.replace(pattern, replacement),
+    script,
+  );
+}
+
+function redactPackageScripts(scripts) {
+  if (!scripts || typeof scripts !== 'object') {
+    return {};
+  }
+
+  const result = {};
+  for (const [name, command] of Object.entries(scripts)) {
+    result[name] = typeof command === 'string' ? redactScript(command) : command;
+  }
+  return result;
+}
 
 export function buildAgentMap({
   projectName,
@@ -83,7 +126,7 @@ export function buildAgentMap({
       packageName: packageJson?.name || null,
       packageVersion: packageJson?.version || null,
       description: packageJson?.description || null,
-      packageScripts: packageJson?.scripts || {},
+      packageScripts: redactPackageScripts(packageJson?.scripts),
       dependencies: packageJson?.dependencies || {},
       devDependencies: packageJson?.devDependencies || {},
     },
@@ -175,6 +218,7 @@ function createVirtualFile(filePath) {
 function normalizeDoclets({ targetRoot, doclets }) {
   return doclets
     .filter((doclet) => doclet.kind !== 'package')
+    .filter((doclet) => !isSensitiveFileName(doclet.meta?.filename || ''))
     .filter(isAgentUsefulDoclet)
     .map((doclet) => {
       const file = normalizeDocletFile(targetRoot, doclet);
