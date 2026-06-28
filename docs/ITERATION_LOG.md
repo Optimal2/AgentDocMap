@@ -87,3 +87,14 @@ real validation target.
 - Added focused tests for sensitive-file exclusion and script redaction.
 - Regenerated the OpenDocViewer example packet; ordinary public scripts remain
   readable and `LOG_TOKEN` values are masked.
+
+## Iteration 10 - Tighter script redaction
+
+- Tightened secret-key regexes to avoid false positives such as
+  `TOKEN_EXPIRY_DAYS`, `AUTHORITY`, `AUTH0_CLIENT_ID`, `PASS=through`, and
+  `SECRET_SANTA`.
+- Added quoted-value redaction so `API_KEY="secret"` becomes
+  `API_KEY="***"` while preserving the quotes.
+- Added redaction for token-only URLs such as `https://token@github.com/…`.
+- Expanded `secretSafety.test.js` to cover the false-positive examples,
+  quoted secrets, and token-only URL credentials.

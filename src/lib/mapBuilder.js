@@ -5,12 +5,20 @@ import { ENTRYPOINT_NAMES } from './projectSignals.js';
 
 const SENSITIVE_SCRIPT_REPLACEMENTS = [
   {
-    pattern: /([A-Za-z_]*(?:TOKEN|SECRET|PASSWORD|PASS|API[_-]?KEY|AUTH|CREDENTIAL|PRIVATE[_-]?KEY)[A-Za-z_0-9]*=)([^\s;`'"]+)/gi,
+    pattern: /([A-Za-z_]*(?:TOKEN|SECRET|PASSWORD|PASS|API[_-]?KEY|AUTH(?![A-Za-z0-9])|CREDENTIAL|PRIVATE[_-]?KEY)[A-Za-z_0-9]*(?<!_(?:EXPIRY|DAYS|NAME|PATH|ID|SANTA))=)(?!through\b)([^\s;`'"]+)/gi,
     replacement: '$1***',
+  },
+  {
+    pattern: /([A-Za-z_]*(?:TOKEN|SECRET|PASSWORD|PASS|API[_-]?KEY|AUTH(?![A-Za-z0-9])|CREDENTIAL|PRIVATE[_-]?KEY)[A-Za-z_0-9]*(?<!_(?:EXPIRY|DAYS|NAME|PATH|ID|SANTA))=)(["'`])(.*?)\2/gi,
+    replacement: '$1$2***$2',
   },
   {
     pattern: /((?:^|[^A-Za-z0-9_-])(?:Authorization|Auth)[\s]*[:=][\s]*(?:Bearer|Basic|Token)?[\s]*)([^\s'"]+)/gi,
     replacement: '$1***',
+  },
+  {
+    pattern: /(https?:\/\/)([^:/@]+)@/gi,
+    replacement: '$1***@',
   },
   {
     pattern: /(https?:\/\/)([^:/@]+):([^@]+)@/gi,

@@ -101,6 +101,28 @@ test('redactScript masks common secret patterns', () => {
   );
 });
 
+test('redactScript avoids false positives for legitimate key names', () => {
+  assert.equal(redactScript('TOKEN_EXPIRY_DAYS=30'), 'TOKEN_EXPIRY_DAYS=30');
+  assert.equal(redactScript('AUTHORITY=http://example.com'), 'AUTHORITY=http://example.com');
+  assert.equal(redactScript('AUTH0_CLIENT_ID=public'), 'AUTH0_CLIENT_ID=public');
+  assert.equal(redactScript('PASS=through'), 'PASS=through');
+  assert.equal(redactScript('SECRET_SANTA=group'), 'SECRET_SANTA=group');
+});
+
+test('redactScript masks quoted secret values while preserving quotes', () => {
+  assert.equal(redactScript('API_KEY="secret"'), 'API_KEY="***"');
+  assert.equal(redactScript("API_KEY='secret'"), "API_KEY='***'");
+  assert.equal(redactScript('API_KEY=`secret`'), 'API_KEY=`***`');
+  assert.equal(redactScript('PASSWORD="hunter2"'), 'PASSWORD="***"');
+});
+
+test('redactScript masks token-only URL credentials', () => {
+  assert.equal(
+    redactScript('git push https://token@github.com/org/repo.git'),
+    'git push https://***@github.com/org/repo.git',
+  );
+});
+
 test('buildAgentMap redacts package scripts before exposing them', () => {
   const map = buildAgentMap({
     projectName: 'SecretProject',
