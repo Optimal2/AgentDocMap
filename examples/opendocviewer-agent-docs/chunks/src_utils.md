@@ -1,6 +1,6 @@
 # OpenDocViewer / src/utils
 
-File count: 35. Line count: 14796. JSDoc symbol count: 564.
+File count: 35. Line count: 15035. JSDoc symbol count: 591.
 
 ## src/utils/documentLoadingConfig.js
 
@@ -427,6 +427,21 @@ Exports: `handlePrint`, `handlePrintAll`, `handlePrintCurrentComparison`, `handl
 
 Local imports: `src/utils/printCore.js`, `src/utils/printParse.js`, `src/utils/printPdf.js`
 
+Symbols:
+
+- `module:printUtils` (module) - OpenDocViewer — Print Utilities Facade Re\-export the stable print API and parser from the internal modules.
+- `module:handlePrint` (module) - Print the current selection/range through the HTML path.
+- `module:handlePrintAll` (module) - Print all pages through the HTML path.
+- `module:handlePrintCurrentComparison` (module) - Print the current comparison pane through the HTML path.
+- `module:handlePrintRange` (module) - Print a specific page range through the HTML path.
+- `module:handlePrintSequence` (module) - Print a parsed custom page sequence through the HTML path.
+- `module:parsePrintSequence` (module) - Parse a user\-entered &amp;quot;Custom pages&amp;quot; string into a page sequence.
+- `module:handlePdfOutput` (module) - Generate a PDF for the current selection/range and open the print dialog.
+- `module:handlePdfCurrent` (module) - Generate a PDF for the current page and open the print dialog.
+- `module:handlePdfCurrentComparison` (module) - Generate a PDF for the current comparison pane and open the print dialog.
+- `module:createPrintPdfBlob` (module) - Create a printable PDF blob from the current print job.
+- `module:printPdfBlob` (module) - Print a generated PDF blob.
+
 ## src/utils/printWatermark.js
 
 OpenDocViewer — Print watermark mode helpers.
@@ -524,15 +539,15 @@ Symbols:
 - `KeyboardPrintShortcutBehavior` (typedef) - No description.
 - `ViewerDefaultZoomMode` (typedef) - No description.
 - `PrintDefaultMode` (typedef) - No description.
+- `ResetSessionTarget` (typedef) - Session\-reset target for the support/problem notice.
+- `KEYBOARD_PRINT_SHORTCUT_BEHAVIORS` (constant) - Runtime validation values for KeyboardPrintShortcutBehavior; the typedef documents the public contract.
+- `RESET_SESSION_TARGETS` (constant) - Runtime validation values for ResetSessionTarget; the typedef documents the public contract.
+- `DEFAULT_ZOOM_MODE_ALIAS_ENTRIES` (constant) - User\-facing zoom\-mode aliases mapped to ViewerDefaultZoomMode values.
 - `ViewerCustomFitSizeLimits` (typedef) - No description.
 - `PrintSelectionWorkspaceConfig` (typedef) - No description.
 - `ViewerEdgeScrollPageTurnConfig` (typedef) - No description.
 - `ViewerProblemNoticeConfig` (typedef) - No description.
 - `getRuntimeConfig` (function) - Read the merged runtime configuration from the browser environment.
-- `getKeyboardPrintShortcutBehavior` (function) - Resolve the configured Ctrl/Cmd\+P behavior.
-- `isDocumentMetadataUiEnabled` (function) - Resolve whether document metadata UI affordances should be available.
-- `normalizePrintDefaultMode` (function) - Normalize a user\-facing print default mode.
-- `normalizeCustomFitWidthFactorPercent` (function) - Normalize a custom fit\-width factor.
 
 ## src/utils/sourceTempStore.js
 

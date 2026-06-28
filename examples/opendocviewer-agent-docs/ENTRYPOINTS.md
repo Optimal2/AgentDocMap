@@ -8,12 +8,14 @@
 - `lint`: `eslint "src/**/*.{js,jsx}"`
 - `lint:fix`: `eslint "src/**/*.{js,jsx}" --fix`
 - `format`: `prettier --write "src/**/*.{js,jsx,css,scss,md}"`
+- `test`: `vitest run`
+- `test:watch`: `vitest`
 - `doc`: `jsdoc -c jsdoc.json`
 - `doc:agent`: `node scripts/generate-agent-docs.mjs`
 - `start:system-log`: `node server/system-log-server.js`
 - `start:user-log`: `node server/user-log-server.js`
 - `start:logs`: `concurrently -n sys,user -c auto "npm run start:system-log" "npm run start:user-log"`
-- `dev:system-log`: `cross-env NODE_ENV=development PORT=3001 LOG_TOKEN=devtoken node server/system-log-server.js`
+- `dev:system-log`: `cross-env NODE_ENV=development PORT=3001 LOG_TOKEN=*** node server/system-log-server.js`
 - `dev:user-log`: `cross-env NODE_ENV=development PORT=3002 node server/user-log-server.js`
 - `dev:logs`: `concurrently -n sys,user -c auto "npm run dev:system-log" "npm run dev:user-log"`
 - `dev:both`: `concurrently -n app,logs -c auto "npm run dev" "npm run dev:logs"`
@@ -34,7 +36,7 @@
 - `src/utils/runtimeConfig.js`: 13 incoming local imports
 - `src/utils/documentLoadingConfig.js`: 12 incoming local imports
 - `src/contexts/viewerContext.js`: 10 incoming local imports
-- `src/utils/localizedValue.js`: 6 incoming local imports
+- `src/utils/localizedValue.js`: 8 incoming local imports
 - `src/utils/publicAssetUrl.js`: 6 incoming local imports
 - `src/utils/viewerPreferences.js`: 5 incoming local imports
 - `src/utils/pdfjsDocumentOptions.js`: 4 incoming local imports
@@ -48,5 +50,5 @@
 - `src/utils/printTemplate.js`: 3 incoming local imports
 - `src/utils/supportDiagnostics.js`: 3 incoming local imports
 - `src/components/common/StatusLed.jsx`: 2 incoming local imports
+- `src/components/DocumentToolbar/printRangeDialogHelpers.js`: 2 incoming local imports
 - `src/components/DocumentToolbar/SplitToolbarButton.jsx`: 2 incoming local imports
-- `src/hooks/useAcceleratingHoldRepeat.js`: 2 incoming local imports
