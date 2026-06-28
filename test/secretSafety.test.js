@@ -36,6 +36,8 @@ test('isSensitiveFileName recognises common sensitive file names', () => {
   assert.equal(isSensitiveFileName('secrets.json'), true);
   assert.equal(isSensitiveFileName('config.local.js'), true);
   assert.equal(isSensitiveFileName('.localrc'), true);
+  assert.equal(isSensitiveFileName('config.secret.js'), true);
+  assert.equal(isSensitiveFileName('.htpasswd'), true);
 
   assert.equal(isSensitiveFileName('index.js'), false);
   assert.equal(isSensitiveFileName('tokenValidator.js'), false);
@@ -81,6 +83,29 @@ test('collectSourceFiles skips sensitive directories', async () => {
     assert.equal(paths.includes('src/normal.js'), true);
     assert.equal(paths.includes('secrets/nested.js'), false);
     assert.equal(paths.includes('.env/production.js'), false);
+  });
+});
+
+test('collectSourceFiles excludes aws credentials and agentdocmap working directory', async () => {
+  await withTempDir('agentdocmap-secret-', async (target) => {
+    await writeFiles(target, {
+      'src/normal.js': 'export const a = 1;',
+      'src/.aws/credentials': '[default]\naws_access_key_id=AKIA...',
+      'server/.aws/credentials': '[default]\naws_secret_access_key=...',
+      'server/.htpasswd': 'user:hash',
+      'server/config.secret.js': 'module.exports = {};',
+      '.agentdocmap/state.json': '{}',
+    });
+
+    const files = await collectSourceFiles({ targetRoot: target, jsdocConfig: null });
+    const paths = files.map((file) => file.relativePath);
+
+    assert.equal(paths.includes('src/normal.js'), true);
+    assert.equal(paths.includes('src/.aws/credentials'), false, 'aws credentials file is excluded');
+    assert.equal(paths.includes('server/.aws/credentials'), false, 'aws credentials file under server is excluded');
+    assert.equal(paths.includes('server/.htpasswd'), false, 'htpasswd file is excluded');
+    assert.equal(paths.includes('server/config.secret.js'), false, 'secret-pattern file is excluded');
+    assert.equal(paths.includes('.agentdocmap/state.json'), false, 'agentdocmap working directory is excluded');
   });
 });
 

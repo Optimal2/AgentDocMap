@@ -32,14 +32,20 @@ node src/cli.js generate --target ../OpenDocViewer --out examples/opendocviewer-
 Options:
 
 - `--target <path>`: Target repository root.
-- `--out <path>`: Output directory for the generated packet.
+- `--out <path>`: Output directory for the generated packet. Recommended names
+  are `docs-agent` or any directory ending in `-agent-docs`
+  (e.g. `examples/opendocviewer-agent-docs`). When `--clean` is used (the
+  default), the directory must be named `docs-agent`, end in `-agent-docs`, or
+  be a temporary directory prefixed with `agentdocmap-`. This guard prevents
+  accidental deletion of important folders.
 - `--project-name <name>`: Optional display name.
 - `--generated-at <text>`: Optional timestamp or label override. Defaults to the
   target commit date when available, which keeps generated output stable.
 - `--source-metadata <git|none>`: Include or omit target Git metadata. Use
   `none` for documentation committed into the same target repository, where the
   current commit hash would otherwise make the generated files unstable.
-- `--no-clean`: Keep existing files in the output directory.
+- `--no-clean`: Keep existing files in the output directory. Use this to write
+  to a directory that does not match the allowed clean-output names.
 
 ## Output Files
 

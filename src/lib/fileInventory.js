@@ -4,20 +4,22 @@ import { normalizeRelativePath } from './fsUtils.js';
 
 const DEFAULT_INCLUDE = ['src', 'server'];
 const DEFAULT_INCLUDE_PATTERN = /\.(js|jsx|mjs|cjs)$/i;
-const DEFAULT_EXCLUDE_PATTERN = /(node_modules|dist|docs|coverage|\.git)\//i;
+const DEFAULT_EXCLUDE_PATTERN = /(node_modules|dist|docs|coverage|\.git|\.agentdocmap)\//i;
 
 const SENSITIVE_NAME_PATTERNS = [
   /^\.env/i,
   /\.(key|pem|p12|pfx|crt|cer|der|keystore|jks)$/i,
   /^id_(rsa|dsa|ecdsa|ed25519)/i,
-  /^(\.npmrc|\.yarnrc|\.pypirc|\.netrc|_netrc)$/i,
+  /^(\.npmrc|\.yarnrc|\.pypirc|\.netrc|_netrc|\.htpasswd)$/i,
   /^(secret|secrets|credential|credentials|password|passwords|token|tokens)\./i,
+  /\.secret\./i,
   /\.local\.(json|js|mjs|cjs|yaml|yml|toml)$/i,
   /^\.localrc$/i,
 ];
 
 const SENSITIVE_DIRECTORY_NAMES = new Set([
   '.env',
+  '.aws',
   'secrets',
   'secret',
   'credentials',
@@ -84,7 +86,7 @@ async function walk(startPath, onFile) {
   for (const entry of entries) {
     const fullPath = path.join(startPath, entry.name);
     if (entry.isDirectory()) {
-      if (!['node_modules', 'dist', 'docs', 'coverage', '.git'].includes(entry.name) && !isSensitiveDirectoryName(entry.name)) {
+      if (!['node_modules', 'dist', 'docs', 'coverage', '.git', '.agentdocmap'].includes(entry.name) && !isSensitiveDirectoryName(entry.name)) {
         await walk(fullPath, onFile);
       }
     } else if (entry.isFile()) {

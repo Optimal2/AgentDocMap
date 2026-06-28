@@ -13,7 +13,13 @@ Commands:
 
 Options:
   --target <path>        Target repository root.
-  --out <path>           Output directory.
+  --out <path>           Output directory. Recommended names are 'docs-agent' or
+                         any directory ending in '-agent-docs' (e.g.
+                         'examples/opendocviewer-agent-docs'). When --clean is
+                         used (the default), the directory must be one of those
+                         names or a temporary directory prefixed with
+                         'agentdocmap-'. Use --no-clean to write to any
+                         directory without deleting it first.
   --project-name <name>  Display name used in generated docs.
   --generated-at <text>  Timestamp/label override. Defaults to target commit date.
   --source-metadata <mode>
