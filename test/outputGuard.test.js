@@ -20,7 +20,7 @@ async function assertDirectoryStillExists(directory) {
 }
 
 function getFallbackSensitiveOutputPath() {
-  return path.parse(os.homedir()).root || path.parse(process.cwd()).root || undefined;
+  return path.parse(os.homedir()).root || path.parse(process.cwd()).root;
 }
 
 function getKnownSensitiveOutputPath() {
