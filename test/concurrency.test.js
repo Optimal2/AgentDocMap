@@ -1,18 +1,9 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
-import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 import { generateAgentDocs } from '../src/index.js';
-
-async function withTempDir(prefix, callback) {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), prefix));
-  try {
-    return await callback(dir);
-  } finally {
-    await fs.rm(dir, { recursive: true, force: true });
-  }
-}
+import { withTempDir } from './testUtils.js';
 
 function assertIsAgentDocResult(result, index) {
   assert.equal(typeof result, 'object', `run ${index} should return a result object`);
