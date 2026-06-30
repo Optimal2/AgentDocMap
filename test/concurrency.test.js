@@ -5,6 +5,10 @@ import test from 'node:test';
 import { generateAgentDocs } from '../src/index.js';
 import { withTempDir } from './testUtils.js';
 
+/**
+ * Verifies that a generated agent documentation result has the shape and
+ * fixture file count expected by these concurrency tests.
+ */
 function assertIsAgentDocResult(result, index) {
   assert.equal(typeof result, 'object', `run ${index} should return a result object`);
   assert.notEqual(result, null, `run ${index} should return a non-null result`);
@@ -13,6 +17,10 @@ function assertIsAgentDocResult(result, index) {
   assert.equal(result.stats.fileCount, 2, `run ${index} should inspect the fixture files`);
 }
 
+/**
+ * Formats Promise.allSettled results into a compact diagnostic string that
+ * lists only rejected runs and their failure reasons.
+ */
 function formatSettledFailureDiagnostics(results) {
   return results
     .map((result, index) => {

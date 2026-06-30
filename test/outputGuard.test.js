@@ -6,15 +6,27 @@ import test from 'node:test';
 import { assertSafeCleanOutputDirectory } from '../src/lib/outputGuard.js';
 import { withTempDir } from './testUtils.js';
 
+/**
+ * Verifies that a path still exists and points to a directory after a guard
+ * check has decided that cleaning it is safe.
+ */
 async function assertDirectoryStillExists(directory) {
   const stats = await fs.stat(directory);
   assert.equal(stats.isDirectory(), true);
 }
 
+/**
+ * Provides a filesystem root fallback for platforms where the test suite does
+ * not have a more specific sensitive system directory to probe.
+ */
 function getFallbackSensitiveOutputPath() {
   return path.parse(os.homedir()).root || path.parse(process.cwd()).root;
 }
 
+/**
+ * Returns a platform-specific sensitive directory that AgentDocMap must refuse
+ * to clean, using Windows system roots or common Unix system directories.
+ */
 function getKnownSensitiveOutputPath() {
   if (process.platform === 'win32') {
     return process.env.ProgramData
@@ -29,6 +41,10 @@ function getKnownSensitiveOutputPath() {
   return getFallbackSensitiveOutputPath();
 }
 
+/**
+ * Verifies that assertSafeCleanOutputDirectory rejects unsafe output paths and
+ * paths that overlap the target repository root.
+ */
 function assertRejectedAsUnsafeOrOverlapping(candidate, targetRoot) {
   assert.throws(
     () => assertSafeCleanOutputDirectory(candidate, targetRoot),
