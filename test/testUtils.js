@@ -9,6 +9,10 @@ function formatCleanupError(error) {
 /**
  * Creates a temporary directory with the provided prefix, passes its path to
  * the callback, and removes the directory recursively after the callback exits.
+ *
+ * @param {string} prefix - Prefix for the temporary directory name.
+ * @param {(dir: string) => Promise<*>} callback - Callback that receives the temporary directory path.
+ * @returns {Promise<*>} The result returned by the callback.
  */
 export async function withTempDir(prefix, callback) {
   const dir = await fs.mkdtemp(path.join(os.tmpdir(), prefix));
