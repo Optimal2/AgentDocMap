@@ -20,7 +20,7 @@ async function assertDirectoryStillExists(directory) {
 }
 
 function getFallbackSensitiveOutputPath() {
-  return path.parse(os.homedir()).root || path.parse(process.cwd()).root || null;
+  return path.parse(os.homedir()).root || path.parse(process.cwd()).root || undefined;
 }
 
 function getKnownSensitiveOutputPath() {
@@ -80,13 +80,10 @@ test('assertSafeCleanOutputDirectory allows cleaning docs-agent inside the targe
   });
 });
 
-test('assertSafeCleanOutputDirectory rejects cleaning common system directories', (t) => {
+test('assertSafeCleanOutputDirectory rejects cleaning common system directories', () => {
   const outDir = getKnownSensitiveOutputPath();
-  if (!outDir) {
-    t.skip(`No known sensitive output path for platform ${process.platform}.`);
-    return;
-  }
 
+  assert.ok(outDir, `expected a sensitive output path for platform ${process.platform}`);
   assertRejectedAsUnsafeOrOverlapping(outDir, path.join(os.tmpdir(), 'agentdocmap-target'));
 });
 

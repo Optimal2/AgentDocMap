@@ -32,7 +32,10 @@ test('generateAgentDocs produces deterministic output across isolated parallel r
       ),
     );
 
-    assert.equal(results.every((result) => result.stats.fileCount === 2), true);
+    assert.ok(
+      results.every((result) => result.stats.fileCount === 2),
+      'all isolated concurrent runs should inspect the fixture files',
+    );
 
     const firstContext = await fs.readFile(path.join(outDirs[0], 'AGENT_CONTEXT.md'), 'utf8');
     const firstMap = JSON.parse(await fs.readFile(path.join(outDirs[0], 'agent-map.json'), 'utf8'));
@@ -68,6 +71,6 @@ test('concurrent same-directory runs complete without crashing the process', asy
     // only verifies that the process remains stable and does not throw
     // unhandled errors.
     const fulfilled = results.filter((result) => result.status === 'fulfilled').length;
-    assert.equal(fulfilled > 0, true, 'at least one concurrent run should complete');
+    assert.ok(fulfilled > 0, 'at least one concurrent run should complete');
   });
 });
