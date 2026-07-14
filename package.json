@@ -17,7 +17,7 @@
     "validate": "npm test && npm run build:odv"
   },
   "dependencies": {
-    "@babel/parser": "^7.28.5",
+    "@babel/parser": "^8.0.0",
     "jsdoc": "^4.0.5"
   }
 }
