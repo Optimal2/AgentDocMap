@@ -3,3 +3,6 @@ node_modules/
 tmp/
 coverage/
 npm-debug.log*
+
+# Claude Code local tool config — never tracked, must not block dep maintenance
+.claude/
