@@ -19,5 +19,8 @@
   "dependencies": {
     "@babel/parser": "^8.0.0",
     "jsdoc": "^4.0.5"
+  },
+  "overrides": {
+    "linkify-it": "^5.0.2"
   }
 }
