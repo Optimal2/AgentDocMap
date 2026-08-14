@@ -10,7 +10,10 @@ const MAX_REPORT_ITEMS = 15;
 const MAX_IMPORTS_DISPLAY = 12;
 const MAX_SYMBOLS_PER_FILE_DISPLAY = 12;
 const TABLE_CELL_ESCAPE_PATTERN = /\r\n|\r|\n|[&<>"'\\|`[\]()]/g;
-const INLINE_ESCAPE_PATTERN = /[&<>\\`*_{}[\]()#+\-=!|~]/g;
+// No '&' in this class: escapeMarkdownInline no longer maps it, and a character the
+// pattern matches without a matching replacement entry would be substituted with the
+// string "undefined". The pattern and the replacement table have to agree.
+const INLINE_ESCAPE_PATTERN = /[<>\\`*_{}[\]()#+\-=!|~]/g;
 const HTML_ESCAPE_PATTERN = /[&<>"']/g;
 const BACKTICK_RUN_PATTERN = /`+/g;
 
@@ -456,7 +459,12 @@ function normalizeMarkdownInlineValue(value) {
 function escapeMarkdownInline(value) {
   const normalized = normalizeMarkdownInlineValue(value);
   const replacements = {
-    '&': '&amp;',
+    // '&' is deliberately absent. Markdown does not require entity encoding for an
+    // ampersand, and these files are read as raw text by agents rather than rendered to
+    // HTML -- so escaping it produced a literal "&amp;" in the output where the source
+    // said "&". Reported by GitHub code quality against OpenDocViewer's generated
+    // AGENT_CONTEXT.md. '<' and '>' stay escaped: those do change how a Markdown reader
+    // treats the text, because they can open raw HTML.
     '<': '&lt;',
     '>': '&gt;',
     '\\': '\\\\',
