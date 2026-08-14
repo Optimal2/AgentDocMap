@@ -141,7 +141,13 @@ function renderCrossCutting(map) {
       lines.push(`### ${escapeMarkdownInline(pattern.key)}`, '');
       lines.push(`${escapeMarkdownInline(pattern.description)}.`, '');
       for (const file of pattern.files.slice(0, MAX_REPORT_ITEMS)) {
-        lines.push(`- ${formatMarkdownCode(file.path)} lines ${file.lines.join(', ')} - ${escapeMarkdownInline(file.summary)}`);
+        // `lines` means two different things in this file: a line COUNT on ordinary file
+        // entries (see the other three uses) and an array of line NUMBERS on risk-pattern
+        // entries. Only the latter can be joined, and an entry that ever arrives with the
+        // count shape would throw a TypeError here rather than degrade. Reported by GitHub
+        // code quality.
+        const matchedLines = Array.isArray(file.lines) ? file.lines.join(', ') : String(file.lines ?? 'unknown');
+        lines.push(`- ${formatMarkdownCode(file.path)} lines ${matchedLines} - ${escapeMarkdownInline(file.summary)}`);
       }
       lines.push('');
     }
@@ -244,6 +250,12 @@ function renderEntrypoints(map) {
   }
 
   lines.push('## Runtime Entrypoints', '');
+  if (entrypointFiles.length === 0) {
+    // Sibling sections (Package Scripts, Parse Errors) say so explicitly rather than
+    // leaving a heading over a blank line, where a reader cannot tell "none found" from
+    // "the generator failed here". Reported by GitHub code quality.
+    lines.push('_None detected._');
+  }
   for (const file of entrypointFiles) {
     lines.push(`- ${formatMarkdownCode(file.path)} - ${escapeMarkdownInline(file.summary)}`);
   }
