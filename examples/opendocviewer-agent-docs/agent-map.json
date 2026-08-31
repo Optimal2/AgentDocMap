@@ -3,7 +3,7 @@
   "project": {
     "name": "OpenDocViewer",
     "packageName": "opendocviewer",
-    "packageVersion": "2.6.6",
+    "packageVersion": "2.7.1",
     "description": "Fast, lightweight document viewer (PDF, TIFF, images) built with React + Vite, with a token-gated log server and runtime configuration.",
     "packageScripts": {
       "dev": "vite",
@@ -29,47 +29,47 @@
       "release:major": "npm version major -m \"chore(release): %s\""
     },
     "dependencies": {
-      "axios": "^1.18.0",
+      "axios": "^1.20.0",
       "cors": "^2.8.6",
-      "dompurify": "^3.4.11",
+      "dompurify": "^3.4.14",
       "dotenv": "^17.4.2",
       "express": "^5.2.1",
-      "express-rate-limit": "^8.5.2",
-      "file-type": "^22.0.1",
-      "helmet": "^8.2.0",
-      "i18next": "^26.3.1",
-      "i18next-http-backend": "^4.0.0",
-      "i18next-icu": "^2.4.3",
+      "express-rate-limit": "^8.6.2",
+      "file-type": "^22.0.2",
+      "helmet": "^8.3.0",
+      "i18next": "^26.4.0",
+      "i18next-http-backend": "^4.0.1",
+      "i18next-icu": "^2.4.4",
       "jspdf": "^4.2.1",
       "material-icons": "^1.13.14",
       "morgan": "^1.11.0",
       "pdf-lib": "^1.17.1",
-      "pdfjs-dist": "^6.0.227",
+      "pdfjs-dist": "^6.1.200",
       "prop-types": "^15.8.1",
-      "react": "^19.2.7",
-      "react-dom": "^19.2.7",
-      "react-i18next": "^17.0.8",
+      "react": "^19.2.8",
+      "react-dom": "^19.2.8",
+      "react-i18next": "^17.0.12",
       "utif2": "^4.1.0"
     },
     "devDependencies": {
-      "@babel/core": "^8.0.0",
-      "@babel/plugin-transform-runtime": "^8.0.0",
+      "@babel/core": "^8.0.1",
+      "@babel/plugin-transform-runtime": "^8.0.1",
       "@babel/runtime": "^8.0.0",
       "@eslint/js": "^10.0.1",
       "@rolldown/plugin-babel": "^0.2.3",
-      "@vitejs/plugin-react": "^6.0.2",
-      "concurrently": "^10.0.3",
+      "@vitejs/plugin-react": "^6.1.0",
+      "concurrently": "^10.0.5",
       "cross-env": "^10.1.0",
       "docdash": "^2.0.2",
-      "eslint": "^10.5.0",
+      "eslint": "^10.9.1",
       "eslint-plugin-react-hooks": "^7.1.1",
-      "eslint-plugin-react-refresh": "^0.5.3",
-      "globals": "^17.6.0",
+      "eslint-plugin-react-refresh": "^0.5.5",
+      "globals": "^17.11.0",
       "jsdoc": "^4.0.5",
-      "prettier": "^3.8.4",
-      "rolldown": "^1.1.1",
-      "vite": "^8.0.16",
-      "vitest": "^3.0.0"
+      "prettier": "^3.9.6",
+      "rolldown": "^1.2.6",
+      "vite": "^8.2.2",
+      "vitest": "^4.1.11"
     }
   },
   "generated": {
@@ -82,8 +82,8 @@
   },
   "stats": {
     "fileCount": 114,
-    "sourceLineCount": 49377,
-    "docletCount": 1314,
+    "sourceLineCount": 49449,
+    "docletCount": 1318,
     "documentedFileCount": 114,
     "lowConfidenceSummaryCount": 0,
     "parseErrorCount": 0,
@@ -363,10 +363,10 @@
   "importantFiles": [
     {
       "path": "src/utils/documentLoadingConfig.js",
-      "score": 122,
-      "lines": 1062,
+      "score": 123,
+      "lines": 1095,
       "incomingLocalImports": 12,
-      "doclets": 32,
+      "doclets": 34,
       "summary": "OpenDocViewer — runtime helpers for fetch/render/memory policies.",
       "summaryConfidence": "high"
     },
@@ -377,6 +377,15 @@
       "incomingLocalImports": 13,
       "doclets": 35,
       "summary": "Runtime configuration helpers.",
+      "summaryConfidence": "high"
+    },
+    {
+      "path": "src/logging/systemLogger.js",
+      "score": 102,
+      "lines": 471,
+      "incomingLocalImports": 35,
+      "doclets": 31,
+      "summary": "src/logging/systemLogger.js OpenDocViewer — Frontend Logging Controller (ESM) - Provide a small, dependency-light logging facade for the browser app.",
       "summaryConfidence": "high"
     },
     {
@@ -395,15 +404,6 @@
       "incomingLocalImports": 5,
       "doclets": 33,
       "summary": "Lightweight persisted viewer preferences.",
-      "summaryConfidence": "high"
-    },
-    {
-      "path": "src/logging/systemLogger.js",
-      "score": 92,
-      "lines": 432,
-      "incomingLocalImports": 35,
-      "doclets": 29,
-      "summary": "src/logging/systemLogger.js OpenDocViewer — Frontend Logging Controller (ESM) - Provide a small, dependency-light logging facade for the browser app.",
       "summaryConfidence": "high"
     },
     {
@@ -1348,15 +1348,15 @@
     {
       "name": "src/logging",
       "fileCount": 2,
-      "lineCount": 740,
-      "docletCount": 46,
+      "lineCount": 779,
+      "docletCount": 48,
       "importantFiles": [
         {
           "path": "src/logging/systemLogger.js",
-          "score": 92,
-          "lines": 432,
+          "score": 102,
+          "lines": 471,
           "incomingLocalImports": 35,
-          "doclets": 29,
+          "doclets": 31,
           "summary": "src/logging/systemLogger.js OpenDocViewer — Frontend Logging Controller (ESM) - Provide a small, dependency-light logging facade for the browser app.",
           "summaryConfidence": "high"
         },
@@ -1425,15 +1425,15 @@
     {
       "name": "src/utils",
       "fileCount": 35,
-      "lineCount": 15049,
-      "docletCount": 592,
+      "lineCount": 15082,
+      "docletCount": 594,
       "importantFiles": [
         {
           "path": "src/utils/documentLoadingConfig.js",
-          "score": 122,
-          "lines": 1062,
+          "score": 123,
+          "lines": 1095,
           "incomingLocalImports": 12,
-          "doclets": 32,
+          "doclets": 34,
           "summary": "OpenDocViewer — runtime helpers for fetch/render/memory policies.",
           "summaryConfidence": "high"
         },
@@ -28108,9 +28108,9 @@
     },
     {
       "path": "src/logging/systemLogger.js",
-      "lines": 432,
+      "lines": 471,
       "extension": ".js",
-      "jsdocBlockCount": 45,
+      "jsdocBlockCount": 47,
       "sourceSummary": "src/logging/systemLogger.js OpenDocViewer — Frontend Logging Controller (ESM) - Provide a small, dependency-light logging facade for the browser app.",
       "imports": [
         {
@@ -28123,9 +28123,19 @@
       ],
       "exports": [
         {
+          "name": "isPlaceholderToken",
+          "kind": "function",
+          "line": 213
+        },
+        {
+          "name": "shouldEnableBackendLogging",
+          "kind": "function",
+          "line": 234
+        },
+        {
           "name": "logger",
           "kind": "default",
-          "line": 431
+          "line": 470
         }
       ],
       "declarations": [
@@ -28180,9 +28190,19 @@
           "line": 196
         },
         {
+          "name": "isPlaceholderToken",
+          "kind": "function",
+          "line": 213
+        },
+        {
+          "name": "shouldEnableBackendLogging",
+          "kind": "function",
+          "line": 234
+        },
+        {
           "name": "LogController",
           "kind": "class",
-          "line": 210
+          "line": 243
         }
       ],
       "parseError": null,
@@ -28427,13 +28447,75 @@
           "examples": 0
         },
         {
+          "id": "isPlaceholderToken",
+          "name": "isPlaceholderToken",
+          "longname": "isPlaceholderToken",
+          "kind": "function",
+          "scope": "global",
+          "file": "src/logging/systemLogger.js",
+          "line": 213,
+          "description": "Detect tokens that are clearly placeholders or left unset.",
+          "params": [
+            {
+              "name": "token",
+              "type": "*",
+              "optional": false,
+              "description": ""
+            }
+          ],
+          "returns": [
+            {
+              "type": "boolean",
+              "description": ""
+            }
+          ],
+          "examples": 0
+        },
+        {
+          "id": "shouldEnableBackendLogging",
+          "name": "shouldEnableBackendLogging",
+          "longname": "shouldEnableBackendLogging",
+          "kind": "function",
+          "scope": "global",
+          "file": "src/logging/systemLogger.js",
+          "line": 234,
+          "description": "Decide whether backend log forwarding may be enabled.",
+          "params": [
+            {
+              "name": "backendUrl",
+              "type": "string",
+              "optional": false,
+              "description": ""
+            },
+            {
+              "name": "enabledOverride",
+              "type": "boolean|null",
+              "optional": false,
+              "description": ""
+            },
+            {
+              "name": "token",
+              "type": "*",
+              "optional": false,
+              "description": ""
+            }
+          ],
+          "returns": [
+            {
+              "type": "boolean",
+              "description": ""
+            }
+          ],
+          "examples": 0
+        },
+        {
           "id": "LogController",
           "name": "LogController",
           "longname": "LogController",
           "kind": "class",
           "scope": "global",
           "file": "src/logging/systemLogger.js",
-          "line": 210,
+          "line": 243,
           "description": "LogController — small facade around console + optional HTTP forwarding.",
           "params": [],
           "returns": [],
@@ -28446,7 +28528,7 @@
           "kind": "member",
           "scope": "instance",
           "file": "src/logging/systemLogger.js",
-          "line": 247,
+          "line": 286,
           "description": "Enable/disable HTTP forwarding at runtime.",
           "params": [
             {
@@ -28471,7 +28553,7 @@
           "kind": "member",
           "scope": "instance",
           "file": "src/logging/systemLogger.js",
-          "line": 260,
+          "line": 299,
           "description": "Set the backend ingestion URL (absolute or relative).",
           "params": [
             {
@@ -28496,7 +28578,7 @@
           "kind": "member",
           "scope": "instance",
           "file": "src/logging/systemLogger.js",
-          "line": 274,
+          "line": 313,
           "description": "Set the current log level.",
           "params": [
             {
@@ -28521,7 +28603,7 @@
           "kind": "member",
           "scope": "instance",
           "file": "src/logging/systemLogger.js",
-          "line": 284,
+          "line": 323,
           "description": "Set retry limit for backend forwarding.",
           "params": [
             {
@@ -28546,7 +28628,7 @@
           "kind": "member",
           "scope": "instance",
           "file": "src/logging/systemLogger.js",
-          "line": 293,
+          "line": 332,
           "description": "Set retry interval (ms) for backend forwarding.",
           "params": [
             {
@@ -28571,7 +28653,7 @@
           "kind": "member",
           "scope": "instance",
           "file": "src/logging/systemLogger.js",
-          "line": 302,
+          "line": 341,
           "description": "Set axios timeout (ms) for backend posts.",
           "params": [
             {
@@ -28596,7 +28678,7 @@
           "kind": "member",
           "scope": "instance",
           "file": "src/logging/systemLogger.js",
-          "line": 311,
+          "line": 350,
           "description": "Update/replace the auth token used in 'x-log-token'.",
           "params": [
             {
@@ -28621,7 +28703,7 @@
           "kind": "member",
           "scope": "instance",
           "file": "src/logging/systemLogger.js",
-          "line": 324,
+          "line": 363,
           "description": "Internal: should this level be logged at all (console or backend)?",
           "params": [
             {
@@ -28646,7 +28728,7 @@
           "kind": "member",
           "scope": "instance",
           "file": "src/logging/systemLogger.js",
-          "line": 338,
+          "line": 377,
           "description": "Log a message with a given level and optional context.",
           "params": [
             {
@@ -28683,7 +28765,7 @@
           "kind": "member",
           "scope": "instance",
           "file": "src/logging/systemLogger.js",
-          "line": 365,
+          "line": 404,
           "description": "Disable backend forwarding after a non-recoverable configuration/runtime failure.",
           "params": [
             {
@@ -28708,7 +28790,7 @@
           "kind": "member",
           "scope": "instance",
           "file": "src/logging/systemLogger.js",
-          "line": 383,
+          "line": 422,
           "description": "Attempt to POST the log to the backend, with simple linear retries.",
           "params": [
             {
@@ -28751,7 +28833,7 @@
           "kind": "member",
           "scope": "instance",
           "file": "src/logging/systemLogger.js",
-          "line": 417,
+          "line": 456,
           "description": "",
           "params": [
             {
@@ -28771,7 +28853,7 @@
           "kind": "member",
           "scope": "instance",
           "file": "src/logging/systemLogger.js",
-          "line": 420,
+          "line": 459,
           "description": "",
           "params": [
             {
@@ -28791,7 +28873,7 @@
           "kind": "member",
           "scope": "instance",
           "file": "src/logging/systemLogger.js",
-          "line": 423,
+          "line": 462,
           "description": "",
           "params": [
             {
@@ -28811,7 +28893,7 @@
           "kind": "member",
           "scope": "instance",
           "file": "src/logging/systemLogger.js",
-          "line": 426,
+          "line": 465,
           "description": "",
           "params": [
             {
@@ -28831,7 +28913,7 @@
           "kind": "constant",
           "scope": "global",
           "file": "src/logging/systemLogger.js",
-          "line": 430,
+          "line": 469,
           "description": "Export a singleton instance (sufficient for app usage).",
           "params": [],
           "returns": [],
@@ -28850,7 +28932,7 @@
         }
       ],
       "incomingLocalImports": 35,
-      "importanceScore": 92,
+      "importanceScore": 102,
       "summary": "src/logging/systemLogger.js OpenDocViewer — Frontend Logging Controller (ESM) - Provide a small, dependency-light logging facade for the browser app.",
       "summaryConfidence": "high",
       "summarySource": "leading-jsdoc"
@@ -30790,9 +30872,9 @@
     },
     {
       "path": "src/utils/documentLoadingConfig.js",
-      "lines": 1062,
+      "lines": 1095,
       "extension": ".js",
-      "jsdocBlockCount": 34,
+      "jsdocBlockCount": 36,
       "sourceSummary": "OpenDocViewer — runtime helpers for fetch/render/memory policies.",
       "imports": [
         {
@@ -30827,74 +30909,79 @@
           "line": 243
         },
         {
+          "name": "normalizeProtection",
+          "kind": "function",
+          "line": 400
+        },
+        {
           "name": "cloneDocumentLoadingConfig",
           "kind": "function",
-          "line": 501
+          "line": 534
         },
         {
           "name": "countPdfPages",
           "kind": "function",
-          "line": 523
+          "line": 556
         },
         {
           "name": "resolvePdfWorkerPlanForPageCount",
           "kind": "function",
-          "line": 543
+          "line": 576
         },
         {
           "name": "resolvePdfRenderConfigForPageCount",
           "kind": "function",
-          "line": 604
+          "line": 637
         },
         {
           "name": "applyDocumentLoadingMode",
           "kind": "function",
-          "line": 744
+          "line": 777
         },
         {
           "name": "applyMemoryPressureStage",
           "kind": "function",
-          "line": 819
+          "line": 852
         },
         {
           "name": "getPerformanceWindowPageCount",
           "kind": "function",
-          "line": 849
+          "line": 882
         },
         {
           "name": "getDocumentLoadingConfig",
           "kind": "function",
-          "line": 856
+          "line": 889
         },
         {
           "name": "isRasterImageExtension",
           "kind": "function",
-          "line": 987
+          "line": 1020
         },
         {
           "name": "shouldUseFullImagesForThumbnails",
           "kind": "function",
-          "line": 1000
+          "line": 1033
         },
         {
           "name": "shouldKeepAllFullImageAssets",
           "kind": "function",
-          "line": 1011
+          "line": 1044
         },
         {
           "name": "formatBytes",
           "kind": "function",
-          "line": 1023
+          "line": 1056
         },
         {
           "name": "formatCount",
           "kind": "function",
-          "line": 1041
+          "line": 1074
         },
         {
           "name": "shouldRecommendStopping",
           "kind": "function",
-          "line": 1049
+          "line": 1082
         }
       ],
       "declarations": [
@@ -30926,172 +31013,172 @@
         {
           "name": "normalizeNumber",
           "kind": "function",
-          "line": 352
+          "line": 366
         },
         {
           "name": "normalizeFloat",
           "kind": "function",
-          "line": 359
+          "line": 373
         },
         {
           "name": "normalizeThreshold",
           "kind": "function",
-          "line": 365
+          "line": 379
         },
         {
           "name": "normalizeMiBThreshold",
           "kind": "function",
-          "line": 373
+          "line": 387
         },
         {
           "name": "normalizeStoreMode",
           "kind": "function",
-          "line": 380
+          "line": 394
         },
         {
           "name": "normalizeProtection",
           "kind": "function",
-          "line": 386
+          "line": 400
         },
         {
           "name": "normalizeThumbnailLoadingStrategy",
           "kind": "function",
-          "line": 392
+          "line": 409
         },
         {
           "name": "normalizeThumbnailSourceStrategy",
           "kind": "function",
-          "line": 398
+          "line": 415
         },
         {
           "name": "normalizeMode",
           "kind": "function",
-          "line": 406
+          "line": 423
         },
         {
           "name": "normalizeFetchStrategy",
           "kind": "function",
-          "line": 412
+          "line": 429
         },
         {
           "name": "normalizeRenderStrategy",
           "kind": "function",
-          "line": 418
+          "line": 435
         },
         {
           "name": "normalizeRenderBackend",
           "kind": "function",
-          "line": 424
+          "line": 441
         },
         {
           "name": "normalizePdfToImageMode",
           "kind": "function",
-          "line": 430
+          "line": 447
         },
         {
           "name": "normalizePdfWorkerPagePolicy",
           "kind": "function",
-          "line": 439
+          "line": 456
         },
         {
           "name": "shouldUseMainThreadForPdf",
           "kind": "function",
-          "line": 477
+          "line": 510
         },
         {
           "name": "normalizePdfWorkerWarmupBatchMode",
           "kind": "function",
-          "line": 484
+          "line": 517
         },
         {
           "name": "normalizeBoolean",
           "kind": "function",
-          "line": 491
+          "line": 524
         },
         {
           "name": "cloneDocumentLoadingConfig",
           "kind": "function",
-          "line": 501
+          "line": 534
         },
         {
           "name": "countPdfPages",
           "kind": "function",
-          "line": 523
+          "line": 556
         },
         {
           "name": "resolvePdfWorkerPlanForPageCount",
           "kind": "function",
-          "line": 543
+          "line": 576
         },
         {
           "name": "resolvePdfRenderConfigForPageCount",
           "kind": "function",
-          "line": 604
+          "line": 637
         },
         {
           "name": "base",
           "kind": "object",
-          "line": 605
+          "line": 638
         },
         {
           "name": "buildAdaptiveDefaults",
           "kind": "function",
-          "line": 651
+          "line": 684
         },
         {
           "name": "applyDocumentLoadingMode",
           "kind": "function",
-          "line": 744
+          "line": 777
         },
         {
           "name": "applyMemoryPressureStage",
           "kind": "function",
-          "line": 819
+          "line": 852
         },
         {
           "name": "getPerformanceWindowPageCount",
           "kind": "function",
-          "line": 849
+          "line": 882
         },
         {
           "name": "getDocumentLoadingConfig",
           "kind": "function",
-          "line": 856
+          "line": 889
         },
         {
           "name": "normalized",
           "kind": "object",
-          "line": 885
+          "line": 918
         },
         {
           "name": "isRasterImageExtension",
           "kind": "function",
-          "line": 987
+          "line": 1020
         },
         {
           "name": "shouldUseFullImagesForThumbnails",
           "kind": "function",
-          "line": 1000
+          "line": 1033
         },
         {
           "name": "shouldKeepAllFullImageAssets",
           "kind": "function",
-          "line": 1011
+          "line": 1044
         },
         {
           "name": "formatBytes",
           "kind": "function",
-          "line": 1023
+          "line": 1056
         },
         {
           "name": "formatCount",
           "kind": "function",
-          "line": 1041
+          "line": 1074
         },
         {
           "name": "shouldRecommendStopping",
           "kind": "function",
-          "line": 1049
+          "line": 1082
         }
       ],
       "parseError": null,
@@ -31472,13 +31559,105 @@
           "examples": 0
         },
         {
+          "id": "normalizeNumber",
+          "name": "normalizeNumber",
+          "longname": "normalizeNumber",
+          "kind": "function",
+          "scope": "global",
+          "file": "src/utils/documentLoadingConfig.js",
+          "line": 366,
+          "description": "Coerce a value to a bounded integer .",
+          "params": [
+            {
+              "name": "value",
+              "type": "unknown",
+              "optional": false,
+              "description": "Raw value, typically from configuration."
+            },
+            {
+              "name": "fallback",
+              "type": "number",
+              "optional": false,
+              "description": "Returned when value is not a finite number."
+            },
+            {
+              "name": "min",
+              "type": "number",
+              "optional": false,
+              "description": "Lower bound, applied before flooring."
+            },
+            {
+              "name": "max",
+              "type": "number",
+              "optional": true,
+              "description": "Optional upper bound."
+            }
+          ],
+          "returns": [
+            {
+              "type": "number",
+              "description": "An integer in [min, max]."
+            }
+          ],
+          "examples": 0
+        },
+        {
+          "id": "shouldUseMainThreadForPdf",
+          "name": "shouldUseMainThreadForPdf",
+          "longname": "shouldUseMainThreadForPdf",
+          "kind": "function",
+          "scope": "global",
+          "file": "src/utils/documentLoadingConfig.js",
+          "line": 510,
+          "description": "Decide whether a PDF should render on the main thread rather than through workers.",
+          "params": [
+            {
+              "name": "policy",
+              "type": "Object",
+              "optional": false,
+              "description": ""
+            },
+            {
+              "name": "pageCount",
+              "type": "number",
+              "optional": false,
+              "description": "Zero or negative means empty or not yet known."
+            },
+            {
+              "name": "mainThreadLimit",
+              "type": "number",
+              "optional": false,
+              "description": ""
+            },
+            {
+              "name": "mainThreadHardwareLimit",
+              "type": "number",
+              "optional": false,
+              "description": ""
+            },
+            {
+              "name": "hardwareConcurrency",
+              "type": "number",
+              "optional": false,
+              "description": ""
+            }
+          ],
+          "returns": [
+            {
+              "type": "boolean",
+              "description": ""
+            }
+          ],
+          "examples": 0
+        },
+        {
           "id": "countPdfPages",
           "name": "countPdfPages",
           "longname": "countPdfPages",
           "kind": "function",
           "scope": "global",
           "file": "src/utils/documentLoadingConfig.js",
-          "line": 523,
+          "line": 556,
           "description": "Count PDF pages in a page descriptor list.",
           "params": [
             {
@@ -31503,7 +31682,7 @@
           "kind": "function",
           "scope": "global",
           "file": "src/utils/documentLoadingConfig.js",
-          "line": 543,
+          "line": 576,
           "description": "Resolve the PDF page-worker policy for the current document size.",
           "params": [
             {
@@ -31534,7 +31713,7 @@
           "kind": "function",
           "scope": "global",
           "file": "src/utils/documentLoadingConfig.js",
-          "line": 604,
+          "line": 637,
           "description": "Return a render config with pdfToImageMode and pdfWorkerCount resolved for a known PDF page count.",
           "params": [
             {
@@ -31565,7 +31744,7 @@
           "kind": "function",
           "scope": "global",
           "file": "src/utils/documentLoadingConfig.js",
-          "line": 849,
+          "line": 882,
           "description": "Return the page-count window where auto mode should still behave like the fast, eager path.",
           "params": [
             {
@@ -31590,7 +31769,7 @@
           "kind": "function",
           "scope": "global",
           "file": "src/utils/documentLoadingConfig.js",
-          "line": 1023,
+          "line": 1056,
           "description": "",
           "params": [
             {
@@ -31615,7 +31794,7 @@
           "kind": "function",
           "scope": "global",
           "file": "src/utils/documentLoadingConfig.js",
-          "line": 1041,
+          "line": 1074,
           "description": "",
           "params": [
             {
@@ -31640,7 +31819,7 @@
           "kind": "function",
           "scope": "global",
           "file": "src/utils/documentLoadingConfig.js",
-          "line": 1049,
+          "line": 1082,
           "description": "",
           "params": [
             {
@@ -31680,7 +31859,7 @@
       ],
       "packageImports": [],
       "incomingLocalImports": 12,
-      "importanceScore": 122,
+      "importanceScore": 123,
       "summary": "OpenDocViewer — runtime helpers for fetch/render/memory policies.",
       "summaryConfidence": "high",
       "summarySource": "leading-jsdoc"
@@ -68452,7 +68631,7 @@
       "kind": "member",
       "scope": "instance",
       "file": "src/logging/systemLogger.js",
-      "line": 417,
+      "line": 456,
       "description": "",
       "params": [
         {
@@ -68472,7 +68651,7 @@
       "kind": "member",
       "scope": "instance",
       "file": "src/logging/systemLogger.js",
-      "line": 365,
+      "line": 404,
       "description": "Disable backend forwarding after a non-recoverable configuration/runtime failure.",
       "params": [
         {
@@ -68497,7 +68676,7 @@
       "kind": "member",
       "scope": "instance",
       "file": "src/logging/systemLogger.js",
-      "line": 426,
+      "line": 465,
       "description": "",
       "params": [
         {
@@ -68517,7 +68696,7 @@
       "kind": "member",
       "scope": "instance",
       "file": "src/logging/systemLogger.js",
-      "line": 420,
+      "line": 459,
       "description": "",
       "params": [
         {
@@ -68528,6 +68707,31 @@
         }
       ],
       "returns": [],
+      "examples": 0
+    },
+    {
+      "id": "isPlaceholderToken",
+      "name": "isPlaceholderToken",
+      "longname": "isPlaceholderToken",
+      "kind": "function",
+      "scope": "global",
+      "file": "src/logging/systemLogger.js",
+      "line": 213,
+      "description": "Detect tokens that are clearly placeholders or left unset.",
+      "params": [
+        {
+          "name": "token",
+          "type": "*",
+          "optional": false,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "type": "boolean",
+          "description": ""
+        }
+      ],
       "examples": 0
     },
     {
@@ -68568,7 +68772,7 @@
       "kind": "member",
       "scope": "instance",
       "file": "src/logging/systemLogger.js",
-      "line": 338,
+      "line": 377,
       "description": "Log a message with a given level and optional context.",
       "params": [
         {
@@ -68618,7 +68822,7 @@
       "kind": "class",
       "scope": "global",
       "file": "src/logging/systemLogger.js",
-      "line": 210,
+      "line": 243,
       "description": "LogController — small facade around console + optional HTTP forwarding.",
       "params": [],
       "returns": [],
@@ -68631,7 +68835,7 @@
       "kind": "constant",
       "scope": "global",
       "file": "src/logging/systemLogger.js",
-      "line": 430,
+      "line": 469,
       "description": "Export a singleton instance (sufficient for app usage).",
       "params": [],
       "returns": [],
@@ -68817,7 +69021,7 @@
       "kind": "member",
       "scope": "instance",
       "file": "src/logging/systemLogger.js",
-      "line": 383,
+      "line": 422,
       "description": "Attempt to POST the log to the backend, with simple linear retries.",
       "params": [
         {
@@ -68860,7 +69064,7 @@
       "kind": "member",
       "scope": "instance",
       "file": "src/logging/systemLogger.js",
-      "line": 311,
+      "line": 350,
       "description": "Update/replace the auth token used in 'x-log-token'.",
       "params": [
         {
@@ -68885,7 +69089,7 @@
       "kind": "member",
       "scope": "instance",
       "file": "src/logging/systemLogger.js",
-      "line": 260,
+      "line": 299,
       "description": "Set the backend ingestion URL (absolute or relative).",
       "params": [
         {
@@ -68910,7 +69114,7 @@
       "kind": "member",
       "scope": "instance",
       "file": "src/logging/systemLogger.js",
-      "line": 302,
+      "line": 341,
       "description": "Set axios timeout (ms) for backend posts.",
       "params": [
         {
@@ -68935,7 +69139,7 @@
       "kind": "member",
       "scope": "instance",
       "file": "src/logging/systemLogger.js",
-      "line": 274,
+      "line": 313,
       "description": "Set the current log level.",
       "params": [
         {
@@ -68960,7 +69164,7 @@
       "kind": "member",
       "scope": "instance",
       "file": "src/logging/systemLogger.js",
-      "line": 247,
+      "line": 286,
       "description": "Enable/disable HTTP forwarding at runtime.",
       "params": [
         {
@@ -68985,7 +69189,7 @@
       "kind": "member",
       "scope": "instance",
       "file": "src/logging/systemLogger.js",
-      "line": 293,
+      "line": 332,
       "description": "Set retry interval (ms) for backend forwarding.",
       "params": [
         {
@@ -69010,7 +69214,7 @@
       "kind": "member",
       "scope": "instance",
       "file": "src/logging/systemLogger.js",
-      "line": 284,
+      "line": 323,
       "description": "Set retry limit for backend forwarding.",
       "params": [
         {
@@ -69029,13 +69233,50 @@
       "examples": 0
     },
     {
+      "id": "shouldEnableBackendLogging",
+      "name": "shouldEnableBackendLogging",
+      "longname": "shouldEnableBackendLogging",
+      "kind": "function",
+      "scope": "global",
+      "file": "src/logging/systemLogger.js",
+      "line": 234,
+      "description": "Decide whether backend log forwarding may be enabled.",
+      "params": [
+        {
+          "name": "backendUrl",
+          "type": "string",
+          "optional": false,
+          "description": ""
+        },
+        {
+          "name": "enabledOverride",
+          "type": "boolean|null",
+          "optional": false,
+          "description": ""
+        },
+        {
+          "name": "token",
+          "type": "*",
+          "optional": false,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "type": "boolean",
+          "description": ""
+        }
+      ],
+      "examples": 0
+    },
+    {
       "id": "LogController#shouldLog",
       "name": "shouldLog",
       "longname": "LogController#shouldLog",
       "kind": "member",
       "scope": "instance",
       "file": "src/logging/systemLogger.js",
-      "line": 324,
+      "line": 363,
       "description": "Internal: should this level be logged at all (console or backend)?",
       "params": [
         {
@@ -69060,7 +69301,7 @@
       "kind": "member",
       "scope": "instance",
       "file": "src/logging/systemLogger.js",
-      "line": 423,
+      "line": 462,
       "description": "",
       "params": [
         {
@@ -70500,7 +70741,7 @@
       "kind": "function",
       "scope": "global",
       "file": "src/utils/documentLoadingConfig.js",
-      "line": 523,
+      "line": 556,
       "description": "Count PDF pages in a page descriptor list.",
       "params": [
         {
@@ -70725,7 +70966,7 @@
       "kind": "function",
       "scope": "global",
       "file": "src/utils/documentLoadingConfig.js",
-      "line": 1023,
+      "line": 1056,
       "description": "",
       "params": [
         {
@@ -70750,7 +70991,7 @@
       "kind": "function",
       "scope": "global",
       "file": "src/utils/documentLoadingConfig.js",
-      "line": 1041,
+      "line": 1074,
       "description": "",
       "params": [
         {
@@ -70775,7 +71016,7 @@
       "kind": "function",
       "scope": "global",
       "file": "src/utils/documentLoadingConfig.js",
-      "line": 849,
+      "line": 882,
       "description": "Return the page-count window where auto mode should still behave like the fast, eager path.",
       "params": [
         {
@@ -70812,6 +71053,49 @@
       "examples": 0
     },
     {
+      "id": "normalizeNumber",
+      "name": "normalizeNumber",
+      "longname": "normalizeNumber",
+      "kind": "function",
+      "scope": "global",
+      "file": "src/utils/documentLoadingConfig.js",
+      "line": 366,
+      "description": "Coerce a value to a bounded integer .",
+      "params": [
+        {
+          "name": "value",
+          "type": "unknown",
+          "optional": false,
+          "description": "Raw value, typically from configuration."
+        },
+        {
+          "name": "fallback",
+          "type": "number",
+          "optional": false,
+          "description": "Returned when value is not a finite number."
+        },
+        {
+          "name": "min",
+          "type": "number",
+          "optional": false,
+          "description": "Lower bound, applied before flooring."
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "optional": true,
+          "description": "Optional upper bound."
+        }
+      ],
+      "returns": [
+        {
+          "type": "number",
+          "description": "An integer in [min, max]."
+        }
+      ],
+      "examples": 0
+    },
+    {
       "id": "PdfToImageMode",
       "name": "PdfToImageMode",
       "longname": "PdfToImageMode",
@@ -70831,7 +71115,7 @@
       "kind": "function",
       "scope": "global",
       "file": "src/utils/documentLoadingConfig.js",
-      "line": 604,
+      "line": 637,
       "description": "Return a render config with pdfToImageMode and pdfWorkerCount resolved for a known PDF page count.",
       "params": [
         {
@@ -70862,7 +71146,7 @@
       "kind": "function",
       "scope": "global",
       "file": "src/utils/documentLoadingConfig.js",
-      "line": 543,
+      "line": 576,
       "description": "Resolve the PDF page-worker policy for the current document size.",
       "params": [
         {
@@ -70968,12 +71252,61 @@
       "kind": "function",
       "scope": "global",
       "file": "src/utils/documentLoadingConfig.js",
-      "line": 1049,
+      "line": 1082,
       "description": "",
       "params": [
         {
           "name": "input",
           "type": "StopRecommendationInput",
+          "optional": false,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "type": "boolean",
+          "description": ""
+        }
+      ],
+      "examples": 0
+    },
+    {
+      "id": "shouldUseMainThreadForPdf",
+      "name": "shouldUseMainThreadForPdf",
+      "longname": "shouldUseMainThreadForPdf",
+      "kind": "function",
+      "scope": "global",
+      "file": "src/utils/documentLoadingConfig.js",
+      "line": 510,
+      "description": "Decide whether a PDF should render on the main thread rather than through workers.",
+      "params": [
+        {
+          "name": "policy",
+          "type": "Object",
+          "optional": false,
+          "description": ""
+        },
+        {
+          "name": "pageCount",
+          "type": "number",
+          "optional": false,
+          "description": "Zero or negative means empty or not yet known."
+        },
+        {
+          "name": "mainThreadLimit",
+          "type": "number",
+          "optional": false,
+          "description": ""
+        },
+        {
+          "name": "mainThreadHardwareLimit",
+          "type": "number",
+          "optional": false,
+          "description": ""
+        },
+        {
+          "name": "hardwareConcurrency",
+          "type": "number",
           "optional": false,
           "description": ""
         }
