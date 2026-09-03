@@ -7,6 +7,11 @@ import { collectSourceFiles, isSensitiveFileName } from '../src/lib/fileInventor
 import { buildAgentMap, redactScript } from '../src/lib/mapBuilder.js';
 import { writeAgentDocs } from '../src/lib/writers.js';
 
+// Built at runtime: a literal base64 of user:pass would itself trip secret scanning,
+// which is exactly what the redaction under test protects against.
+const basicToken = Buffer.from('user:pass').toString('base64');
+
+
 async function withTempDir(prefix, callback) {
   const dir = await fs.mkdtemp(path.join(os.tmpdir(), prefix));
   try {
@@ -115,7 +120,7 @@ test('redactScript masks common secret patterns', () => {
   assert.equal(redactScript('DEPLOY_TOKEN=xyz'), 'DEPLOY_TOKEN=***');
   assert.equal(redactScript('PASSWORD=super-secret'), 'PASSWORD=***');
   assert.equal(redactScript('curl -H "Authorization: Bearer super-secret-token"'), 'curl -H "Authorization: Bearer ***"');
-  assert.equal(redactScript('curl --header Authorization: Basic ***REMOVED***'), 'curl --header Authorization: Basic ***');
+  assert.equal(redactScript(`curl --header Authorization: Basic ${basicToken}`), 'curl --header Authorization: Basic ***');
   assert.equal(
     redactScript('npm config set //registry.npmjs.org/:_authToken=npm_xxxxxxxx'),
     'npm config set //registry.npmjs.org/:_authToken=***',
@@ -162,7 +167,7 @@ test('buildAgentMap redacts package scripts before exposing them', () => {
         start: 'node server.js',
         'deploy:prod': 'API_KEY=abc123 DEPLOY_TOKEN=xyz node deploy.js',
         auth: 'curl -H "Authorization: Bearer super-secret-token" https://api.example.com',
-        'auth:basic': 'curl --header Authorization: Basic ***REMOVED***',
+        'auth:basic': `curl --header Authorization: Basic ${basicToken}`,
         registry: 'npm config set //registry.npmjs.org/:_authToken=npm_xxxxxxxx',
         'git:push': 'git push https://user:password@github.com/org/repo.git',
       },
@@ -178,7 +183,7 @@ test('buildAgentMap redacts package scripts before exposing them', () => {
   assert.equal(scripts['deploy:prod'].includes('DEPLOY_TOKEN=***'), true);
   assert.equal(scripts.auth.includes('super-secret-token'), false);
   assert.equal(scripts.auth.includes('Authorization: Bearer ***'), true);
-  assert.equal(scripts['auth:basic'].includes('***REMOVED***'), false);
+  assert.equal(scripts['auth:basic'].includes(basicToken), false);
   assert.equal(scripts['auth:basic'].includes('Authorization: Basic ***'), true);
   assert.equal(scripts.registry.includes('npm_xxxxxxxx'), false);
   assert.equal(scripts.registry.includes('//registry.npmjs.org/:_authToken=***'), true);
