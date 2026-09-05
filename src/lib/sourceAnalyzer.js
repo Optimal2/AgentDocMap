@@ -13,6 +13,9 @@ const PARSER_PLUGINS = [
   'topLevelAwait',
 ];
 
+/** Maximum number of matching line numbers recorded per risk pattern and file. */
+const MAX_RISK_PATTERN_LINES = 12;
+
 const RISK_PATTERNS = Object.freeze([
   {
     key: 'dangerouslySetInnerHTML',
@@ -328,7 +331,7 @@ function findMatchingLines(text, pattern) {
     }
   }
 
-  return lines.slice(0, 12);
+  return lines.slice(0, MAX_RISK_PATTERN_LINES);
 }
 
 /**

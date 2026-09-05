@@ -3,13 +3,44 @@ import { firstSentence, normalizeRelativePath, toPosixPath, truncateText } from 
 import { isSensitiveFileName } from './fileInventory.js';
 import { ENTRYPOINT_NAMES } from './projectSignals.js';
 
+/**
+ * Key stems that mark a `KEY=value` assignment in a package script as sensitive.
+ * `AUTH` must end the word so that `AUTHORITY=` and `AUTH0_CLIENT_ID=` are not
+ * treated as secrets.
+ */
+const SECRET_KEY_STEMS = 'TOKEN|SECRET|PASSWORD|PASS|API[_-]?KEY|AUTH(?![A-Za-z0-9])|CREDENTIAL|PRIVATE[_-]?KEY';
+
+/**
+ * Trailing key segments (`_<SUFFIX>=`) that turn a sensitive-looking key into
+ * non-secret metadata. Each entry documents the false positive it prevents.
+ */
+const NON_SECRET_KEY_SUFFIXES = [
+  'EXPIRY', // TOKEN_EXPIRY=3600: a lifetime, not the token itself.
+  'DAYS', // TOKEN_EXPIRY_DAYS=30: a lifetime expressed in days.
+  'NAME', // SECRET_NAME=db-password: a reference to a secret, not its value.
+  'PATH', // PRIVATE_KEY_PATH=./key.pem: a file location, not key material.
+  'ID', // API_KEY_ID=main: an identifier that is safe to show.
+  'SANTA', // SECRET_SANTA=group: "secret" used as an ordinary word.
+];
+
+/**
+ * Matches (and captures, including the `=`) a sensitive assignment key such as
+ * `DEPLOY_TOKEN=`; the value patterns below decide how the value is masked.
+ */
+const SECRET_ASSIGNMENT_KEY = `[A-Za-z_]*(?:${SECRET_KEY_STEMS})[A-Za-z_0-9]*(?<!_(?:${NON_SECRET_KEY_SUFFIXES.join('|')}))=`;
+
+/** Unquoted assignment value that is a known-safe idiom (`PASS=through`). */
+const SAFE_UNQUOTED_VALUE = 'through';
+
 const SENSITIVE_SCRIPT_REPLACEMENTS = [
   {
-    pattern: /([A-Za-z_]*(?:TOKEN|SECRET|PASSWORD|PASS|API[_-]?KEY|AUTH(?![A-Za-z0-9])|CREDENTIAL|PRIVATE[_-]?KEY)[A-Za-z_0-9]*(?<!_(?:EXPIRY|DAYS|NAME|PATH|ID|SANTA))=)(?!through\b)([^\s;`'"]+)/gi,
+    // Unquoted value: KEY=value -> KEY=***
+    pattern: new RegExp(`(${SECRET_ASSIGNMENT_KEY})(?!${SAFE_UNQUOTED_VALUE}\\b)([^\\s;\`'"]+)`, 'gi'),
     replacement: '$1***',
   },
   {
-    pattern: /([A-Za-z_]*(?:TOKEN|SECRET|PASSWORD|PASS|API[_-]?KEY|AUTH(?![A-Za-z0-9])|CREDENTIAL|PRIVATE[_-]?KEY)[A-Za-z_0-9]*(?<!_(?:EXPIRY|DAYS|NAME|PATH|ID|SANTA))=)(["'`])(.*?)\2/gi,
+    // Quoted value: KEY="value" -> KEY="***" (quote style preserved)
+    pattern: new RegExp(`(${SECRET_ASSIGNMENT_KEY})(["'\`])(.*?)\\2`, 'gi'),
     replacement: '$1$2***$2',
   },
   {

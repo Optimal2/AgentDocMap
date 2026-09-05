@@ -96,6 +96,41 @@ test('DEPENDENCIES.md states how many Used In files are hidden and marks dynamic
   }
 });
 
+test('DEPENDENCIES.md renders declared dependencies without observed imports as zero with an empty Used In cell', async () => {
+  const sandbox = await fs.mkdtemp(path.join(os.tmpdir(), 'agentdocmap-deps-'));
+  const target = path.join(sandbox, 'fixture-project');
+  const out = path.join(target, 'docs-agent');
+  await fs.mkdir(target, { recursive: true });
+
+  const map = createMinimalMap();
+  map.project.dependencies = {
+    'no-usage-entry': '1.0.0',
+    'empty-usage': '2.0.0',
+  };
+  map.project.devDependencies = {
+    'dev-no-usage-entry': '3.0.0',
+  };
+  // 'no-usage-entry' and 'dev-no-usage-entry' have no packageUsage entry at all (usage is undefined);
+  // 'empty-usage' has an entry with zero observed imports and no files.
+  map.packageUsage = [
+    { packageName: 'empty-usage', importCount: 0, dynamicImportCount: 0, files: [] },
+  ];
+
+  try {
+    await writeAgentDocs({ outDir: out, clean: true, targetRoot: target, map });
+    const dependencies = await fs.readFile(path.join(out, 'DEPENDENCIES.md'), 'utf8');
+    const rows = dependencies.split('\n').filter((line) => line.startsWith('| <code>'));
+
+    assert.deepEqual(rows, [
+      '| <code>empty-usage</code> | <code>2.0.0</code> | 0 |  |',
+      '| <code>no-usage-entry</code> | <code>1.0.0</code> | 0 |  |',
+      '| <code>dev-no-usage-entry</code> | <code>3.0.0</code> | 0 |',
+    ]);
+  } finally {
+    await fs.rm(sandbox, { recursive: true, force: true });
+  }
+});
+
 test('writeAgentDocs rejects cleaning the target repository root even when the name is allowlisted', async () => {
   const sandbox = await fs.mkdtemp(path.join(os.tmpdir(), 'agentdocmap-guard-'));
   const target = path.join(sandbox, 'docs-agent');

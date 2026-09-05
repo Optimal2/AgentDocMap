@@ -598,7 +598,9 @@ function formatUsageFiles(usage) {
   const shown = usage.files.slice(0, MAX_USAGE_FILES_DISPLAY).map((file) => formatMarkdownTableCode(file));
   const hidden = usage.files.length - shown.length;
   if (hidden > 0) {
-    shown.push(`... (+${hidden} more, ${usage.files.length} files total)`);
+    // The cell is HTML (<code> entries joined by <br>), so the plain-text note is
+    // HTML-escaped like the entries, but not wrapped in <code>.
+    shown.push(escapeHtmlText(`... (+${hidden} more, ${usage.files.length} files total)`));
   }
 
   return shown.join('<br>');
