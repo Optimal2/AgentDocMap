@@ -96,7 +96,7 @@ test('DEPENDENCIES.md states how many Used In files are hidden and marks dynamic
   }
 });
 
-test('DEPENDENCIES.md renders declared dependencies without observed imports as zero with an empty Used In cell', async () => {
+test('DEPENDENCIES.md distinguishes missing usage data from zero observed files in the Used In cell', async () => {
   const sandbox = await fs.mkdtemp(path.join(os.tmpdir(), 'agentdocmap-deps-'));
   const target = path.join(sandbox, 'fixture-project');
   const out = path.join(target, 'docs-agent');
@@ -110,8 +110,9 @@ test('DEPENDENCIES.md renders declared dependencies without observed imports as 
   map.project.devDependencies = {
     'dev-no-usage-entry': '3.0.0',
   };
-  // 'no-usage-entry' and 'dev-no-usage-entry' have no packageUsage entry at all (usage is undefined);
-  // 'empty-usage' has an entry with zero observed imports and no files.
+  // 'no-usage-entry' and 'dev-no-usage-entry' have no packageUsage entry at all (usage is undefined)
+  // and must render a dash; 'empty-usage' has an entry with zero observed imports and no files
+  // and must render an empty cell, so the two cases stay distinguishable in the table.
   map.packageUsage = [
     { packageName: 'empty-usage', importCount: 0, dynamicImportCount: 0, files: [] },
   ];
@@ -123,8 +124,37 @@ test('DEPENDENCIES.md renders declared dependencies without observed imports as 
 
     assert.deepEqual(rows, [
       '| <code>empty-usage</code> | <code>2.0.0</code> | 0 |  |',
-      '| <code>no-usage-entry</code> | <code>1.0.0</code> | 0 |  |',
+      '| <code>no-usage-entry</code> | <code>1.0.0</code> | 0 | — |',
       '| <code>dev-no-usage-entry</code> | <code>3.0.0</code> | 0 |',
+    ]);
+    assert.notEqual(rows[0].split(' | ')[3], rows[1].split(' | ')[3]);
+  } finally {
+    await fs.rm(sandbox, { recursive: true, force: true });
+  }
+});
+
+test('DEPENDENCIES.md does not treat Object.prototype member names as declared packages', async () => {
+  const sandbox = await fs.mkdtemp(path.join(os.tmpdir(), 'agentdocmap-deps-'));
+  const target = path.join(sandbox, 'fixture-project');
+  const out = path.join(target, 'docs-agent');
+  await fs.mkdir(target, { recursive: true });
+
+  const map = createMinimalMap();
+  map.project.dependencies = { declared: '1.0.0' };
+  map.packageUsage = [
+    { packageName: 'constructor', importCount: 1, dynamicImportCount: 0, files: ['src/a.js'] },
+    { packageName: 'toString', importCount: 1, dynamicImportCount: 0, files: ['src/b.js'] },
+    { packageName: 'declared', importCount: 1, dynamicImportCount: 0, files: ['src/c.js'] },
+  ];
+
+  try {
+    await writeAgentDocs({ outDir: out, clean: true, targetRoot: target, map });
+    const dependencies = await fs.readFile(path.join(out, 'DEPENDENCIES.md'), 'utf8');
+    const undeclared = dependencies.split('\n').filter((line) => line.startsWith('- `'));
+
+    assert.deepEqual(undeclared, [
+      '- `constructor`: 1 imports in 1 files',
+      '- `toString`: 1 imports in 1 files',
     ]);
   } finally {
     await fs.rm(sandbox, { recursive: true, force: true });

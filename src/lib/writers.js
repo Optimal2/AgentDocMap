@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { hasOwn } from './fsUtils.js';
 import { assertSafeCleanOutputDirectory } from './outputGuard.js';
 import { isRuntimeEntrypointPath } from './projectSignals.js';
 
@@ -10,6 +11,8 @@ const MAX_REPORT_ITEMS = 15;
 const MAX_IMPORTS_DISPLAY = 12;
 const MAX_SYMBOLS_PER_FILE_DISPLAY = 12;
 const MAX_USAGE_FILES_DISPLAY = 5;
+// Rendered in the Used In column when a declared package has no observed-import entry at all.
+const NO_USAGE_DATA_MARKER = '—';
 const TABLE_CELL_ESCAPE_PATTERN = /\r\n|\r|\n|[&<>"'\\|`[\]()]/g;
 // No '&' in this class: escapeMarkdownInline no longer maps it, and a character the
 // pattern matches without a matching replacement entry would be substituted with the
@@ -166,7 +169,8 @@ function renderDependencies(map) {
     '',
     'This file combines package.json declarations with observed source imports.',
     'Import counts include static `import` declarations and constant-specifier dynamic `import()` calls;',
-    `the Used In column lists at most ${MAX_USAGE_FILES_DISPLAY} files and states how many more exist.`,
+    `the Used In column lists at most ${MAX_USAGE_FILES_DISPLAY} files and states how many more exist;`,
+    `${NO_USAGE_DATA_MARKER} means no import of the package was observed at all.`,
     '',
     '## Runtime Dependencies',
     '',
@@ -187,7 +191,9 @@ function renderDependencies(map) {
     lines.push(`| ${formatMarkdownTableCode(name)} | ${formatMarkdownTableCode(version)} | ${formatImportCount(usage)} |`);
   }
 
-  const undeclared = map.packageUsage.filter((item) => !runtimeDeps[item.packageName] && !devDeps[item.packageName]);
+  // Package names are untrusted strings; hasOwn() keeps inherited Object.prototype members
+  // (a package literally named `constructor`) from counting as declared.
+  const undeclared = map.packageUsage.filter((item) => !hasOwn(runtimeDeps, item.packageName) && !hasOwn(devDeps, item.packageName));
   lines.push('', '## Imported But Not Declared Directly', '');
   if (undeclared.length === 0) {
     lines.push('No undeclared package imports were detected.');
@@ -591,7 +597,13 @@ function formatSourceCommit(generated) {
 }
 
 function formatUsageFiles(usage) {
-  if (!usage || usage.files.length === 0) {
+  if (!usage) {
+    // No usage entry at all (the package was never seen in an import): distinct
+    // from an entry that exists but lists zero files, which renders as an empty cell.
+    return NO_USAGE_DATA_MARKER;
+  }
+
+  if (usage.files.length === 0) {
     return '';
   }
 

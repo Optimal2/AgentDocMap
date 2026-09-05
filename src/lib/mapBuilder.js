@@ -230,6 +230,12 @@ function countPackageUsage(files) {
     .sort((left, right) => right.importCount - left.importCount || left.packageName.localeCompare(right.packageName));
 }
 
+/**
+ * Derives the package name from an import specifier. The result is an untrusted
+ * string (an import of `constructor/x` or `__proto__/x` yields `constructor` or
+ * `__proto__`); it is stored in a Map here, and every plain-object lookup keyed
+ * by it downstream (renderDependencies) goes through hasOwn() from fsUtils.js.
+ */
 function packageNameFromImport(value) {
   if (!value || value.startsWith('node:')) {
     return null;
