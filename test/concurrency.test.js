@@ -14,7 +14,7 @@ function assertIsAgentDocResult(result, index) {
   assert.notEqual(result, null, `run ${index} should return a non-null result`);
   assert.equal(typeof result.stats, 'object', `run ${index} should include stats`);
   assert.notEqual(result.stats, null, `run ${index} stats should be non-null`);
-  assert.equal(result.stats.fileCount, 2, `run ${index} should inspect the fixture files`);
+  assert.equal(result.stats.fileCount, 3, `run ${index} should inspect the fixture files`);
 }
 
 /**

@@ -9,6 +9,7 @@ const MAX_IMPORT_HUBS_DISPLAY = 20;
 const MAX_REPORT_ITEMS = 15;
 const MAX_IMPORTS_DISPLAY = 12;
 const MAX_SYMBOLS_PER_FILE_DISPLAY = 12;
+const MAX_USAGE_FILES_DISPLAY = 5;
 const TABLE_CELL_ESCAPE_PATTERN = /\r\n|\r|\n|[&<>"'\\|`[\]()]/g;
 // No '&' in this class: escapeMarkdownInline no longer maps it, and a character the
 // pattern matches without a matching replacement entry would be substituted with the
@@ -164,6 +165,8 @@ function renderDependencies(map) {
     '# Dependencies',
     '',
     'This file combines package.json declarations with observed source imports.',
+    'Import counts include static `import` declarations and constant-specifier dynamic `import()` calls;',
+    `the Used In column lists at most ${MAX_USAGE_FILES_DISPLAY} files and states how many more exist.`,
     '',
     '## Runtime Dependencies',
     '',
@@ -173,7 +176,7 @@ function renderDependencies(map) {
 
   for (const [name, version] of Object.entries(runtimeDeps).sort(([nameA], [nameB]) => nameA.localeCompare(nameB))) {
     const usage = usageByName.get(name);
-    lines.push(`| ${formatMarkdownTableCode(name)} | ${formatMarkdownTableCode(version)} | ${usage?.importCount || 0} | ${formatUsageFiles(usage)} |`);
+    lines.push(`| ${formatMarkdownTableCode(name)} | ${formatMarkdownTableCode(version)} | ${formatImportCount(usage)} | ${formatUsageFiles(usage)} |`);
   }
 
   lines.push('', '## Development Dependencies', '');
@@ -181,7 +184,7 @@ function renderDependencies(map) {
   lines.push('| --- | --- | ---: |');
   for (const [name, version] of Object.entries(devDeps).sort(([nameA], [nameB]) => nameA.localeCompare(nameB))) {
     const usage = usageByName.get(name);
-    lines.push(`| ${formatMarkdownTableCode(name)} | ${formatMarkdownTableCode(version)} | ${usage?.importCount || 0} |`);
+    lines.push(`| ${formatMarkdownTableCode(name)} | ${formatMarkdownTableCode(version)} | ${formatImportCount(usage)} |`);
   }
 
   const undeclared = map.packageUsage.filter((item) => !runtimeDeps[item.packageName] && !devDeps[item.packageName]);
@@ -592,7 +595,23 @@ function formatUsageFiles(usage) {
     return '';
   }
 
-  return usage.files.slice(0, 5).map((file) => formatMarkdownTableCode(file)).join('<br>');
+  const shown = usage.files.slice(0, MAX_USAGE_FILES_DISPLAY).map((file) => formatMarkdownTableCode(file));
+  const hidden = usage.files.length - shown.length;
+  if (hidden > 0) {
+    shown.push(`... (+${hidden} more, ${usage.files.length} files total)`);
+  }
+
+  return shown.join('<br>');
+}
+
+function formatImportCount(usage) {
+  const total = usage?.importCount || 0;
+  const dynamic = usage?.dynamicImportCount || 0;
+  if (dynamic === 0) {
+    return String(total);
+  }
+
+  return dynamic === total ? `${total} (dynamic)` : `${total} (${dynamic} dynamic)`;
 }
 
 function finishMarkdown(lines) {

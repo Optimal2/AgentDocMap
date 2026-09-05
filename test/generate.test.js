@@ -16,8 +16,8 @@ test('generateAgentDocs writes an agent packet from existing JSDoc comments', as
     projectName: 'FixtureProject',
   });
 
-  assert.equal(result.stats.fileCount, 2);
-  assert.equal(result.stats.docletCount >= 2, true);
+  assert.equal(result.stats.fileCount, 3);
+  assert.equal(result.stats.docletCount >= 3, true);
 
   const context = await fs.readFile(path.join(out, 'AGENT_CONTEXT.md'), 'utf8');
   assert.match(context, /FixtureProject Agent Context/);
@@ -40,6 +40,47 @@ test('generateAgentDocs writes an agent packet from existing JSDoc comments', as
   assert.equal(agentMap.files.every((file) => typeof file.summaryConfidence === 'string'), true);
   assert.equal(agentMap.stats.sourceLineCount > 0, true);
   assert.equal(agentMap.stats.estimatedSourceTokens > 0, true);
+});
+
+test('generateAgentDocs counts constant-specifier dynamic imports like static imports', async () => {
+  const target = path.resolve('test/fixture-project');
+  const out = await fs.mkdtemp(path.join(os.tmpdir(), 'agentdocmap-'));
+
+  await generateAgentDocs({
+    target,
+    out,
+    projectName: 'FixtureProject',
+  });
+
+  const agentMap = JSON.parse(await fs.readFile(path.join(out, 'agent-map.json'), 'utf8'));
+  const lazy = agentMap.files.find((file) => file.path === 'src/lazy.js');
+  assert.ok(lazy, 'expected src/lazy.js in the analyzed files');
+  assert.deepEqual(
+    lazy.imports.map((item) => [item.source, item.kind]),
+    [
+      ['./math.js', 'static'],
+      ['lazy-formatter', 'dynamic'],
+      ['./math.js', 'dynamic'],
+    ],
+  );
+  assert.equal(lazy.packageImports.length, 1);
+  assert.equal(lazy.packageImports[0].kind, 'dynamic');
+  assert.equal(lazy.localImports.length, 2);
+  assert.equal(lazy.localImports.every((item) => item.resolved === 'src/math.js'), true);
+
+  const math = agentMap.files.find((file) => file.path === 'src/math.js');
+  assert.equal(math.incomingLocalImports, 3);
+
+  const usage = agentMap.packageUsage.find((item) => item.packageName === 'lazy-formatter');
+  assert.deepEqual(usage, {
+    packageName: 'lazy-formatter',
+    importCount: 1,
+    dynamicImportCount: 1,
+    files: ['src/lazy.js'],
+  });
+
+  const dependencies = await fs.readFile(path.join(out, 'DEPENDENCIES.md'), 'utf8');
+  assert.match(dependencies, /- `lazy-formatter`: 1 imports in 1 files/);
 });
 
 test('writeAgentDocs escapes Markdown-sensitive inline values', async () => {

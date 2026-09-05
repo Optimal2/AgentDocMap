@@ -177,11 +177,14 @@ function countPackageUsage(files) {
       }
 
       if (!usage.has(packageName)) {
-        usage.set(packageName, { packageName, importCount: 0, files: new Set() });
+        usage.set(packageName, { packageName, importCount: 0, dynamicImportCount: 0, files: new Set() });
       }
 
       const entry = usage.get(packageName);
       entry.importCount += 1;
+      if (item.kind === 'dynamic') {
+        entry.dynamicImportCount += 1;
+      }
       entry.files.add(file.path);
     }
   }
@@ -190,6 +193,7 @@ function countPackageUsage(files) {
     .map((entry) => ({
       packageName: entry.packageName,
       importCount: entry.importCount,
+      dynamicImportCount: entry.dynamicImportCount,
       files: [...entry.files].sort(),
     }))
     .sort((left, right) => right.importCount - left.importCount || left.packageName.localeCompare(right.packageName));

@@ -80,8 +80,19 @@ async function analyzeFile({ targetRoot, sourceFile }) {
         source: node.source.value,
         specifiers: node.specifiers.map((specifier) => specifier.local?.name).filter(Boolean),
         line: node.loc?.start?.line || null,
+        kind: 'static',
       });
       return;
+    }
+
+    const dynamicSource = getDynamicImportSource(node);
+    if (dynamicSource) {
+      result.imports.push({
+        source: dynamicSource,
+        specifiers: [],
+        line: node.loc?.start?.line || null,
+        kind: 'dynamic',
+      });
     }
 
     if (node.type === 'ExportNamedDeclaration') {
@@ -318,6 +329,39 @@ function findMatchingLines(text, pattern) {
   }
 
   return lines.slice(0, 12);
+}
+
+/**
+ * Returns the module specifier of a dynamic `import(...)` expression when it is
+ * a constant string, otherwise null. Supports both the Babel 8 `ImportExpression`
+ * node and the legacy `CallExpression` with an `Import` callee. Computed
+ * specifiers (identifiers, template literals with expressions) cannot be
+ * resolved statically and are ignored.
+ *
+ * @param {object} node AST node.
+ * @returns {string|null} Module specifier or null.
+ */
+function getDynamicImportSource(node) {
+  let argument = null;
+  if (node.type === 'ImportExpression') {
+    argument = node.source;
+  } else if (node.type === 'CallExpression' && node.callee?.type === 'Import') {
+    argument = node.arguments?.[0] || null;
+  }
+
+  if (!argument) {
+    return null;
+  }
+
+  if (argument.type === 'StringLiteral' || (argument.type === 'Literal' && typeof argument.value === 'string')) {
+    return argument.value;
+  }
+
+  if (argument.type === 'TemplateLiteral' && argument.expressions.length === 0 && argument.quasis.length === 1) {
+    return argument.quasis[0].value.cooked ?? argument.quasis[0].value.raw;
+  }
+
+  return null;
 }
 
 function walkAst(node, visitor) {

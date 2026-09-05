@@ -45,6 +45,57 @@ function createMinimalMap() {
   };
 }
 
+test('DEPENDENCIES.md states how many Used In files are hidden and marks dynamic imports', async () => {
+  const sandbox = await fs.mkdtemp(path.join(os.tmpdir(), 'agentdocmap-deps-'));
+  const target = path.join(sandbox, 'fixture-project');
+  const out = path.join(target, 'docs-agent');
+  await fs.mkdir(target, { recursive: true });
+
+  const map = createMinimalMap();
+  map.project.dependencies = {
+    'many-files': '1.0.0',
+    'mixed-kinds': '2.0.0',
+    'only-dynamic': '3.0.0',
+    'five-files': '4.0.0',
+  };
+  map.project.devDependencies = {
+    'dev-dynamic': '5.0.0',
+  };
+  const manyFiles = Array.from({ length: 8 }, (_, index) => `src/file-${index + 1}.js`);
+  map.packageUsage = [
+    { packageName: 'many-files', importCount: 9, dynamicImportCount: 0, files: manyFiles },
+    { packageName: 'mixed-kinds', importCount: 3, dynamicImportCount: 1, files: ['src/a.js', 'src/b.js'] },
+    { packageName: 'only-dynamic', importCount: 2, dynamicImportCount: 2, files: ['src/c.js'] },
+    { packageName: 'five-files', importCount: 5, dynamicImportCount: 0, files: manyFiles.slice(0, 5) },
+    { packageName: 'dev-dynamic', importCount: 1, dynamicImportCount: 1, files: ['src/d.js'] },
+  ];
+
+  try {
+    await writeAgentDocs({ outDir: out, clean: true, targetRoot: target, map });
+    const dependencies = await fs.readFile(path.join(out, 'DEPENDENCIES.md'), 'utf8');
+    const rows = Object.fromEntries(
+      dependencies
+        .split('\n')
+        .filter((line) => line.startsWith('| <code>'))
+        .map((line) => [line.match(/^\| <code>([^<]+)<\/code>/)[1], line]),
+    );
+
+    assert.equal(
+      rows['many-files'],
+      '| <code>many-files</code> | <code>1.0.0</code> | 9 | '
+        + manyFiles.slice(0, 5).map((file) => `<code>${file}</code>`).join('<br>')
+        + '<br>... (+3 more, 8 files total) |',
+    );
+    assert.equal(rows['five-files'].includes('more'), false);
+    assert.equal(rows['five-files'].includes('<code>src/file-5.js</code> |'), true);
+    assert.equal(rows['mixed-kinds'].includes('| 3 (1 dynamic) |'), true);
+    assert.equal(rows['only-dynamic'].includes('| 2 (dynamic) |'), true);
+    assert.equal(rows['dev-dynamic'], '| <code>dev-dynamic</code> | <code>5.0.0</code> | 1 (dynamic) |');
+  } finally {
+    await fs.rm(sandbox, { recursive: true, force: true });
+  }
+});
+
 test('writeAgentDocs rejects cleaning the target repository root even when the name is allowlisted', async () => {
   const sandbox = await fs.mkdtemp(path.join(os.tmpdir(), 'agentdocmap-guard-'));
   const target = path.join(sandbox, 'docs-agent');
