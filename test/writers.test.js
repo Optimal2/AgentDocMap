@@ -3,8 +3,11 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
+import { buildAgentMap } from '../src/lib/mapBuilder.js';
 import { writeAgentDocs } from '../src/lib/writers.js';
 
+// Mirrors the `generated` block produced by buildAgentMap (src/lib/mapBuilder.js);
+// the shape is asserted against the real builder in the source commit test below.
 function createMinimalMap() {
   return {
     project: {
@@ -17,11 +20,12 @@ function createMinimalMap() {
       packageScripts: {},
     },
     generated: {
+      by: 'AgentDocMap',
       atUtc: 'example',
-      commit: null,
-      commitDate: null,
-      branch: null,
-      dirty: false,
+      sourceMetadata: 'git',
+      sourceCommit: null,
+      sourceBranch: null,
+      sourceDirty: false,
     },
     stats: {
       fileCount: 0,
@@ -44,6 +48,52 @@ function createMinimalMap() {
     modules: [],
   };
 }
+
+test('AGENT_CONTEXT.md renders the source commit from the real generated shape', async () => {
+  const sandbox = await fs.mkdtemp(path.join(os.tmpdir(), 'agentdocmap-commit-'));
+  const target = path.join(sandbox, 'fixture-project');
+  const out = path.join(target, 'docs-agent');
+  await fs.mkdir(target, { recursive: true });
+
+  const commit = '0123456789abcdef0123456789abcdef01234567';
+  const realMap = buildAgentMap({
+    projectName: 'FixtureProject',
+    targetRoot: target,
+    generatedBy: 'AgentDocMap',
+    sourceMetadata: 'git',
+    generatedAtUtc: 'example',
+    git: { commit, commitDate: '2024-01-01T00:00:00Z', branch: 'main', dirty: true },
+    packageJson: null,
+    sourceAnalysis: { files: [] },
+    doclets: [],
+  });
+
+  // The fixture must use the field names buildAgentMap actually emits; otherwise
+  // formatSourceCommit silently falls back to 'unknown' and the rendering goes untested.
+  const fixture = createMinimalMap();
+  assert.deepEqual(Object.keys(fixture.generated).sort(), Object.keys(realMap.generated).sort());
+  assert.equal(realMap.generated.sourceCommit, commit);
+  assert.equal(realMap.generated.sourceDirty, true);
+
+  fixture.generated.sourceCommit = commit;
+  fixture.generated.sourceDirty = true;
+
+  // The dirty marker's parentheses are Markdown-escaped by escapeMarkdownInline.
+  const expectedLine = `Source commit: ${commit} \\(dirty\\)`;
+  const sourceCommitLine = (context) => context.split('\n').find((line) => line.startsWith('Source commit:'));
+
+  try {
+    await writeAgentDocs({ outDir: out, clean: true, targetRoot: target, map: fixture });
+    const context = await fs.readFile(path.join(out, 'AGENT_CONTEXT.md'), 'utf8');
+    assert.equal(sourceCommitLine(context), expectedLine);
+
+    await writeAgentDocs({ outDir: out, clean: true, targetRoot: target, map: realMap });
+    const realContext = await fs.readFile(path.join(out, 'AGENT_CONTEXT.md'), 'utf8');
+    assert.equal(sourceCommitLine(realContext), expectedLine);
+  } finally {
+    await fs.rm(sandbox, { recursive: true, force: true });
+  }
+});
 
 test('DEPENDENCIES.md states how many Used In files are hidden and marks dynamic imports', async () => {
   const sandbox = await fs.mkdtemp(path.join(os.tmpdir(), 'agentdocmap-deps-'));
