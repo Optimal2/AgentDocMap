@@ -4,7 +4,40 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 import { generateAgentDocs } from '../src/index.js';
+import { buildAgentMap } from '../src/lib/mapBuilder.js';
 import { writeAgentDocs } from '../src/lib/writers.js';
+
+// Mirrors the `generated` block produced by buildAgentMap (src/lib/mapBuilder.js);
+// the key set is asserted against the real builder below so the fixture cannot drift.
+function createGeneratedFixture() {
+  return {
+    by: 'AgentDocMap',
+    atUtc: 'example',
+    sourceMetadata: 'none',
+    sourceCommit: null,
+    sourceBranch: null,
+    sourceDirty: false,
+  };
+}
+
+test('the generated fixture uses the field names buildAgentMap emits', () => {
+  const realMap = buildAgentMap({
+    projectName: 'FixtureProject',
+    targetRoot: path.join(os.tmpdir(), 'agentdocmap-target'),
+    generatedBy: 'AgentDocMap',
+    sourceMetadata: 'none',
+    generatedAtUtc: 'example',
+    git: { commit: null, commitDate: null, branch: null, dirty: null },
+    packageJson: null,
+    sourceAnalysis: { files: [] },
+    doclets: [],
+  });
+
+  assert.deepEqual(
+    Object.keys(createGeneratedFixture()).sort(),
+    Object.keys(realMap.generated).sort(),
+  );
+});
 
 test('generateAgentDocs writes an agent packet from existing JSDoc comments', async () => {
   const target = path.resolve('test/fixture-project');
@@ -104,12 +137,7 @@ test('writeAgentDocs escapes Markdown-sensitive inline values', async () => {
           start: 'node -e "console.log(`hi`)"',
         },
       },
-      generated: {
-        atUtc: 'example',
-        sourceMetadata: 'none',
-        sourceCommit: null,
-        sourceDirty: false,
-      },
+      generated: createGeneratedFixture(),
       stats: {
         fileCount: 1,
         sourceLineCount: 10,

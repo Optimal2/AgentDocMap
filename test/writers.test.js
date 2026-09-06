@@ -267,18 +267,38 @@ test('writeAgentDocs still allows writing to docs-agent inside the target reposi
   await assert.doesNotReject(fs.access(path.join(out, 'AGENT_CONTEXT.md')));
 });
 
-test('writeAgentDocs rejects cleaning common system directories', async () => {
-  const outDir = process.platform === 'win32'
-    ? (process.env.ProgramData || process.env.SystemRoot)
-    : '/usr';
+async function directoryExists(candidate) {
+  try {
+    return (await fs.stat(candidate)).isDirectory();
+  } catch {
+    return false;
+  }
+}
 
-  await assert.rejects(
-    writeAgentDocs({
-      outDir,
-      clean: true,
-      targetRoot: path.join(os.tmpdir(), 'agentdocmap-target'),
-      map: createMinimalMap(),
-    }),
-    /Refusing to clean unsafe AgentDocMap output directory/,
-  );
+test('writeAgentDocs rejects cleaning common system directories', async () => {
+  // The home directory is always protected by the guard and always exists, so the
+  // test never depends on host environment variables or on a fixed POSIX layout.
+  // Platform system directories are added only when this host actually has them.
+  const systemCandidates = process.platform === 'win32'
+    ? [process.env.ProgramData, process.env.SystemRoot]
+    : ['/usr'];
+  const outDirs = [os.homedir()];
+  for (const candidate of systemCandidates) {
+    if (candidate && await directoryExists(candidate)) {
+      outDirs.push(candidate);
+    }
+  }
+
+  for (const outDir of outDirs) {
+    await assert.rejects(
+      writeAgentDocs({
+        outDir,
+        clean: true,
+        targetRoot: path.join(os.tmpdir(), 'agentdocmap-target'),
+        map: createMinimalMap(),
+      }),
+      /Refusing to clean unsafe AgentDocMap output directory/,
+      `expected the guard to reject ${outDir}`,
+    );
+  }
 });
