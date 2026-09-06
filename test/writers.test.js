@@ -117,7 +117,7 @@ test('DEPENDENCIES.md states how many Used In files are hidden and marks dynamic
     { packageName: 'mixed-kinds', importCount: 3, dynamicImportCount: 1, files: ['src/a.js', 'src/b.js'] },
     { packageName: 'only-dynamic', importCount: 2, dynamicImportCount: 2, files: ['src/c.js'] },
     { packageName: 'five-files', importCount: 5, dynamicImportCount: 0, files: manyFiles.slice(0, 5) },
-    { packageName: 'dev-dynamic', importCount: 1, dynamicImportCount: 1, files: ['src/d.js'] },
+    { packageName: 'dev-dynamic', importCount: 9, dynamicImportCount: 9, files: manyFiles },
   ];
 
   try {
@@ -146,7 +146,9 @@ test('DEPENDENCIES.md states how many Used In files are hidden and marks dynamic
       '| <code>mixed-kinds</code> | <code>2.0.0</code> | 3 (1 dynamic) | <code>src/a.js</code><br><code>src/b.js</code><br>(2 files total) |',
     );
     assert.equal(rows['only-dynamic'].includes('| 2 (dynamic) | <code>src/c.js</code><br>(1 file total) |'), true);
-    assert.equal(rows['dev-dynamic'], '| <code>dev-dynamic</code> | <code>5.0.0</code> | 1 (dynamic) |');
+    // Development dependencies have no Used In column, even with many files;
+    // preserve the three-column row and its dynamic import count.
+    assert.equal(rows['dev-dynamic'], '| <code>dev-dynamic</code> | <code>5.0.0</code> | 9 (dynamic) |');
   } finally {
     await fs.rm(sandbox, { recursive: true, force: true });
   }
@@ -275,7 +277,7 @@ async function directoryExists(candidate) {
   }
 }
 
-test('writeAgentDocs rejects cleaning common system directories', async () => {
+test('writeAgentDocs rejects cleaning common system directories', async (t) => {
   // The home directory is always protected by the guard and always exists, so the
   // test never depends on host environment variables or on a fixed POSIX layout.
   // Platform system directories are added only when this host actually has them.
@@ -287,6 +289,9 @@ test('writeAgentDocs rejects cleaning common system directories', async () => {
     if (candidate && await directoryExists(candidate)) {
       outDirs.push(candidate);
     }
+  }
+  if (process.platform === 'win32' && outDirs.length === 1) {
+    t.diagnostic('WARNING: Reduced system-directory guard coverage: neither ProgramData nor SystemRoot identifies an existing directory; only the home directory is tested.');
   }
 
   for (const outDir of outDirs) {

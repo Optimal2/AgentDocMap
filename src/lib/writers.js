@@ -589,6 +589,9 @@ function toJsonString(data) {
   return `${JSON.stringify(data, null, 2)}\n`;
 }
 
+// buildAgentMap emits sourceMetadata/sourceCommit/sourceBranch/sourceDirty;
+// test/writers.test.js: "AGENT_CONTEXT.md renders the source commit from the real
+// generated shape" binds the fixture keys to the builder with deepEqual.
 function formatSourceCommit(generated) {
   if (generated.sourceMetadata === 'none') {
     return 'not embedded';
