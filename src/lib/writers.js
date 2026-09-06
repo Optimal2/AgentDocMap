@@ -169,7 +169,8 @@ function renderDependencies(map) {
     '',
     'This file combines package.json declarations with observed source imports.',
     'Import counts include static `import` declarations and constant-specifier dynamic `import()` calls;',
-    `the Used In column lists at most ${MAX_USAGE_FILES_DISPLAY} files and states how many more exist;`,
+    `the Used In column lists at most ${MAX_USAGE_FILES_DISPLAY} files and states the file total whenever it cannot be read off the cell`,
+    '(more files than listed, or an import count that differs from the file count);',
     `${NO_USAGE_DATA_MARKER} means no import of the package was observed at all.`,
     '',
     '## Runtime Dependencies',
@@ -607,12 +608,18 @@ function formatUsageFiles(usage) {
     return '';
   }
 
+  const total = usage.files.length;
   const shown = usage.files.slice(0, MAX_USAGE_FILES_DISPLAY).map((file) => formatMarkdownTableCode(file));
-  const hidden = usage.files.length - shown.length;
+  const hidden = total - shown.length;
   if (hidden > 0) {
     // The cell is HTML (<code> entries joined by <br>), so the plain-text note is
     // HTML-escaped like the entries, but not wrapped in <code>.
-    shown.push(escapeHtmlText(`... (+${hidden} more, ${usage.files.length} files total)`));
+    shown.push(escapeHtmlText(`... (+${hidden} more, ${total} files total)`));
+  } else if ((usage.importCount || 0) !== total) {
+    // Every file is listed, but the Imports column counts import declarations, not
+    // files, so a package imported more than once per file (e.g. a main entry plus a
+    // worker URL) would otherwise read as if files were missing from the list.
+    shown.push(escapeHtmlText(`(${total} ${total === 1 ? 'file' : 'files'} total)`));
   }
 
   return shown.join('<br>');

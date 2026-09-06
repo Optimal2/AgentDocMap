@@ -87,9 +87,15 @@ test('DEPENDENCIES.md states how many Used In files are hidden and marks dynamic
         + '<br>... (+3 more, 8 files total) |',
     );
     assert.equal(rows['five-files'].includes('more'), false);
+    assert.equal(rows['five-files'].includes('files total'), false);
     assert.equal(rows['five-files'].includes('<code>src/file-5.js</code> |'), true);
-    assert.equal(rows['mixed-kinds'].includes('| 3 (1 dynamic) |'), true);
-    assert.equal(rows['only-dynamic'].includes('| 2 (dynamic) |'), true);
+    // Import count differs from the file count while every file is listed: the
+    // file total is stated so the Imports column cannot be misread as a file count.
+    assert.equal(
+      rows['mixed-kinds'],
+      '| <code>mixed-kinds</code> | <code>2.0.0</code> | 3 (1 dynamic) | <code>src/a.js</code><br><code>src/b.js</code><br>(2 files total) |',
+    );
+    assert.equal(rows['only-dynamic'].includes('| 2 (dynamic) | <code>src/c.js</code><br>(1 file total) |'), true);
     assert.equal(rows['dev-dynamic'], '| <code>dev-dynamic</code> | <code>5.0.0</code> | 1 (dynamic) |');
   } finally {
     await fs.rm(sandbox, { recursive: true, force: true });
