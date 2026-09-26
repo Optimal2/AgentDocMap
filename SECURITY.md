@@ -30,9 +30,20 @@ documentation from private repositories in public reports.
 ## Security Model
 
 AgentDocMap reads source files and JSDoc comments from a target repository and
-writes generated documentation. It does not execute target application code.
-However, it does run the JSDoc parser over target files, so treat target source
-trees as input that should come from repositories you trust.
+writes generated documentation. It does not execute target application code
+and makes no network requests. However, it runs the JSDoc CLI with the
+target's `jsdoc.json`, and JSDoc loads any `plugins` listed there, so treat
+target source trees as input that should come from repositories you trust.
+
+Built-in protections:
+
+- sensitive file and directory names (`.env*`, keys and certificates,
+  credential config files, `secrets/`, `.aws/`, ...) are skipped
+  (`src/lib/fileInventory.js`)
+- secrets in package scripts are redacted before output
+  (`redactScript()` in `src/lib/mapBuilder.js`)
+- the output directory is only deleted when it passes
+  `assertSafeCleanOutputDirectory()` (`src/lib/outputGuard.js`)
 
 Recommended use:
 

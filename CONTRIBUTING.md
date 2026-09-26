@@ -21,7 +21,11 @@ Run the full validation before committing parser, map, writer, or CLI changes:
 npm run validate
 ```
 
-This runs the fixture test and regenerates the OpenDocViewer example packet.
+This runs the test suite (`node --test test/*.test.js`, including the
+fixture project in `test/fixture-project/`) and regenerates the
+OpenDocViewer example packet. `npm run build:odv` expects an OpenDocViewer
+checkout next to this repository (`../OpenDocViewer`); CI checks out both
+repositories side by side.
 
 For documentation-only changes:
 
@@ -37,3 +41,11 @@ when generator behavior changes.
 
 Do not include generated packets from private or customer-specific repositories
 in this public repository.
+
+## Downstream Impact
+
+OpenDocViewer's workflows check out this repository's default branch without
+pinning a ref. Its "Agent Documentation" workflow regenerates its committed
+`docs-agent/` packet and fails if the result differs. A change that alters
+generated output therefore needs a matching `docs-agent/` regeneration in
+OpenDocViewer.
