@@ -147,7 +147,8 @@ test('DEPENDENCIES.md states how many Used In files are hidden and marks dynamic
     );
     assert.equal(rows['only-dynamic'].includes('| 2 (dynamic) | <code>src/c.js</code><br>(1 file total) |'), true);
     // Development dependencies have no Used In column, even with many files;
-    // preserve the three-column row and its dynamic import count.
+    // this eight-file case must preserve the three-column row and its dynamic
+    // import count, without applying the runtime-only file truncation formatter.
     assert.equal(rows['dev-dynamic'], '| <code>dev-dynamic</code> | <code>5.0.0</code> | 9 (dynamic) |');
   } finally {
     await fs.rm(sandbox, { recursive: true, force: true });
@@ -291,6 +292,7 @@ test('writeAgentDocs rejects cleaning common system directories', async (t) => {
     }
   }
   if (process.platform === 'win32' && outDirs.length === 1) {
+    // Report missing host directories explicitly instead of silently passing with home-only coverage.
     t.diagnostic('WARNING: Reduced system-directory guard coverage: neither ProgramData nor SystemRoot identifies an existing directory; only the home directory is tested.');
   }
 
