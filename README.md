@@ -491,7 +491,8 @@ npm test
 node src/cli.js generate --target ../YourProject --out ../YourProject/docs-agent --generated-at committed-docs --source-metadata none
 ```
 
-Then open `../YourProject/docs-agent/AGENT_CONTEXT.md`.
+`../YourProject` is a placeholder for the path to the project you want to
+document. Then open `../YourProject/docs-agent/AGENT_CONTEXT.md`.
 
 To use the `agentdocmap` command instead of `node src/cli.js`, run `npm link`
 in the AgentDocMap checkout (`bin` in `package.json`).
