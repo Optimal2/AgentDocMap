@@ -1,6 +1,6 @@
 # OpenDocViewer / src/components
 
-File count: 13. Line count: 6643. JSDoc symbol count: 83.
+File count: 18. Line count: 7855. JSDoc symbol count: 103.
 
 ## src/components/CanvasRenderer.jsx
 
@@ -53,22 +53,22 @@ OpenDocViewer — Active page renderer.
 
 Exports: `DocumentRender`
 
-Local imports: `src/contexts/viewerContext.js`, `src/logging/systemLogger.js`, `src/components/ImageRenderer.jsx`, `src/components/CanvasRenderer.jsx`, `src/components/LoadingMessage.jsx`, `src/utils/zoomUtils.js`, `src/utils/documentLoadingConfig.js`, `src/utils/renderSurfaceBounds.js`
+Local imports: `src/contexts/viewerContext.js`, `src/logging/systemLogger.js`, `src/components/ImageRenderer.jsx`, `src/components/CanvasRenderer.jsx`, `src/components/LoadingMessage.jsx`, `src/utils/zoomUtils.js`, `src/utils/documentLoadingConfig.js`, `src/utils/renderSurfaceBounds.js`, `src/utils/imageAdjustments.js`, `src/utils/printCore.js`, `src/utils/compareTransform.js`
 
 Symbols:
 
+- `NOOP` (function) - Shared default for the optional callbacks.
 - `getCurrentPage` (function) - No description.
 - `normalizeSize` (function) - No description.
 - `hasUsableSize` (function) - No description.
 - `isBlobAssetUrl` (function) - No description.
 - `DisplayedAsset` (typedef) - No description.
 - `DocumentRender` (constant) - No description.
+- `<anonymous>~lastNaturalSizeRef` (constant) - Natural size of the last finalized asset, per page index, for boost zoom compensation.
 - `<anonymous>~resetAssetRetry` (constant) - Reset the per\-page blob\-URL retry tracker after a successful load or when the target page changes.
 - `<anonymous>~clearLoadingOverlayTimer` (constant) - No description.
 - `<anonymous>~claimAssetRetry` (constant) - No description.
 - `<anonymous>~resolveCustomFitOptions` (constant) - No description.
-- `<anonymous>~drawImageOnCanvas` (constant) - No description.
-- `<anonymous>~getActiveRenderSurface` (constant) - Returns the surface whose intrinsic size should drive fit calculations.
 
 ## src/components/DocumentSelectionPanel.jsx
 
@@ -85,9 +85,9 @@ Symbols:
 
 OpenDocViewer — Deterministic thumbnail strip.
 
-Exports: `DocumentThumbnailList`
+Exports: `resolveRowHeaderAndShell`, `DocumentThumbnailList`
 
-Local imports: `src/contexts/viewerContext.js`, `src/logging/systemLogger.js`, `src/components/LoadingSpinner.jsx`, `src/utils/documentLoadingConfig.js`, `src/utils/publicAssetUrl.js`, `src/utils/documentMetadata.js`
+Local imports: `src/contexts/viewerContext.js`, `src/logging/systemLogger.js`, `src/components/LoadingSpinner.jsx`, `src/utils/documentLoadingConfig.js`, `src/utils/publicAssetUrl.js`, `src/utils/documentMetadata.js`, `src/utils/pdfSignatureStatus.js`, `src/utils/pdfSignatureDocuments.js`, `src/utils/runtimeConfig.js`, `src/components/SignatureStatusBadge.jsx`
 
 Symbols:
 
@@ -173,6 +173,74 @@ Symbols:
 - `Resizer.propTypes.orientation` (member) - Visual/semantic orientation of the separator.
 - `Resizer.propTypes.ariaLabel` (member) - Accessible name for assistive technologies.
 - `Resizer.propTypes.className` (member) - Extra class names to append to the root element.
+
+## src/components/SignatureDetailsDialog.jsx
+
+Signature details dialog \(browser integrity and optional gateway trust\).
+
+Exports: `SignatureDetailsDialog`
+
+Local imports: `src/utils/pdfSignatureStatus.js`, `src/utils/pdfSignatureDocuments.js`, `src/components/SignatureTime.jsx`
+
+Symbols:
+
+- `getKindLabel` (function) - No description.
+- `getSigningTimeSourceLabel` (function) - No description.
+- `module.exports` (function) - No description.
+- `<anonymous>~handleEscape` (function) - No description.
+- `SignatureDetailsDialog~handleTabKeyDown` (function) - Arrow keys, Home and End move between file tabs \(automatic activation\).
+- `SignatureDetailsDialog~handleTabTrap` (function) - Keep Tab navigation inside the dialog while it is open.
+- `SignatureDetailsDialog~orEmpty` (function) - No description.
+
+## src/components/SignatureOverviewButton.jsx
+
+Toolbar signature overview button.
+
+Exports: `SignatureOverviewButton`
+
+Symbols:
+
+- `ICON_BY_SEVERITY` (constant) - Material Icons ligature per severity \(same as SignatureStatusBadge\).
+- `module.exports` (function) - No description.
+
+## src/components/SignatureOverviewDialog.jsx
+
+Signature overview dialog, opened from the toolbar overview button.
+
+Exports: `SignatureOverviewDialog`
+
+Local imports: `src/utils/pdfSignatureStatus.js`, `src/utils/pdfSignatureDocuments.js`, `src/components/SignatureTime.jsx`
+
+Symbols:
+
+- `module.exports` (function) - No description.
+- `<anonymous>~handleEscape` (function) - No description.
+- `SignatureOverviewDialog~handleKeyDown` (function) - Keep Tab navigation inside the dialog while it is open.
+
+## src/components/SignatureStatusBadge.jsx
+
+Small signature symbol shown next to a document's "DOK n" label \(variant \`document\`, aggregated over all files of the document\) and on every page thumbnail of a signed file \(variant \`thumbnail\`\).
+
+Exports: `SignatureStatusBadge`
+
+Local imports: `src/utils/pdfSignatureStatus.js`
+
+Symbols:
+
+- `ICON_BY_SEVERITY` (constant) - Material Icons ligature per severity.
+- `module.exports` (function) - No description.
+
+## src/components/SignatureTime.jsx
+
+Local\-time rendering of a signature\-related ISO time \(signing, validation, certificate validity\) for the signature dialogs: "2022\-04\-27 19:55" as text, the exact UTC ISO value in the title attribute and \`dateTime\`.
+
+Exports: `SignatureTime`
+
+Local imports: `src/utils/pdfSignatureStatus.js`
+
+Symbols:
+
+- `module.exports` (function) - No description.
 
 ## src/components/ViewerProblemNotice.jsx
 

@@ -4,33 +4,33 @@ Token counts are rough estimates using one token per four characters. Use this f
 
 ## Source Estimate
 
-- Source files: 114
-- Source lines: 49449
-- Estimated source-map tokens: 3543
+- Source files: 148
+- Source lines: 60676
+- Estimated source-map tokens: 4894
 
 ## Generated Output Estimate
 
 - Output files measured: 29 (excluding this budget file)
-- Output lines: 124691
-- Output characters: 3385738
-- Estimated output tokens: 846445
+- Output lines: 157793
+- Output characters: 4415989
+- Estimated output tokens: 1104009
 
 ## Largest Output Files
 
 | File | Lines | Characters | Estimated tokens |
 | --- | ---: | ---: | ---: |
-| `agent-map.json` | 87252 | 2299522 | 574881 |
-| `symbol-index.json` | 33557 | 763860 | 190965 |
-| `SYMBOL_INDEX.md` | 1323 | 180683 | 45171 |
-| `chunks/src_utils.md` | 643 | 30855 | 7714 |
-| `FILE_MAP.md` | 125 | 19176 | 4794 |
-| `MODULES.md` | 169 | 11717 | 2930 |
-| `chunks/src_components_DocumentToolbar.md` | 249 | 10255 | 2564 |
-| `chunks/src_components_DocumentViewer.md` | 174 | 9164 | 2291 |
-| `chunks/src_components_DocumentLoader.md` | 150 | 8495 | 2124 |
-| `chunks/src_components.md` | 191 | 7434 | 1859 |
-| `chunks/src_integrations.md` | 127 | 6752 | 1688 |
-| `DEPENDENCIES.md` | 61 | 5361 | 1341 |
-| `CROSS_CUTTING.md` | 53 | 4255 | 1064 |
-| `chunks/src_contexts.md` | 79 | 3488 | 872 |
-| `chunks/src_hooks.md` | 69 | 2939 | 735 |
+| `agent-map.json` | 110876 | 2990099 | 747525 |
+| `symbol-index.json` | 42079 | 989685 | 247422 |
+| `SYMBOL_INDEX.md` | 1663 | 244405 | 61102 |
+| `chunks/src_utils.md` | 934 | 53810 | 13453 |
+| `FILE_MAP.md` | 159 | 26031 | 6508 |
+| `chunks/src_components_DocumentViewer.md` | 287 | 17115 | 4279 |
+| `chunks/src_components_DocumentToolbar.md` | 300 | 14234 | 3559 |
+| `MODULES.md` | 172 | 12737 | 3185 |
+| `chunks/src_components.md` | 259 | 10168 | 2542 |
+| `chunks/src_components_DocumentLoader.md` | 150 | 8600 | 2150 |
+| `chunks/src_integrations.md` | 145 | 7862 | 1966 |
+| `DEPENDENCIES.md` | 66 | 5776 | 1444 |
+| `CROSS_CUTTING.md` | 57 | 5266 | 1317 |
+| `chunks/src_contexts.md` | 83 | 4357 | 1090 |
+| `chunks/src_hooks.md` | 83 | 3488 | 872 |

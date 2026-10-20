@@ -1,6 +1,70 @@
 # OpenDocViewer / src/utils
 
-File count: 35. Line count: 15082. JSDoc symbol count: 594.
+File count: 51. Line count: 20060. JSDoc symbol count: 811.
+
+## src/utils/compareCurtain.js
+
+File: src/utils/compareCurtain.js Curtain view of the compare mode: the two calibrated pages in one coordinate space, page A \(left/primary\) below and page B \(right/compare\) above,...
+
+Exports: `COMPARE_CURTAIN_POSITION`, `COMPARE_CURTAIN_MODES`, `INITIAL_COMPARE_CURTAIN_STATE`, `clampCurtainPosition`, `selectCurtainPosition`, `buildCurtainClipPath`, `buildCurtainHandleStyle`, `curtainPositionFromPointer`, `resolveCurtainKeyAction`, `compareCurtainReducer`
+
+Symbols:
+
+- `module:compareCurtain` (module) - File: src/utils/compareCurtain.js Curtain view of the compare mode: the two calibrated pages in one coordinate space, page A \(left/primary\) below and page B \(right/compare\) above,...
+- `module:compareCurtain~CurtainMode` (typedef) - No description.
+- `module:compareCurtain~CompareCurtainState` (typedef) - No description.
+- `module:compareCurtain.COMPARE_CURTAIN_POSITION` (constant) - Border position range and keyboard steps \(percent of the stage\).
+- `module:compareCurtain~normalizeMode` (function) - No description.
+- `module:compareCurtain.clampCurtainPosition` (function) - Clamp a border position to \[0, 100\] with two decimals; non\-numbers fall back to 50.
+- `module:compareCurtain.selectCurtainPosition` (function) - The border position of the current mode.
+- `module:compareCurtain.buildCurtainClipPath` (function) - CSS clip of the top page \(page B\): everything on the A side of the border is cut away.
+- `module:compareCurtain.buildCurtainHandleStyle` (function) - Position of the grab bar on the border.
+- `module:compareCurtain.curtainPositionFromPointer` (function) - Border position under a pointer: the share of the stage along the moving axis \(y for the horizontal border, x for the vertical one\).
+- `module:compareCurtain.resolveCurtainKeyAction` (function) - Map a key press on the border to a reducer action: Left/Up −1 %, Right/Down \+1 %, Shift ×10.
+- `module:compareCurtain~withPosition` (function) - No description.
+
+## src/utils/compareOverlay.js
+
+File: src/utils/compareOverlay.js Overlay view of the compare mode: the two compared pages stacked in one coordinate space, the top page drawn semi\-transparent.
+
+Exports: `COMPARE_OVERLAY_OPACITY`, `INITIAL_COMPARE_OVERLAY_STATE`, `clampOverlayOpacity`, `getOverlayBottomTarget`, `hasCompareCalibration`, `compareOverlayReducer`, `resolveOverlayOpacityKeyAction`, `resolveOverlayNudgeKeyAction`, `COMPARE_CALIBRATION_VERSION`, `serializeCompareCalibration`
+
+Local imports: `src/utils/compareTransform.js`, `src/utils/imageAdjustments.js`
+
+Symbols:
+
+- `module:compareOverlay` (module) - File: src/utils/compareOverlay.js Overlay view of the compare mode: the two compared pages stacked in one coordinate space, the top page drawn semi\-transparent.
+- `module:compareOverlay~CompareOverlayState` (typedef) - No description.
+- `module:compareOverlay.COMPARE_OVERLAY_OPACITY` (constant) - Opacity range and steps of the overlay slider \(percent\).
+- `module:compareOverlay.clampOverlayOpacity` (function) - Clamp an opacity to whole percents in \[0, 100\]; non\-numbers fall back to the default.
+- `module:compareOverlay.getOverlayBottomTarget` (function) - The page under the top page.
+- `module:compareOverlay.hasCompareCalibration` (function) - True when a calibration exists in the viewer context: the overlay view has been opened since compare mode started.
+- `module:compareOverlay.compareOverlayReducer` (function) - Reducer for the overlay settings.
+- `module:compareOverlay.resolveOverlayOpacityKeyAction` (function) - Map a key press on the opacity slider to a reducer action: Left/Down −1 %, Right/Up \+1 %, Shift ×10, Home 0 %, End 100 %.
+- `module:compareOverlay.resolveOverlayNudgeKeyAction` (function) - Nudge mode: arrow keys move the top page only \(1 px, Shift 10 px\), as on the move control.
+- `module:compareOverlay.COMPARE_CALIBRATION_VERSION` (constant) - Version of the calibration JSON.
+- `module:compareOverlay.serializeCompareCalibration` (function) - The calibration as JSON for support cases.
+
+## src/utils/compareTransform.js
+
+File: src/utils/compareTransform.js Free per\-page transform for the compare view: stepless scale, free pan and 0.1 degree rotation, one transform per compared page \( primary \= lef...
+
+Exports: `COMPARE_TRANSFORM_LIMITS`, `IDENTITY_COMPARE_TRANSFORM`, `INITIAL_COMPARE_TRANSFORM_STATE`, `normalizeTransformRotation`, `normalizeCompareTransform`, `isIdentityCompareTransform`, `selectCompareTransform`, `splitTransformRotation`, `buildCompareTransformCss`, `compareTransformReducer`, `parseLocaleNumber`, `formatTransformNumber`, `resolveTransformKeyAction`
+
+Symbols:
+
+- `module:compareTransform` (module) - File: src/utils/compareTransform.js Free per\-page transform for the compare view: stepless scale, free pan and 0.1 degree rotation, one transform per compared page \( primary \= lef...
+- `module:compareTransform~CompareTransform` (typedef) - Per\-page transform.
+- `module:compareTransform~CompareTransformTarget` (typedef) - No description.
+- `module:compareTransform~CompareTransformState` (typedef) - No description.
+- `module:compareTransform.COMPARE_TRANSFORM_LIMITS` (constant) - Supported range.
+- `module:compareTransform~roundTo` (function) - No description.
+- `module:compareTransform~finiteOr` (function) - No description.
+- `module:compareTransform~normalizeScale` (function) - No description.
+- `module:compareTransform~normalizeOffset` (function) - No description.
+- `module:compareTransform.normalizeTransformRotation` (function) - Normalize an angle to \[0, 360\) with 0.1 degree resolution.
+- `module:compareTransform.normalizeCompareTransform` (function) - No description.
+- `module:compareTransform.isIdentityCompareTransform` (function) - No description.
 
 ## src/utils/documentLoadingConfig.js
 
@@ -8,7 +72,7 @@ OpenDocViewer — runtime helpers for fetch/render/memory policies.
 
 Exports: `MAX_RELOAD_CACHE_TTL_MS`, `resolveRecommendedWorkerCount`, `DOCUMENT_LOADING_DEFAULTS`, `normalizeProtection`, `cloneDocumentLoadingConfig`, `countPdfPages`, `resolvePdfWorkerPlanForPageCount`, `resolvePdfRenderConfigForPageCount`, `applyDocumentLoadingMode`, `applyMemoryPressureStage`, `getPerformanceWindowPageCount`, `getDocumentLoadingConfig`, `isRasterImageExtension`, `shouldUseFullImagesForThumbnails`, `shouldKeepAllFullImageAssets`, `formatBytes`, `formatCount`, `shouldRecommendStopping`
 
-Local imports: `src/utils/runtimeConfig.js`, `src/utils/memoryProfile.js`
+Local imports: `src/utils/runtimeConfig.js`, `src/utils/memoryProfile.js`, `src/utils/pdfResolution.js`
 
 Symbols:
 
@@ -46,6 +110,19 @@ Symbols:
 - `buildAliasDetailRow` (function) - No description.
 - `buildAliasLabelsByFieldId` (function) - No description.
 
+## src/utils/i18nVersion.js
+
+Cache\-busting version token for the locale files \( locales/&lt;lng&gt;/common.json?v\=&lt;token&gt; \).
+
+Exports: `normalizeVersionToken`, `getBuildLocaleToken`, `resolveI18nVersion`
+
+Symbols:
+
+- `module:utils/i18nVersion` (module) - Cache\-busting version token for the locale files \( locales/&lt;lng&gt;/common.json?v\=&lt;token&gt; \).
+- `module:utils/i18nVersion.normalizeVersionToken` (function) - Normalize optional version tokens; &quot;auto&quot; and blank values mean &quot;not set&quot;.
+- `module:utils/i18nVersion.getBuildLocaleToken` (function) - Join the build id and the locale content hash into one token.
+- `module:utils/i18nVersion.resolveI18nVersion` (function) - No description.
+
 ## src/utils/idUtils.js
 
 OpenDocViewer — small opaque identifier helpers.
@@ -58,6 +135,24 @@ Symbols:
 - `bytesToHex` (function) - No description.
 - `createOpaqueIdFragment` (function) - Create an opaque identifier fragment suitable for synthetic keys and document ids.
 - `createOpaqueId` (function) - Create a prefixed opaque identifier.
+
+## src/utils/imageAdjustments.js
+
+File: src/utils/imageAdjustments.js Per\-pane pixel adjustments \(brightness, contrast, grayscale, invert\) and the quarter turn the canvas draws.
+
+Exports: `NEUTRAL_IMAGE_FILTER`, `normalizeGrayscale`, `normalizeInvert`, `hasImageAdjustment`, `pickStoredImageAdjustments`, `needsCanvas`, `buildImageFilter`
+
+Symbols:
+
+- `module:imageAdjustments` (module) - File: src/utils/imageAdjustments.js Per\-pane pixel adjustments \(brightness, contrast, grayscale, invert\) and the quarter turn the canvas draws.
+- `module:imageAdjustments.NEUTRAL_IMAGE_FILTER` (constant) - The canvas filter for neutral values \(brightness and contrast at 100 %, nothing else\).
+- `module:imageAdjustments~finiteOr` (function) - No description.
+- `module:imageAdjustments.normalizeGrayscale` (function) - Grayscale amount in percent, clamped to 0..100.
+- `module:imageAdjustments.normalizeInvert` (function) - Invert as a real boolean.
+- `module:imageAdjustments.hasImageAdjustment` (function) - Whether any colour adjustment \(brightness, contrast, grayscale, invert\) is off its neutral value.
+- `module:imageAdjustments.pickStoredImageAdjustments` (function) - The stored image adjustment of one page, normalized: brightness, contrast, grayscale and invert.
+- `module:imageAdjustments.needsCanvas` (function) - Whether the page must be drawn on the canvas instead of the plain &lt;img&gt; .
+- `module:imageAdjustments.buildImageFilter` (function) - The canvas 2d filter for the adjustments, composed as brightness, contrast, grayscale, invert.
 
 ## src/utils/localizedValue.js
 
@@ -73,6 +168,41 @@ Symbols:
 - `OptionLike` (typedef) - Option\-like shape used by the print reason selector.
 - `resolveLocalizedValue` (function) - Return the best string for the active language.
 - `resolveOptionLabel` (function) - Resolve a label for a reason option.
+
+## src/utils/manualContentsTree.js
+
+Runtime contents tree for the manual overlay.
+
+Exports: `slugifyManualHeading`, `buildManualContentsTree`, `findManualSectionId`, `countManualMatchesPerSection`
+
+Symbols:
+
+- `ManualContentsEntry` (typedef) - No description.
+- `ManualContentsGroup` (typedef) - No description.
+- `FALLBACK_SLUG` (constant) - Slug used when a heading text has no ASCII letters or digits left.
+- `POSITION_FOLLOWING` (constant) - Node.compareDocumentPosition flags \(numeric so this also runs without a global Node\).
+- `collapseWhitespace` (function) - No description.
+- `slugifyManualHeading` (function) - Derive a heading id from its text.
+- `buildManualContentsTree` (function) - Build the contents tree from the rendered manual and give every listed heading a unique id.
+- `headingStartsAtOrBefore` (function) - No description.
+- `findManualSectionId` (function) - Id of the section that contains the node: the last listed heading at or before it in document order, or '' when the node comes before the first heading.
+- `countManualMatchesPerSection` (function) - Count search hits per section in a single merge pass.
+
+## src/utils/manualSources.js
+
+Resolves which manual HTML file the help dialog shows.
+
+Exports: `DEFAULT_SITE_MANUAL_TEMPLATE`, `DEFAULT_FALLBACK_MANUAL_TEMPLATE`, `interpolateManualTemplate`, `buildManualCandidates`, `isApplicationShellHtml`, `resolveManualSource`
+
+Symbols:
+
+- `DEFAULT_SITE_MANUAL_TEMPLATE` (constant) - Resolves which manual HTML file the help dialog shows.
+- `toText` (function) - No description.
+- `interpolateManualTemplate` (function) - No description.
+- `buildManualCandidates` (function) - Candidate manual URLs in priority order: site before default, UI language before fallback language.
+- `isApplicationShellHtml` (function) - True when the HTML is OpenDocViewer's own application shell rather than a manual.
+- `ManualCandidateResponse` (typedef) - No description.
+- `resolveManualSource` (function) - Fetch candidates in order and return the first one the server delivers as a manual.
 
 ## src/utils/memoryProfile.js
 
@@ -122,13 +252,36 @@ Symbols:
 - `getTrackedObjectUrlCount` (function) - No description.
 - `revokeAllTrackedObjectUrls` (function) - Revoke every tracked object URL.
 
+## src/utils/ompThemePreference.js
+
+Shared OMP theme preference adapter \(OMP\_THEME\_PREFERENCE\).
+
+Exports: `OMP_THEME_STORAGE_KEY`, `sharedThemeRevisionTime`, `parseSharedThemeValue`, `mirrorSharedThemePreference`, `getSharedThemePreference`, `createSharedThemeRevision`, `setSharedThemePreference`, `detectSystemTheme`, `resolveConcreteTheme`, `applyOdvThemeToDocument`, `getEffectiveOdvThemeMode`, `setOdvThemeMode`
+
+Local imports: `src/utils/viewerPreferences.js`
+
+Symbols:
+
+- `SharedThemeMode` (typedef) - Shared OMP theme mode.
+- `OdvThemeMode` (typedef) - ODV theme mode \(the shared modes plus the viewer\-specific Normal variant\).
+- `OdvThemeName` (typedef) - Concrete ODV palette.
+- `SharedThemePreference` (typedef) - Parsed shared preference value.
+- `getSession` (function) - Keep denied\-storage choices scoped to the current browsing context.
+- `sharedThemeRevisionTime` (function) - Read the base\-36 creation time, matching the OMP preference ordering contract.
+- `isSharedThemeMode` (function) - No description.
+- `parseSharedThemeValue` (function) - Parse a raw stored shared\-preference value.
+- `readSharedRawFromCookie` (function) - Read the raw shared value from the cookie \(URI\-encoded JSON per the contract\).
+- `readSharedRawFromStorage` (function) - Read the raw shared value from the localStorage mirror.
+- `writeSharedToCookie` (function) - No description.
+- `writeSharedToStorage` (function) - No description.
+
 ## src/utils/pageAssetRenderer.js
 
 OpenDocViewer — hybrid page\-asset renderer.
 
 Exports: `createPageAssetRenderer`, `PageAssetRenderer`
 
-Local imports: `src/utils/documentLoadingConfig.js`, `src/utils/pageAssetWorkerPool.js`, `src/utils/pdfPageWorkerPool.js`, `src/utils/pdfjsDocumentOptions.js`
+Local imports: `src/utils/documentLoadingConfig.js`, `src/utils/pageAssetWorkerPool.js`, `src/utils/pdfPageWorkerPool.js`, `src/utils/pdfjsDocumentOptions.js`, `src/utils/pdfResolution.js`, `src/utils/pdfResolutionRuntime.js`
 
 Symbols:
 
@@ -137,6 +290,7 @@ Symbols:
 - `RenderPageAssetOptions` (typedef) - No description.
 - `PageAssetRenderer#renderPdfPageAssetBatch` (function) - Render a PDF page set through the PDF worker pool as one partitioned batch.
 - `PageAssetRenderer#renderPageAsset` (function) - Render one requested page asset.
+- `PageAssetRenderer#resolvePdfPageResolution` (function) - Read page geometry only when a persisted asset needs an exact resolution identity.
 
 ## src/utils/pageAssetStore.js
 
@@ -272,6 +426,132 @@ Symbols:
 - `canReuseGeneratedPdfPrint` (function) - Active\-page PDF output is based on the current rendered surface, including transient client\-side edits such as rotation, brightness and contrast.
 - `isFullSessionPageSequence` (function) - No description.
 
+## src/utils/pdfResolution.js
+
+Pure, per\-page PDF display resolution policy shared by browser and worker renderers.
+
+Exports: `PDF_RESOLUTION_DEFAULTS`, `PDF_POINTS_PER_INCH`, `PDF_RESOLUTION_SCALE_LIMIT`, `normalizePdfResolution`, `resolvePdfRenderScale`, `resolvePdfResolutionBoost`, `applyPdfScaleOverride`, `resolvePdfViewportResolution`
+
+Local imports: `src/utils/renderSurfaceBounds.js`
+
+Symbols:
+
+- `PDF_POINTS_PER_INCH` (constant) - PDF user space is 72 points per inch; a scale factor is therefore dpi / 72.
+- `PDF_RESOLUTION_SCALE_LIMIT` (constant) - Upper bound for configured scale factors.
+- `normalizePdfResolution` (function) - Normalize a render config, including the legacy fullPageScale alias.
+- `resolvePdfRenderScale` (function) - Resolve an effective scale without reading browser globals.
+- `resolvePdfResolutionBoost` (function) - Double the current effective scale for a one\-shot boost.
+- `applyPdfScaleOverride` (function) - Apply an explicit per\-render scale override to a normalized policy, the same way getPdfResolutionInputs does on the main thread: the override becomes a fixed scale and raises maxS...
+- `resolvePdfViewportResolution` (function) - Resolve a scale\-one, already rotated PDF.js viewport and retain inputs for cache/boost checks.
+
+## src/utils/pdfResolutionRuntime.js
+
+Browser measurements and diagnostic state kept outside the pure PDF resolution policy.
+
+Exports: `registerPdfViewerWidth`, `getPdfResolutionInputs`, `recordPdfResolution`, `getPdfResolutionDiagnostics`
+
+Local imports: `src/utils/pdfResolution.js`, `src/utils/memoryProfile.js`
+
+Symbols:
+
+- `registerPdfViewerWidth` (function) - Register a live content\-width measurement without triggering renders on resize.
+- `getPdfResolutionInputs` (function) - Capture serializable browser inputs before sending a render request to a window\-less worker.
+- `recordPdfResolution` (function) - Record successful rendering/restoration only; never collect document identifiers.
+- `getPdfResolutionDiagnostics` (function) - Effective PDF display diagnostics, with null scale until a page has been rendered.
+
+## src/utils/pdfSignatureDocuments.js
+
+Per\-document aggregation of PDF signature reports.
+
+Exports: `getPageSignatureDocumentKey`, `getSourceFileNameFromUrl`, `buildSignatureDocuments`, `summarizeSignatureDocuments`, `findSignatureDocumentBySourceKey`, `getSignatureFileHeading`, `getSignatureFilePages`
+
+Local imports: `src/utils/pdfSignatureStatus.js`
+
+Symbols:
+
+- `module:utils/pdfSignatureDocuments` (module) - Per\-document aggregation of PDF signature reports.
+- `module:utils/pdfSignatureDocuments~SignatureFileEntry` (typedef) - No description.
+- `module:utils/pdfSignatureDocuments~SignatureDocumentEntry` (typedef) - No description.
+- `module:utils/pdfSignatureDocuments.getPageSignatureDocumentKey` (function) - Document key of a page.
+- `module:utils/pdfSignatureDocuments.getSourceFileNameFromUrl` (function) - Display file name from a source URL: the last path segment, only when it looks like a file name \(has an extension\).
+- `module:utils/pdfSignatureDocuments~pickNewestSignature` (function) - No description.
+- `module:utils/pdfSignatureDocuments.buildSignatureDocuments` (function) - Fold per\-file signature reports into per\-document entries.
+- `module:utils/pdfSignatureDocuments.summarizeSignatureDocuments` (function) - Totals for the toolbar overview button, or null when nothing is signed \(the button is then not rendered\).
+- `module:utils/pdfSignatureDocuments.findSignatureDocumentBySourceKey` (function) - No description.
+- `module:utils/pdfSignatureDocuments.getSignatureFileHeading` (function) - Heading for one file of a multi\-file document: &quot;File k of m: name&quot;, or &quot;File k of m&quot; when no file name is available.
+- `module:utils/pdfSignatureDocuments.getSignatureFilePages` (function) - Page range of a file inside its document, &quot;Pages 19–24&quot; or &quot;Page 3&quot;; '' when unknown.
+
+## src/utils/pdfSignatureGateway.js
+
+Optional gateway trust enrichment.
+
+Exports: `getGatewaySignatureContext`, `mergeGatewaySignatureReport`, `createGatewaySignatureClient`
+
+Local imports: `src/utils/pdfSignatureStatus.js`
+
+Symbols:
+
+- `module:utils/pdfSignatureGateway` (module) - Optional gateway trust enrichment.
+- `module:utils/pdfSignatureGateway.getGatewaySignatureContext` (function) - Resolve only HTTP source routes on the viewer's own origin, preserving the path base.
+- `module:utils/pdfSignatureGateway~validationDisabled` (function) - The gateway answered that server validation is switched off.
+- `module:utils/pdfSignatureGateway.mergeGatewaySignatureReport` (function) - Accept only unambiguous server entries.
+- `module:utils/pdfSignatureGateway.createGatewaySignatureClient` (function) - Create viewer\-local state for disabled gateway sessions.
+
+## src/utils/pdfSignatureInspector.js
+
+PDF signature inspection \- the single entry point for application code.
+
+Exports: `getDocumentSignatures`, `disposePdfSignatureWorker`, `getDocumentSignatures`
+
+Local imports: `../workers/pdfSignatureWorker.js?worker`, `src/utils/pdfSignatures.js`
+
+Symbols:
+
+- `module:utils/pdfSignatureInspector` (module) - PDF signature inspection \- the single entry point for application code.
+- `module:utils/pdfSignatureInspector~workerHandle` (member) - Lazily created worker handle: \{ worker, broken, pending \} where pending maps requestId to its resolve/reject callbacks.
+- `module:utils/pdfSignatureInspector.getDocumentSignatures` (function) - Inspect the signatures of one document.
+- `module:utils/pdfSignatureInspector.disposePdfSignatureWorker` (function) - Terminate the signature worker \(e.g.
+
+## src/utils/pdfSignatures.js
+
+PDF signature collection \- level 1 integrity inspection.
+
+Exports: `SUPPORTED_SUBFILTERS`, `parsePdfDateString`, `unreadableSignatureReport`, `installIndirectObjectHeaderProbe`, `collectPdfSignatures`
+
+Symbols:
+
+- `module:utils/pdfSignatures` (module) - PDF signature collection \- level 1 integrity inspection.
+- `module:utils/pdfSignatures~PdfSignatureInfo` (typedef) - One inspected PDF signature \(level\-1 integrity view; trust is never evaluated here \- see the trust property\).
+- `module:utils/pdfSignatures~PdfSignatureReport` (typedef) - No description.
+- `module:utils/pdfSignatures.SUPPORTED_SUBFILTERS` (constant) - SubFilters with level\-1 handling.
+- `module:utils/pdfSignatures~pdfText` (function) - Decode a PDF text string object \(literal string or hex string\) to a JS string, honouring the UTF\-16BE byte\-order mark.
+- `module:utils/pdfSignatures.parsePdfDateString` (function) - Parse a PDF date string \(&quot;D:YYYYMMDDHHmmSS\+02'30'&quot;, also without the D: prefix, with partial fields, or without a timezone \- a missing timezone is treated as UTC\).
+- `module:utils/pdfSignatures~discoverSignatures` (function) - Walk every indirect object; collect signature dictionaries together with the field dictionary that references them \(for /T\).
+- `module:utils/pdfSignatures.unreadableSignatureReport` (function) - Report an inspection failure without claiming that the document is unsigned.
+- `module:utils/pdfSignatures.installIndirectObjectHeaderProbe` (function) - pdf\-lib's skipJibberish probes every byte of leading junk with matchIndirectObjectHeader, which throws \(building an Error\) on each miss: \~17 us per byte, so a 64 KiB prefix cost a...
+- `module:utils/pdfSignatures.collectPdfSignatures` (function) - Collect signature information from PDF bytes.
+
+## src/utils/pdfSignatureStatus.js
+
+Signature UI status helpers for browser integrity and gateway trust.
+
+Exports: `getSignatureSeverity`, `getReportSignatureSeverity`, `normalizeSignatureIntegrity`, `getIntegrityLabel`, `getWorstSignatureIntegrity`, `getSignatureCount`, `reportHasSignatures`, `normalizeSignatureTrust`, `getWorstSignatureTrust`, `getTrustLabel`, `TRUST_REASON_CODES`, `getTrustReasonText`, `getSignatureTrustState`, `getTrustExplanation`, `formatSignatureTime`
+
+Symbols:
+
+- `module:utils/pdfSignatureStatus` (module) - Signature UI status helpers for browser integrity and gateway trust.
+- `module:utils/pdfSignatureStatus~SEVERITY_BY_INTEGRITY` (constant) - Severity classes used for colours/icons: intact is neutral/positive, modified\-after\-signing and unsupported are warnings, and digest\-mismatch, signature\-invalid and unreadable are...
+- `module:utils/pdfSignatureStatus~INTEGRITY_WORST_FIRST` (constant) - Integrity statuses ordered worst\-first.
+- `module:utils/pdfSignatureStatus.getSignatureSeverity` (function) - Map one integrity status to its severity class.
+- `module:utils/pdfSignatureStatus.getReportSignatureSeverity` (function) - Worst severity across integrity and trust for all signatures.
+- `module:utils/pdfSignatureStatus.normalizeSignatureIntegrity` (function) - Fail closed for missing, unexpected and inherited property names.
+- `module:utils/pdfSignatureStatus.getIntegrityLabel` (function) - Shared localized status text for the badge tooltip and details dialog.
+- `module:utils/pdfSignatureStatus.getWorstSignatureIntegrity` (function) - The worst integrity status among a document's signatures, or null when there are none.
+- `module:utils/pdfSignatureStatus.getSignatureCount` (function) - No description.
+- `module:utils/pdfSignatureStatus.reportHasSignatures` (function) - No description.
+- `module:utils/pdfSignatureStatus~TRUST_WORST_FIRST` (constant) - Trust verdicts ordered worst\-first.
+- `module:utils/pdfSignatureStatus.normalizeSignatureTrust` (function) - No description.
+
 ## src/utils/pdfWorkerDispatcher.js
 
 OpenDocViewer \- generated PDF worker dispatcher.
@@ -311,9 +591,9 @@ Symbols:
 
 Core print coordinator for the frontend.
 
-Exports: `handlePrint`, `handlePrintCurrentComparison`, `handlePrintAll`, `handlePrintSequence`, `handlePrintRange`
+Exports: `handlePrint`, `handlePrintCurrentComparison`, `composePagePrintCanvas`, `resolvePrintableSurface`, `composeCompareOverlayCanvas`, `composeCompareCurtainCanvas`, `handlePrintCompareOverlay`, `handlePrintCompareCurtain`, `handlePrintAll`, `handlePrintSequence`, `handlePrintRange`
 
-Local imports: `src/logging/systemLogger.js`, `src/utils/printDom.js`, `src/utils/printTemplate.js`, `src/utils/printSanitize.js`
+Local imports: `src/logging/systemLogger.js`, `src/utils/printDom.js`, `src/utils/printTemplate.js`, `src/utils/printSanitize.js`, `src/utils/compareTransform.js`, `src/utils/compareOverlay.js`, `src/utils/compareCurtain.js`
 
 Symbols:
 
@@ -369,9 +649,9 @@ Symbols:
 
 OpenDocViewer — Generated PDF print backend.
 
-Exports: `createPrintPdfBlob`, `downloadPdfBlob`, `printPdfBlob`, `collectPrintablePdfSources`, `createPdfFromDocumentHandle`, `handlePdfOutput`, `handlePdfCurrent`, `handlePdfCurrentComparison`
+Exports: `createPrintPdfBlob`, `downloadPdfBlob`, `printPdfBlob`, `collectPrintablePdfSources`, `releasePrintablePdfSources`, `createPdfFromDocumentHandle`, `handlePdfOutput`, `handlePdfCurrent`, `handlePdfCurrentComparison`, `handlePdfCompareOverlay`, `handlePdfCompareCurtain`
 
-Local imports: `src/logging/systemLogger.js`, `src/utils/printTemplate.js`, `src/utils/localizedValue.js`, `src/utils/printSanitize.js`, `src/utils/printWatermark.js`, `src/utils/documentLoadingConfig.js`, `src/utils/pdfWorkerDispatcher.js`
+Local imports: `src/logging/systemLogger.js`, `src/utils/printTemplate.js`, `src/utils/localizedValue.js`, `src/utils/printSanitize.js`, `src/utils/printWatermark.js`, `src/utils/documentLoadingConfig.js`, `src/utils/pdfWorkerDispatcher.js`, `src/utils/printCore.js`
 
 Symbols:
 
@@ -423,7 +703,7 @@ Symbols:
 
 OpenDocViewer — Print Utilities Facade Re\-export the stable print API and parser from the internal modules.
 
-Exports: `handlePrint`, `handlePrintAll`, `handlePrintCurrentComparison`, `handlePrintRange`, `handlePrintSequence`, `parsePrintSequence`, `handlePdfOutput`, `handlePdfCurrent`, `handlePdfCurrentComparison`, `createPrintPdfBlob`, `printPdfBlob`, `downloadPdfBlob`, `default`
+Exports: `handlePrint`, `handlePrintAll`, `handlePrintCurrentComparison`, `handlePrintCompareOverlay`, `handlePrintCompareCurtain`, `handlePrintRange`, `handlePrintSequence`, `parsePrintSequence`, `handlePdfOutput`, `handlePdfCurrent`, `handlePdfCurrentComparison`, `handlePdfCompareOverlay`, `handlePdfCompareCurtain`, `createPrintPdfBlob`, `printPdfBlob`, `downloadPdfBlob`, `default`
 
 Local imports: `src/utils/printCore.js`, `src/utils/printParse.js`, `src/utils/printPdf.js`
 
@@ -433,14 +713,14 @@ Symbols:
 - `module:handlePrint` (module) - Print the current selection/range through the HTML path.
 - `module:handlePrintAll` (module) - Print all pages through the HTML path.
 - `module:handlePrintCurrentComparison` (module) - Print the current comparison pane through the HTML path.
+- `module:handlePrintCompareOverlay` (module) - Print the overlay view of the compare mode as one composed page through the HTML path.
+- `module:handlePrintCompareCurtain` (module) - Print the curtain view of the compare mode as one composed page through the HTML path.
 - `module:handlePrintRange` (module) - Print a specific page range through the HTML path.
 - `module:handlePrintSequence` (module) - Print a parsed custom page sequence through the HTML path.
 - `module:parsePrintSequence` (module) - Parse a user\-entered &quot;Custom pages&quot; string into a page sequence.
 - `module:handlePdfOutput` (module) - Generate a PDF for the current selection/range and open the print dialog.
 - `module:handlePdfCurrent` (module) - Generate a PDF for the current page and open the print dialog.
 - `module:handlePdfCurrentComparison` (module) - Generate a PDF for the current comparison pane and open the print dialog.
-- `module:createPrintPdfBlob` (module) - Create a printable PDF blob from the current print job.
-- `module:printPdfBlob` (module) - Print a generated PDF blob.
 
 ## src/utils/printWatermark.js
 
@@ -500,7 +780,7 @@ Opt\-in render/decode benchmark tooling for the already loaded document session.
 
 Exports: `isRenderDecodeBenchmarkEnabled`, `runRenderDecodeBenchmark`
 
-Local imports: `src/logging/systemLogger.js`, `src/utils/pageAssetRenderer.js`, `src/utils/pdfPageWorkerPool.js`, `src/utils/documentLoadingConfig.js`, `src/utils/supportDiagnostics.js`
+Local imports: `src/logging/systemLogger.js`, `src/utils/pageAssetRenderer.js`, `src/utils/pdfPageWorkerPool.js`, `src/utils/pdfResolutionRuntime.js`, `src/utils/documentLoadingConfig.js`, `src/utils/supportDiagnostics.js`
 
 Symbols:
 
@@ -532,22 +812,22 @@ Symbols:
 
 Runtime configuration helpers.
 
-Exports: `getRuntimeConfig`, `getKeyboardPrintShortcutBehavior`, `isDocumentMetadataUiEnabled`, `normalizePrintDefaultMode`, `normalizeCustomFitWidthFactorPercent`, `normalizeOptionalCustomFitFactorPercent`, `normalizeCustomFitSizeLimitPreference`, `getViewerDefaultZoomMode`, `getViewerCustomFitWidthFactorPercent`, `getViewerCustomFitSizeLimits`, `getPrintDefaultMode`, `getPrintSelectionWorkspaceConfig`, `getViewerEdgeScrollPageTurnConfig`, `getViewerProblemNoticeConfig`
+Exports: `COMPARE_ADJUST_TOOLBAR_MODES`, `getRuntimeConfig`, `getKeyboardPrintShortcutBehavior`, `isDocumentMetadataUiEnabled`, `isFineTuneEnabled`, `isCompareOverlayEnabled`, `isCompareOverlayPrintEnabled`, `isCompareCurtainEnabled`, `isCompareCurtainPrintEnabled`, `getCompareAdjustToolbarMode`, `isSignatureThumbnailPageBadgeEnabled`, `isPdfSignatureInspectionEnabled`, `getPdfSignatureInspectionStart`, `getToolbarLargeButtonsDefault`, `normalizePrintDefaultMode`, `normalizeCustomFitWidthFactorPercent`, `normalizeOptionalCustomFitFactorPercent`, `normalizeCustomFitSizeLimitPreference`, `getViewerDefaultZoomMode`, `getViewerCustomFitWidthFactorPercent`, `getViewerCustomFitSizeLimits`, `getPrintDefaultMode`, `getPrintSelectionWorkspaceConfig`, `getViewerEdgeScrollPageTurnConfig`, `getViewerProblemNoticeConfig`, `getThemeDefaultMode`, `getOmpThemeBridgeAllowedOrigins`
 
 Symbols:
 
 - `KeyboardPrintShortcutBehavior` (typedef) - No description.
 - `ViewerDefaultZoomMode` (typedef) - No description.
 - `PrintDefaultMode` (typedef) - No description.
+- `CompareAdjustToolbarMode` (typedef) - No description.
 - `ResetSessionTarget` (typedef) - Session\-reset target for the support/problem notice.
 - `KEYBOARD_PRINT_SHORTCUT_BEHAVIORS` (constant) - Runtime validation values for KeyboardPrintShortcutBehavior; the typedef documents the public contract.
+- `COMPARE_ADJUST_TOOLBAR_MODES` (constant) - Runtime validation values for CompareAdjustToolbarMode; the first one is the default.
 - `RESET_SESSION_TARGETS` (constant) - Runtime validation values for ResetSessionTarget; the typedef documents the public contract.
 - `PRINT_DEFAULT_MODE_ALIASES` (constant) - User\-facing print default mode aliases mapped to persisted PrintDefaultMode values.
 - `DEFAULT_ZOOM_MODE_ALIAS_ENTRIES` (constant) - User\-facing zoom\-mode aliases mapped to ViewerDefaultZoomMode values.
 - `ViewerCustomFitSizeLimits` (typedef) - No description.
 - `PrintSelectionWorkspaceConfig` (typedef) - No description.
-- `ViewerEdgeScrollPageTurnConfig` (typedef) - No description.
-- `ViewerProblemNoticeConfig` (typedef) - No description.
 
 ## src/utils/sourceTempStore.js
 
@@ -578,7 +858,7 @@ Support diagnostics helpers for opt\-in troubleshooting tools.
 
 Exports: `loadLatestPdfBenchmarkResult`, `saveLatestPdfBenchmarkResult`, `loadLatestRenderDecodeBenchmarkResult`, `saveLatestRenderDecodeBenchmarkResult`, `collectSupportDiagnostics`, `downloadJsonFile`
 
-Local imports: `src/utils/runtimeConfig.js`, `src/utils/pdfPrebuildPlan.js`, `src/utils/pdfPrintCacheKey.js`
+Local imports: `src/utils/runtimeConfig.js`, `src/utils/documentLoadingConfig.js`, `src/utils/pdfResolutionRuntime.js`, `src/utils/pdfPrebuildPlan.js`, `src/utils/pdfPrintCacheKey.js`
 
 Symbols:
 
@@ -595,11 +875,22 @@ Symbols:
 - `collectConfigDiagnostics` (function) - No description.
 - `loadLatestBenchmarkResult` (function) - No description.
 
+## src/utils/toolbarDensity.js
+
+Toolbar density on the document root.
+
+Exports: `toolbarDensityFor`, `applyToolbarDensityToDocument`
+
+Symbols:
+
+- `toolbarDensityFor` (function) - No description.
+- `applyToolbarDensityToDocument` (function) - Apply the toolbar density to the document root \(SSR\-safe\).
+
 ## src/utils/viewerPreferences.js
 
 Lightweight persisted viewer preferences.
 
-Exports: `getViewerPreferences`, `setViewerPreferences`, `getThemePreference`, `setThemePreference`, `getThemeModePreference`, `setThemeModePreference`, `getLanguagePreference`, `setLanguagePreference`, `getPrintDefaultModePreference`, `setPrintDefaultModePreference`, `clearPrintDefaultModePreference`, `getDefaultZoomModePreference`, `setDefaultZoomModePreference`, `clearDefaultZoomModePreference`, `getCustomFitWidthFactorPreference`, `setCustomFitWidthFactorPreference`, `clearCustomFitWidthFactorPreference`, `getCustomFitSizeLimitPreference`, `setCustomFitSizeLimitPreference`, `clearCustomFitSizeLimitPreference`
+Exports: `getViewerPreferences`, `setViewerPreferences`, `getThemePreference`, `setThemePreference`, `getThemeModePreference`, `setThemeModePreference`, `clearThemeSharedRevision`, `getLanguagePreference`, `setLanguagePreference`, `getPrintDefaultModePreference`, `setPrintDefaultModePreference`, `clearPrintDefaultModePreference`, `getDefaultZoomModePreference`, `setDefaultZoomModePreference`, `clearDefaultZoomModePreference`, `getCustomFitWidthFactorPreference`, `setCustomFitWidthFactorPreference`, `clearCustomFitWidthFactorPreference`, `getCustomFitSizeLimitPreference`, `setCustomFitSizeLimitPreference`, `clearCustomFitSizeLimitPreference`, `getToolbarLargeButtonsPreference`, `setToolbarLargeButtonsPreference`, `getEffectiveToolbarLargeButtons`
 
 Local imports: `src/utils/runtimeConfig.js`
 

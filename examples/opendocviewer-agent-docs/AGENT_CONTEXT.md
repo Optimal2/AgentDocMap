@@ -6,7 +6,7 @@ Source commit: not embedded
 ## Project
 
 - Package: opendocviewer
-- Version: 2.7.1
+- Version: 2.10.0
 - Description: Fast, lightweight document viewer \(PDF, TIFF, images\) built with React \+ Vite, with a token\-gated log server and runtime configuration.
 
 ## Read Order
@@ -23,10 +23,10 @@ Source commit: not embedded
 
 ## Stats
 
-- Source files: 114
-- Source lines: 49449
-- JSDoc symbols: 1318
-- Files with JSDoc: 114
+- Source files: 148
+- Source lines: 60676
+- JSDoc symbols: 1658
+- Files with JSDoc: 148
 - Low-confidence summaries: 0
 - Parse errors: 0
 
@@ -34,16 +34,16 @@ Source commit: not embedded
 
 - `src/utils/documentLoadingConfig.js` - OpenDocViewer — runtime helpers for fetch/render/memory policies.
 - `src/utils/runtimeConfig.js` - Runtime configuration helpers.
-- `src/logging/systemLogger.js` - src/logging/systemLogger.js OpenDocViewer — Frontend Logging Controller \(ESM\) \- Provide a small, dependency\-light logging facade for the browser app.
-- `src/utils/printPdf.js` - OpenDocViewer — Generated PDF print backend.
+- `src/utils/compareTransform.js` - File: src/utils/compareTransform.js Free per\-page transform for the compare view: stepless scale, free pan and 0.1 degree rotation, one transform per compared page \( primary \= lef...
+- `src/utils/imageAdjustments.js` - File: src/utils/imageAdjustments.js Per\-pane pixel adjustments \(brightness, contrast, grayscale, invert\) and the quarter turn the canvas draws.
 - `src/utils/viewerPreferences.js` - Lightweight persisted viewer preferences.
-- `src/contexts/viewerContext.js` - Exports ViewerContext.
+- `src/utils/pdfSignatureStatus.js` - Signature UI status helpers for browser integrity and gateway trust.
+- `src/logging/systemLogger.js` - src/logging/systemLogger.js OpenDocViewer — Frontend Logging Controller \(ESM\) \- Provide a small, dependency\-light logging facade for the browser app.
+- `src/utils/pdfResolution.js` - Pure, per\-page PDF display resolution policy shared by browser and worker renderers.
+- `src/utils/printPdf.js` - OpenDocViewer — Generated PDF print backend.
+- `src/utils/pdfSignatureDocuments.js` - Per\-document aggregation of PDF signature reports.
+- `src/contexts/viewerContext.js` - Per\-page compare transform \(utils/compareTransform.js\): scale multiplies the base zoom \(1 \= 100 %\), dx / dy are CSS px at transform scale 1, rotation is degrees in \[0, 360\).
 - `src/utils/localizedValue.js` - Localized string resolver for admin\-supplied config values.
-- `src/index.jsx` - OpenDocViewer — Application Entry \- Load global styles \(CSS variables \+ layout\).
-- `src/utils/pdfPrintCacheKey.js` - Generated\-PDF cache key helpers.
-- `src/utils/printTemplate.js` - OpenDocViewer — Print Templating & Tokens Provide token context generation and safe token substitution where values are HTML\-escaped before insertion into admin\-authored print header/footer templates.
-- `src/components/DocumentLoader/documentLoaderUtils.js` - OpenDocViewer — Loader Utilities Helper utilities used by the DocumentLoader pipeline: • Build document URL lists \(pattern mode and demo mode\) • Fetch as ArrayBuffer \(with optional AbortSignal\) • Page counting \(PDF / TIF
-- `src/utils/supportDiagnostics.js` - Support diagnostics helpers for opt\-in troubleshooting tools.
 
 ## Agent Notes
 

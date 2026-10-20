@@ -1,6 +1,6 @@
 # OpenDocViewer / src/integrations
 
-File count: 7. Line count: 2073. JSDoc symbol count: 52.
+File count: 8. Line count: 2276. JSDoc symbol count: 59.
 
 ## src/integrations/bootstrapRuntime.js
 
@@ -44,6 +44,24 @@ Symbols:
 - `PortableBundleMetadataAliasMap` (typedef) - Runtime\-configurable mapping between semantic metadata aliases and metadata record identifiers used by a host\-specific object\-document payload.
 - `normalizeToPortableBundle` (function) - Normalize many incoming shapes to a neutral PortableDocumentBundle v1.
 - `spreadUnknown` (function) - Preserve unknown own enumerable properties from host input while excluding keys that were already normalized explicitly.
+
+## src/integrations/ompThemeBridge.js
+
+Opt\-in cross\-origin theme bridge for the shared OMP theme preference.
+
+Exports: `OMP_THEME_BRIDGE_KIND`, `OMP_THEME_BRIDGE_VERSION`, `parseThemeBridgeMessage`, `isThemeBridgeOriginAllowed`, `isRevisionNewer`, `startOmpThemeBridge`, `announceThemeToAllowedOrigins`
+
+Local imports: `src/utils/ompThemePreference.js`
+
+Symbols:
+
+- `RemoteThemePreference` (typedef) - Remote theme preference received over the bridge.
+- `parseThemeBridgeMessage` (function) - Validate an inbound postMessage payload.
+- `isThemeBridgeOriginAllowed` (function) - Check an event origin against the configured allow\-list \(exact match only\).
+- `isRevisionNewer` (function) - Order two revisions by their base\-36 creation time, as OMP does.
+- `startOmpThemeBridge` (function) - Start listening for theme changes from allowed origins.
+- `startOmpThemeBridge~onMessage` (function) - No description.
+- `announceThemeToAllowedOrigins` (function) - Announce a local \(user\-initiated\) theme change to the embedded parent frame, once per allowed origin with that origin as the exact targetOrigin.
 
 ## src/integrations/parentBridge.js
 

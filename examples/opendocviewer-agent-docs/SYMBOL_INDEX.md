@@ -22,7 +22,7 @@
 | <code>getAppBase</code> | function | <code>src/app/bootConfig.js:16</code> | Return the application base path \(always with a trailing slash\) derived from the current page URL. |
 | <code>isJsContentType</code> | function | <code>src/app/bootConfig.js:29</code> | Heuristic: does a content-type look like JavaScript? |
 | <code>loadClassicScript</code> | function | <code>src/app/bootConfig.js:58</code> | Load a classic script and resolve when it executes \(or errors\). |
-| <code>loadFromCandidates</code> | function | <code>src/app/bootConfig.js:100</code> | Try multiple candidate URLs \(in order\) until one probes as JS, then load it. |
+| <code>loadFromCandidates</code> | function | <code>src/app/bootConfig.js:109</code> | Try multiple candidate URLs \(in order\) until one probes as JS, then load it. |
 | <code>probeScriptUrl</code> | function | <code>src/app/bootConfig.js:42</code> | Probe a candidate script URL and only accept it when the response looks like JavaScript. |
 | <code>BootstrapDebugInfo</code> | typedef | <code>src/app/OpenDocViewer.jsx:33</code> | Diagnostics-only startup details surfaced through the performance overlay. |
 | <code>OpenDocViewer</code> | function | <code>src/app/OpenDocViewer.jsx:67</code> | OpenDocViewer — Top-level component. |
@@ -41,64 +41,64 @@
 | <code>WorkerJob</code> | typedef | <code>src/components/DocumentLoader/batchHandler.js:31</code> | A single decoding/rendering unit handed to a worker. |
 | <code>WorkerMessageHandler</code> | typedef | <code>src/components/DocumentLoader/batchHandler.js:59</code> | Handle a worker&#39;s message and insert results. |
 | <code>module.exports</code> | function | <code>src/components/DocumentLoader/DemoControls.jsx:35</code> | DemoControls — wraps DocumentLoader with demo-mode props and a small control UI. |
-| <code>asciiHead</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:254</code> |  |
-| <code>buildInlineSourceBlob</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:847</code> | Decode host-provided Base64 source bytes without routing through fetch\(data:...\) . |
-| <code>createFailedPlaceholder</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:1059</code> |  |
-| <code>createInvalidSourcePayloadError</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:742</code> | Build a source-validation error. |
-| <code>createLimiter</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:161</code> |  |
-| <code>createPagePlaceholders</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:1017</code> |  |
-| <code>createPrefetchHttpError</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:682</code> | Build a consistent HTTP error so the retry classifier can inspect the status code. |
-| <code>createPrefetchTimeoutError</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:726</code> | Build a timeout-flavoured prefetch error so the loader can fail fast without waiting for the browser/network stack to decide when a stuck request should finally die. |
-| <code>createSourceUnavailableSessionError</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:710</code> |  |
-| <code>DocumentLoader</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:1169</code> |  |
+| <code>asciiHead</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:255</code> |  |
+| <code>buildInlineSourceBlob</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:848</code> | Decode host-provided Base64 source bytes without routing through fetch\(data:...\) . |
+| <code>createFailedPlaceholder</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:1060</code> |  |
+| <code>createInvalidSourcePayloadError</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:743</code> | Build a source-validation error. |
+| <code>createLimiter</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:162</code> |  |
+| <code>createPagePlaceholders</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:1018</code> |  |
+| <code>createPrefetchHttpError</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:683</code> | Build a consistent HTTP error so the retry classifier can inspect the status code. |
+| <code>createPrefetchTimeoutError</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:727</code> | Build a timeout-flavoured prefetch error so the loader can fail fast without waiting for the browser/network stack to decide when a stuck request should finally die. |
+| <code>createSourceUnavailableSessionError</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:711</code> |  |
+| <code>DocumentLoader</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:1170</code> |  |
 | <code>DocumentLoaderProps</code> | typedef | <code>src/components/DocumentLoader/DocumentLoader.js:58</code> |  |
 | <code>DocumentSourceItem</code> | typedef | <code>src/components/DocumentLoader/DocumentLoader.js:35</code> |  |
-| <code>estimateTotalPagesConservatively</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:645</code> | Estimate the final page count conservatively. |
+| <code>estimateTotalPagesConservatively</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:646</code> | Estimate the final page count conservatively. |
 | <code>FailedPlaceholderInput</code> | typedef | <code>src/components/DocumentLoader/DocumentLoader.js:91</code> |  |
-| <code>finalizeDocumentPages</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:993</code> | Patch the final page-count and boundary flags onto every page in a document once the loader knows where that document ends. |
-| <code>getDocumentProgressKey</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:977</code> |  |
-| <code>getEstimatedEntryExtension</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:604</code> | Resolve the best-effort extension we can use for page-count estimation before every source has been fetched. |
-| <code>getInitialTempStoreMode</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:591</code> |  |
-| <code>inferUrlExtension</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:206</code> |  |
-| <code>isReloadCacheEnabled</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:582</code> |  |
-| <code>isSourceUnavailableError</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:697</code> | Host integrations often expose short-lived file tickets. |
-| <code>isSupportedSourceExtension</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:238</code> |  |
-| <code>isTextLikeSourceMime</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:246</code> |  |
-| <code>isTransientPrefetchError</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:819</code> | Retry only errors that are likely to be transient in real deployments: browser/network fetch failures and gateway-style HTTP responses. |
+| <code>finalizeDocumentPages</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:994</code> | Patch the final page-count and boundary flags onto every page in a document once the loader knows where that document ends. |
+| <code>getDocumentProgressKey</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:978</code> |  |
+| <code>getEstimatedEntryExtension</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:605</code> | Resolve the best-effort extension we can use for page-count estimation before every source has been fetched. |
+| <code>getInitialTempStoreMode</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:592</code> |  |
+| <code>inferUrlExtension</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:207</code> |  |
+| <code>isReloadCacheEnabled</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:583</code> |  |
+| <code>isSourceUnavailableError</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:698</code> | Host integrations often expose short-lived file tickets. |
+| <code>isSupportedSourceExtension</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:239</code> |  |
+| <code>isTextLikeSourceMime</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:247</code> |  |
+| <code>isTransientPrefetchError</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:820</code> | Retry only errors that are likely to be transient in real deployments: browser/network fetch failures and gateway-style HTTP responses. |
 | <code>LoadPressureSummary</code> | typedef | <code>src/components/DocumentLoader/DocumentLoader.js:121</code> |  |
-| <code>looksLikeTextPayload</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:269</code> |  |
-| <code>matchesKnownSourceSignature</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:298</code> |  |
-| <code>&lt;anonymous&gt;~maybePrompt</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:1283</code> |  |
-| <code>mimeForExtension</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:923</code> |  |
-| <code>mimeToExtension</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:566</code> |  |
-| <code>needsPageCountAnalysis</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:452</code> |  |
-| <code>normalizeExtension</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:215</code> |  |
+| <code>looksLikeTextPayload</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:270</code> |  |
+| <code>matchesKnownSourceSignature</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:299</code> |  |
+| <code>&lt;anonymous&gt;~maybePrompt</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:1284</code> |  |
+| <code>mimeForExtension</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:924</code> |  |
+| <code>mimeToExtension</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:567</code> |  |
+| <code>needsPageCountAnalysis</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:453</code> |  |
+| <code>normalizeExtension</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:216</code> |  |
 | <code>PageEstimateStats</code> | typedef | <code>src/components/DocumentLoader/DocumentLoader.js:134</code> |  |
 | <code>PagePlaceholderInput</code> | typedef | <code>src/components/DocumentLoader/DocumentLoader.js:73</code> |  |
 | <code>PrefetchResult</code> | typedef | <code>src/components/DocumentLoader/DocumentLoader.js:140</code> |  |
-| <code>&lt;anonymous&gt;~prefetchSource</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:1304</code> | Fetch and persist one source blob with conservative retry behavior. |
-| <code>DocumentLoader~promptForPressure</code> | constant | <code>src/components/DocumentLoader/DocumentLoader.js:1213</code> |  |
-| <code>readBlobHeadBytes</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:335</code> |  |
-| <code>readUint32LittleEndian</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:888</code> |  |
-| <code>redactUrlForLog</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:548</code> |  |
-| <code>&lt;anonymous&gt;~resolve</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:1584</code> |  |
+| <code>&lt;anonymous&gt;~prefetchSource</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:1305</code> | Fetch and persist one source blob with conservative retry behavior. |
+| <code>DocumentLoader~promptForPressure</code> | constant | <code>src/components/DocumentLoader/DocumentLoader.js:1214</code> |  |
+| <code>readBlobHeadBytes</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:336</code> |  |
+| <code>readUint32LittleEndian</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:889</code> |  |
+| <code>redactUrlForLog</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:549</code> |  |
+| <code>&lt;anonymous&gt;~resolve</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:1585</code> |  |
 | <code>ResolvedEntry</code> | typedef | <code>src/components/DocumentLoader/DocumentLoader.js:102</code> |  |
-| <code>resolveDocumentSourceContext</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:951</code> | Extract multi-document source context from an entry or placeholder input. |
-| <code>resolveEntries</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:1101</code> |  |
-| <code>resolveExactPlannedPageCount</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:477</code> |  |
-| <code>resolveFetchedSourcePayload</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:353</code> | Resolve source type information with a cheap signature-first path. |
-| <code>resolvePrefetchedPageCountHint</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:517</code> | Resolve multi-page source page counts inside the prefetch worker queue so many small PDF/TIFF files do not create a second sequential analysis phase after all sources have been fe... |
-| <code>DocumentLoader~resolvePressurePrompt</code> | constant | <code>src/components/DocumentLoader/DocumentLoader.js:1222</code> |  |
-| <code>resolveTrustedEntryPageCountHint</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:462</code> |  |
-| <code>resolveTrustedSourcePackPayload</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:418</code> | Gateway source packs already carry trusted file metadata from the prepared server-side session. |
-| <code>safeMessage</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:1161</code> |  |
-| <code>shouldDeferSourceWarmup</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:499</code> | Large multi-page PDFs should not start their background render warm-up while the loader is still discovering more sources. |
-| <code>&lt;anonymous&gt;~shouldStopRun</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:1277</code> | Whether this load run is no longer allowed to mutate React state. |
-| <code>sleep</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:667</code> |  |
-| <code>startsWithAscii</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:284</code> |  |
-| <code>toPositiveIntOrUndefined</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:940</code> |  |
-| <code>updatePageEstimateStats</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:619</code> | Update per-extension page-count statistics used by the conservative warning estimator. |
-| <code>validateFetchedSourceBlob</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:764</code> | Validate that a fetched source looks like a renderable document before it is saved to ODV&#39;s session temp store. |
+| <code>resolveDocumentSourceContext</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:952</code> | Extract multi-document source context from an entry or placeholder input. |
+| <code>resolveEntries</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:1102</code> |  |
+| <code>resolveExactPlannedPageCount</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:478</code> |  |
+| <code>resolveFetchedSourcePayload</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:354</code> | Resolve source type information with a cheap signature-first path. |
+| <code>resolvePrefetchedPageCountHint</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:518</code> | Resolve multi-page source page counts inside the prefetch worker queue so many small PDF/TIFF files do not create a second sequential analysis phase after all sources have been fe... |
+| <code>DocumentLoader~resolvePressurePrompt</code> | constant | <code>src/components/DocumentLoader/DocumentLoader.js:1223</code> |  |
+| <code>resolveTrustedEntryPageCountHint</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:463</code> |  |
+| <code>resolveTrustedSourcePackPayload</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:419</code> | Gateway source packs already carry trusted file metadata from the prepared server-side session. |
+| <code>safeMessage</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:1162</code> |  |
+| <code>shouldDeferSourceWarmup</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:500</code> | Large multi-page PDFs should not start their background render warm-up while the loader is still discovering more sources. |
+| <code>&lt;anonymous&gt;~shouldStopRun</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:1278</code> | Whether this load run is no longer allowed to mutate React state. |
+| <code>sleep</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:668</code> |  |
+| <code>startsWithAscii</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:285</code> |  |
+| <code>toPositiveIntOrUndefined</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:941</code> |  |
+| <code>updatePageEstimateStats</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:620</code> | Update per-extension page-count statistics used by the conservative warning estimator. |
+| <code>validateFetchedSourceBlob</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:765</code> | Validate that a fetched source looks like a renderable document before it is saved to ODV&#39;s session temp store. |
 | <code>fetchAndArrayBuffer</code> | constant | <code>src/components/DocumentLoader/documentLoaderUtils.js:170</code> | Fetch a resource and return its ArrayBuffer. |
 | <code>FetchOptions</code> | typedef | <code>src/components/DocumentLoader/documentLoaderUtils.js:105</code> | Options for fetchAndArrayBuffer. |
 | <code>generateDemoList</code> | constant | <code>src/components/DocumentLoader/documentLoaderUtils.js:80</code> | Generate a list of demo document URLs by repeating or mixing sample files. |
@@ -111,15 +111,15 @@
 | <code>LoadPressureDialogProps</code> | typedef | <code>src/components/DocumentLoader/LoadPressureDialog.jsx:21</code> |  |
 | <code>LoadPressureDialogSummary</code> | typedef | <code>src/components/DocumentLoader/LoadPressureDialog.jsx:8</code> |  |
 | <code>LoadPressureDialog~tr</code> | function | <code>src/components/DocumentLoader/LoadPressureDialog.jsx:43</code> |  |
-| <code>__pdfWorkerInitialized</code> | member | <code>src/components/DocumentLoader/mainThreadRenderer.js:71</code> | One-time init of pdf.js classic worker script URL \(dev == build\). |
-| <code>buildOjpegJpeg</code> | function | <code>src/components/DocumentLoader/mainThreadRenderer.js:248</code> | Build a standard JPEG Blob from an OJPEG \(old-style JPEG-in-TIFF\) IFD by concatenating the tables \( JPEGInterchangeFormat / Length : t513/t514\) with the entropy-coded scan strips... |
-| <code>ensurePdfWorker</code> | function | <code>src/components/DocumentLoader/mainThreadRenderer.js:78</code> | Ensure a pdf.js worker is ready for this runtime. |
-| <code>getTagArray</code> | function | <code>src/components/DocumentLoader/mainThreadRenderer.js:232</code> | Safely read a TIFF tag array from a utif2 IFD object. |
-| <code>InsertPageAtIndex</code> | typedef | <code>src/components/DocumentLoader/mainThreadRenderer.js:61</code> | Signature for inserting a page structure into the page list at an index. |
-| <code>MAX_OJPEG_SCAN_SIZE_BYTES</code> | constant | <code>src/components/DocumentLoader/mainThreadRenderer.js:33</code> | Upper bound for reconstructed OJPEG entropy-coded scan data. |
-| <code>RenderJob</code> | typedef | <code>src/components/DocumentLoader/mainThreadRenderer.js:47</code> | Render job passed to the main-thread renderer. |
-| <code>renderPDFInMainThread</code> | constant | <code>src/components/DocumentLoader/mainThreadRenderer.js:102</code> | Render PDF pages on the main thread and INSERT THEM DIRECTLY. |
-| <code>renderTIFFInMainThread</code> | constant | <code>src/components/DocumentLoader/mainThreadRenderer.js:318</code> | Render TIFF pages on the main thread with an ultra-light OJPEG fast path: If Compression=6 \(old-style JPEG-in-TIFF\), reconstruct a standard JPEG stream by concatenating the JFIF/t... |
+| <code>__pdfWorkerInitialized</code> | member | <code>src/components/DocumentLoader/mainThreadRenderer.js:74</code> | One-time init of pdf.js classic worker script URL \(dev == build\). |
+| <code>buildOjpegJpeg</code> | function | <code>src/components/DocumentLoader/mainThreadRenderer.js:256</code> | Build a standard JPEG Blob from an OJPEG \(old-style JPEG-in-TIFF\) IFD by concatenating the tables \( JPEGInterchangeFormat / Length : t513/t514\) with the entropy-coded scan strips... |
+| <code>ensurePdfWorker</code> | function | <code>src/components/DocumentLoader/mainThreadRenderer.js:81</code> | Ensure a pdf.js worker is ready for this runtime. |
+| <code>getTagArray</code> | function | <code>src/components/DocumentLoader/mainThreadRenderer.js:240</code> | Safely read a TIFF tag array from a utif2 IFD object. |
+| <code>InsertPageAtIndex</code> | typedef | <code>src/components/DocumentLoader/mainThreadRenderer.js:64</code> | Signature for inserting a page structure into the page list at an index. |
+| <code>MAX_OJPEG_SCAN_SIZE_BYTES</code> | constant | <code>src/components/DocumentLoader/mainThreadRenderer.js:36</code> | Upper bound for reconstructed OJPEG entropy-coded scan data. |
+| <code>RenderJob</code> | typedef | <code>src/components/DocumentLoader/mainThreadRenderer.js:50</code> | Render job passed to the main-thread renderer. |
+| <code>renderPDFInMainThread</code> | constant | <code>src/components/DocumentLoader/mainThreadRenderer.js:105</code> | Render PDF pages on the main thread and INSERT THEM DIRECTLY. |
+| <code>renderTIFFInMainThread</code> | constant | <code>src/components/DocumentLoader/mainThreadRenderer.js:326</code> | Render TIFF pages on the main thread with an ultra-light OJPEG fast path: If Compression=6 \(old-style JPEG-in-TIFF\), reconstruct a standard JPEG stream by concatenating the JFIF/t... |
 | <code>ExplicitSourceList</code> | typedef | <code>src/components/DocumentLoader/sources/explicitListSource.js:3</code> | OpenDocViewer — Explicit Source List Normalizer PURPOSE Convert a PortableDocumentBundle into a flat, ordered list of file entries that the loader can process deterministically. |
 | <code>firstDocumentField</code> | function | <code>src/components/DocumentLoader/sources/explicitListSource.js:102</code> |  |
 | <code>inferExtFromUrl</code> | function | <code>src/components/DocumentLoader/sources/explicitListSource.js:77</code> | Infer a lowercase extension from a URL if present. |
@@ -143,113 +143,137 @@
 | <code>&lt;anonymous&gt;~handleEscape</code> | function | <code>src/components/DocumentMetadataMatrixOverlayDialog.jsx:30</code> |  |
 | <code>module.exports</code> | function | <code>src/components/DocumentMetadataOverlayDialog.jsx:21</code> |  |
 | <code>&lt;anonymous&gt;~handleEscape</code> | function | <code>src/components/DocumentMetadataOverlayDialog.jsx:38</code> |  |
-| <code>&lt;anonymous&gt;~applyFitZoomForKnownSize</code> | constant | <code>src/components/DocumentRender.jsx:465</code> | Apply sticky fit modes before a newly loaded page becomes visible. |
-| <code>&lt;anonymous&gt;~applyInitialZoomMode</code> | constant | <code>src/components/DocumentRender.jsx:488</code> |  |
-| <code>&lt;anonymous&gt;~claimAssetRetry</code> | constant | <code>src/components/DocumentRender.jsx:215</code> |  |
-| <code>&lt;anonymous&gt;~clearLoadingOverlayTimer</code> | constant | <code>src/components/DocumentRender.jsx:203</code> |  |
-| <code>DisplayedAsset</code> | typedef | <code>src/components/DocumentRender.jsx:76</code> |  |
-| <code>DocumentRender</code> | constant | <code>src/components/DocumentRender.jsx:100</code> |  |
-| <code>&lt;anonymous&gt;~drawImageOnCanvas</code> | constant | <code>src/components/DocumentRender.jsx:374</code> |  |
-| <code>&lt;anonymous&gt;~finalizeDisplayedAsset</code> | constant | <code>src/components/DocumentRender.jsx:709</code> |  |
-| <code>&lt;anonymous&gt;~fitToCustomWidth</code> | constant | <code>src/components/DocumentRender.jsx:452</code> |  |
-| <code>&lt;anonymous&gt;~fitToScreen</code> | constant | <code>src/components/DocumentRender.jsx:433</code> |  |
-| <code>&lt;anonymous&gt;~fitToWidth</code> | constant | <code>src/components/DocumentRender.jsx:442</code> |  |
-| <code>&lt;anonymous&gt;~getActiveRenderSurface</code> | constant | <code>src/components/DocumentRender.jsx:420</code> | Returns the surface whose intrinsic size should drive fit calculations. |
-| <code>getCurrentPage</code> | function | <code>src/components/DocumentRender.jsx:44</code> |  |
-| <code>&lt;anonymous&gt;~handlePendingImageError</code> | constant | <code>src/components/DocumentRender.jsx:893</code> |  |
-| <code>&lt;anonymous&gt;~handlePendingImageLoad</code> | constant | <code>src/components/DocumentRender.jsx:826</code> |  |
-| <code>&lt;anonymous&gt;~handleViewportDoubleClick</code> | constant | <code>src/components/DocumentRender.jsx:511</code> |  |
-| <code>&lt;anonymous&gt;~handleVisibleImageError</code> | constant | <code>src/components/DocumentRender.jsx:921</code> |  |
-| <code>&lt;anonymous&gt;~handleVisibleImageLoad</code> | constant | <code>src/components/DocumentRender.jsx:769</code> |  |
-| <code>hasUsableSize</code> | function | <code>src/components/DocumentRender.jsx:64</code> |  |
-| <code>isBlobAssetUrl</code> | function | <code>src/components/DocumentRender.jsx:72</code> |  |
-| <code>normalizeSize</code> | function | <code>src/components/DocumentRender.jsx:53</code> |  |
-| <code>&lt;anonymous&gt;~recoverPageAsset</code> | constant | <code>src/components/DocumentRender.jsx:852</code> |  |
-| <code>&lt;anonymous&gt;~resetAssetRetry</code> | constant | <code>src/components/DocumentRender.jsx:196</code> | Reset the per-page blob-URL retry tracker after a successful load or when the target page changes. |
-| <code>&lt;anonymous&gt;~resolveCustomFitOptions</code> | constant | <code>src/components/DocumentRender.jsx:255</code> |  |
+| <code>&lt;anonymous&gt;~applyFitZoomForKnownSize</code> | constant | <code>src/components/DocumentRender.jsx:494</code> | Apply sticky fit modes before a newly loaded page becomes visible. |
+| <code>&lt;anonymous&gt;~applyInitialZoomMode</code> | constant | <code>src/components/DocumentRender.jsx:517</code> |  |
+| <code>&lt;anonymous&gt;~claimAssetRetry</code> | constant | <code>src/components/DocumentRender.jsx:238</code> |  |
+| <code>&lt;anonymous&gt;~clearLoadingOverlayTimer</code> | constant | <code>src/components/DocumentRender.jsx:226</code> |  |
+| <code>DisplayedAsset</code> | typedef | <code>src/components/DocumentRender.jsx:90</code> |  |
+| <code>DocumentRender</code> | constant | <code>src/components/DocumentRender.jsx:117</code> |  |
+| <code>&lt;anonymous&gt;~drawImageOnCanvas</code> | constant | <code>src/components/DocumentRender.jsx:407</code> |  |
+| <code>&lt;anonymous&gt;~finalizeDisplayedAsset</code> | constant | <code>src/components/DocumentRender.jsx:739</code> |  |
+| <code>&lt;anonymous&gt;~fitToCustomWidth</code> | constant | <code>src/components/DocumentRender.jsx:481</code> |  |
+| <code>&lt;anonymous&gt;~fitToScreen</code> | constant | <code>src/components/DocumentRender.jsx:462</code> |  |
+| <code>&lt;anonymous&gt;~fitToWidth</code> | constant | <code>src/components/DocumentRender.jsx:471</code> |  |
+| <code>&lt;anonymous&gt;~getActiveRenderSurface</code> | constant | <code>src/components/DocumentRender.jsx:449</code> | Returns the surface whose intrinsic size should drive fit calculations. |
+| <code>getCurrentPage</code> | function | <code>src/components/DocumentRender.jsx:58</code> |  |
+| <code>&lt;anonymous&gt;~handlePendingImageError</code> | constant | <code>src/components/DocumentRender.jsx:943</code> |  |
+| <code>&lt;anonymous&gt;~handlePendingImageLoad</code> | constant | <code>src/components/DocumentRender.jsx:876</code> |  |
+| <code>&lt;anonymous&gt;~handleViewportDoubleClick</code> | constant | <code>src/components/DocumentRender.jsx:540</code> |  |
+| <code>&lt;anonymous&gt;~handleVisibleImageError</code> | constant | <code>src/components/DocumentRender.jsx:971</code> |  |
+| <code>&lt;anonymous&gt;~handleVisibleImageLoad</code> | constant | <code>src/components/DocumentRender.jsx:819</code> |  |
+| <code>hasUsableSize</code> | function | <code>src/components/DocumentRender.jsx:78</code> |  |
+| <code>isBlobAssetUrl</code> | function | <code>src/components/DocumentRender.jsx:86</code> |  |
+| <code>&lt;anonymous&gt;~lastNaturalSizeRef</code> | constant | <code>src/components/DocumentRender.jsx:164</code> | Natural size of the last finalized asset, per page index, for boost zoom compensation. |
+| <code>NOOP</code> | function | <code>src/components/DocumentRender.jsx:51</code> | Shared default for the optional callbacks. |
+| <code>normalizeSize</code> | function | <code>src/components/DocumentRender.jsx:67</code> |  |
+| <code>&lt;anonymous&gt;~recoverPageAsset</code> | constant | <code>src/components/DocumentRender.jsx:902</code> |  |
+| <code>&lt;anonymous&gt;~resetAssetRetry</code> | constant | <code>src/components/DocumentRender.jsx:219</code> | Reset the per-page blob-URL retry tracker after a successful load or when the target page changes. |
+| <code>&lt;anonymous&gt;~resolveCustomFitOptions</code> | constant | <code>src/components/DocumentRender.jsx:278</code> |  |
 | <code>module.exports</code> | function | <code>src/components/DocumentSelectionPanel.jsx:89</code> |  |
 | <code>SelectionCheckboxRow</code> | function | <code>src/components/DocumentSelectionPanel.jsx:30</code> |  |
-| <code>buildCenterOutQueue</code> | function | <code>src/components/DocumentThumbnailList.jsx:150</code> | Build a center-out thumbnail warm-up order so the pane feels responsive around the user&#39;s current scroll target instead of always starting from page 1. |
-| <code>clamp</code> | function | <code>src/components/DocumentThumbnailList.jsx:63</code> |  |
-| <code>DocumentThumbnailList</code> | constant | <code>src/components/DocumentThumbnailList.jsx:535</code> |  |
-| <code>formatMetricFraction</code> | function | <code>src/components/DocumentThumbnailList.jsx:107</code> |  |
-| <code>formatMetricValue</code> | function | <code>src/components/DocumentThumbnailList.jsx:117</code> |  |
-| <code>getDocumentBoundaryLabel</code> | function | <code>src/components/DocumentThumbnailList.jsx:315</code> |  |
-| <code>getDocumentBoundaryTitle</code> | function | <code>src/components/DocumentThumbnailList.jsx:329</code> |  |
-| <code>getMetricBadges</code> | function | <code>src/components/DocumentThumbnailList.jsx:261</code> |  |
-| <code>getMetricTitles</code> | function | <code>src/components/DocumentThumbnailList.jsx:212</code> |  |
-| <code>getPageDocumentContext</code> | function | <code>src/components/DocumentThumbnailList.jsx:184</code> |  |
-| <code>getPageDocumentKey</code> | function | <code>src/components/DocumentThumbnailList.jsx:171</code> |  |
-| <code>getSessionPageIndex</code> | function | <code>src/components/DocumentThumbnailList.jsx:126</code> |  |
-| <code>getThumbnailLayout</code> | function | <code>src/components/DocumentThumbnailList.jsx:86</code> |  |
-| <code>&lt;anonymous&gt;~handleActivate</code> | constant | <code>src/components/DocumentThumbnailList.jsx:1051</code> |  |
-| <code>&lt;anonymous&gt;~handleImageLoad</code> | constant | <code>src/components/DocumentThumbnailList.jsx:1144</code> |  |
-| <code>&lt;anonymous&gt;~handleKeyActivate</code> | constant | <code>src/components/DocumentThumbnailList.jsx:1077</code> |  |
-| <code>&lt;anonymous&gt;~handleKeyDown</code> | function | <code>src/components/DocumentThumbnailList.jsx:946</code> |  |
-| <code>&lt;anonymous&gt;~handleOpenContextMenu</code> | constant | <code>src/components/DocumentThumbnailList.jsx:1090</code> |  |
-| <code>&lt;anonymous&gt;~handlePointerDown</code> | function | <code>src/components/DocumentThumbnailList.jsx:937</code> |  |
-| <code>&lt;anonymous&gt;~handleScroll</code> | constant | <code>src/components/DocumentThumbnailList.jsx:1024</code> |  |
-| <code>isIndexInRange</code> | function | <code>src/components/DocumentThumbnailList.jsx:137</code> |  |
-| <code>&lt;anonymous&gt;~setContainerRef</code> | constant | <code>src/components/DocumentThumbnailList.jsx:708</code> |  |
-| <code>shouldWarmAllThumbnails</code> | function | <code>src/components/DocumentThumbnailList.jsx:72</code> |  |
-| <code>ThumbnailRow</code> | constant | <code>src/components/DocumentThumbnailList.jsx:342</code> |  |
-| <code>ThumbnailRowProps</code> | typedef | <code>src/components/DocumentThumbnailList.jsx:35</code> |  |
+| <code>buildCenterOutQueue</code> | function | <code>src/components/DocumentThumbnailList.jsx:161</code> | Build a center-out thumbnail warm-up order so the pane feels responsive around the user&#39;s current scroll target instead of always starting from page 1. |
+| <code>clamp</code> | function | <code>src/components/DocumentThumbnailList.jsx:74</code> |  |
+| <code>DocumentBoundaryHeader</code> | function | <code>src/components/DocumentThumbnailList.jsx:367</code> | The &amp;quot;DOK n&amp;quot; document header with the document signature symbol. |
+| <code>DocumentThumbnailList</code> | constant | <code>src/components/DocumentThumbnailList.jsx:646</code> |  |
+| <code>formatMetricFraction</code> | function | <code>src/components/DocumentThumbnailList.jsx:118</code> |  |
+| <code>formatMetricValue</code> | function | <code>src/components/DocumentThumbnailList.jsx:128</code> |  |
+| <code>getDocumentBoundaryLabel</code> | function | <code>src/components/DocumentThumbnailList.jsx:326</code> |  |
+| <code>getDocumentBoundaryTitle</code> | function | <code>src/components/DocumentThumbnailList.jsx:340</code> |  |
+| <code>getMetricBadges</code> | function | <code>src/components/DocumentThumbnailList.jsx:272</code> |  |
+| <code>getMetricTitles</code> | function | <code>src/components/DocumentThumbnailList.jsx:223</code> |  |
+| <code>getPageDocumentContext</code> | function | <code>src/components/DocumentThumbnailList.jsx:195</code> |  |
+| <code>getPageDocumentKey</code> | function | <code>src/components/DocumentThumbnailList.jsx:182</code> |  |
+| <code>getSessionPageIndex</code> | function | <code>src/components/DocumentThumbnailList.jsx:137</code> |  |
+| <code>getThumbnailLayout</code> | function | <code>src/components/DocumentThumbnailList.jsx:97</code> |  |
+| <code>&lt;anonymous&gt;~handleActivate</code> | constant | <code>src/components/DocumentThumbnailList.jsx:1241</code> |  |
+| <code>&lt;anonymous&gt;~handleImageLoad</code> | constant | <code>src/components/DocumentThumbnailList.jsx:1334</code> |  |
+| <code>&lt;anonymous&gt;~handleKeyActivate</code> | constant | <code>src/components/DocumentThumbnailList.jsx:1267</code> |  |
+| <code>&lt;anonymous&gt;~handleKeyDown</code> | function | <code>src/components/DocumentThumbnailList.jsx:1093</code> |  |
+| <code>&lt;anonymous&gt;~handleOpenContextMenu</code> | constant | <code>src/components/DocumentThumbnailList.jsx:1280</code> |  |
+| <code>&lt;anonymous&gt;~handlePointerDown</code> | function | <code>src/components/DocumentThumbnailList.jsx:1084</code> |  |
+| <code>&lt;anonymous&gt;~handleScroll</code> | constant | <code>src/components/DocumentThumbnailList.jsx:1171</code> |  |
+| <code>isIndexInRange</code> | function | <code>src/components/DocumentThumbnailList.jsx:148</code> |  |
+| <code>resolveRowHeaderAndShell</code> | function | <code>src/components/DocumentThumbnailList.jsx:614</code> | Locate a row&#39;s inline document-boundary header and its row shell for the sticky-header measurement. |
+| <code>&lt;anonymous&gt;~resolveStickyHeaderRowIndex</code> | constant | <code>src/components/DocumentThumbnailList.jsx:733</code> | The sticky header shows the current document only once that document&#39;s inline header has scrolled out of view, so the two are never visible together. |
+| <code>&lt;anonymous&gt;~setContainerRef</code> | constant | <code>src/components/DocumentThumbnailList.jsx:855</code> |  |
+| <code>shouldWarmAllThumbnails</code> | function | <code>src/components/DocumentThumbnailList.jsx:83</code> |  |
+| <code>ThumbnailRow</code> | constant | <code>src/components/DocumentThumbnailList.jsx:414</code> |  |
+| <code>ThumbnailRowProps</code> | typedef | <code>src/components/DocumentThumbnailList.jsx:39</code> |  |
 | <code>module.exports</code> | function | <code>src/components/DocumentToolbar/AboutOverlayDialog.jsx:46</code> |  |
 | <code>&lt;anonymous&gt;~handleEscape</code> | function | <code>src/components/DocumentToolbar/AboutOverlayDialog.jsx:70</code> |  |
 | <code>resolveAboutInfo</code> | function | <code>src/components/DocumentToolbar/AboutOverlayDialog.jsx:17</code> |  |
-| <code>AnyRef</code> | typedef | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:108</code> | Mutable ref-like object used by the toolbar. |
-| <code>DocumentToolbar~dispatchPrintRequest</code> | constant | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:1119</code> | Execute the actual print helper after the dialog has resolved the user&#39;s choices. |
-| <code>DocumentToolbar</code> | function | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:285</code> | Toolbar shell for page navigation, zoom, comparison, image adjustments, help, language, and print entry. |
-| <code>DocumentToolbarProps</code> | typedef | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:136</code> | Props for {@link DocumentToolbar}. |
-| <code>formatPdfProgressBody</code> | function | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:64</code> |  |
-| <code>getPdfProgressPercent</code> | function | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:81</code> |  |
-| <code>DocumentToolbar~handleBrightnessSliderChange</code> | constant | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:681</code> | Handle brightness slider changes with neutral snapping at 100. |
-| <code>DocumentToolbar~handleContrastSliderChange</code> | constant | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:695</code> | Handle contrast slider changes with neutral snapping at 100. |
-| <code>DocumentToolbar~handleEnhancePdfResolutionClick</code> | constant | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:717</code> |  |
-| <code>&lt;anonymous&gt;~handleEscape</code> | function | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:407</code> |  |
-| <code>&lt;anonymous&gt;~handlePointerDown</code> | function | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:399</code> |  |
-| <code>DocumentToolbar~handlePrintSubmit</code> | constant | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:1287</code> | Handle the dialog submit event and dispatch the correct print action. |
-| <code>DocumentToolbar~handleResetAdjustmentsClick</code> | constant | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:730</code> |  |
-| <code>DocumentToolbar~handleRotationButtonClick</code> | constant | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:709</code> |  |
-| <code>ImageProperties</code> | typedef | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:114</code> | Editable image state shown by the toolbar. |
-| <code>isPdfAbortError</code> | function | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:55</code> |  |
-| <code>isPdfPage</code> | function | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:272</code> |  |
-| <code>makePdfResolutionPageKey</code> | function | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:262</code> |  |
-| <code>DocumentToolbar~makePrintOptions</code> | constant | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:858</code> |  |
-| <code>normalizeToolbarPageNumber</code> | function | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:250</code> | Clamp a page number into the valid viewer range while preserving a safe fallback. |
-| <code>ONE_TO_ONE_EPS</code> | constant | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:219</code> | Epsilon for considering zoom ≈ 100% \(0.5%\). |
-| <code>PageNumberSetter</code> | typedef | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:122</code> | React-like numeric page setter used by the toolbar. |
-| <code>PrintSubmitDetail</code> | typedef | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:88</code> | Detail payload emitted by the print dialog. |
-| <code>DocumentToolbar~resolvePrintPageContexts</code> | constant | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:808</code> | Resolve page metadata objects aligned with the printed page sequence. |
-| <code>DocumentToolbar~resolvePrintPageCount</code> | constant | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:786</code> | Estimate the number of pages the user is about to print. |
-| <code>DocumentToolbar~resolvePrintPageNumbers</code> | constant | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:822</code> |  |
-| <code>SLIDER_CENTER_RANGE</code> | constant | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:217</code> | Range \(±\) around 100% where sliders snap back to the neutral value. |
-| <code>DocumentToolbar~submitUserPrintLog</code> | constant | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:886</code> | Fire-and-forget user print log. |
-| <code>DocumentToolbar~toggleAdjustmentMenu</code> | constant | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:739</code> |  |
-| <code>DocumentToolbar~toPagesString</code> | constant | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:766</code> | Build a compact &amp;quot;pages&amp;quot; descriptor for logging. |
-| <code>ZoomState</code> | typedef | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:129</code> | Zoom display state used by the newer toolbar UX paths. |
+| <code>AnyRef</code> | typedef | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:53</code> | Mutable ref-like object used by the toolbar. |
+| <code>DocumentToolbar</code> | function | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:211</code> | Toolbar shell for page navigation, zoom, comparison, image adjustments, help, language, and print entry. |
+| <code>DocumentToolbarProps</code> | typedef | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:81</code> | Props for {@link DocumentToolbar}. |
+| <code>DocumentToolbar~handleBrightnessSliderChange</code> | constant | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:622</code> | Handle brightness slider changes with neutral snapping at 100. |
+| <code>DocumentToolbar~handleContrastSliderChange</code> | constant | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:636</code> | Handle contrast slider changes with neutral snapping at 100. |
+| <code>DocumentToolbar~handleEnhancePdfResolutionClick</code> | constant | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:658</code> |  |
+| <code>&lt;anonymous&gt;~handleEscape</code> | function | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:339</code> |  |
+| <code>&lt;anonymous&gt;~handlePointerDown</code> | function | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:331</code> |  |
+| <code>DocumentToolbar~handleResetAdjustmentsClick</code> | constant | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:671</code> |  |
+| <code>DocumentToolbar~handleRotationButtonClick</code> | constant | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:650</code> |  |
+| <code>ImageProperties</code> | typedef | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:59</code> | Editable image state shown by the toolbar. |
+| <code>isPdfPage</code> | function | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:198</code> |  |
+| <code>makePdfResolutionPageKey</code> | function | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:188</code> |  |
+| <code>ONE_TO_ONE_EPS</code> | constant | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:161</code> | Epsilon for considering zoom ≈ 100% \(0.5%\). |
+| <code>PageNumberSetter</code> | typedef | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:67</code> | React-like numeric page setter used by the toolbar. |
+| <code>SLIDER_CENTER_RANGE</code> | constant | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:159</code> | Range \(±\) around 100% where sliders snap back to the neutral value. |
+| <code>DocumentToolbar~toggleAdjustmentMenu</code> | constant | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:680</code> |  |
+| <code>ZoomState</code> | typedef | <code>src/components/DocumentToolbar/DocumentToolbar.jsx:74</code> | Zoom display state used by the newer toolbar UX paths. |
 | <code>&lt;anonymous&gt;~handleKeyDown</code> | function | <code>src/components/DocumentToolbar/HelpMenuButton.jsx:30</code> |  |
 | <code>&lt;anonymous&gt;~handlePointerDown</code> | function | <code>src/components/DocumentToolbar/HelpMenuButton.jsx:22</code> |  |
 | <code>module.exports</code> | function | <code>src/components/DocumentToolbar/HelpOverlayDialog.jsx:19</code> |  |
 | <code>&lt;anonymous&gt;~handleEscape</code> | function | <code>src/components/DocumentToolbar/HelpOverlayDialog.jsx:29</code> |  |
 | <code>module:usePrintRangeConfig</code> | module | <code>src/components/DocumentToolbar/hooks/usePrintRangeConfig.js:2</code> | Runtime-configuration derivation for PrintRangeDialog. |
-| <code>module:usePrintRangeConfig.usePrintRangeConfig</code> | function | <code>src/components/DocumentToolbar/hooks/usePrintRangeConfig.js:29</code> |  |
+| <code>module:usePrintRangeConfig.usePrintRangeConfig</code> | function | <code>src/components/DocumentToolbar/hooks/usePrintRangeConfig.js:30</code> |  |
 | <code>&lt;anonymous&gt;~handleKeyDown</code> | function | <code>src/components/DocumentToolbar/LanguageMenuButton.jsx:61</code> |  |
 | <code>&lt;anonymous&gt;~handlePointerDown</code> | function | <code>src/components/DocumentToolbar/LanguageMenuButton.jsx:53</code> |  |
 | <code>LanguageMenuButton~handleSelectLanguage</code> | function | <code>src/components/DocumentToolbar/LanguageMenuButton.jsx:80</code> |  |
 | <code>resolveLanguageLabel</code> | function | <code>src/components/DocumentToolbar/LanguageMenuButton.jsx:18</code> |  |
-| <code>appendManualRefreshToken</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:111</code> |  |
-| <code>buildManualCandidates</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:143</code> |  |
-| <code>module.exports</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:173</code> |  |
-| <code>&lt;anonymous&gt;~handleEscape</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:193</code> |  |
-| <code>interpolateTemplate</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:31</code> |  |
-| <code>isRewritableRelativeUrl</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:41</code> |  |
-| <code>removeManualRefreshToken</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:127</code> |  |
-| <code>rewriteManualHtml</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:69</code> |  |
-| <code>sanitizeManualHtml</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:55</code> |  |
-| <code>toText</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:21</code> |  |
+| <code>appendManualRefreshToken</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:96</code> |  |
+| <code>applyCustomHighlight</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:294</code> | Highlight every match through the CSS Custom Highlight API without touching the manual DOM at all. |
+| <code>applyMarkFallback</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:348</code> | Fallback highlighter for browsers without the CSS Custom Highlight API: wrap every match in a &amp;lt;mark&amp;gt; carrying its hit index. |
+| <code>canUseCustomHighlight</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:274</code> |  |
+| <code>captureScrollPositions</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:555</code> | Record the scroll positions of the page and of every ancestor of from , so a fragment navigation \(which the browser may scroll for\) can be undone. |
+| <code>collectManualTextMatches</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:231</code> | Find every non-overlapping occurrence of the query in the rendered manual text. |
+| <code>createManualSearchFolder</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:161</code> | Build a case-folding function that lowers one character through the UI locale, so Swedish characters such as å/ä/ö fold correctly instead of by raw code units. |
+| <code>module.exports</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:600</code> |  |
+| <code>findManualElementById</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:514</code> |  |
+| <code>foldManualSearchText</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:200</code> | Case-fold text one code point at a time and keep, for every folded code unit, the original code-unit range of the character it came from. |
+| <code>&lt;anonymous&gt;~handleEscape</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:801</code> |  |
+| <code>isHiddenInManual</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:537</code> | True when the element or one of its ancestors inside the manual is not rendered \( display: none \). |
+| <code>isRewritableRelativeUrl</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:26</code> |  |
+| <code>MANUAL_CONTENTS_ID</code> | constant | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:494</code> | Id of the contents tree; the narrow-window toggle points at it with aria-controls. |
+| <code>MANUAL_DIALOG_IDS</code> | constant | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:506</code> | Ids the dialog renders around the manual. |
+| <code>MANUAL_SEARCH_CURRENT_HIGHLIGHT_NAME</code> | constant | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:143</code> | Name of the CSS Custom Highlight covering only the current manual search hit. |
+| <code>MANUAL_SEARCH_DEBOUNCE_MS</code> | constant | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:133</code> | Debounce delay before a typed query is applied to the rendered manual text. |
+| <code>MANUAL_SEARCH_HIGHLIGHT_NAME</code> | constant | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:138</code> | Name of the shared CSS Custom Highlight covering every manual search hit. |
+| <code>MANUAL_SEARCH_INPUT_ID</code> | constant | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:497</code> | Id of the manual search field. |
+| <code>MANUAL_SEARCH_MARK_ATTRIBUTE</code> | constant | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:150</code> | Attribute marking fallback &amp;lt;mark&amp;gt; wrappers with their hit index. |
+| <code>MANUAL_SEARCH_MIN_LENGTH</code> | constant | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:128</code> | Minimum query length before the manual search runs. |
+| <code>MANUAL_SECTION_ACTIVE_LINE</code> | constant | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:459</code> | Share of the content pane height, measured from its top, inside which a heading counts as the start of the section being read. |
+| <code>MANUAL_SECTION_SCROLL_GAP</code> | constant | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:462</code> | Gap in pixels kept above a heading when the content pane scrolls to it. |
+| <code>MANUAL_TITLE_ID</code> | constant | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:500</code> | Id of the dialog title. |
+| <code>ManualOverlayDialog~navigateToManualTarget</code> | constant | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:704</code> | Scroll the content pane \(never the tree\) to an element in the manual and focus it. |
+| <code>openDetailsAncestors</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:470</code> | Open collapsed &amp;lt;details&amp;gt; ancestors so a target inside them can be shown. |
+| <code>ManualOverlayDialog~pinSectionFor</code> | constant | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:658</code> | Make the section holding target current and keep it current until the reader scrolls. |
+| <code>removeManualRefreshToken</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:112</code> |  |
+| <code>removeMarkFallback</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:409</code> | Unwrap fallback marks and merge the split text nodes back together. |
+| <code>ManualOverlayDialog~renderContentsLink</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:1065</code> |  |
+| <code>replaceUrlFragment</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:583</code> | Replace the URL fragment without adding a history entry. |
+| <code>ManualOverlayDialog~restoreViewerFragment</code> | constant | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:683</code> | Put back the URL fragment the viewer had before the manual set one. |
+| <code>revealManualMatch</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:431</code> | Open collapsed &amp;lt;details&amp;gt; ancestors of the hit and scroll it into the dialog scroll container. |
+| <code>rewriteManualHtml</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:54</code> |  |
+| <code>sanitizeManualHtml</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:40</code> |  |
+| <code>scrollPaneToTarget</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:487</code> | Scroll only the given pane so the target sits at its top. |
+| <code>setCurrentMark</code> | function | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:390</code> |  |
+| <code>ManualOverlayDialog~setManualFragment</code> | constant | <code>src/components/DocumentToolbar/ManualOverlayDialog.jsx:672</code> | Set the URL fragment for a manual link whose target is styled through :target \(the bundled manuals&#39; image lightbox\), without moving the content pane, the dialog or the page behind... |
 | <code>clampPage</code> | function | <code>src/components/DocumentToolbar/PageNavigationButtons.jsx:46</code> | Page navigation button group. |
-| <code>PrintSubmitDetail</code> | typedef | <code>src/components/DocumentToolbar/PrintRangeDialog.jsx:13</code> | Structured payload returned to the caller on submit. |
+| <code>resolvePrintFieldLabel</code> | function | <code>src/components/DocumentToolbar/printFieldLabels.js:17</code> |  |
+| <code>module.exports</code> | function | <code>src/components/DocumentToolbar/PrintPipelineDialogs.jsx:51</code> |  |
+| <code>formatPdfProgressBody</code> | function | <code>src/components/DocumentToolbar/PrintPipelineDialogs.jsx:22</code> |  |
+| <code>getPdfProgressPercent</code> | function | <code>src/components/DocumentToolbar/PrintPipelineDialogs.jsx:39</code> |  |
+| <code>PrintSubmitDetail</code> | typedef | <code>src/components/DocumentToolbar/PrintRangeDialog.jsx:14</code> | Structured payload returned to the caller on submit. |
 | <code>module:printRangeDialogHelpers.buildSelectedOptionDetails</code> | function | <code>src/components/DocumentToolbar/printRangeDialogHelpers.js:101</code> | Build token-friendly details for the selected option without forcing templates to use list indexes. |
 | <code>module:printRangeDialogHelpers.ensureODVPrintCSS</code> | function | <code>src/components/DocumentToolbar/printRangeDialogHelpers.js:140</code> | Ensure base print CSS is injected once per document. |
 | <code>module:printRangeDialogHelpers.getCfg</code> | function | <code>src/components/DocumentToolbar/printRangeDialogHelpers.js:14</code> | Read the runtime configuration \(merged defaults + site overrides\). |
@@ -260,12 +284,12 @@
 | <code>module:printRangeDialogHelpers.resolvePrintAction</code> | function | <code>src/components/DocumentToolbar/printRangeDialogHelpers.js:73</code> | Resolve a configurable print dialog action. |
 | <code>module:printRangeDialogHelpers.safeRegex</code> | function | <code>src/components/DocumentToolbar/printRangeDialogHelpers.js:25</code> | Build a safe RegExp from optional pattern/flags. |
 | <code>module.exports</code> | member | <code>src/components/DocumentToolbar/SplitToolbarButton.jsx:127</code> | Exported SplitToolbarButton component. |
-| <code>&lt;anonymous&gt;~handleKeyDown</code> | function | <code>src/components/DocumentToolbar/ThemeMenuButton.jsx:88</code> |  |
-| <code>&lt;anonymous&gt;~handlePointerDown</code> | function | <code>src/components/DocumentToolbar/ThemeMenuButton.jsx:80</code> |  |
-| <code>ThemeMenuButton~handleSelect</code> | function | <code>src/components/DocumentToolbar/ThemeMenuButton.jsx:104</code> |  |
-| <code>resolveSelectedMode</code> | function | <code>src/components/DocumentToolbar/ThemeMenuButton.jsx:46</code> |  |
-| <code>resolveThemeModeIcon</code> | function | <code>src/components/DocumentToolbar/ThemeMenuButton.jsx:34</code> |  |
-| <code>resolveThemeModeLabel</code> | function | <code>src/components/DocumentToolbar/ThemeMenuButton.jsx:23</code> |  |
+| <code>&lt;anonymous&gt;~handleKeyDown</code> | function | <code>src/components/DocumentToolbar/ThemeMenuButton.jsx:97</code> |  |
+| <code>&lt;anonymous&gt;~handlePointerDown</code> | function | <code>src/components/DocumentToolbar/ThemeMenuButton.jsx:89</code> |  |
+| <code>ThemeMenuButton~handleSelect</code> | function | <code>src/components/DocumentToolbar/ThemeMenuButton.jsx:113</code> |  |
+| <code>resolveSelectedMode</code> | function | <code>src/components/DocumentToolbar/ThemeMenuButton.jsx:51</code> |  |
+| <code>resolveThemeModeIcon</code> | function | <code>src/components/DocumentToolbar/ThemeMenuButton.jsx:39</code> |  |
+| <code>resolveThemeModeLabel</code> | function | <code>src/components/DocumentToolbar/ThemeMenuButton.jsx:28</code> |  |
 | <code>module.exports</code> | member | <code>src/components/DocumentToolbar/ThemeToggleButton.jsx:60</code> | Exported ThemeToggleButton component. |
 | <code>createSessionPageNumbers</code> | function | <code>src/components/DocumentToolbar/usePdfPrebuildAllPages.js:125</code> |  |
 | <code>createVariantDetail</code> | function | <code>src/components/DocumentToolbar/usePdfPrebuildAllPages.js:78</code> |  |
@@ -275,50 +299,118 @@
 | <code>normalizePdfOrientation</code> | function | <code>src/components/DocumentToolbar/usePdfPrebuildAllPages.js:51</code> |  |
 | <code>runLimited</code> | function | <code>src/components/DocumentToolbar/usePdfPrebuildAllPages.js:103</code> | Run async work with bounded concurrency. |
 | <code>throwIfAborted</code> | function | <code>src/components/DocumentToolbar/usePdfPrebuildAllPages.js:32</code> |  |
-| <code>usePrintRangeController~composePrintFormat</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:365</code> |  |
-| <code>usePrintRangeController~composeReason</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:384</code> |  |
-| <code>usePrintRangeController~composeSubmitDetail</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:427</code> | Compose and validate the print payload for the current dialog state. |
-| <code>usePrintRangeController~extras</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:407</code> |  |
-| <code>usePrintRangeController~makeDescendingSequence</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:279</code> |  |
-| <code>usePrintRangeController~onDialogKeyDown</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:267</code> |  |
+| <code>module:usePrintPipeline~canPrintComposedView</code> | function | <code>src/components/DocumentToolbar/usePrintPipeline.js:47</code> | Read capability at use time, including delayed submits from a stale dialog. |
+| <code>module:usePrintPipeline~COMPOSED_VIEW_PRINTERS</code> | constant | <code>src/components/DocumentToolbar/usePrintPipeline.js:41</code> | Compare views that print as one composed page, with their print helpers. |
+| <code>module:usePrintPipeline~ComposedPrintTarget</code> | typedef | <code>src/components/DocumentToolbar/usePrintPipeline.js:106</code> | A compare view asking the shared dialog to print it as one page. |
+| <code>module:usePrintPipeline~usePrintPipeline~dispatchPrintRequest</code> | constant | <code>src/components/DocumentToolbar/usePrintPipeline.js:523</code> | Execute the actual print helper after the dialog has resolved the user&#39;s choices. |
+| <code>module:usePrintPipeline~usePrintPipeline~handlePrintSubmit</code> | constant | <code>src/components/DocumentToolbar/usePrintPipeline.js:719</code> | Handle the dialog submit event and dispatch the correct print action. |
+| <code>module:usePrintPipeline.isComposedCompareDetail</code> | function | <code>src/components/DocumentToolbar/usePrintPipeline.js:66</code> | True for the dialog detail of a compare-view print \( activeScope compare-overlay / compare-curtain \): both compared pages composed onto one page. |
+| <code>module:usePrintPipeline~isPdfAbortError</code> | function | <code>src/components/DocumentToolbar/usePrintPipeline.js:56</code> |  |
+| <code>module:usePrintPipeline~usePrintPipeline~makePrintOptions</code> | constant | <code>src/components/DocumentToolbar/usePrintPipeline.js:301</code> |  |
+| <code>module:usePrintPipeline</code> | function | <code>src/components/DocumentToolbar/usePrintPipeline.js:149</code> | The single print pipeline shared by the toolbar and the compare views. |
+| <code>module:usePrintPipeline.normalizeToolbarPageNumber</code> | function | <code>src/components/DocumentToolbar/usePrintPipeline.js:78</code> | Clamp a page number to the visible page range. |
+| <code>module:usePrintPipeline~usePrintPipeline~openComposedPrintDialog</code> | constant | <code>src/components/DocumentToolbar/usePrintPipeline.js:749</code> | Compare-view entry: the same dialog, printing the view as one composed page. |
+| <code>module:usePrintPipeline~usePrintPipeline~openToolbarPrintDialog</code> | constant | <code>src/components/DocumentToolbar/usePrintPipeline.js:739</code> | Toolbar entry: the dialog for the viewer&#39;s own pages. |
+| <code>module:usePrintPipeline~PrintPipelineParams</code> | typedef | <code>src/components/DocumentToolbar/usePrintPipeline.js:115</code> |  |
+| <code>module:usePrintPipeline~PrintSubmitDetail</code> | typedef | <code>src/components/DocumentToolbar/usePrintPipeline.js:86</code> | Detail payload emitted by the print dialog. |
+| <code>module:usePrintPipeline~usePrintPipeline~resolvePrintPageContexts</code> | constant | <code>src/components/DocumentToolbar/usePrintPipeline.js:251</code> | Resolve page metadata objects aligned with the printed page sequence. |
+| <code>module:usePrintPipeline~usePrintPipeline~resolvePrintPageCount</code> | constant | <code>src/components/DocumentToolbar/usePrintPipeline.js:229</code> | Estimate the number of pages the user is about to print. |
+| <code>module:usePrintPipeline~usePrintPipeline~resolvePrintPageNumbers</code> | constant | <code>src/components/DocumentToolbar/usePrintPipeline.js:265</code> |  |
+| <code>module:usePrintPipeline~usePrintPipeline~submitUserPrintLog</code> | constant | <code>src/components/DocumentToolbar/usePrintPipeline.js:329</code> | Fire-and-forget user print log. |
+| <code>module:usePrintPipeline~usePrintPipeline~toPagesString</code> | constant | <code>src/components/DocumentToolbar/usePrintPipeline.js:208</code> | Build a compact &amp;quot;pages&amp;quot; descriptor for logging. |
+| <code>module:usePrintPipeline</code> | module | <code>src/components/DocumentToolbar/usePrintPipeline.js:2</code> | File: src/components/DocumentToolbar/usePrintPipeline.js The ONE print pipeline of the viewer: print dialog target, print options, user print log, the direct-versus-generated-PDF... |
+| <code>usePrintRangeController~composePrintFormat</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:368</code> |  |
+| <code>usePrintRangeController~composeReason</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:387</code> |  |
+| <code>usePrintRangeController~composeSubmitDetail</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:430</code> | Compose and validate the print payload for the current dialog state. |
+| <code>usePrintRangeController~extras</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:410</code> |  |
+| <code>usePrintRangeController~makeDescendingSequence</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:282</code> |  |
+| <code>usePrintRangeController~onDialogKeyDown</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:270</code> |  |
 | <code>PrintSubmitDetail</code> | typedef | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:27</code> | Structured payload returned to the caller on submit. |
-| <code>usePrintRangeController~restoreFromDetail</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:518</code> | Restore the dialog state from the latest successfully prepared print. |
-| <code>usePrintRangeController~submitPdfDownload</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:507</code> |  |
-| <code>usePrintRangeController~submitPrintDirect</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:499</code> |  |
-| <code>usePrintRangeController~submitPrintPdf</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:502</code> |  |
-| <code>usePrintRangeController~submitWithBackend</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:486</code> |  |
-| <code>usePrintRangeController</code> | function | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:63</code> | Hook that encapsulates state, derived values, effects and handlers for PrintRangeDialog. |
-| <code>usePrintRangeController~validateRange</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:288</code> |  |
-| <code>usePrintRangeController~validateUserFields</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:300</code> |  |
-| <code>parsePercentInput</code> | function | <code>src/components/DocumentToolbar/ZoomButtons.jsx:98</code> | Parse a percent-like string safely. |
-| <code>CompareZoomOverlay</code> | function | <code>src/components/DocumentViewer/CompareZoomOverlay.jsx:28</code> | CompareZoomOverlay Presentational-only \(no state\). |
-| <code>&lt;anonymous&gt;~allowNativeContextMenu</code> | function | <code>src/components/DocumentViewer/DocumentViewer.jsx:328</code> |  |
-| <code>&lt;anonymous&gt;~hasActiveModalDialog</code> | function | <code>src/components/DocumentViewer/DocumentViewer.jsx:236</code> |  |
-| <code>&lt;anonymous&gt;~isEditableTarget</code> | function | <code>src/components/DocumentViewer/DocumentViewer.jsx:229</code> |  |
-| <code>&lt;anonymous&gt;~onKeyDown</code> | function | <code>src/components/DocumentViewer/DocumentViewer.jsx:240</code> |  |
-| <code>DocumentViewerRender</code> | function | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:200</code> | DocumentViewerRender Renders the main document pane and, if enabled, a comparison pane. |
-| <code>getPageSelectionContext</code> | function | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:54</code> |  |
-| <code>getWheelDeltaYPx</code> | function | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:124</code> |  |
-| <code>&lt;anonymous&gt;~handleKeyDown</code> | function | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:645</code> |  |
-| <code>DocumentViewerRender~handlePaneContextMenu</code> | constant | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:671</code> |  |
-| <code>DocumentViewerRender~handlePaneWheelCapture</code> | constant | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:403</code> |  |
-| <code>&lt;anonymous&gt;~handlePointerDown</code> | function | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:639</code> |  |
-| <code>isAtScrollBottom</code> | function | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:144</code> |  |
-| <code>isAtScrollTop</code> | function | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:136</code> |  |
-| <code>isPaneInteractiveTarget</code> | function | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:75</code> |  |
-| <code>isPannableViewport</code> | function | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:86</code> |  |
-| <code>isPointerOnViewportScrollbar</code> | function | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:97</code> |  |
-| <code>preventDefaultIfCancelable</code> | function | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:155</code> |  |
-| <code>DocumentViewerRender~renderEdgeScrollIndicator</code> | function | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:746</code> |  |
-| <code>DocumentViewerRender~renderPaneSelector</code> | function | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:769</code> |  |
-| <code>ViewerContextMenuState</code> | typedef | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:38</code> |  |
-| <code>ViewerPaneKey</code> | typedef | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:34</code> |  |
-| <code>DocumentViewerThumbnails</code> | function | <code>src/components/DocumentViewer/DocumentViewerThumbnails.jsx:42</code> |  |
-| <code>DocumentViewerToolbar</code> | function | <code>src/components/DocumentViewer/DocumentViewerToolbar.jsx:127</code> | Renders the toolbar for the document viewer by delegating to . |
+| <code>usePrintRangeController~restoreFromDetail</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:521</code> | Restore the dialog state from the latest successfully prepared print. |
+| <code>usePrintRangeController~submitPdfDownload</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:510</code> |  |
+| <code>usePrintRangeController~submitPrintDirect</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:502</code> |  |
+| <code>usePrintRangeController~submitPrintPdf</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:505</code> |  |
+| <code>usePrintRangeController~submitWithBackend</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:489</code> |  |
+| <code>usePrintRangeController</code> | function | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:64</code> | Hook that encapsulates state, derived values, effects and handlers for PrintRangeDialog. |
+| <code>usePrintRangeController~validateRange</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:291</code> |  |
+| <code>usePrintRangeController~validateUserFields</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:303</code> |  |
+| <code>AdvancedCustomSizeDisclosure</code> | function | <code>src/components/DocumentToolbar/ZoomButtons.jsx:85</code> | &amp;quot;Advanced&amp;quot; disclosure for the secondary custom-size fields \(window height, actual size\). |
+| <code>BASIC_CUSTOM_SIZE_FIELDS</code> | constant | <code>src/components/DocumentToolbar/ZoomButtons.jsx:71</code> | Fields shown by default \(window width\) vs. |
+| <code>parsePercentInput</code> | function | <code>src/components/DocumentToolbar/ZoomButtons.jsx:146</code> | Parse a percent-like string safely. |
+| <code>CompareCurtainButton</code> | function | <code>src/components/DocumentViewer/CompareCurtainButton.jsx:25</code> |  |
+| <code>applyCurtainStyles</code> | function | <code>src/components/DocumentViewer/CompareCurtainView.jsx:68</code> | Write the clip and the grab bar position straight to the DOM \(drag path, no React render\). |
+| <code>CompareCurtainView</code> | function | <code>src/components/DocumentViewer/CompareCurtainView.jsx:110</code> |  |
+| <code>CurtainMode</code> | typedef | <code>src/components/DocumentViewer/CompareCurtainView.jsx:57</code> |  |
+| <code>measureStage</code> | function | <code>src/components/DocumentViewer/CompareCurtainView.jsx:83</code> | The stage&#39;s visible size in CSS px, so the printed page shows the same window as the screen. |
+| <code>&lt;anonymous&gt;~onKeyDown</code> | function | <code>src/components/DocumentViewer/CompareCurtainView.jsx:154</code> |  |
+| <code>CompareOverlayView</code> | function | <code>src/components/DocumentViewer/CompareOverlayView.jsx:103</code> |  |
+| <code>measureStage</code> | function | <code>src/components/DocumentViewer/CompareOverlayView.jsx:70</code> | The stage&#39;s visible size in CSS px, so the printed page shows the same window as the screen. |
+| <code>&lt;anonymous&gt;~onKeyDown</code> | function | <code>src/components/DocumentViewer/CompareOverlayView.jsx:163</code> |  |
+| <code>&lt;anonymous&gt;~onWheel</code> | function | <code>src/components/DocumentViewer/CompareOverlayView.jsx:190</code> |  |
+| <code>OverlayTarget</code> | typedef | <code>src/components/DocumentViewer/CompareOverlayView.jsx:58</code> |  |
+| <code>CompareTransformControls</code> | function | <code>src/components/DocumentViewer/CompareTransformControls.jsx:182</code> |  |
+| <code>CompareTransformControls~setImage</code> | function | <code>src/components/DocumentViewer/CompareTransformControls.jsx:209</code> |  |
+| <code>toSignedRotation</code> | function | <code>src/components/DocumentViewer/CompareTransformControls.jsx:44</code> | Rotation shown signed in \(-180, 180\] so a small counter-clockwise tilt reads as −0,1 and not 359,9. |
+| <code>TransformNumberField</code> | function | <code>src/components/DocumentViewer/CompareTransformControls.jsx:67</code> | Numeric text field with locale-aware parsing; keeps a draft while focused. |
+| <code>module:compareViewKeys</code> | module | <code>src/components/DocumentViewer/compareViewKeys.js:2</code> | File: src/components/DocumentViewer/compareViewKeys.js Keyboard targets shared by the full-surface compare views \(CompareOverlayView.jsx, CompareCurtainView.jsx\): which focused el... |
+| <code>module:compareViewKeys.hasActiveModalDialog</code> | function | <code>src/components/DocumentViewer/compareViewKeys.js:37</code> |  |
+| <code>module:compareViewKeys.isOwnKeyTarget</code> | function | <code>src/components/DocumentViewer/compareViewKeys.js:18</code> | Keys typed into fields \(and controls that handle their own arrows\) must not reach the view. |
+| <code>module:compareViewKeys.shouldEscapeCloseView</code> | function | <code>src/components/DocumentViewer/compareViewKeys.js:31</code> | Escape closes the view unless a text field has focus \(Escape undoes its typed value there\). |
+| <code>COLLAPSE_DELAY_MS</code> | constant | <code>src/components/DocumentViewer/CompareZoomOverlay.jsx:40</code> | Delay before the zone collapses after the pointer/focus has left, so it does not flicker. |
+| <code>CompareZoomOverlay</code> | function | <code>src/components/DocumentViewer/CompareZoomOverlay.jsx:58</code> | CompareZoomOverlay Parent owns the factor and clamping; this component only owns the expanded/collapsed state. |
+| <code>isKeyboardFocus</code> | function | <code>src/components/DocumentViewer/CompareZoomOverlay.jsx:46</code> |  |
+| <code>&lt;anonymous&gt;~allowNativeContextMenu</code> | function | <code>src/components/DocumentViewer/DocumentViewer.jsx:485</code> |  |
+| <code>&lt;anonymous&gt;~hasActiveModalDialog</code> | function | <code>src/components/DocumentViewer/DocumentViewer.jsx:360</code> |  |
+| <code>&lt;anonymous&gt;~isEditableTarget</code> | function | <code>src/components/DocumentViewer/DocumentViewer.jsx:353</code> |  |
+| <code>DocumentViewer~navigateToSignatureDocument</code> | constant | <code>src/components/DocumentViewer/DocumentViewer.jsx:331</code> | Overview row activation: show the document&#39;s first page and keep the overview open. |
+| <code>&lt;anonymous&gt;~onKeyDown</code> | function | <code>src/components/DocumentViewer/DocumentViewer.jsx:364</code> |  |
+| <code>DocumentViewer~openSignatureDialog</code> | constant | <code>src/components/DocumentViewer/DocumentViewer.jsx:289</code> | Open the signature details dialog for the document that contains a file \(sourceKey\), with that file&#39;s tab preselected. |
+| <code>DocumentViewerRender</code> | function | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:213</code> | DocumentViewerRender Renders the main document pane and, if enabled, a comparison pane. |
+| <code>getPageSelectionContext</code> | function | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:60</code> |  |
+| <code>getWheelDeltaYPx</code> | function | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:130</code> |  |
+| <code>&lt;anonymous&gt;~handleKeyDown</code> | function | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:829</code> |  |
+| <code>DocumentViewerRender~handlePaneContextMenu</code> | constant | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:855</code> |  |
+| <code>DocumentViewerRender~handlePaneWheelCapture</code> | constant | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:490</code> |  |
+| <code>&lt;anonymous&gt;~handlePointerDown</code> | function | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:823</code> |  |
+| <code>DocumentViewerRender~handleTransformWheel</code> | constant | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:345</code> | Ctrl/Cmd+wheel over a pane whose fine-tuning bar is expanded: ±1 % page scale per notch. |
+| <code>isAtScrollBottom</code> | function | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:150</code> |  |
+| <code>isAtScrollTop</code> | function | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:142</code> |  |
+| <code>isPaneInteractiveTarget</code> | function | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:81</code> |  |
+| <code>isPannableViewport</code> | function | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:92</code> |  |
+| <code>isPointerOnViewportScrollbar</code> | function | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:103</code> |  |
+| <code>preventDefaultIfCancelable</code> | function | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:161</code> |  |
+| <code>DocumentViewerRender~renderEdgeScrollIndicator</code> | function | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:933</code> |  |
+| <code>DocumentViewerRender~renderPaneSelector</code> | function | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:956</code> |  |
+| <code>ViewerContextMenuState</code> | typedef | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:44</code> |  |
+| <code>ViewerPaneKey</code> | typedef | <code>src/components/DocumentViewer/DocumentViewerRender.jsx:40</code> |  |
+| <code>DocumentViewerThumbnails</code> | function | <code>src/components/DocumentViewer/DocumentViewerThumbnails.jsx:44</code> |  |
+| <code>DocumentViewerToolbar</code> | function | <code>src/components/DocumentViewer/DocumentViewerToolbar.jsx:123</code> | Renders the toolbar for the document viewer by delegating to . |
 | <code>DocumentViewerToolbarProps</code> | typedef | <code>src/components/DocumentViewer/DocumentViewerToolbar.jsx:36</code> | Props consumed by DocumentViewerToolbar. |
 | <code>PageNumberSetter</code> | typedef | <code>src/components/DocumentViewer/DocumentViewerToolbar.jsx:26</code> | React-like numeric/original page setter used by the toolbar adapter. |
 | <code>RefLike</code> | typedef | <code>src/components/DocumentViewer/DocumentViewerToolbar.jsx:13</code> | Ref-like shape used for imperative handles. |
 | <code>SetBooleanState</code> | typedef | <code>src/components/DocumentViewer/DocumentViewerToolbar.jsx:19</code> | State setter that accepts a boolean or an updater callback. |
+| <code>module:useCompareOverlay.resolveShownCompareViews</code> | function | <code>src/components/DocumentViewer/hooks/useCompareOverlay.js:49</code> | Render gate for the compare views: a view is shown only while it is open AND enabled in the runtime config, so a stale open flag can never surface a disabled view. |
+| <code>module:useCompareOverlay</code> | module | <code>src/components/DocumentViewer/hooks/useCompareOverlay.js:2</code> | File: src/components/DocumentViewer/hooks/useCompareOverlay.js Open/close state of the compare overlay view \(CompareOverlayView.jsx\). |
+| <code>module:useCompareOverlay.useCompareOverlay</code> | function | <code>src/components/DocumentViewer/hooks/useCompareOverlay.js:73</code> |  |
+| <code>module:useCompareTransforms.useCompareTransforms~bumpPostZoomLeft</code> | constant | <code>src/components/DocumentViewer/hooks/useCompareTransforms.js:73</code> |  |
+| <code>module:useCompareTransforms.useCompareTransforms~bumpPostZoomRight</code> | constant | <code>src/components/DocumentViewer/hooks/useCompareTransforms.js:78</code> |  |
+| <code>module:useCompareTransforms.useCompareTransforms~resetPostZoom</code> | constant | <code>src/components/DocumentViewer/hooks/useCompareTransforms.js:83</code> | Scale 1 on both pages \(fit and actual-size presets\). |
+| <code>module:useCompareTransforms</code> | module | <code>src/components/DocumentViewer/hooks/useCompareTransforms.js:2</code> | File: src/components/DocumentViewer/hooks/useCompareTransforms.js Viewer-side access to the free per-page compare transform kept in the viewer context \(utils/compareTransform.js,... |
+| <code>module:useCompareTransforms.useCompareTransforms</code> | function | <code>src/components/DocumentViewer/hooks/useCompareTransforms.js:38</code> |  |
+| <code>module:usePaneImageAdjustments.usePaneImageAdjustments~clearImageAdjustments</code> | constant | <code>src/components/DocumentViewer/hooks/usePaneImageAdjustments.js:117</code> | Image only; the transform is kept. |
+| <code>module:usePaneImageAdjustments.DEFAULT_IMAGE_ADJUSTMENTS</code> | constant | <code>src/components/DocumentViewer/hooks/usePaneImageAdjustments.js:31</code> | Neutral per-page image adjustment state. |
+| <code>module:usePaneImageAdjustments.usePaneImageAdjustments~handleBrightnessChange</code> | constant | <code>src/components/DocumentViewer/hooks/usePaneImageAdjustments.js:91</code> |  |
+| <code>module:usePaneImageAdjustments.usePaneImageAdjustments~handleContrastChange</code> | constant | <code>src/components/DocumentViewer/hooks/usePaneImageAdjustments.js:96</code> |  |
+| <code>module:usePaneImageAdjustments.usePaneImageAdjustments~handleGrayscaleChange</code> | constant | <code>src/components/DocumentViewer/hooks/usePaneImageAdjustments.js:101</code> |  |
+| <code>module:usePaneImageAdjustments.usePaneImageAdjustments~handleInvertChange</code> | constant | <code>src/components/DocumentViewer/hooks/usePaneImageAdjustments.js:109</code> | Accepts a checkbox event \( target.checked \), a { target: { value } } event or a plain value. |
+| <code>module:usePaneImageAdjustments~normalizeTarget</code> | function | <code>src/components/DocumentViewer/hooks/usePaneImageAdjustments.js:43</code> |  |
+| <code>module:usePaneImageAdjustments.usePaneImageAdjustments~patchPane</code> | constant | <code>src/components/DocumentViewer/hooks/usePaneImageAdjustments.js:85</code> |  |
+| <code>module:usePaneImageAdjustments~readPercent200</code> | function | <code>src/components/DocumentViewer/hooks/usePaneImageAdjustments.js:51</code> |  |
+| <code>module:usePaneImageAdjustments.usePaneImageAdjustments~resetImageProperties</code> | constant | <code>src/components/DocumentViewer/hooks/usePaneImageAdjustments.js:140</code> | The main toolbar reset: resetPane in compare mode, its earlier scope otherwise. |
+| <code>module:usePaneImageAdjustments.usePaneImageAdjustments~resetPane</code> | constant | <code>src/components/DocumentViewer/hooks/usePaneImageAdjustments.js:133</code> | Everything for one pane: identity transform \(no quarter turn either\) and neutral image. |
+| <code>module:usePaneImageAdjustments.usePaneImageAdjustments~restoreImageAdjustments</code> | constant | <code>src/components/DocumentViewer/hooks/usePaneImageAdjustments.js:126</code> | Restore both panes&#39; stored image fields \(brightness, contrast, grayscale, invert\) from a saved { primary, compare } ; the transform, and with it the quarter turn, is not touched. |
+| <code>module:usePaneImageAdjustments</code> | module | <code>src/components/DocumentViewer/hooks/usePaneImageAdjustments.js:2</code> | File: src/components/DocumentViewer/hooks/usePaneImageAdjustments.js Per-pane image adjustments \(brightness, contrast, grayscale, invert\) and the resets that combine them with the... |
+| <code>module:usePaneImageAdjustments.usePaneImageAdjustments</code> | function | <code>src/components/DocumentViewer/hooks/usePaneImageAdjustments.js:64</code> |  |
 | <code>module:useViewerEffects.hasActiveModalDialog</code> | function | <code>src/components/DocumentViewer/hooks/useViewerEffects.js:89</code> | Determine whether a modal dialog is currently open. |
 | <code>module:useViewerEffects.isEditableTarget</code> | function | <code>src/components/DocumentViewer/hooks/useViewerEffects.js:74</code> | Determine whether the event target is an editable or form control where viewer shortcuts must stay inactive. |
 | <code>module:useViewerEffects~KeyboardPrintShortcutBehavior</code> | typedef | <code>src/components/DocumentViewer/hooks/useViewerEffects.js:22</code> |  |
@@ -337,77 +429,68 @@
 | <code>&lt;anonymous&gt;~onWindowBlur</code> | function | <code>src/components/DocumentViewer/hooks/useViewerKeyboardNavigation.js:282</code> |  |
 | <code>module:useViewerKeyboardNavigation</code> | module | <code>src/components/DocumentViewer/hooks/useViewerKeyboardNavigation.js:2</code> | Global keyboard navigation, zoom, rotation, and selection shortcuts for DocumentViewer. |
 | <code>module:useViewerKeyboardNavigation.useViewerKeyboardNavigation</code> | function | <code>src/components/DocumentViewer/hooks/useViewerKeyboardNavigation.js:15</code> |  |
-| <code>module:useViewerPostZoom.useViewerPostZoom~bumpPostZoomLeft</code> | constant | <code>src/components/DocumentViewer/hooks/useViewerPostZoom.js:59</code> | Adjust left pane post-zoom by ±0.1 steps. |
-| <code>module:useViewerPostZoom.useViewerPostZoom~bumpPostZoomRight</code> | constant | <code>src/components/DocumentViewer/hooks/useViewerPostZoom.js:68</code> | Adjust right pane post-zoom by ±0.1 steps. |
-| <code>module:useViewerPostZoom~clamp</code> | function | <code>src/components/DocumentViewer/hooks/useViewerPostZoom.js:20</code> | Clamp a numeric value to \[min, max\]. |
-| <code>module:useViewerPostZoom.useViewerPostZoom~resetPostZoom</code> | constant | <code>src/components/DocumentViewer/hooks/useViewerPostZoom.js:50</code> | Reset both per-pane factors to 1.0. |
-| <code>module:useViewerPostZoom~round1</code> | function | <code>src/components/DocumentViewer/hooks/useViewerPostZoom.js:29</code> | Round to one decimal place \(avoids float drift when stepping by 0.1\). |
-| <code>module:useViewerPostZoom</code> | module | <code>src/components/DocumentViewer/hooks/useViewerPostZoom.js:2</code> | File: src/components/DocumentViewer/hooks/useViewerPostZoom.js Encapsulates per-pane &amp;quot;post-zoom&amp;quot; state &amp;amp; handlers used only in compare mode. |
-| <code>module:useViewerPostZoom.useViewerPostZoom</code> | function | <code>src/components/DocumentViewer/hooks/useViewerPostZoom.js:45</code> | Hook managing per-pane post-zoom factors for compare mode. |
-| <code>&lt;anonymous&gt;~onKeyDown</code> | function | <code>src/components/DocumentViewer/hooks/useViewerZoomEffects.js:122</code> |  |
+| <code>&lt;anonymous&gt;~onKeyDown</code> | function | <code>src/components/DocumentViewer/hooks/useViewerZoomEffects.js:124</code> |  |
 | <code>&lt;anonymous&gt;~onWheelGlobal</code> | function | <code>src/components/DocumentViewer/hooks/useViewerZoomEffects.js:105</code> |  |
 | <code>module:useViewerZoomEffects</code> | module | <code>src/components/DocumentViewer/hooks/useViewerZoomEffects.js:2</code> | Zoom, resize, wheel, print-shortcut, and initial-fit effects for DocumentViewer. |
 | <code>module:useViewerZoomEffects.useViewerZoomEffects</code> | function | <code>src/components/DocumentViewer/hooks/useViewerZoomEffects.js:15</code> |  |
-| <code>useDocumentViewer~activateComparePane</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1509</code> | Open compare mode when needed and make the right pane the default target. |
-| <code>useDocumentViewer~activatePrimaryPane</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1501</code> |  |
-| <code>useDocumentViewer~applyThumbnailWidth</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1618</code> | Mouse down handler for the thumbnail resizer; listens for mousemove/up on window. |
-| <code>buildDocumentSelectionModel</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:357</code> |  |
-| <code>buildImageRotationDependencyKey</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:140</code> |  |
-| <code>buildSelectionMaskFromPrintPageSequence</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:263</code> | Build an inclusion mask from a print-page sequence. |
-| <code>buildVisibleDocumentNavigationModel</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:435</code> | Build the visible-document grouping used by document-level navigation. |
-| <code>clampPage</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:45</code> | Clamp a 1-based page number into \[1, total\]. |
-| <code>useDocumentViewer~closeCompare</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1537</code> | Close compare mode without affecting the left page. |
-| <code>CustomFitSizeLimits</code> | typedef | <code>src/components/DocumentViewer/useDocumentViewer.js:66</code> | Optional maximum percentage limits for the custom fit-to-size zoom mode. |
-| <code>findNearestVisiblePageNumber</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:300</code> | Resolve the nearest visible page number for a requested original page index. |
-| <code>useDocumentViewer~getDocumentNavigationState</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:733</code> | Resolve document-navigation state for the requested pane. |
-| <code>getPageDocumentNavigationMeta</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:409</code> |  |
-| <code>useDocumentViewer~goToFirstDocument</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1263</code> | Jump to the first page of the first visible document. |
-| <code>useDocumentViewer~goToFirstPage</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1219</code> | Jump to the first visible page in the requested target pane. |
-| <code>useDocumentViewer~goToLastDocument</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1275</code> | Jump to the first page of the last visible document. |
-| <code>useDocumentViewer~goToLastPage</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1228</code> | Jump to the last visible page in the requested target pane. |
-| <code>useDocumentViewer~goToNextDocument</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1251</code> | Jump to the first page of the next visible document. |
-| <code>useDocumentViewer~goToNextPage</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1210</code> | Move one page forward in the requested target pane. |
-| <code>useDocumentViewer~goToPreviousDocument</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1239</code> | Jump to the first page of the previous visible document \(or to the current document start when the active pane already points inside the first visible document\). |
-| <code>useDocumentViewer~goToPreviousPage</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1201</code> | Move one page backward in the requested target pane. |
-| <code>useDocumentViewer~handleBrightnessChange</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1573</code> |  |
-| <code>useDocumentViewer~handleCompare</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1519</code> | Toggle compare mode. |
-| <code>useDocumentViewer~handleContrastChange</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1585</code> |  |
-| <code>useDocumentViewer~handlePageNumberChange</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1117</code> | Change the primary page using an original page number \(or a visible-page updater function when called from navigation helpers\). |
-| <code>useDocumentViewer~handlePrimaryDisplayStateChange</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1165</code> | Keep requested-page state and the actually displayed page synchronized for diagnostics. |
-| <code>useDocumentViewer~handleVisiblePageNumberChange</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1126</code> | Change the primary page by a visible page number from the thumbnail strip. |
-| <code>hasExcludedPages</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:173</code> | Return true when the normalized mask excludes at least one page from the current session. |
-| <code>useDocumentViewer~hideDocumentFromSelection</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:992</code> | Immediately exclude every page that belongs to the same document as the provided original page index. |
-| <code>useDocumentViewer~hidePageFromSelection</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:954</code> | Immediately exclude a page from the active selection and apply the filtered session. |
-| <code>ImageProperties</code> | typedef | <code>src/components/DocumentViewer/useDocumentViewer.js:78</code> | Image adjustment properties for canvas edit mode. |
-| <code>isNaturalPrintPageSequence</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:282</code> |  |
-| <code>masksEqual</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:190</code> | Compare two selection masks over the active page count. |
-| <code>normalizeOriginalPageIndex</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:221</code> | Normalize a zero-based original page index and reject invalid/out-of-range values. |
-| <code>normalizePrintPageSequence</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:235</code> |  |
-| <code>normalizeRotationDegrees</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:61</code> | Normalize a rotation angle into the canonical 0..359 range used by the canvas renderer. |
-| <code>normalizeSelectionMask</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:153</code> | Normalize a persisted/host-provided page-selection mask to the current page count. |
-| <code>normalizeViewerPaneTarget</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:499</code> | Normalize any pane key into the viewer&#39;s two supported navigation targets. |
-| <code>&lt;anonymous&gt;~onMove</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:1704</code> |  |
-| <code>PrintPageSequence</code> | typedef | <code>src/components/DocumentViewer/useDocumentViewer.js:76</code> |  |
-| <code>resolveDocumentSelectionPageNumber</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:340</code> | Resolve a page&#39;s 1-based page number within the current document-selection group. |
-| <code>resolveEffectiveCustomFitSizeLimits</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:113</code> | Resolve effective custom-fit limits from a preferred value set and runtime config. |
-| <code>useDocumentViewer~resolveNearestVisibleOriginalPageNumber</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:811</code> |  |
-| <code>resolveOriginalIndexFromPrintPageNumber</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:205</code> | Convert a 1-based print/session page number to a zero-based original page index. |
-| <code>resolveProposedVisiblePageNumber</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:324</code> | Resolve either a direct visible-page value or a React setState-style updater function. |
-| <code>useDocumentViewer~resolveTargetOriginalPageNumber</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1069</code> | Resolve the next original 1-based page number from a visible-page update. |
-| <code>useDocumentViewer~selectForCompare</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1552</code> | Select a page for the right-hand compare pane. |
-| <code>SelectionMask</code> | typedef | <code>src/components/DocumentViewer/useDocumentViewer.js:75</code> |  |
-| <code>useDocumentViewer~setActivePane</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1494</code> | Set the default pane for compare-aware navigation and editing actions. |
-| <code>useDocumentViewer~setComparePageNumber</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1153</code> | Change the compare page using an original page number \(or a visible-page updater function when called from compare navigation helpers\). |
-| <code>useDocumentViewer~setIsExpanded</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1482</code> | Setter for the editing controls visibility. |
-| <code>useDocumentViewer~setVisibleComparePageNumber</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1139</code> | Change the compare page by a visible page number from the toolbar page field. |
-| <code>useDocumentViewer~setZoomMode</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1389</code> | Set zoom mode directly \(&#39;FIT_PAGE&#39;\|&#39;FIT_WIDTH&#39;\|&#39;FIT_CUSTOM&#39;\|&#39;ACTUAL_SIZE&#39;\|&#39;CUSTOM&#39;\). |
-| <code>useDocumentViewer~thumbnailSelectionPageNumber</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1193</code> | The thumbnail pane should react immediately when the user changes page. |
-| <code>useDocumentViewer~toggleFitZoomMode</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1466</code> | Toggle between the two fit modes from the page surface. |
-| <code>useDocumentViewer~updatePageTarget</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1092</code> | Generic primary/compare page setter that accepts either a visible-page updater function or a concrete original page number. |
-| <code>useDocumentViewer</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:520</code> | Hook that centralizes viewer UI state and event handlers. |
-| <code>ViewerPageTarget</code> | typedef | <code>src/components/DocumentViewer/useDocumentViewer.js:77</code> |  |
-| <code>ZoomMode</code> | typedef | <code>src/components/DocumentViewer/useDocumentViewer.js:481</code> | Sticky zoom modes used by the viewer \(subset is used here\). |
-| <code>ZoomState</code> | typedef | <code>src/components/DocumentViewer/useDocumentViewer.js:486</code> | Zoom state \(mode + current numeric scale\). |
+| <code>useDocumentViewer~activateComparePane</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1547</code> | Open compare mode when needed and make the right pane the default target. |
+| <code>useDocumentViewer~activatePrimaryPane</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1539</code> |  |
+| <code>useDocumentViewer~applyThumbnailWidth</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1622</code> | Mouse down handler for the thumbnail resizer; listens for mousemove/up on window. |
+| <code>buildDocumentSelectionModel</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:359</code> |  |
+| <code>buildImageRotationDependencyKey</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:142</code> |  |
+| <code>buildSelectionMaskFromPrintPageSequence</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:265</code> | Build an inclusion mask from a print-page sequence. |
+| <code>buildVisibleDocumentNavigationModel</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:437</code> | Build the visible-document grouping used by document-level navigation. |
+| <code>clampPage</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:49</code> | Clamp a 1-based page number into \[1, total\]. |
+| <code>useDocumentViewer~closeCompare</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1575</code> | Close compare mode without affecting the left page. |
+| <code>CustomFitSizeLimits</code> | typedef | <code>src/components/DocumentViewer/useDocumentViewer.js:70</code> | Optional maximum percentage limits for the custom fit-to-size zoom mode. |
+| <code>findNearestVisiblePageNumber</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:302</code> | Resolve the nearest visible page number for a requested original page index. |
+| <code>useDocumentViewer~getDocumentNavigationState</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:735</code> | Resolve document-navigation state for the requested pane. |
+| <code>getPageDocumentNavigationMeta</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:411</code> |  |
+| <code>useDocumentViewer~goToFirstDocument</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1301</code> | Jump to the first page of the first visible document. |
+| <code>useDocumentViewer~goToFirstPage</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1257</code> | Jump to the first visible page in the requested target pane. |
+| <code>useDocumentViewer~goToLastDocument</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1313</code> | Jump to the first page of the last visible document. |
+| <code>useDocumentViewer~goToLastPage</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1266</code> | Jump to the last visible page in the requested target pane. |
+| <code>useDocumentViewer~goToNextDocument</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1289</code> | Jump to the first page of the next visible document. |
+| <code>useDocumentViewer~goToNextPage</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1248</code> | Move one page forward in the requested target pane. |
+| <code>useDocumentViewer~goToPreviousDocument</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1277</code> | Jump to the first page of the previous visible document \(or to the current document start when the active pane already points inside the first visible document\). |
+| <code>useDocumentViewer~goToPreviousPage</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1239</code> | Move one page backward in the requested target pane. |
+| <code>useDocumentViewer~handleCompare</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1557</code> | Toggle compare mode. |
+| <code>useDocumentViewer~handlePageNumberChange</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1155</code> | Change the primary page using an original page number \(or a visible-page updater function when called from navigation helpers\). |
+| <code>useDocumentViewer~handlePrimaryDisplayStateChange</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1203</code> | Keep requested-page state and the actually displayed page synchronized for diagnostics. |
+| <code>useDocumentViewer~handleVisiblePageNumberChange</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1164</code> | Change the primary page by a visible page number from the thumbnail strip. |
+| <code>hasExcludedPages</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:175</code> | Return true when the normalized mask excludes at least one page from the current session. |
+| <code>useDocumentViewer~hideDocumentFromSelection</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1030</code> | Immediately exclude every page that belongs to the same document as the provided original page index. |
+| <code>useDocumentViewer~hidePageFromSelection</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:992</code> | Immediately exclude a page from the active selection and apply the filtered session. |
+| <code>ImageProperties</code> | typedef | <code>src/components/DocumentViewer/useDocumentViewer.js:82</code> | Image adjustment properties for canvas edit mode. |
+| <code>isNaturalPrintPageSequence</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:284</code> |  |
+| <code>masksEqual</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:192</code> | Compare two selection masks over the active page count. |
+| <code>normalizeOriginalPageIndex</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:223</code> | Normalize a zero-based original page index and reject invalid/out-of-range values. |
+| <code>normalizePrintPageSequence</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:237</code> |  |
+| <code>normalizeRotationDegrees</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:65</code> | Normalize a rotation angle into the canonical 0..359 range used by the canvas renderer. |
+| <code>normalizeSelectionMask</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:155</code> | Normalize a persisted/host-provided page-selection mask to the current page count. |
+| <code>normalizeViewerPaneTarget</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:501</code> | Normalize any pane key into the viewer&#39;s two supported navigation targets. |
+| <code>&lt;anonymous&gt;~onMove</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:1708</code> |  |
+| <code>PrintPageSequence</code> | typedef | <code>src/components/DocumentViewer/useDocumentViewer.js:80</code> |  |
+| <code>resolveDocumentSelectionPageNumber</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:342</code> | Resolve a page&#39;s 1-based page number within the current document-selection group. |
+| <code>resolveEffectiveCustomFitSizeLimits</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:115</code> | Resolve effective custom-fit limits from a preferred value set and runtime config. |
+| <code>useDocumentViewer~resolveNearestVisibleOriginalPageNumber</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:813</code> |  |
+| <code>resolveOriginalIndexFromPrintPageNumber</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:207</code> | Convert a 1-based print/session page number to a zero-based original page index. |
+| <code>resolveProposedVisiblePageNumber</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:326</code> | Resolve either a direct visible-page value or a React setState-style updater function. |
+| <code>useDocumentViewer~resolveTargetOriginalPageNumber</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1107</code> | Resolve the next original 1-based page number from a visible-page update. |
+| <code>useDocumentViewer~selectForCompare</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1590</code> | Select a page for the right-hand compare pane. |
+| <code>SelectionMask</code> | typedef | <code>src/components/DocumentViewer/useDocumentViewer.js:79</code> |  |
+| <code>useDocumentViewer~setActivePane</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1532</code> | Set the default pane for compare-aware navigation and editing actions. |
+| <code>useDocumentViewer~setComparePageNumber</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1191</code> | Change the compare page using an original page number \(or a visible-page updater function when called from compare navigation helpers\). |
+| <code>useDocumentViewer~setIsExpanded</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1520</code> | Setter for the editing controls visibility. |
+| <code>useDocumentViewer~setVisibleComparePageNumber</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1177</code> | Change the compare page by a visible page number from the toolbar page field. |
+| <code>useDocumentViewer~setZoomMode</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1427</code> | Set zoom mode directly \(&#39;FIT_PAGE&#39;\|&#39;FIT_WIDTH&#39;\|&#39;FIT_CUSTOM&#39;\|&#39;ACTUAL_SIZE&#39;\|&#39;CUSTOM&#39;\). |
+| <code>useDocumentViewer~thumbnailSelectionPageNumber</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1231</code> | The thumbnail pane should react immediately when the user changes page. |
+| <code>useDocumentViewer~toggleFitZoomMode</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1504</code> | Toggle between the two fit modes from the page surface. |
+| <code>useDocumentViewer~updatePageTarget</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1130</code> | Generic primary/compare page setter that accepts either a visible-page updater function or a concrete original page number. |
+| <code>useDocumentViewer</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:522</code> | Hook that centralizes viewer UI state and event handlers. |
+| <code>ViewerPageTarget</code> | typedef | <code>src/components/DocumentViewer/useDocumentViewer.js:81</code> |  |
+| <code>ZoomMode</code> | typedef | <code>src/components/DocumentViewer/useDocumentViewer.js:483</code> | Sticky zoom modes used by the viewer \(subset is used here\). |
+| <code>ZoomState</code> | typedef | <code>src/components/DocumentViewer/useDocumentViewer.js:488</code> | Zoom state \(mode + current numeric scale\). |
 | <code>ImageRenderer</code> | constant | <code>src/components/ImageRenderer.jsx:51</code> | ImageRenderer component. |
 | <code>ImgEventHandler</code> | typedef | <code>src/components/ImageRenderer.jsx:28</code> | Image load/error handler. |
 | <code>LoadingMessage</code> | function | <code>src/components/LoadingMessage.jsx:43</code> | LoadingMessage component. |
@@ -429,91 +512,120 @@
 | <code>Resizer</code> | constant | <code>src/components/Resizer.jsx:61</code> | Resizer component. |
 | <code>ResizerProps</code> | typedef | <code>src/components/Resizer.jsx:43</code> | Props for . |
 | <code>ResizeStartHandler</code> | typedef | <code>src/components/Resizer.jsx:36</code> | Handler invoked when a resize interaction is initiated. |
+| <code>module.exports</code> | function | <code>src/components/SignatureDetailsDialog.jsx:85</code> |  |
+| <code>getKindLabel</code> | function | <code>src/components/SignatureDetailsDialog.jsx:40</code> |  |
+| <code>getSigningTimeSourceLabel</code> | function | <code>src/components/SignatureDetailsDialog.jsx:57</code> |  |
+| <code>&lt;anonymous&gt;~handleEscape</code> | function | <code>src/components/SignatureDetailsDialog.jsx:125</code> |  |
+| <code>SignatureDetailsDialog~handleTabKeyDown</code> | function | <code>src/components/SignatureDetailsDialog.jsx:151</code> | Arrow keys, Home and End move between file tabs \(automatic activation\). |
+| <code>SignatureDetailsDialog~handleTabTrap</code> | function | <code>src/components/SignatureDetailsDialog.jsx:167</code> | Keep Tab navigation inside the dialog while it is open. |
+| <code>SignatureDetailsDialog~orEmpty</code> | function | <code>src/components/SignatureDetailsDialog.jsx:207</code> |  |
+| <code>module.exports</code> | function | <code>src/components/SignatureOverviewButton.jsx:32</code> |  |
+| <code>ICON_BY_SEVERITY</code> | constant | <code>src/components/SignatureOverviewButton.jsx:19</code> | Material Icons ligature per severity \(same as SignatureStatusBadge\). |
+| <code>module.exports</code> | function | <code>src/components/SignatureOverviewDialog.jsx:49</code> |  |
+| <code>&lt;anonymous&gt;~handleEscape</code> | function | <code>src/components/SignatureOverviewDialog.jsx:90</code> |  |
+| <code>SignatureOverviewDialog~handleKeyDown</code> | function | <code>src/components/SignatureOverviewDialog.jsx:104</code> | Keep Tab navigation inside the dialog while it is open. |
+| <code>module.exports</code> | function | <code>src/components/SignatureStatusBadge.jsx:44</code> |  |
+| <code>ICON_BY_SEVERITY</code> | constant | <code>src/components/SignatureStatusBadge.jsx:29</code> | Material Icons ligature per severity. |
+| <code>module.exports</code> | function | <code>src/components/SignatureTime.jsx:18</code> |  |
 | <code>module.exports</code> | function | <code>src/components/ViewerProblemNotice.jsx:197</code> |  |
 | <code>ProblemNoticeTrigger</code> | typedef | <code>src/components/ViewerProblemNotice.jsx:26</code> |  |
 | <code>resolveProblemTrigger</code> | function | <code>src/components/ViewerProblemNotice.jsx:44</code> |  |
 | <code>toCount</code> | function | <code>src/components/ViewerProblemNotice.jsx:21</code> |  |
-| <code>ThemeContext</code> | constant | <code>src/contexts/themeContext.js:26</code> | Create the Theme context with a safe default to avoid undefined access if a consumer is mounted outside the provider by mistake. |
+| <code>ThemeContext</code> | constant | <code>src/contexts/themeContext.js:28</code> | Create the Theme context with a safe default to avoid undefined access if a consumer is mounted outside the provider by mistake. |
 | <code>ThemeContextValue</code> | typedef | <code>src/contexts/themeContext.js:10</code> | Context value shape for the theme. |
 | <code>ThemeMode</code> | typedef | <code>src/contexts/themeContext.js:4</code> | Theme identifier. |
-| <code>applyThemeToDocument</code> | function | <code>src/contexts/ThemeProvider.jsx:69</code> | Apply the resolved theme to the DOM \(SSR-safe\). |
-| <code>detectSystemTheme</code> | function | <code>src/contexts/ThemeProvider.jsx:38</code> | Detect system preferred color scheme \(SSR-safe; defaults to light\). |
-| <code>&lt;anonymous&gt;~onChange</code> | function | <code>src/contexts/ThemeProvider.jsx:162</code> |  |
-| <code>resolveInitialThemeMode</code> | function | <code>src/contexts/ThemeProvider.jsx:87</code> | Resolve the initial theme mode once during provider initialization. |
-| <code>resolveThemeForMode</code> | function | <code>src/contexts/ThemeProvider.jsx:55</code> | Resolve the concrete theme for a theme mode. |
-| <code>ThemeProvider~setThemeExplicit</code> | constant | <code>src/contexts/ThemeProvider.jsx:139</code> | Apply an explicit concrete theme. |
-| <code>ThemeProvider~setThemeMode</code> | constant | <code>src/contexts/ThemeProvider.jsx:119</code> | Persist and apply a theme mode. |
-| <code>ThemeMode</code> | typedef | <code>src/contexts/ThemeProvider.jsx:27</code> | Theme mode identifier. |
-| <code>ThemeName</code> | typedef | <code>src/contexts/ThemeProvider.jsx:22</code> | Theme identifier. |
-| <code>ThemeProvider</code> | constant | <code>src/contexts/ThemeProvider.jsx:103</code> | ThemeProvider component to manage and provide theme-related state and functions. |
-| <code>ThemeProvider~toggleTheme</code> | constant | <code>src/contexts/ThemeProvider.jsx:149</code> | Toggle between the two highest-contrast explicit themes. |
+| <code>ThemeProvider~applyExternalThemeMode</code> | constant | <code>src/contexts/ThemeProvider.jsx:242</code> | Apply a mode that arrived from outside this component \(another tab, the host page, or the cross-origin bridge\). |
+| <code>applyThemeToDocument</code> | function | <code>src/contexts/ThemeProvider.jsx:83</code> | Apply the resolved theme to the DOM \(SSR-safe\). |
+| <code>detectSystemTheme</code> | function | <code>src/contexts/ThemeProvider.jsx:52</code> | Detect system preferred color scheme \(SSR-safe; defaults to light\). |
+| <code>&lt;anonymous&gt;~onChange</code> | function | <code>src/contexts/ThemeProvider.jsx:204</code> |  |
+| <code>&lt;anonymous&gt;~onStorage</code> | function | <code>src/contexts/ThemeProvider.jsx:261</code> |  |
+| <code>resolveInitialThemeMode</code> | function | <code>src/contexts/ThemeProvider.jsx:101</code> | Resolve the initial theme mode once during provider initialization. |
+| <code>resolveThemeForMode</code> | function | <code>src/contexts/ThemeProvider.jsx:69</code> | Resolve the concrete theme for a theme mode. |
+| <code>ThemeProvider~setThemeExplicit</code> | constant | <code>src/contexts/ThemeProvider.jsx:181</code> | Apply an explicit concrete theme. |
+| <code>ThemeProvider~setThemeMode</code> | constant | <code>src/contexts/ThemeProvider.jsx:149</code> | Persist and apply a theme mode. |
+| <code>ThemeProvider~setToolbarLargeButtons</code> | constant | <code>src/contexts/ThemeProvider.jsx:136</code> | Persist and apply the &amp;quot;Larger toolbar buttons&amp;quot; choice. |
+| <code>ThemeMode</code> | typedef | <code>src/contexts/ThemeProvider.jsx:41</code> | Theme mode identifier. |
+| <code>ThemeName</code> | typedef | <code>src/contexts/ThemeProvider.jsx:36</code> | Theme identifier. |
+| <code>ThemeProvider</code> | constant | <code>src/contexts/ThemeProvider.jsx:115</code> | ThemeProvider component to manage and provide theme-related state and functions. |
+| <code>ThemeProvider~toggleTheme</code> | constant | <code>src/contexts/ThemeProvider.jsx:191</code> | Toggle between the two highest-contrast explicit themes. |
+| <code>CompareOverlayState</code> | typedef | <code>src/contexts/viewerContext.js:233</code> |  |
+| <code>CompareTransform</code> | typedef | <code>src/contexts/viewerContext.js:223</code> | Per-page compare transform \(utils/compareTransform.js\): scale multiplies the base zoom \(1 = 100 %\), dx / dy are CSS px at transform scale 1, rotation is degrees in \[0, 360\). |
+| <code>CompareTransformState</code> | typedef | <code>src/contexts/viewerContext.js:240</code> |  |
 | <code>DisposeDocumentSessionOptions</code> | typedef | <code>src/contexts/viewerContext.js:40</code> |  |
 | <code>DocumentSessionInitOptions</code> | typedef | <code>src/contexts/viewerContext.js:32</code> |  |
 | <code>EnsurePageAssetOptions</code> | typedef | <code>src/contexts/viewerContext.js:55</code> |  |
 | <code>StoreSourceBlobInput</code> | typedef | <code>src/contexts/viewerContext.js:45</code> |  |
-| <code>ViewerContextValue</code> | typedef | <code>src/contexts/viewerContext.js:165</code> |  |
+| <code>ViewerContextValue</code> | typedef | <code>src/contexts/viewerContext.js:166</code> |  |
 | <code>ViewerPageEntry</code> | typedef | <code>src/contexts/viewerContext.js:4</code> |  |
-| <code>ViewerPageLoadState</code> | typedef | <code>src/contexts/viewerContext.js:155</code> |  |
-| <code>ViewerRuntimeDiagnostics</code> | typedef | <code>src/contexts/viewerContext.js:78</code> |  |
+| <code>ViewerPageLoadState</code> | typedef | <code>src/contexts/viewerContext.js:156</code> |  |
+| <code>ViewerRuntimeDiagnostics</code> | typedef | <code>src/contexts/viewerContext.js:79</code> |  |
 | <code>ViewerSourceDescriptor</code> | typedef | <code>src/contexts/viewerContext.js:65</code> |  |
-| <code>ViewerProvider~addMessage</code> | constant | <code>src/contexts/ViewerProvider.jsx:918</code> |  |
-| <code>ViewerProvider~announceIndexedDbAssetMode</code> | constant | <code>src/contexts/ViewerProvider.jsx:1243</code> |  |
-| <code>ViewerProvider~applySessionConfig</code> | constant | <code>src/contexts/ViewerProvider.jsx:933</code> |  |
-| <code>ViewerProvider~clearPageAssetReference</code> | constant | <code>src/contexts/ViewerProvider.jsx:1392</code> | Drop a page&#39;s current object URL reference from React state and the in-memory cache. |
-| <code>ViewerProvider~clearWarmupQueue</code> | constant | <code>src/contexts/ViewerProvider.jsx:960</code> |  |
-| <code>ViewerProvider~collectRuntimeDiagnostics</code> | constant | <code>src/contexts/ViewerProvider.jsx:519</code> | Collect a stable snapshot of runtime counters for the optional diagnostics overlay. |
-| <code>createLimiter</code> | function | <code>src/contexts/ViewerProvider.jsx:203</code> |  |
-| <code>ViewerProvider~disposeDocumentSession</code> | constant | <code>src/contexts/ViewerProvider.jsx:1032</code> |  |
-| <code>DisposeDocumentSessionOptions</code> | typedef | <code>src/contexts/ViewerProvider.jsx:47</code> |  |
-| <code>DocumentSessionInitOptions</code> | typedef | <code>src/contexts/ViewerProvider.jsx:41</code> |  |
-| <code>ViewerProvider~enforceCacheLimit</code> | constant | <code>src/contexts/ViewerProvider.jsx:1490</code> |  |
-| <code>ViewerProvider~enhancePdfPageResolution</code> | constant | <code>src/contexts/ViewerProvider.jsx:1862</code> | Render one PDF page again at twice the configured full-page PDF scale. |
-| <code>ViewerProvider~ensurePageAsset</code> | constant | <code>src/contexts/ViewerProvider.jsx:1701</code> |  |
-| <code>EnsurePageAssetOptions</code> | typedef | <code>src/contexts/ViewerProvider.jsx:62</code> |  |
-| <code>getPageAt</code> | function | <code>src/contexts/ViewerProvider.jsx:135</code> |  |
-| <code>ViewerProvider~getPrintablePageUrls</code> | constant | <code>src/contexts/ViewerProvider.jsx:2239</code> |  |
-| <code>ViewerProvider~getVariantCache</code> | constant | <code>src/contexts/ViewerProvider.jsx:1370</code> |  |
-| <code>ViewerProvider~getVariantCacheLimit</code> | constant | <code>src/contexts/ViewerProvider.jsx:1466</code> |  |
-| <code>ViewerProvider~initializeDocumentSession</code> | constant | <code>src/contexts/ViewerProvider.jsx:969</code> |  |
-| <code>ViewerProvider~insertPageAtIndex</code> | constant | <code>src/contexts/ViewerProvider.jsx:832</code> |  |
-| <code>ViewerProvider~insertPagesAtIndex</code> | constant | <code>src/contexts/ViewerProvider.jsx:849</code> |  |
-| <code>isBlobObjectUrl</code> | function | <code>src/contexts/ViewerProvider.jsx:169</code> |  |
-| <code>isPageFailedForSession</code> | function | <code>src/contexts/ViewerProvider.jsx:195</code> |  |
-| <code>isPageReadyForSession</code> | function | <code>src/contexts/ViewerProvider.jsx:187</code> |  |
-| <code>isPdfPageEntry</code> | function | <code>src/contexts/ViewerProvider.jsx:108</code> |  |
-| <code>isReusableAssetUrl</code> | function | <code>src/contexts/ViewerProvider.jsx:177</code> |  |
-| <code>makeAssetKey</code> | function | <code>src/contexts/ViewerProvider.jsx:77</code> |  |
-| <code>makePdfResolutionPageKey</code> | function | <code>src/contexts/ViewerProvider.jsx:98</code> |  |
-| <code>makePendingAssetKey</code> | function | <code>src/contexts/ViewerProvider.jsx:87</code> |  |
-| <code>makePersistedAssetKey</code> | function | <code>src/contexts/ViewerProvider.jsx:118</code> |  |
-| <code>ViewerProvider~maybeReleaseSinglePageRasterSource</code> | constant | <code>src/contexts/ViewerProvider.jsx:1255</code> |  |
-| <code>createLimiter~normalizePriority</code> | function | <code>src/contexts/ViewerProvider.jsx:214</code> |  |
-| <code>ViewerProvider~noteFullAssetReady</code> | constant | <code>src/contexts/ViewerProvider.jsx:496</code> | Record that a page now has a reusable full-size asset available. |
-| <code>ViewerProvider~noteThumbnailAssetReady</code> | constant | <code>src/contexts/ViewerProvider.jsx:506</code> | Record that a page now has a reusable thumbnail asset available. |
-| <code>ViewerProvider~patchPageAtIndex</code> | constant | <code>src/contexts/ViewerProvider.jsx:870</code> |  |
-| <code>ViewerProvider~persistRenderedAsset</code> | constant | <code>src/contexts/ViewerProvider.jsx:1302</code> |  |
-| <code>ViewerProvider~pinPageAsset</code> | constant | <code>src/contexts/ViewerProvider.jsx:1444</code> |  |
-| <code>ViewerProvider~pumpWarmupQueue</code> | constant | <code>src/contexts/ViewerProvider.jsx:2105</code> | Drain background eager-render work without blocking the UI thread. |
-| <code>ViewerProvider~readSourceArrayBuffer</code> | constant | <code>src/contexts/ViewerProvider.jsx:1226</code> |  |
-| <code>ViewerProvider~readSourceBlob</code> | constant | <code>src/contexts/ViewerProvider.jsx:1235</code> |  |
-| <code>ViewerProvider~recordLoaderPhaseTiming</code> | constant | <code>src/contexts/ViewerProvider.jsx:1925</code> |  |
-| <code>ViewerProvider~registerSourceDescriptor</code> | constant | <code>src/contexts/ViewerProvider.jsx:1183</code> |  |
-| <code>ViewerProvider~renderPageBlob</code> | constant | <code>src/contexts/ViewerProvider.jsx:1615</code> |  |
-| <code>ViewerProvider~resetViewerState</code> | constant | <code>src/contexts/ViewerProvider.jsx:672</code> |  |
-| <code>resolvePatch</code> | function | <code>src/contexts/ViewerProvider.jsx:145</code> |  |
-| <code>ViewerProvider~restorePersistedAsset</code> | constant | <code>src/contexts/ViewerProvider.jsx:1548</code> |  |
-| <code>ViewerProvider~revokeSessionUrls</code> | constant | <code>src/contexts/ViewerProvider.jsx:650</code> |  |
-| <code>ViewerProvider~scheduleSourceWarmup</code> | constant | <code>src/contexts/ViewerProvider.jsx:2196</code> | Enqueue eager page rendering for a newly discovered source range. |
-| <code>ViewerProvider~shouldReuseFullAssetForThumbnail</code> | constant | <code>src/contexts/ViewerProvider.jsx:1535</code> |  |
-| <code>ViewerProvider~storeSourceBlob</code> | constant | <code>src/contexts/ViewerProvider.jsx:1202</code> |  |
-| <code>StoreSourceBlobInput</code> | typedef | <code>src/contexts/ViewerProvider.jsx:52</code> |  |
-| <code>touchCacheEntry</code> | function | <code>src/contexts/ViewerProvider.jsx:158</code> |  |
-| <code>ViewerProvider~touchPageAsset</code> | constant | <code>src/contexts/ViewerProvider.jsx:1379</code> |  |
-| <code>ViewerProvider~tryRenderPdfWarmupBatch</code> | constant | <code>src/contexts/ViewerProvider.jsx:1947</code> | Try to render a full-page PDF warm-up batch through the partitioned worker path. |
-| <code>ViewerProvider~unpinPageAsset</code> | constant | <code>src/contexts/ViewerProvider.jsx:1455</code> |  |
-| <code>ViewerProvider~updateAllPages</code> | constant | <code>src/contexts/ViewerProvider.jsx:472</code> |  |
-| <code>ViewerProvider</code> | constant | <code>src/contexts/ViewerProvider.jsx:324</code> |  |
-| <code>ViewerProviderProps</code> | typedef | <code>src/contexts/ViewerProvider.jsx:313</code> |  |
+| <code>ViewerProvider~addMessage</code> | constant | <code>src/contexts/ViewerProvider.jsx:1020</code> |  |
+| <code>ViewerProvider~announceIndexedDbAssetMode</code> | constant | <code>src/contexts/ViewerProvider.jsx:1347</code> |  |
+| <code>ViewerProvider~applySessionConfig</code> | constant | <code>src/contexts/ViewerProvider.jsx:1035</code> |  |
+| <code>ViewerProvider~clearPageAssetReference</code> | constant | <code>src/contexts/ViewerProvider.jsx:1497</code> | Drop a page&#39;s current object URL reference from React state and the in-memory cache. |
+| <code>ViewerProvider~clearWarmupQueue</code> | constant | <code>src/contexts/ViewerProvider.jsx:1062</code> |  |
+| <code>ViewerProvider~collectRuntimeDiagnostics</code> | constant | <code>src/contexts/ViewerProvider.jsx:547</code> | Collect a stable snapshot of runtime counters for the optional diagnostics overlay. |
+| <code>createLimiter</code> | function | <code>src/contexts/ViewerProvider.jsx:217</code> |  |
+| <code>ViewerProvider~dispatchCompareOverlay</code> | constant | <code>src/contexts/ViewerProvider.jsx:2715</code> |  |
+| <code>ViewerProvider~dispatchCompareTransform</code> | constant | <code>src/contexts/ViewerProvider.jsx:2701</code> |  |
+| <code>ViewerProvider~disposeDocumentSession</code> | constant | <code>src/contexts/ViewerProvider.jsx:1134</code> |  |
+| <code>DisposeDocumentSessionOptions</code> | typedef | <code>src/contexts/ViewerProvider.jsx:59</code> |  |
+| <code>DocumentSessionInitOptions</code> | typedef | <code>src/contexts/ViewerProvider.jsx:53</code> |  |
+| <code>ViewerProvider~enforceCacheLimit</code> | constant | <code>src/contexts/ViewerProvider.jsx:1595</code> |  |
+| <code>ViewerProvider~enhancePdfPageResolution</code> | constant | <code>src/contexts/ViewerProvider.jsx:2012</code> | Render one PDF page again at twice its effective PDF scale. |
+| <code>ViewerProvider~ensurePageAsset</code> | constant | <code>src/contexts/ViewerProvider.jsx:1819</code> |  |
+| <code>EnsurePageAssetOptions</code> | typedef | <code>src/contexts/ViewerProvider.jsx:74</code> |  |
+| <code>ViewerProvider~getCompareTransform</code> | constant | <code>src/contexts/ViewerProvider.jsx:2720</code> |  |
+| <code>getPageAt</code> | function | <code>src/contexts/ViewerProvider.jsx:149</code> |  |
+| <code>ViewerProvider~getPrintablePageUrls</code> | constant | <code>src/contexts/ViewerProvider.jsx:2409</code> |  |
+| <code>ViewerProvider~getVariantCache</code> | constant | <code>src/contexts/ViewerProvider.jsx:1475</code> |  |
+| <code>ViewerProvider~getVariantCacheLimit</code> | constant | <code>src/contexts/ViewerProvider.jsx:1571</code> |  |
+| <code>ViewerProvider~initializeDocumentSession</code> | constant | <code>src/contexts/ViewerProvider.jsx:1071</code> |  |
+| <code>ViewerProvider~insertPageAtIndex</code> | constant | <code>src/contexts/ViewerProvider.jsx:866</code> |  |
+| <code>ViewerProvider~insertPagesAtIndex</code> | constant | <code>src/contexts/ViewerProvider.jsx:883</code> |  |
+| <code>isBlobObjectUrl</code> | function | <code>src/contexts/ViewerProvider.jsx:183</code> |  |
+| <code>ViewerProvider~isPageAssetUrlReferenced</code> | constant | <code>src/contexts/ViewerProvider.jsx:922</code> |  |
+| <code>isPageFailedForSession</code> | function | <code>src/contexts/ViewerProvider.jsx:209</code> |  |
+| <code>isPageReadyForSession</code> | function | <code>src/contexts/ViewerProvider.jsx:201</code> |  |
+| <code>isPdfPageEntry</code> | function | <code>src/contexts/ViewerProvider.jsx:120</code> |  |
+| <code>ViewerProvider~isPrintablePageUrlLeased</code> | constant | <code>src/contexts/ViewerProvider.jsx:903</code> |  |
+| <code>isReusableAssetUrl</code> | function | <code>src/contexts/ViewerProvider.jsx:191</code> |  |
+| <code>ViewerProvider~leasePrintablePageUrl</code> | constant | <code>src/contexts/ViewerProvider.jsx:912</code> |  |
+| <code>makeAssetKey</code> | function | <code>src/contexts/ViewerProvider.jsx:89</code> |  |
+| <code>makePdfResolutionPageKey</code> | function | <code>src/contexts/ViewerProvider.jsx:110</code> |  |
+| <code>makePendingAssetKey</code> | function | <code>src/contexts/ViewerProvider.jsx:99</code> |  |
+| <code>makePersistedAssetKey</code> | function | <code>src/contexts/ViewerProvider.jsx:131</code> |  |
+| <code>ViewerProvider~maybeReleaseSinglePageRasterSource</code> | constant | <code>src/contexts/ViewerProvider.jsx:1359</code> |  |
+| <code>createLimiter~normalizePriority</code> | function | <code>src/contexts/ViewerProvider.jsx:228</code> |  |
+| <code>ViewerProvider~noteFullAssetReady</code> | constant | <code>src/contexts/ViewerProvider.jsx:524</code> | Record that a page now has a reusable full-size asset available. |
+| <code>ViewerProvider~noteThumbnailAssetReady</code> | constant | <code>src/contexts/ViewerProvider.jsx:534</code> | Record that a page now has a reusable thumbnail asset available. |
+| <code>ViewerProvider~patchPageAtIndex</code> | constant | <code>src/contexts/ViewerProvider.jsx:970</code> |  |
+| <code>ViewerProvider~persistRenderedAsset</code> | constant | <code>src/contexts/ViewerProvider.jsx:1406</code> |  |
+| <code>ViewerProvider~pinPageAsset</code> | constant | <code>src/contexts/ViewerProvider.jsx:1549</code> |  |
+| <code>ViewerProvider~pumpWarmupQueue</code> | constant | <code>src/contexts/ViewerProvider.jsx:2275</code> | Drain background eager-render work without blocking the UI thread. |
+| <code>ViewerProvider~readSourceArrayBuffer</code> | constant | <code>src/contexts/ViewerProvider.jsx:1330</code> |  |
+| <code>ViewerProvider~readSourceBlob</code> | constant | <code>src/contexts/ViewerProvider.jsx:1339</code> |  |
+| <code>ViewerProvider~recordLoaderPhaseTiming</code> | constant | <code>src/contexts/ViewerProvider.jsx:2094</code> |  |
+| <code>ViewerProvider~registerSourceDescriptor</code> | constant | <code>src/contexts/ViewerProvider.jsx:1286</code> |  |
+| <code>ViewerProvider~releasePrintablePageUrls</code> | constant | <code>src/contexts/ViewerProvider.jsx:946</code> | Release print leases previously acquired through getPrintablePageUrls . |
+| <code>ViewerProvider~renderPageBlob</code> | constant | <code>src/contexts/ViewerProvider.jsx:1727</code> |  |
+| <code>ViewerProvider~resetViewerState</code> | constant | <code>src/contexts/ViewerProvider.jsx:705</code> |  |
+| <code>resolvePatch</code> | function | <code>src/contexts/ViewerProvider.jsx:159</code> |  |
+| <code>ViewerProvider~restorePersistedAsset</code> | constant | <code>src/contexts/ViewerProvider.jsx:1655</code> |  |
+| <code>ViewerProvider~revokeSessionUrls</code> | constant | <code>src/contexts/ViewerProvider.jsx:678</code> |  |
+| <code>ViewerProvider~scheduleSourceWarmup</code> | constant | <code>src/contexts/ViewerProvider.jsx:2366</code> | Enqueue eager page rendering for a newly discovered source range. |
+| <code>ViewerProvider~setCompareTransform</code> | constant | <code>src/contexts/ViewerProvider.jsx:2710</code> | Write one page&#39;s transform: a partial transform or current =&amp;gt; partial . |
+| <code>ViewerProvider~shouldReuseFullAssetForThumbnail</code> | constant | <code>src/contexts/ViewerProvider.jsx:1642</code> |  |
+| <code>ViewerProvider~storeSourceBlob</code> | constant | <code>src/contexts/ViewerProvider.jsx:1306</code> |  |
+| <code>StoreSourceBlobInput</code> | typedef | <code>src/contexts/ViewerProvider.jsx:64</code> |  |
+| <code>touchCacheEntry</code> | function | <code>src/contexts/ViewerProvider.jsx:172</code> |  |
+| <code>ViewerProvider~touchPageAsset</code> | constant | <code>src/contexts/ViewerProvider.jsx:1484</code> |  |
+| <code>ViewerProvider~tryRenderPdfWarmupBatch</code> | constant | <code>src/contexts/ViewerProvider.jsx:2116</code> | Try to render a full-page PDF warm-up batch through the partitioned worker path. |
+| <code>ViewerProvider~unpinPageAsset</code> | constant | <code>src/contexts/ViewerProvider.jsx:1560</code> |  |
+| <code>ViewerProvider~updateAllPages</code> | constant | <code>src/contexts/ViewerProvider.jsx:500</code> |  |
+| <code>ViewerProvider</code> | constant | <code>src/contexts/ViewerProvider.jsx:338</code> |  |
+| <code>ViewerProviderProps</code> | typedef | <code>src/contexts/ViewerProvider.jsx:327</code> |  |
 | <code>componentDidCatch</code> | function | <code>src/ErrorBoundary.jsx:152</code> | Log error details for diagnostics. |
 | <code>module.exports#copyDetails</code> | member | <code>src/ErrorBoundary.jsx:189</code> | Copy a concise diagnostic bundle to the clipboard \(best effort\). |
 | <code>ErrorBoundaryProps</code> | typedef | <code>src/ErrorBoundary.jsx:103</code> | Props for the ErrorBoundary component. |
@@ -549,29 +661,32 @@
 | <code>usePageTimer~startPageTimer</code> | constant | <code>src/hooks/usePageTimer.js:75</code> | Start the timer for continuous page navigation. |
 | <code>usePageTimer~stopPageTimer</code> | constant | <code>src/hooks/usePageTimer.js:123</code> | Stop any active delay or interval timer \(idempotent\). |
 | <code>usePageTimer</code> | function | <code>src/hooks/usePageTimer.js:60</code> | Custom hook to handle page change with a timer for continuous navigation. |
-| <code>appendQuery</code> | function | <code>src/i18n.js:140</code> | Helper: append query params safely to a URL. |
-| <code>BUNDLED_I18N_RESOURCE_REVISION</code> | constant | <code>src/i18n.js:90</code> | Fallback cache-busting token for bundled locale resources. |
-| <code>computeBaseHref</code> | function | <code>src/i18n.js:372</code> | Compute a normalized base href. |
-| <code>DIAGNOSTIC_RELOAD_DELAY_MS</code> | constant | <code>src/i18n.js:99</code> | Dev-only reload delay after diagnostic localStorage writes. |
-| <code>getBaseLanguageCode</code> | function | <code>src/i18n.js:243</code> | Extract the lowercase base language code from a locale candidate. |
-| <code>getI18nVersion</code> | function | <code>src/i18n.js:111</code> | Return cache-busting version token \(see header\). |
-| <code>getImportMetaEnv</code> | function | <code>src/i18n.js:57</code> | Return Vite import.meta.env safely. |
-| <code>getNormalizedSupportedLanguages</code> | function | <code>src/i18n.js:257</code> | Normalize configured supported languages to non-empty base language codes. |
-| <code>getSafeWindow</code> | function | <code>src/i18n.js:40</code> | Return browser window safely in browser, SSR, test, and documentation contexts. |
-| <code>getStaticI18nDefaults</code> | function | <code>src/i18n.js:217</code> | Compute app config &amp;amp; defaults safely. |
-| <code>getUnsupportedVersionPlaceholders</code> | function | <code>src/i18n.js:173</code> | Find malformed version-like placeholders in loadPath without extra array passes. |
-| <code>IS_DEV</code> | constant | <code>src/i18n.js:68</code> | Dev-mode detector \(Vite + Node envs\). |
-| <code>normalizeSupportedLanguage</code> | function | <code>src/i18n.js:272</code> | Normalize an arbitrary language candidate to a supported base language. |
-| <code>normalizeVersionToken</code> | function | <code>src/i18n.js:102</code> | Normalize optional version tokens from runtime config or globals. |
-| <code>readQuery</code> | function | <code>src/i18n.js:73</code> | Read a query parameter by name \(no deps\). |
-| <code>reloadAfterDiagnosticStorageWrite</code> | function | <code>src/i18n.js:196</code> | Refresh i18n resources after a diagnostic localStorage write. |
-| <code>resolveInitialLanguage</code> | function | <code>src/i18n.js:302</code> | Resolve the initial UI language without relying on persisted i18next cache state. |
-| <code>resolveLoadPath</code> | function | <code>src/i18n.js:390</code> | Resolve the final translation URL at request time \(with cache buster\). |
-| <code>sanitizeI18nPathSegment</code> | function | <code>src/i18n.js:161</code> | Keep i18n URL template substitutions constrained to plain path segments. |
-| <code>syncDocumentLanguage</code> | function | <code>src/i18n.js:353</code> | Keep the document language synchronized with the active UI language. |
-| <code>WANT_DIAG</code> | constant | <code>src/i18n.js:82</code> | Diagnostics ON only in dev builds. |
-| <code>container</code> | constant | <code>src/index.jsx:44</code> | Mount the app into #root. |
-| <code>isDev</code> | constant | <code>src/index.jsx:34</code> | Determine environment and set a sensible client-side log level. |
+| <code>module:hooks/usePdfSignatureReports</code> | module | <code>src/hooks/usePdfSignatureReports.js:2</code> | Browser PDF signature inspection and optional gateway trust enrichment. |
+| <code>module:hooks/usePdfSignatureReports~isPdfPage</code> | function | <code>src/hooks/usePdfSignatureReports.js:27</code> |  |
+| <code>module:hooks/usePdfSignatureReports</code> | function | <code>src/hooks/usePdfSignatureReports.js:43</code> |  |
+| <code>appendQuery</code> | function | <code>src/i18n.js:134</code> | Helper: append query params safely to a URL. |
+| <code>BUNDLED_I18N_RESOURCE_REVISION</code> | constant | <code>src/i18n.js:93</code> | Fallback cache-busting token for bundled locale resources. |
+| <code>computeBaseHref</code> | function | <code>src/i18n.js:366</code> | Compute a normalized base href. |
+| <code>DIAGNOSTIC_RELOAD_DELAY_MS</code> | constant | <code>src/i18n.js:102</code> | Dev-only reload delay after diagnostic localStorage writes. |
+| <code>getBaseLanguageCode</code> | function | <code>src/i18n.js:237</code> | Extract the lowercase base language code from a locale candidate. |
+| <code>getI18nVersion</code> | function | <code>src/i18n.js:114</code> | Return cache-busting version token \(see header and utils/i18nVersion.js\). |
+| <code>getImportMetaEnv</code> | function | <code>src/i18n.js:60</code> | Return Vite import.meta.env safely. |
+| <code>getNormalizedSupportedLanguages</code> | function | <code>src/i18n.js:251</code> | Normalize configured supported languages to non-empty base language codes. |
+| <code>getSafeWindow</code> | function | <code>src/i18n.js:43</code> | Return browser window safely in browser, SSR, test, and documentation contexts. |
+| <code>getStaticI18nDefaults</code> | function | <code>src/i18n.js:211</code> | Compute app config &amp;amp; defaults safely. |
+| <code>getUnsupportedVersionPlaceholders</code> | function | <code>src/i18n.js:167</code> | Find malformed version-like placeholders in loadPath without extra array passes. |
+| <code>IS_DEV</code> | constant | <code>src/i18n.js:71</code> | Dev-mode detector \(Vite + Node envs\). |
+| <code>normalizeSupportedLanguage</code> | function | <code>src/i18n.js:266</code> | Normalize an arbitrary language candidate to a supported base language. |
+| <code>readQuery</code> | function | <code>src/i18n.js:76</code> | Read a query parameter by name \(no deps\). |
+| <code>readStoredI18nVersion</code> | function | <code>src/i18n.js:105</code> | Read the persisted diagnostic version token, if storage is available. |
+| <code>reloadAfterDiagnosticStorageWrite</code> | function | <code>src/i18n.js:190</code> | Refresh i18n resources after a diagnostic localStorage write. |
+| <code>resolveInitialLanguage</code> | function | <code>src/i18n.js:296</code> | Resolve the initial UI language without relying on persisted i18next cache state. |
+| <code>resolveLoadPath</code> | function | <code>src/i18n.js:384</code> | Resolve the final translation URL at request time \(with cache buster\). |
+| <code>sanitizeI18nPathSegment</code> | function | <code>src/i18n.js:155</code> | Keep i18n URL template substitutions constrained to plain path segments. |
+| <code>syncDocumentLanguage</code> | function | <code>src/i18n.js:347</code> | Keep the document language synchronized with the active UI language. |
+| <code>WANT_DIAG</code> | constant | <code>src/i18n.js:85</code> | Diagnostics ON only in dev builds. |
+| <code>container</code> | constant | <code>src/index.jsx:52</code> | Mount the app into #root. |
+| <code>isDev</code> | constant | <code>src/index.jsx:42</code> | Determine environment and set a sensible client-side log level. |
 | <code>BootstrapAny</code> | typedef | <code>src/integrations/bootstrapRuntime.js:44</code> |  |
 | <code>BootstrapDebugInfo</code> | typedef | <code>src/integrations/bootstrapRuntime.js:33</code> | Opaque information about how startup data reached the viewer. |
 | <code>bootstrapDetect</code> | function | <code>src/integrations/bootstrapRuntime.js:243</code> | Detect the best available bootstrap mode. |
@@ -593,6 +708,13 @@
 | <code>PortableMetadataRecord</code> | typedef | <code>src/integrations/normalizePortableBundle.js:38</code> | A normalized raw metadata record attached to a document. |
 | <code>PortableSession</code> | typedef | <code>src/integrations/normalizePortableBundle.js:20</code> | Session info stored on a bundle. |
 | <code>spreadUnknown</code> | function | <code>src/integrations/normalizePortableBundle.js:240</code> | Preserve unknown own enumerable properties from host input while excluding keys that were already normalized explicitly. |
+| <code>announceThemeToAllowedOrigins</code> | function | <code>src/integrations/ompThemeBridge.js:181</code> | Announce a local \(user-initiated\) theme change to the embedded parent frame, once per allowed origin with that origin as the exact targetOrigin. |
+| <code>isRevisionNewer</code> | function | <code>src/integrations/ompThemeBridge.js:86</code> | Order two revisions by their base-36 creation time, as OMP does. |
+| <code>isThemeBridgeOriginAllowed</code> | function | <code>src/integrations/ompThemeBridge.js:66</code> | Check an event origin against the configured allow-list \(exact match only\). |
+| <code>startOmpThemeBridge~onMessage</code> | function | <code>src/integrations/ompThemeBridge.js:111</code> |  |
+| <code>parseThemeBridgeMessage</code> | function | <code>src/integrations/ompThemeBridge.js:41</code> | Validate an inbound postMessage payload. |
+| <code>RemoteThemePreference</code> | typedef | <code>src/integrations/ompThemeBridge.js:27</code> | Remote theme preference received over the bridge. |
+| <code>startOmpThemeBridge</code> | function | <code>src/integrations/ompThemeBridge.js:102</code> | Start listening for theme changes from allowed origins. |
 | <code>b64DecodeUnicode</code> | function | <code>src/integrations/parentBridge.js:88</code> | Decode a base64-encoded Unicode string into text \(handles UTF-8\). |
 | <code>getSameOriginOpener</code> | function | <code>src/integrations/parentBridge.js:52</code> | Try to obtain a same-origin opener window reference. |
 | <code>getSameOriginParent</code> | function | <code>src/integrations/parentBridge.js:30</code> | Try to obtain a same-origin parent window reference. |
@@ -710,53 +832,101 @@
 | <code>toObject</code> | function | <code>src/schemas/portableBundle.js:98</code> | Coerce unknown input to a plain object \(or return null\). |
 | <code>validatePortableBundle</code> | function | <code>src/schemas/portableBundle.js:283</code> | Validate a normalized \(or raw\) bundle. |
 | <code>ValidateReport</code> | typedef | <code>src/schemas/portableBundle.js:74</code> | Validation report for a bundle. |
-| <code>BumpPostZoom</code> | typedef | <code>src/types/jsdoc-types.js:84</code> | Step the per-pane post-zoom by ±0.1. |
+| <code>BumpPostZoom</code> | typedef | <code>src/types/jsdoc-types.js:85</code> | Step the per-pane post-zoom by ±0.1. |
 | <code>DocumentRenderHandle</code> | typedef | <code>src/types/jsdoc-types.js:67</code> | Minimal imperative handle exposed by the page renderer for printing. |
 | <code>FallbackRenderer</code> | typedef | <code>src/types/jsdoc-types.js:58</code> | Render function signature for ErrorBoundary fallbacks. |
 | <code>PageDirection</code> | typedef | <code>src/types/jsdoc-types.js:52</code> | Direction token used by page timers / navigation. |
-| <code>PostZoomApi</code> | typedef | <code>src/types/jsdoc-types.js:91</code> | Per-pane post-zoom API that augments the document viewer hook. |
-| <code>RefLike</code> | typedef | <code>src/types/jsdoc-types.js:73</code> | Generic &amp;quot;ref-like&amp;quot; object \(for places where React.MutableRefObject is too specific\). |
+| <code>PostZoomApi</code> | typedef | <code>src/types/jsdoc-types.js:92</code> | Per-pane post-zoom API that augments the document viewer hook. |
+| <code>RefLike</code> | typedef | <code>src/types/jsdoc-types.js:74</code> | Generic &amp;quot;ref-like&amp;quot; object \(for places where React.MutableRefObject is too specific\). |
 | <code>SetBooleanState</code> | typedef | <code>src/types/jsdoc-types.js:36</code> | React-like state setter for booleans: accepts a boolean or an updater \(boolean\)-&amp;gt;boolean. |
 | <code>SetNumber</code> | typedef | <code>src/types/jsdoc-types.js:22</code> | Simple number setter \(no updater function\). |
 | <code>SetNumberState</code> | typedef | <code>src/types/jsdoc-types.js:7</code> | Generic React-like state setter for numbers: accepts either a number or an updater function \(number\)-&amp;gt;number. |
 | <code>SetPageNumber</code> | typedef | <code>src/types/jsdoc-types.js:44</code> | React-like state setter for page number: accepts a number or an updater \(number\)-&amp;gt;number. |
 | <code>SetString</code> | typedef | <code>src/types/jsdoc-types.js:29</code> | Simple string setter. |
 | <code>SetStringNullable</code> | typedef | <code>src/types/jsdoc-types.js:15</code> | Setter for string-or-null values. |
-| <code>ZoomMode</code> | typedef | <code>src/types/jsdoc-types.js:79</code> | Sticky zoom modes used by the viewer. |
-| <code>countPdfPages</code> | function | <code>src/utils/documentLoadingConfig.js:556</code> | Count PDF pages in a page descriptor list. |
-| <code>detectBrowserFamily</code> | function | <code>src/utils/documentLoadingConfig.js:167</code> |  |
-| <code>DocumentLoadingAdaptiveMemoryConfig</code> | typedef | <code>src/utils/documentLoadingConfig.js:29</code> |  |
-| <code>DocumentLoadingAssetStoreConfig</code> | typedef | <code>src/utils/documentLoadingConfig.js:71</code> |  |
-| <code>DocumentLoadingConfig</code> | typedef | <code>src/utils/documentLoadingConfig.js:152</code> |  |
-| <code>DocumentLoadingFetchConfig</code> | typedef | <code>src/utils/documentLoadingConfig.js:49</code> |  |
-| <code>DocumentLoadingFetchStrategy</code> | typedef | <code>src/utils/documentLoadingConfig.js:21</code> |  |
-| <code>DocumentLoadingMemoryPressureConfig</code> | typedef | <code>src/utils/documentLoadingConfig.js:133</code> |  |
-| <code>DocumentLoadingMemoryPressureStage</code> | typedef | <code>src/utils/documentLoadingConfig.js:25</code> |  |
-| <code>DocumentLoadingMode</code> | typedef | <code>src/utils/documentLoadingConfig.js:20</code> |  |
-| <code>DocumentLoadingPdfWorkerPagePolicy</code> | typedef | <code>src/utils/documentLoadingConfig.js:120</code> |  |
-| <code>DocumentLoadingRenderBackend</code> | typedef | <code>src/utils/documentLoadingConfig.js:23</code> |  |
-| <code>DocumentLoadingRenderConfig</code> | typedef | <code>src/utils/documentLoadingConfig.js:87</code> |  |
-| <code>DocumentLoadingRenderStrategy</code> | typedef | <code>src/utils/documentLoadingConfig.js:22</code> |  |
-| <code>DocumentLoadingSourceStoreConfig</code> | typedef | <code>src/utils/documentLoadingConfig.js:60</code> |  |
-| <code>DocumentLoadingWarningConfig</code> | typedef | <code>src/utils/documentLoadingConfig.js:40</code> |  |
-| <code>formatBytes</code> | function | <code>src/utils/documentLoadingConfig.js:1056</code> |  |
-| <code>formatCount</code> | function | <code>src/utils/documentLoadingConfig.js:1074</code> |  |
-| <code>getPerformanceWindowPageCount</code> | function | <code>src/utils/documentLoadingConfig.js:882</code> | Return the page-count window where auto mode should still behave like the fast, eager path. |
-| <code>getReportedCoreCount</code> | function | <code>src/utils/documentLoadingConfig.js:186</code> | Return the browser-reported logical core count. |
-| <code>normalizeNumber</code> | function | <code>src/utils/documentLoadingConfig.js:366</code> | Coerce a value to a bounded integer . |
-| <code>PdfToImageMode</code> | typedef | <code>src/utils/documentLoadingConfig.js:24</code> |  |
-| <code>resolvePdfRenderConfigForPageCount</code> | function | <code>src/utils/documentLoadingConfig.js:637</code> | Return a render config with pdfToImageMode and pdfWorkerCount resolved for a known PDF page count. |
-| <code>resolvePdfWorkerPlanForPageCount</code> | function | <code>src/utils/documentLoadingConfig.js:576</code> | Resolve the PDF page-worker policy for the current document size. |
-| <code>resolveRecommendedRasterWorkerCount</code> | function | <code>src/utils/documentLoadingConfig.js:224</code> |  |
-| <code>resolveRecommendedWorkerCount</code> | function | <code>src/utils/documentLoadingConfig.js:204</code> |  |
-| <code>RuntimeMemoryTier</code> | typedef | <code>src/utils/documentLoadingConfig.js:19</code> |  |
-| <code>shouldRecommendStopping</code> | function | <code>src/utils/documentLoadingConfig.js:1082</code> |  |
-| <code>shouldUseMainThreadForPdf</code> | function | <code>src/utils/documentLoadingConfig.js:510</code> | Decide whether a PDF should render on the main thread rather than through workers. |
-| <code>SourceStoreMode</code> | typedef | <code>src/utils/documentLoadingConfig.js:15</code> |  |
-| <code>SourceStoreProtection</code> | typedef | <code>src/utils/documentLoadingConfig.js:16</code> |  |
-| <code>StopRecommendationInput</code> | typedef | <code>src/utils/documentLoadingConfig.js:145</code> |  |
-| <code>ThumbnailLoadingStrategy</code> | typedef | <code>src/utils/documentLoadingConfig.js:17</code> |  |
-| <code>ThumbnailSourceStrategy</code> | typedef | <code>src/utils/documentLoadingConfig.js:18</code> |  |
+| <code>ZoomMode</code> | typedef | <code>src/types/jsdoc-types.js:80</code> | Sticky zoom modes used by the viewer. |
+| <code>module:compareCurtain.buildCurtainClipPath</code> | function | <code>src/utils/compareCurtain.js:88</code> | CSS clip of the top page \(page B\): everything on the A side of the border is cut away. |
+| <code>module:compareCurtain.buildCurtainHandleStyle</code> | function | <code>src/utils/compareCurtain.js:102</code> | Position of the grab bar on the border. |
+| <code>module:compareCurtain.clampCurtainPosition</code> | function | <code>src/utils/compareCurtain.js:61</code> | Clamp a border position to \[0, 100\] with two decimals; non-numbers fall back to 50. |
+| <code>module:compareCurtain.COMPARE_CURTAIN_POSITION</code> | constant | <code>src/utils/compareCurtain.js:27</code> | Border position range and keyboard steps \(percent of the stage\). |
+| <code>module:compareCurtain</code> | module | <code>src/utils/compareCurtain.js:2</code> | File: src/utils/compareCurtain.js Curtain view of the compare mode: the two calibrated pages in one coordinate space, page A \(left/primary\) below and page B \(right/compare\) above,... |
+| <code>module:compareCurtain.compareCurtainReducer</code> | function | <code>src/utils/compareCurtain.js:170</code> | Reducer for the curtain view. |
+| <code>module:compareCurtain~CompareCurtainState</code> | typedef | <code>src/utils/compareCurtain.js:20</code> |  |
+| <code>module:compareCurtain~CurtainMode</code> | typedef | <code>src/utils/compareCurtain.js:18</code> |  |
+| <code>module:compareCurtain.curtainPositionFromPointer</code> | function | <code>src/utils/compareCurtain.js:117</code> | Border position under a pointer: the share of the stage along the moving axis \(y for the horizontal border, x for the vertical one\). |
+| <code>module:compareCurtain~normalizeMode</code> | function | <code>src/utils/compareCurtain.js:51</code> |  |
+| <code>module:compareCurtain.resolveCurtainKeyAction</code> | function | <code>src/utils/compareCurtain.js:133</code> | Map a key press on the border to a reducer action: Left/Up −1 %, Right/Down +1 %, Shift ×10. |
+| <code>module:compareCurtain.selectCurtainPosition</code> | function | <code>src/utils/compareCurtain.js:75</code> | The border position of the current mode. |
+| <code>module:compareCurtain~withPosition</code> | function | <code>src/utils/compareCurtain.js:153</code> |  |
+| <code>module:compareOverlay.clampOverlayOpacity</code> | function | <code>src/utils/compareOverlay.js:49</code> | Clamp an opacity to whole percents in \[0, 100\]; non-numbers fall back to the default. |
+| <code>module:compareOverlay.COMPARE_CALIBRATION_VERSION</code> | constant | <code>src/utils/compareOverlay.js:158</code> | Version of the calibration JSON. |
+| <code>module:compareOverlay.COMPARE_OVERLAY_OPACITY</code> | constant | <code>src/utils/compareOverlay.js:28</code> | Opacity range and steps of the overlay slider \(percent\). |
+| <code>module:compareOverlay</code> | module | <code>src/utils/compareOverlay.js:2</code> | File: src/utils/compareOverlay.js Overlay view of the compare mode: the two compared pages stacked in one coordinate space, the top page drawn semi-transparent. |
+| <code>module:compareOverlay.compareOverlayReducer</code> | function | <code>src/utils/compareOverlay.js:91</code> | Reducer for the overlay settings. |
+| <code>module:compareOverlay~CompareOverlayState</code> | typedef | <code>src/utils/compareOverlay.js:19</code> |  |
+| <code>module:compareOverlay.getOverlayBottomTarget</code> | function | <code>src/utils/compareOverlay.js:63</code> | The page under the top page. |
+| <code>module:compareOverlay.hasCompareCalibration</code> | function | <code>src/utils/compareOverlay.js:74</code> | True when a calibration exists in the viewer context: the overlay view has been opened since compare mode started. |
+| <code>module:compareOverlay.resolveOverlayNudgeKeyAction</code> | function | <code>src/utils/compareOverlay.js:150</code> | Nudge mode: arrow keys move the top page only \(1 px, Shift 10 px\), as on the move control. |
+| <code>module:compareOverlay.resolveOverlayOpacityKeyAction</code> | function | <code>src/utils/compareOverlay.js:124</code> | Map a key press on the opacity slider to a reducer action: Left/Down −1 %, Right/Up +1 %, Shift ×10, Home 0 %, End 100 %. |
+| <code>module:compareOverlay.serializeCompareCalibration</code> | function | <code>src/utils/compareOverlay.js:170</code> | The calibration as JSON for support cases. |
+| <code>module:compareTransform~ARROW_PAN</code> | constant | <code>src/utils/compareTransform.js:328</code> | Arrow key → pan axis and direction. |
+| <code>module:compareTransform.buildCompareTransformCss</code> | function | <code>src/utils/compareTransform.js:177</code> | CSS transform the renderer applies to the page stage \(transform-origin: page centre\). |
+| <code>module:compareTransform.COMPARE_TRANSFORM_LIMITS</code> | constant | <code>src/utils/compareTransform.js:41</code> | Supported range. |
+| <code>module:compareTransform</code> | module | <code>src/utils/compareTransform.js:2</code> | File: src/utils/compareTransform.js Free per-page transform for the compare view: stepless scale, free pan and 0.1 degree rotation, one transform per compared page \( primary = lef... |
+| <code>module:compareTransform~CompareTransform</code> | typedef | <code>src/utils/compareTransform.js:16</code> | Per-page transform. |
+| <code>module:compareTransform.compareTransformReducer</code> | function | <code>src/utils/compareTransform.js:228</code> | Reducer for the per-page transform state. |
+| <code>module:compareTransform~CompareTransformState</code> | typedef | <code>src/utils/compareTransform.js:30</code> |  |
+| <code>module:compareTransform~CompareTransformTarget</code> | typedef | <code>src/utils/compareTransform.js:28</code> |  |
+| <code>module:compareTransform~finiteOr</code> | function | <code>src/utils/compareTransform.js:73</code> |  |
+| <code>module:compareTransform.formatTransformNumber</code> | function | <code>src/utils/compareTransform.js:313</code> | Format a number for a transform field in the UI language, without digit grouping. |
+| <code>module:compareTransform.isIdentityCompareTransform</code> | function | <code>src/utils/compareTransform.js:125</code> |  |
+| <code>module:compareTransform~mapBoth</code> | function | <code>src/utils/compareTransform.js:209</code> |  |
+| <code>module:compareTransform.normalizeCompareTransform</code> | function | <code>src/utils/compareTransform.js:111</code> |  |
+| <code>module:compareTransform~normalizeOffset</code> | function | <code>src/utils/compareTransform.js:91</code> |  |
+| <code>module:compareTransform~normalizeScale</code> | function | <code>src/utils/compareTransform.js:82</code> |  |
+| <code>module:compareTransform~normalizeTarget</code> | function | <code>src/utils/compareTransform.js:137</code> |  |
+| <code>module:compareTransform.normalizeTransformRotation</code> | function | <code>src/utils/compareTransform.js:102</code> | Normalize an angle to \[0, 360\) with 0.1 degree resolution. |
+| <code>module:compareTransform.parseLocaleNumber</code> | function | <code>src/utils/compareTransform.js:284</code> | Parse a number typed by the user in either Swedish \( 12,5 \) or English \( 12.5 \) notation. |
+| <code>module:compareTransform.resolveTransformKeyAction</code> | function | <code>src/utils/compareTransform.js:342</code> | Map a key press on a pan control to a reducer action: arrows pan 1 px, Shift+arrows 10 px. |
+| <code>module:compareTransform~roundTo</code> | function | <code>src/utils/compareTransform.js:63</code> |  |
+| <code>module:compareTransform~sameTransform</code> | function | <code>src/utils/compareTransform.js:189</code> |  |
+| <code>module:compareTransform.selectCompareTransform</code> | function | <code>src/utils/compareTransform.js:148</code> | Read one page&#39;s transform. |
+| <code>module:compareTransform.splitTransformRotation</code> | function | <code>src/utils/compareTransform.js:160</code> | Split a free angle into the quarter turn drawn by the canvas and the residual applied as CSS. |
+| <code>module:compareTransform~withTarget</code> | function | <code>src/utils/compareTransform.js:199</code> |  |
+| <code>countPdfPages</code> | function | <code>src/utils/documentLoadingConfig.js:559</code> | Count PDF pages in a page descriptor list. |
+| <code>detectBrowserFamily</code> | function | <code>src/utils/documentLoadingConfig.js:169</code> |  |
+| <code>DocumentLoadingAdaptiveMemoryConfig</code> | typedef | <code>src/utils/documentLoadingConfig.js:30</code> |  |
+| <code>DocumentLoadingAssetStoreConfig</code> | typedef | <code>src/utils/documentLoadingConfig.js:72</code> |  |
+| <code>DocumentLoadingConfig</code> | typedef | <code>src/utils/documentLoadingConfig.js:154</code> |  |
+| <code>DocumentLoadingFetchConfig</code> | typedef | <code>src/utils/documentLoadingConfig.js:50</code> |  |
+| <code>DocumentLoadingFetchStrategy</code> | typedef | <code>src/utils/documentLoadingConfig.js:22</code> |  |
+| <code>DocumentLoadingMemoryPressureConfig</code> | typedef | <code>src/utils/documentLoadingConfig.js:135</code> |  |
+| <code>DocumentLoadingMemoryPressureStage</code> | typedef | <code>src/utils/documentLoadingConfig.js:26</code> |  |
+| <code>DocumentLoadingMode</code> | typedef | <code>src/utils/documentLoadingConfig.js:21</code> |  |
+| <code>DocumentLoadingPdfWorkerPagePolicy</code> | typedef | <code>src/utils/documentLoadingConfig.js:122</code> |  |
+| <code>DocumentLoadingRenderBackend</code> | typedef | <code>src/utils/documentLoadingConfig.js:24</code> |  |
+| <code>DocumentLoadingRenderConfig</code> | typedef | <code>src/utils/documentLoadingConfig.js:88</code> |  |
+| <code>DocumentLoadingRenderStrategy</code> | typedef | <code>src/utils/documentLoadingConfig.js:23</code> |  |
+| <code>DocumentLoadingSourceStoreConfig</code> | typedef | <code>src/utils/documentLoadingConfig.js:61</code> |  |
+| <code>DocumentLoadingWarningConfig</code> | typedef | <code>src/utils/documentLoadingConfig.js:41</code> |  |
+| <code>formatBytes</code> | function | <code>src/utils/documentLoadingConfig.js:1060</code> |  |
+| <code>formatCount</code> | function | <code>src/utils/documentLoadingConfig.js:1078</code> |  |
+| <code>getPerformanceWindowPageCount</code> | function | <code>src/utils/documentLoadingConfig.js:885</code> | Return the page-count window where auto mode should still behave like the fast, eager path. |
+| <code>getReportedCoreCount</code> | function | <code>src/utils/documentLoadingConfig.js:188</code> | Return the browser-reported logical core count. |
+| <code>normalizeNumber</code> | function | <code>src/utils/documentLoadingConfig.js:369</code> | Coerce a value to a bounded integer . |
+| <code>PdfToImageMode</code> | typedef | <code>src/utils/documentLoadingConfig.js:25</code> |  |
+| <code>resolvePdfRenderConfigForPageCount</code> | function | <code>src/utils/documentLoadingConfig.js:640</code> | Return a render config with pdfToImageMode and pdfWorkerCount resolved for a known PDF page count. |
+| <code>resolvePdfWorkerPlanForPageCount</code> | function | <code>src/utils/documentLoadingConfig.js:579</code> | Resolve the PDF page-worker policy for the current document size. |
+| <code>resolveRecommendedRasterWorkerCount</code> | function | <code>src/utils/documentLoadingConfig.js:226</code> |  |
+| <code>resolveRecommendedWorkerCount</code> | function | <code>src/utils/documentLoadingConfig.js:206</code> |  |
+| <code>RuntimeMemoryTier</code> | typedef | <code>src/utils/documentLoadingConfig.js:20</code> |  |
+| <code>shouldRecommendStopping</code> | function | <code>src/utils/documentLoadingConfig.js:1086</code> |  |
+| <code>shouldUseMainThreadForPdf</code> | function | <code>src/utils/documentLoadingConfig.js:513</code> | Decide whether a PDF should render on the main thread rather than through workers. |
+| <code>SourceStoreMode</code> | typedef | <code>src/utils/documentLoadingConfig.js:16</code> |  |
+| <code>SourceStoreProtection</code> | typedef | <code>src/utils/documentLoadingConfig.js:17</code> |  |
+| <code>StopRecommendationInput</code> | typedef | <code>src/utils/documentLoadingConfig.js:147</code> |  |
+| <code>ThumbnailLoadingStrategy</code> | typedef | <code>src/utils/documentLoadingConfig.js:18</code> |  |
+| <code>ThumbnailSourceStrategy</code> | typedef | <code>src/utils/documentLoadingConfig.js:19</code> |  |
 | <code>buildAliasDetailRow</code> | function | <code>src/utils/documentMetadata.js:183</code> |  |
 | <code>buildAliasLabelsByFieldId</code> | function | <code>src/utils/documentMetadata.js:209</code> |  |
 | <code>buildDocumentMetadataMatrixView</code> | function | <code>src/utils/documentMetadata.js:341</code> | Build a session-wide metadata matrix with one row per document and one column per metadata field. |
@@ -775,16 +945,46 @@
 | <code>resolveMetadataLabel</code> | function | <code>src/utils/documentMetadata.js:129</code> | Resolve the label shown for one metadata row. |
 | <code>resolveMetadataValue</code> | function | <code>src/utils/documentMetadata.js:161</code> |  |
 | <code>toOptionalText</code> | function | <code>src/utils/documentMetadata.js:22</code> |  |
+| <code>module:utils/i18nVersion.getBuildLocaleToken</code> | function | <code>src/utils/i18nVersion.js:38</code> | Join the build id and the locale content hash into one token. |
+| <code>module:utils/i18nVersion.normalizeVersionToken</code> | function | <code>src/utils/i18nVersion.js:25</code> | Normalize optional version tokens; &amp;quot;auto&amp;quot; and blank values mean &amp;quot;not set&amp;quot;. |
+| <code>module:utils/i18nVersion.resolveI18nVersion</code> | function | <code>src/utils/i18nVersion.js:53</code> |  |
+| <code>module:utils/i18nVersion</code> | module | <code>src/utils/i18nVersion.js:2</code> | Cache-busting version token for the locale files \( locales/&amp;lt;lng&amp;gt;/common.json?v=&amp;lt;token&amp;gt; \). |
 | <code>bytesToHex</code> | function | <code>src/utils/idUtils.js:17</code> |  |
 | <code>createOpaqueId</code> | function | <code>src/utils/idUtils.js:56</code> | Create a prefixed opaque identifier. |
 | <code>createOpaqueIdFragment</code> | function | <code>src/utils/idUtils.js:27</code> | Create an opaque identifier fragment suitable for synthetic keys and document ids. |
 | <code>fallbackCounter</code> | member | <code>src/utils/idUtils.js:11</code> | OpenDocViewer — small opaque identifier helpers. |
+| <code>module:imageAdjustments.buildImageFilter</code> | function | <code>src/utils/imageAdjustments.js:100</code> | The canvas 2d filter for the adjustments, composed as brightness, contrast, grayscale, invert. |
+| <code>module:imageAdjustments~finiteOr</code> | function | <code>src/utils/imageAdjustments.js:24</code> |  |
+| <code>module:imageAdjustments.hasImageAdjustment</code> | function | <code>src/utils/imageAdjustments.js:59</code> | Whether any colour adjustment \(brightness, contrast, grayscale, invert\) is off its neutral value. |
+| <code>module:imageAdjustments</code> | module | <code>src/utils/imageAdjustments.js:2</code> | File: src/utils/imageAdjustments.js Per-pane pixel adjustments \(brightness, contrast, grayscale, invert\) and the quarter turn the canvas draws. |
+| <code>module:imageAdjustments.needsCanvas</code> | function | <code>src/utils/imageAdjustments.js:88</code> | Whether the page must be drawn on the canvas instead of the plain &amp;lt;img&amp;gt; . |
+| <code>module:imageAdjustments.NEUTRAL_IMAGE_FILTER</code> | constant | <code>src/utils/imageAdjustments.js:17</code> | The canvas filter for neutral values \(brightness and contrast at 100 %, nothing else\). |
+| <code>module:imageAdjustments.normalizeGrayscale</code> | function | <code>src/utils/imageAdjustments.js:36</code> | Grayscale amount in percent, clamped to 0..100. |
+| <code>module:imageAdjustments.normalizeInvert</code> | function | <code>src/utils/imageAdjustments.js:47</code> | Invert as a real boolean. |
+| <code>module:imageAdjustments.pickStoredImageAdjustments</code> | function | <code>src/utils/imageAdjustments.js:73</code> | The stored image adjustment of one page, normalized: brightness, contrast, grayscale and invert. |
 | <code>I18nLike</code> | typedef | <code>src/utils/localizedValue.js:17</code> | Minimal shape of an i18n instance used by this module. |
 | <code>I18nOptionsLike</code> | typedef | <code>src/utils/localizedValue.js:11</code> | A subset of the i18next options object we care about. |
 | <code>LocalizedString</code> | typedef | <code>src/utils/localizedValue.js:2</code> | Localized string resolver for admin-supplied config values. |
 | <code>OptionLike</code> | typedef | <code>src/utils/localizedValue.js:24</code> | Option-like shape used by the print reason selector. |
 | <code>resolveLocalizedValue</code> | function | <code>src/utils/localizedValue.js:41</code> | Return the best string for the active language. |
 | <code>resolveOptionLabel</code> | function | <code>src/utils/localizedValue.js:109</code> | Resolve a label for a reason option. |
+| <code>buildManualContentsTree</code> | function | <code>src/utils/manualContentsTree.js:78</code> | Build the contents tree from the rendered manual and give every listed heading a unique id. |
+| <code>collapseWhitespace</code> | function | <code>src/utils/manualContentsTree.js:40</code> |  |
+| <code>countManualMatchesPerSection</code> | function | <code>src/utils/manualContentsTree.js:178</code> | Count search hits per section in a single merge pass. |
+| <code>FALLBACK_SLUG</code> | constant | <code>src/utils/manualContentsTree.js:30</code> | Slug used when a heading text has no ASCII letters or digits left. |
+| <code>findManualSectionId</code> | function | <code>src/utils/manualContentsTree.js:153</code> | Id of the section that contains the node: the last listed heading at or before it in document order, or &#39;&#39; when the node comes before the first heading. |
+| <code>headingStartsAtOrBefore</code> | function | <code>src/utils/manualContentsTree.js:139</code> |  |
+| <code>ManualContentsEntry</code> | typedef | <code>src/utils/manualContentsTree.js:13</code> |  |
+| <code>ManualContentsGroup</code> | typedef | <code>src/utils/manualContentsTree.js:21</code> |  |
+| <code>POSITION_FOLLOWING</code> | constant | <code>src/utils/manualContentsTree.js:33</code> | Node.compareDocumentPosition flags \(numeric so this also runs without a global Node\). |
+| <code>slugifyManualHeading</code> | function | <code>src/utils/manualContentsTree.js:51</code> | Derive a heading id from its text. |
+| <code>buildManualCandidates</code> | function | <code>src/utils/manualSources.js:45</code> | Candidate manual URLs in priority order: site before default, UI language before fallback language. |
+| <code>DEFAULT_SITE_MANUAL_TEMPLATE</code> | constant | <code>src/utils/manualSources.js:14</code> | Resolves which manual HTML file the help dialog shows. |
+| <code>interpolateManualTemplate</code> | function | <code>src/utils/manualSources.js:32</code> |  |
+| <code>isApplicationShellHtml</code> | function | <code>src/utils/manualSources.js:76</code> | True when the HTML is OpenDocViewer&#39;s own application shell rather than a manual. |
+| <code>ManualCandidateResponse</code> | typedef | <code>src/utils/manualSources.js:80</code> |  |
+| <code>resolveManualSource</code> | function | <code>src/utils/manualSources.js:94</code> | Fetch candidates in order and return the first one the server delivers as a manual. |
+| <code>toText</code> | function | <code>src/utils/manualSources.js:22</code> |  |
 | <code>getRuntimeMemoryProfile</code> | function | <code>src/utils/memoryProfile.js:63</code> |  |
 | <code>readDeviceMemoryGb</code> | function | <code>src/utils/memoryProfile.js:24</code> |  |
 | <code>readJsHeapLimitMiB</code> | function | <code>src/utils/memoryProfile.js:37</code> |  |
@@ -804,11 +1004,34 @@
 | <code>revokeAllTrackedObjectUrls</code> | function | <code>src/utils/objectUrlRegistry.js:89</code> | Revoke every tracked object URL. |
 | <code>revokeTrackedObjectUrl</code> | function | <code>src/utils/objectUrlRegistry.js:47</code> |  |
 | <code>revokeTrackedObjectUrls</code> | function | <code>src/utils/objectUrlRegistry.js:60</code> |  |
-| <code>PageAssetDescriptor</code> | typedef | <code>src/utils/pageAssetRenderer.js:34</code> |  |
-| <code>PageAssetRendererOptions</code> | typedef | <code>src/utils/pageAssetRenderer.js:28</code> |  |
-| <code>PageAssetRenderer#renderPageAsset</code> | function | <code>src/utils/pageAssetRenderer.js:660</code> | Render one requested page asset. |
-| <code>RenderPageAssetOptions</code> | typedef | <code>src/utils/pageAssetRenderer.js:42</code> |  |
-| <code>PageAssetRenderer#renderPdfPageAssetBatch</code> | function | <code>src/utils/pageAssetRenderer.js:534</code> | Render a PDF page set through the PDF worker pool as one partitioned batch. |
+| <code>applyOdvThemeToDocument</code> | function | <code>src/utils/ompThemePreference.js:291</code> | Apply the resolved theme to the document \(SSR-safe\). |
+| <code>createSharedThemeRevision</code> | function | <code>src/utils/ompThemePreference.js:228</code> | Create a unique revision starting with the creation time \(per the contract\). |
+| <code>detectSystemTheme</code> | function | <code>src/utils/ompThemePreference.js:262</code> | Detect the OS/browser colour scheme \(SSR-safe; defaults to light\). |
+| <code>getEffectiveOdvThemeMode</code> | function | <code>src/utils/ompThemePreference.js:337</code> | Resolve the effective ODV theme mode from the shared preference, the local ODV setting and migration. |
+| <code>getSession</code> | function | <code>src/utils/ompThemePreference.js:69</code> | Keep denied-storage choices scoped to the current browsing context. |
+| <code>getSharedThemePreference</code> | function | <code>src/utils/ompThemePreference.js:208</code> | Read the winning shared preference: newest revision wins and is mirrored to the other store; on a tie \(or when a revision cannot be read\) the cookie wins. |
+| <code>isSharedThemeMode</code> | function | <code>src/utils/ompThemePreference.js:90</code> |  |
+| <code>migrateLocalThemeToShared</code> | function | <code>src/utils/ompThemePreference.js:310</code> | Migrate an existing local ODV theme setting into the shared preference. |
+| <code>mirrorSharedThemePreference</code> | function | <code>src/utils/ompThemePreference.js:189</code> | Persist a shared value to both stores \(each write tolerates denied storage\). |
+| <code>OdvThemeMode</code> | typedef | <code>src/utils/ompThemePreference.js:42</code> | ODV theme mode \(the shared modes plus the viewer-specific Normal variant\). |
+| <code>OdvThemeName</code> | typedef | <code>src/utils/ompThemePreference.js:47</code> | Concrete ODV palette. |
+| <code>parseSharedThemeValue</code> | function | <code>src/utils/ompThemePreference.js:102</code> | Parse a raw stored shared-preference value. |
+| <code>readSharedRawFromCookie</code> | function | <code>src/utils/ompThemePreference.js:119</code> | Read the raw shared value from the cookie \(URI-encoded JSON per the contract\). |
+| <code>readSharedRawFromStorage</code> | function | <code>src/utils/ompThemePreference.js:137</code> | Read the raw shared value from the localStorage mirror. |
+| <code>resolveConcreteTheme</code> | function | <code>src/utils/ompThemePreference.js:277</code> | Resolve the concrete ODV palette for an ODV theme mode. |
+| <code>setOdvThemeMode</code> | function | <code>src/utils/ompThemePreference.js:371</code> | Persist a user theme choice: system/light/dark are written to the shared preference \(new revision\) and mirrored locally; a stale Normal binding is cleared. |
+| <code>setSharedThemePreference</code> | function | <code>src/utils/ompThemePreference.js:252</code> | Store a new shared choice with a fresh revision in both stores. |
+| <code>SharedThemeMode</code> | typedef | <code>src/utils/ompThemePreference.js:37</code> | Shared OMP theme mode. |
+| <code>SharedThemePreference</code> | typedef | <code>src/utils/ompThemePreference.js:52</code> | Parsed shared preference value. |
+| <code>sharedThemeRevisionTime</code> | function | <code>src/utils/ompThemePreference.js:81</code> | Read the base-36 creation time, matching the OMP preference ordering contract. |
+| <code>writeSharedToCookie</code> | function | <code>src/utils/ompThemePreference.js:150</code> |  |
+| <code>writeSharedToStorage</code> | function | <code>src/utils/ompThemePreference.js:169</code> |  |
+| <code>PageAssetDescriptor</code> | typedef | <code>src/utils/pageAssetRenderer.js:36</code> |  |
+| <code>PageAssetRendererOptions</code> | typedef | <code>src/utils/pageAssetRenderer.js:30</code> |  |
+| <code>PageAssetRenderer#renderPageAsset</code> | function | <code>src/utils/pageAssetRenderer.js:669</code> | Render one requested page asset. |
+| <code>RenderPageAssetOptions</code> | typedef | <code>src/utils/pageAssetRenderer.js:44</code> |  |
+| <code>PageAssetRenderer#renderPdfPageAssetBatch</code> | function | <code>src/utils/pageAssetRenderer.js:541</code> | Render a PDF page set through the PDF worker pool as one partitioned batch. |
+| <code>PageAssetRenderer#resolvePdfPageResolution</code> | function | <code>src/utils/pageAssetRenderer.js:780</code> | Read page geometry only when a persisted asset needs an exact resolution identity. |
 | <code>BlobLruCache</code> | class | <code>src/utils/pageAssetStore.js:170</code> |  |
 | <code>PageAssetStore#cleanup</code> | function | <code>src/utils/pageAssetStore.js:455</code> |  |
 | <code>PageAssetStore#cleanupStaleSessions</code> | function | <code>src/utils/pageAssetStore.js:499</code> |  |
@@ -923,6 +1146,69 @@
 | <code>normalizePdfPrintCacheLanguageMode</code> | function | <code>src/utils/pdfPrintCacheKey.js:21</code> |  |
 | <code>normalizePdfPrintCachePageNumbers</code> | function | <code>src/utils/pdfPrintCacheKey.js:60</code> |  |
 | <code>stablePrintText</code> | function | <code>src/utils/pdfPrintCacheKey.js:13</code> |  |
+| <code>applyPdfScaleOverride</code> | function | <code>src/utils/pdfResolution.js:120</code> | Apply an explicit per-render scale override to a normalized policy, the same way getPdfResolutionInputs does on the main thread: the override becomes a fixed scale and raises maxS... |
+| <code>normalizePdfResolution</code> | function | <code>src/utils/pdfResolution.js:29</code> | Normalize a render config, including the legacy fullPageScale alias. |
+| <code>PDF_POINTS_PER_INCH</code> | constant | <code>src/utils/pdfResolution.js:10</code> | PDF user space is 72 points per inch; a scale factor is therefore dpi / 72. |
+| <code>PDF_RESOLUTION_SCALE_LIMIT</code> | constant | <code>src/utils/pdfResolution.js:17</code> | Upper bound for configured scale factors. |
+| <code>resolvePdfRenderScale</code> | function | <code>src/utils/pdfResolution.js:62</code> | Resolve an effective scale without reading browser globals. |
+| <code>resolvePdfResolutionBoost</code> | function | <code>src/utils/pdfResolution.js:100</code> | Double the current effective scale for a one-shot boost. |
+| <code>resolvePdfViewportResolution</code> | function | <code>src/utils/pdfResolution.js:129</code> | Resolve a scale-one, already rotated PDF.js viewport and retain inputs for cache/boost checks. |
+| <code>getPdfResolutionDiagnostics</code> | function | <code>src/utils/pdfResolutionRuntime.js:39</code> | Effective PDF display diagnostics, with null scale until a page has been rendered. |
+| <code>getPdfResolutionInputs</code> | function | <code>src/utils/pdfResolutionRuntime.js:15</code> | Capture serializable browser inputs before sending a render request to a window-less worker. |
+| <code>recordPdfResolution</code> | function | <code>src/utils/pdfResolutionRuntime.js:34</code> | Record successful rendering/restoration only; never collect document identifiers. |
+| <code>registerPdfViewerWidth</code> | function | <code>src/utils/pdfResolutionRuntime.js:9</code> | Register a live content-width measurement without triggering renders on resize. |
+| <code>module:utils/pdfSignatureDocuments.buildSignatureDocuments</code> | function | <code>src/utils/pdfSignatureDocuments.js:119</code> | Fold per-file signature reports into per-document entries. |
+| <code>module:utils/pdfSignatureDocuments.findSignatureDocumentBySourceKey</code> | function | <code>src/utils/pdfSignatureDocuments.js:217</code> |  |
+| <code>module:utils/pdfSignatureDocuments.getPageSignatureDocumentKey</code> | function | <code>src/utils/pdfSignatureDocuments.js:57</code> | Document key of a page. |
+| <code>module:utils/pdfSignatureDocuments.getSignatureFileHeading</code> | function | <code>src/utils/pdfSignatureDocuments.js:230</code> | Heading for one file of a multi-file document: &amp;quot;File k of m: name&amp;quot;, or &amp;quot;File k of m&amp;quot; when no file name is available. |
+| <code>module:utils/pdfSignatureDocuments.getSignatureFilePages</code> | function | <code>src/utils/pdfSignatureDocuments.js:245</code> | Page range of a file inside its document, &amp;quot;Pages 19–24&amp;quot; or &amp;quot;Page 3&amp;quot;; &#39;&#39; when unknown. |
+| <code>module:utils/pdfSignatureDocuments.getSourceFileNameFromUrl</code> | function | <code>src/utils/pdfSignatureDocuments.js:73</code> | Display file name from a source URL: the last path segment, only when it looks like a file name \(has an extension\). |
+| <code>module:utils/pdfSignatureDocuments~pickNewestSignature</code> | function | <code>src/utils/pdfSignatureDocuments.js:97</code> |  |
+| <code>module:utils/pdfSignatureDocuments~SignatureDocumentEntry</code> | typedef | <code>src/utils/pdfSignatureDocuments.js:35</code> |  |
+| <code>module:utils/pdfSignatureDocuments~SignatureFileEntry</code> | typedef | <code>src/utils/pdfSignatureDocuments.js:21</code> |  |
+| <code>module:utils/pdfSignatureDocuments.summarizeSignatureDocuments</code> | function | <code>src/utils/pdfSignatureDocuments.js:202</code> | Totals for the toolbar overview button, or null when nothing is signed \(the button is then not rendered\). |
+| <code>module:utils/pdfSignatureDocuments</code> | module | <code>src/utils/pdfSignatureDocuments.js:2</code> | Per-document aggregation of PDF signature reports. |
+| <code>module:utils/pdfSignatureGateway.createGatewaySignatureClient</code> | function | <code>src/utils/pdfSignatureGateway.js:120</code> | Create viewer-local state for disabled gateway sessions. |
+| <code>module:utils/pdfSignatureGateway.getGatewaySignatureContext</code> | function | <code>src/utils/pdfSignatureGateway.js:20</code> | Resolve only HTTP source routes on the viewer&#39;s own origin, preserving the path base. |
+| <code>module:utils/pdfSignatureGateway.mergeGatewaySignatureReport</code> | function | <code>src/utils/pdfSignatureGateway.js:75</code> | Accept only unambiguous server entries. |
+| <code>module:utils/pdfSignatureGateway</code> | module | <code>src/utils/pdfSignatureGateway.js:1</code> | Optional gateway trust enrichment. |
+| <code>module:utils/pdfSignatureGateway~validationDisabled</code> | function | <code>src/utils/pdfSignatureGateway.js:64</code> | The gateway answered that server validation is switched off. |
+| <code>module:utils/pdfSignatureInspector.disposePdfSignatureWorker</code> | function | <code>src/utils/pdfSignatureInspector.js:175</code> | Terminate the signature worker \(e.g. |
+| <code>module:utils/pdfSignatureInspector.getDocumentSignatures</code> | function | <code>src/utils/pdfSignatureInspector.js:140</code> | Inspect the signatures of one document. |
+| <code>module:utils/pdfSignatureInspector</code> | module | <code>src/utils/pdfSignatureInspector.js:1</code> | PDF signature inspection - the single entry point for application code. |
+| <code>module:utils/pdfSignatureInspector~workerHandle</code> | member | <code>src/utils/pdfSignatureInspector.js:33</code> | Lazily created worker handle: { worker, broken, pending } where pending maps requestId to its resolve/reject callbacks. |
+| <code>module:utils/pdfSignatures.collectPdfSignatures</code> | function | <code>src/utils/pdfSignatures.js:1163</code> | Collect signature information from PDF bytes. |
+| <code>module:utils/pdfSignatures~discoverSignatures</code> | function | <code>src/utils/pdfSignatures.js:276</code> | Walk every indirect object; collect signature dictionaries together with the field dictionary that references them \(for /T\). |
+| <code>module:utils/pdfSignatures.installIndirectObjectHeaderProbe</code> | function | <code>src/utils/pdfSignatures.js:1008</code> | pdf-lib&#39;s skipJibberish probes every byte of leading junk with matchIndirectObjectHeader, which throws \(building an Error\) on each miss: ~17 us per byte, so a 64 KiB prefix cost a... |
+| <code>module:utils/pdfSignatures.parsePdfDateString</code> | function | <code>src/utils/pdfSignatures.js:203</code> | Parse a PDF date string \(&amp;quot;D:YYYYMMDDHHmmSS+02&#39;30&#39;&amp;quot;, also without the D: prefix, with partial fields, or without a timezone - a missing timezone is treated as UTC\). |
+| <code>module:utils/pdfSignatures~PdfSignatureInfo</code> | typedef | <code>src/utils/pdfSignatures.js:19</code> | One inspected PDF signature \(level-1 integrity view; trust is never evaluated here - see the trust property\). |
+| <code>module:utils/pdfSignatures~PdfSignatureReport</code> | typedef | <code>src/utils/pdfSignatures.js:57</code> |  |
+| <code>module:utils/pdfSignatures~pdfText</code> | function | <code>src/utils/pdfSignatures.js:190</code> | Decode a PDF text string object \(literal string or hex string\) to a JS string, honouring the UTF-16BE byte-order mark. |
+| <code>module:utils/pdfSignatures.SUPPORTED_SUBFILTERS</code> | constant | <code>src/utils/pdfSignatures.js:66</code> | SubFilters with level-1 handling. |
+| <code>module:utils/pdfSignatures.unreadableSignatureReport</code> | function | <code>src/utils/pdfSignatures.js:971</code> | Report an inspection failure without claiming that the document is unsigned. |
+| <code>module:utils/pdfSignatures</code> | module | <code>src/utils/pdfSignatures.js:1</code> | PDF signature collection - level 1 integrity inspection. |
+| <code>module:utils/pdfSignatureStatus.formatSignatureTime</code> | function | <code>src/utils/pdfSignatureStatus.js:337</code> | Format a signature-related ISO time \(signing, validation, certificate validity\) as local time, &amp;quot;2022-04-27 19:55&amp;quot;, in both supported languages. |
+| <code>module:utils/pdfSignatureStatus.getIntegrityLabel</code> | function | <code>src/utils/pdfSignatureStatus.js:85</code> | Shared localized status text for the badge tooltip and details dialog. |
+| <code>module:utils/pdfSignatureStatus.getReportSignatureSeverity</code> | function | <code>src/utils/pdfSignatureStatus.js:64</code> | Worst severity across integrity and trust for all signatures. |
+| <code>module:utils/pdfSignatureStatus.getSignatureCount</code> | function | <code>src/utils/pdfSignatureStatus.js:118</code> |  |
+| <code>module:utils/pdfSignatureStatus.getSignatureSeverity</code> | function | <code>src/utils/pdfSignatureStatus.js:52</code> | Map one integrity status to its severity class. |
+| <code>module:utils/pdfSignatureStatus.getSignatureTrustState</code> | function | <code>src/utils/pdfSignatureStatus.js:238</code> | Which trust situation a signature is in: unavailable : no gateway answered for this document \(viewer opened without ODVGateway\); not-checked : the gateway has server validation di... |
+| <code>module:utils/pdfSignatureStatus.getTrustExplanation</code> | function | <code>src/utils/pdfSignatureStatus.js:263</code> | State-specific trust text for the details dialog. |
+| <code>module:utils/pdfSignatureStatus.getTrustLabel</code> | function | <code>src/utils/pdfSignatureStatus.js:164</code> | Shared localized trust text for the details dialog and the overview. |
+| <code>module:utils/pdfSignatureStatus.getTrustReasonText</code> | function | <code>src/utils/pdfSignatureStatus.js:223</code> | Localized plain-language reason for a gateway trustReason code, or null for an unknown code. |
+| <code>module:utils/pdfSignatureStatus.getWorstSignatureIntegrity</code> | function | <code>src/utils/pdfSignatureStatus.js:104</code> | The worst integrity status among a document&#39;s signatures, or null when there are none. |
+| <code>module:utils/pdfSignatureStatus.getWorstSignatureTrust</code> | function | <code>src/utils/pdfSignatureStatus.js:151</code> | The worst trust verdict among signatures, or null when there are none. |
+| <code>module:utils/pdfSignatureStatus~INTEGRITY_WORST_FIRST</code> | constant | <code>src/utils/pdfSignatureStatus.js:37</code> | Integrity statuses ordered worst-first. |
+| <code>module:utils/pdfSignatureStatus.normalizeSignatureIntegrity</code> | function | <code>src/utils/pdfSignatureStatus.js:74</code> | Fail closed for missing, unexpected and inherited property names. |
+| <code>module:utils/pdfSignatureStatus.normalizeSignatureTrust</code> | function | <code>src/utils/pdfSignatureStatus.js:142</code> |  |
+| <code>module:utils/pdfSignatureStatus~pad2</code> | function | <code>src/utils/pdfSignatureStatus.js:326</code> |  |
+| <code>module:utils/pdfSignatureStatus.reportHasSignatures</code> | function | <code>src/utils/pdfSignatureStatus.js:126</code> |  |
+| <code>module:utils/pdfSignatureStatus~SEVERITY_BY_INTEGRITY</code> | constant | <code>src/utils/pdfSignatureStatus.js:21</code> | Severity classes used for colours/icons: intact is neutral/positive, modified-after-signing and unsupported are warnings, and digest-mismatch, signature-invalid and unreadable are... |
+| <code>module:utils/pdfSignatureStatus.TRUST_REASON_CODES</code> | constant | <code>src/utils/pdfSignatureStatus.js:215</code> | Every trustReason code the gateway can emit. |
+| <code>module:utils/pdfSignatureStatus~TRUST_REASON_DEFAULTS</code> | constant | <code>src/utils/pdfSignatureStatus.js:185</code> | Plain-language English default per gateway trustReason code. |
+| <code>module:utils/pdfSignatureStatus~TRUST_WORST_FIRST</code> | constant | <code>src/utils/pdfSignatureStatus.js:136</code> | Trust verdicts ordered worst-first. |
+| <code>module:utils/pdfSignatureStatus~TrustExplanation</code> | typedef | <code>src/utils/pdfSignatureStatus.js:246</code> |  |
+| <code>module:utils/pdfSignatureStatus</code> | module | <code>src/utils/pdfSignatureStatus.js:2</code> | Signature UI status helpers for browser integrity and gateway trust. |
 | <code>batchProgressUnitsFromEvent</code> | function | <code>src/utils/pdfWorkerDispatcher.js:156</code> | Convert worker phases to deterministic job units: 1 unit for loading the PDF engine per batch 1 unit per loaded page image 1 unit per generated page 1 unit for finalizing each par... |
 | <code>clampInteger</code> | function | <code>src/utils/pdfWorkerDispatcher.js:41</code> |  |
 | <code>clampNumber</code> | function | <code>src/utils/pdfWorkerDispatcher.js:114</code> |  |
@@ -944,26 +1230,45 @@
 | <code>escapeMetaName</code> | function | <code>src/utils/performanceOverlayFlag.js:14</code> |  |
 | <code>isPerformanceOverlayEnabled</code> | function | <code>src/utils/performanceOverlayFlag.js:72</code> | Determine whether the diagnostics/performance overlay is enabled. |
 | <code>readRuntimeBooleanFlag</code> | function | <code>src/utils/performanceOverlayFlag.js:34</code> | Resolve a boolean flag from \(precedence order\): window. |
-| <code>collectAllPrintableDataUrlsFromDom</code> | function | <code>src/utils/printCore.js:390</code> | Collect printable image sources from the DOM as a fallback when the renderer handle cannot provide an explicit all-pages list. |
-| <code>createHiddenIframe</code> | function | <code>src/utils/printCore.js:235</code> | Create the temporary hidden iframe used as the print document host. |
-| <code>getODVConfig</code> | function | <code>src/utils/printCore.js:194</code> | Read runtime configuration from the globals populated by public/odv.config.js . |
-| <code>getPrintableDataUrl</code> | function | <code>src/utils/printCore.js:145</code> | Safely derive a printable data URL from an element that is either a or an . |
-| <code>handlePrint</code> | function | <code>src/utils/printCore.js:270</code> | Handles the print functionality for the CURRENT page/image. |
-| <code>handlePrintAll</code> | function | <code>src/utils/printCore.js:443</code> | Print all available pages in viewer order. |
-| <code>handlePrintCurrentComparison</code> | function | <code>src/utils/printCore.js:339</code> | Print both currently visible compare panes as a two-page print job. |
-| <code>handlePrintRange</code> | function | <code>src/utils/printCore.js:585</code> | Print an inclusive page range. |
-| <code>handlePrintSequence</code> | function | <code>src/utils/printCore.js:516</code> | Print an explicit page sequence such as 3,1,2 . |
-| <code>HiddenIframe</code> | typedef | <code>src/utils/printCore.js:89</code> | Return type for the hidden-iframe factory. |
-| <code>isVisiblyMeasurable</code> | function | <code>src/utils/printCore.js:103</code> | Check whether a candidate element is both present in layout and not hidden by basic CSS visibility. |
-| <code>PageRange</code> | typedef | <code>src/utils/printCore.js:50</code> | A 1-based inclusive page range. |
-| <code>pickLargestVisibleElement</code> | function | <code>src/utils/printCore.js:120</code> | Best-effort: pick the largest visible or inside a container \(or document\). |
-| <code>PrintAllOptions</code> | typedef | <code>src/utils/printCore.js:57</code> | Options for printing multiple pages \(all/range/sequence\). |
-| <code>PrintCandidate</code> | typedef | <code>src/utils/printCore.js:70</code> | Internal: candidate node for &amp;quot;largest visible&amp;quot; heuristics. |
-| <code>PrintHeaderCfg</code> | typedef | <code>src/utils/printCore.js:77</code> | Print header config \(runtime\) consumed by the print overlay logic. |
-| <code>PrintOptions</code> | typedef | <code>src/utils/printCore.js:37</code> | Options for single-page printing. |
-| <code>resolveActiveNode</code> | function | <code>src/utils/printCore.js:217</code> | Attempt to resolve the currently active visual node to print. |
-| <code>resolveAllPageDataUrls</code> | function | <code>src/utils/printCore.js:409</code> | Resolve all printable page URLs, preferring the renderer&#39;s imperative API and falling back to DOM inspection. |
-| <code>resolveOrientation</code> | function | <code>src/utils/printCore.js:180</code> | Compute page orientation from dimensions when options.orientation === &#39;auto&#39;. |
+| <code>beginComposedPage</code> | function | <code>src/utils/printCore.js:614</code> | Shared set-up of a composed compare page: place both pages, size the offscreen canvas and paint a white sheet. |
+| <code>collectAllPrintableDataUrlsFromDom</code> | function | <code>src/utils/printCore.js:787</code> | Collect printable image sources from the DOM as a fallback when the renderer handle cannot provide an explicit all-pages list. |
+| <code>CompareCurtainPrintView</code> | typedef | <code>src/utils/printCore.js:445</code> | View state of the curtain view needed to print it \(utils/compareCurtain.js\). |
+| <code>CompareOverlayPrintView</code> | typedef | <code>src/utils/printCore.js:435</code> | View state of the overlay view needed to print it \(utils/compareOverlay.js\). |
+| <code>composeCompareCurtainCanvas</code> | function | <code>src/utils/printCore.js:666</code> | Compose the curtain view onto one canvas: page A whole, page B clipped to its side of the border \(below a horizontal border, right of a vertical one\), each page with its own compa... |
+| <code>composeCompareOverlayCanvas</code> | function | <code>src/utils/printCore.js:643</code> | Compose the overlay view onto one canvas: the bottom page opaque, the top page at the view&#39;s opacity, each page with its own compare transform. |
+| <code>ComposedPagePlacement</code> | typedef | <code>src/utils/printCore.js:455</code> | One page placed in the shared page-pixel space of a composed compare page. |
+| <code>composePagePrintCanvas</code> | function | <code>src/utils/printCore.js:583</code> | Active page output uses the untransformed page frame as its sheet. |
+| <code>createHiddenIframe</code> | function | <code>src/utils/printCore.js:241</code> | Create the temporary hidden iframe used as the print document host. |
+| <code>drawComposedPage</code> | function | <code>src/utils/printCore.js:561</code> | Draw one placed page onto the composed canvas. |
+| <code>getODVConfig</code> | function | <code>src/utils/printCore.js:197</code> | Read runtime configuration from the globals populated by public/odv.config.js . |
+| <code>getPrintableDataUrl</code> | function | <code>src/utils/printCore.js:148</code> | Safely derive a printable data URL from an element that is either a or an . |
+| <code>handlePrint</code> | function | <code>src/utils/printCore.js:277</code> | Handles the print functionality for the CURRENT page/image. |
+| <code>handlePrintAll</code> | function | <code>src/utils/printCore.js:893</code> | Print all available pages in viewer order. |
+| <code>handlePrintCompareCurtain</code> | function | <code>src/utils/printCore.js:774</code> | Print the curtain view as ONE page: page A with page B clipped at the current border, each page with its own compare transform. |
+| <code>handlePrintCompareOverlay</code> | function | <code>src/utils/printCore.js:758</code> | Print the overlay view as ONE page: page B over page A \(or the other way round after a swap\) at the current opacity, each page with its own compare transform. |
+| <code>handlePrintCurrentComparison</code> | function | <code>src/utils/printCore.js:362</code> | Print both currently visible compare panes as a two-page print job. |
+| <code>handlePrintRange</code> | function | <code>src/utils/printCore.js:1055</code> | Print an inclusive page range. |
+| <code>handlePrintSequence</code> | function | <code>src/utils/printCore.js:975</code> | Print an explicit page sequence such as 3,1,2 . |
+| <code>HiddenIframe</code> | typedef | <code>src/utils/printCore.js:92</code> | Return type for the hidden-iframe factory. |
+| <code>isLeasableSurfaceUrl</code> | function | <code>src/utils/printCore.js:806</code> | Only blob URLs can be revoked mid-print by the provider; data: and remote URLs need no lease \(releasing them is a no-op\). |
+| <code>isVisiblyMeasurable</code> | function | <code>src/utils/printCore.js:106</code> | Check whether a candidate element is both present in layout and not hidden by basic CSS visibility. |
+| <code>leaseSurfaceBlobUrl</code> | function | <code>src/utils/printCore.js:819</code> | Lease a live surface blob URL for the duration of a print flow so a supersession \(resolution boost, force-refresh\) cannot revoke it mid-print. |
+| <code>PageRange</code> | typedef | <code>src/utils/printCore.js:53</code> | A 1-based inclusive page range. |
+| <code>pickLargestVisibleElement</code> | function | <code>src/utils/printCore.js:123</code> | Best-effort: pick the largest visible or inside a container \(or document\). |
+| <code>placeComposedPage</code> | function | <code>src/utils/printCore.js:492</code> | Placement of one page in the shared page-pixel space. |
+| <code>placedPageBounds</code> | function | <code>src/utils/printCore.js:512</code> |  |
+| <code>PrintAllOptions</code> | typedef | <code>src/utils/printCore.js:60</code> | Options for printing multiple pages \(all/range/sequence\). |
+| <code>PrintCandidate</code> | typedef | <code>src/utils/printCore.js:73</code> | Internal: candidate node for &amp;quot;largest visible&amp;quot; heuristics. |
+| <code>printComposedComparison</code> | function | <code>src/utils/printCore.js:701</code> | Shared body of the overlay and curtain print \(after their invoked log line\): one composed page through the single-page print document, with the same config and base token context... |
+| <code>PrintHeaderCfg</code> | typedef | <code>src/utils/printCore.js:80</code> | Print header config \(runtime\) consumed by the print overlay logic. |
+| <code>PrintOptions</code> | typedef | <code>src/utils/printCore.js:40</code> | Options for single-page printing. |
+| <code>releasePrintableDataUrls</code> | function | <code>src/utils/printCore.js:841</code> | Release print URL leases held through the document renderer. |
+| <code>resolveActiveNode</code> | function | <code>src/utils/printCore.js:220</code> | Attempt to resolve the currently active visual node to print. |
+| <code>resolveAllPageDataUrls</code> | function | <code>src/utils/printCore.js:859</code> | Resolve all printable page URLs, preferring the renderer&#39;s imperative API and falling back to DOM inspection. |
+| <code>resolveComposeFrame</code> | function | <code>src/utils/printCore.js:535</code> | The area of the composed page in page pixels: the visible stage when its size is known \(both pages share the stage&#39;s top-left as origin\), otherwise the union of both transformed p... |
+| <code>resolveOrientation</code> | function | <code>src/utils/printCore.js:183</code> | Compute page orientation from dimensions when options.orientation === &#39;auto&#39;. |
+| <code>resolvePrintableSurface</code> | function | <code>src/utils/printCore.js:599</code> | Active print/export preserves fine geometry; composed views explicitly use raw surfaces. |
+| <code>surfaceSize</code> | function | <code>src/utils/printCore.js:474</code> | Intrinsic pixel size of a rendered page surface \(the canvas already carries the quarter turn\). |
 | <code>buildOverlayElement</code> | function | <code>src/utils/printDom.js:227</code> | Build a header/footer DIV element for a page using config + tokens. |
 | <code>buildPrintCss</code> | function | <code>src/utils/printDom.js:134</code> | Build the print-only CSS string \(inlined within the print iframe\). |
 | <code>buildPrintFormatElements</code> | function | <code>src/utils/printDom.js:275</code> | Build configured print-format header/watermark elements for a page. |
@@ -986,98 +1291,107 @@
 | <code>parsePrintSequence</code> | function | <code>src/utils/printParse.js:48</code> | Parse &amp;quot;Custom pages&amp;quot; into a sequence. |
 | <code>ParseResult</code> | typedef | <code>src/utils/printParse.js:15</code> | Result of parsing a custom pages string. |
 | <code>tr</code> | function | <code>src/utils/printParse.js:30</code> | Tiny helper to translate with safe fallback. |
-| <code>addImageWithFallback</code> | function | <code>src/utils/printPdf.js:967</code> |  |
-| <code>appendRichColumnLine</code> | function | <code>src/utils/printPdf.js:591</code> |  |
-| <code>appendRichLineBreak</code> | function | <code>src/utils/printPdf.js:552</code> |  |
-| <code>appendRichText</code> | function | <code>src/utils/printPdf.js:562</code> |  |
-| <code>asNumber</code> | function | <code>src/utils/printPdf.js:216</code> | Convert a value to a finite number for PDF layout calculations. |
-| <code>blobToDataUrl</code> | function | <code>src/utils/printPdf.js:2224</code> |  |
-| <code>buildPdfPagePlans</code> | function | <code>src/utils/printPdf.js:1559</code> |  |
-| <code>calculateOverlayReserve</code> | function | <code>src/utils/printPdf.js:1604</code> |  |
-| <code>canvasToBlob</code> | function | <code>src/utils/printPdf.js:2209</code> |  |
-| <code>canvasToPngDataUrl</code> | function | <code>src/utils/printPdf.js:2195</code> | Convert a canvas to a PNG data URL without using synchronous toDataURL when browser support for async toBlob is available. |
-| <code>clamp01</code> | function | <code>src/utils/printPdf.js:241</code> | Clamp a numeric value to the inclusive 0..1 range. |
-| <code>collectPrintablePdfSources</code> | function | <code>src/utils/printPdf.js:2117</code> | Collect printable page image URLs without creating or opening a PDF. |
-| <code>createAbortError</code> | function | <code>src/utils/printPdf.js:248</code> |  |
-| <code>createDefaultSegment</code> | function | <code>src/utils/printPdf.js:1143</code> |  |
-| <code>createJsPdfOptions</code> | function | <code>src/utils/printPdf.js:1040</code> |  |
-| <code>createPdfFromDocumentHandle</code> | function | <code>src/utils/printPdf.js:2141</code> |  |
-| <code>createPrintPdfBlob</code> | function | <code>src/utils/printPdf.js:1662</code> | Build a PDF blob from page image URLs and print metadata. |
-| <code>createPrintPdfBlobInWorker</code> | function | <code>src/utils/printPdf.js:1580</code> |  |
-| <code>describeImageSource</code> | function | <code>src/utils/printPdf.js:796</code> |  |
-| <code>describeModuleExports</code> | function | <code>src/utils/printPdf.js:1629</code> |  |
-| <code>describeValueType</code> | function | <code>src/utils/printPdf.js:822</code> |  |
-| <code>downloadPdfBlob</code> | function | <code>src/utils/printPdf.js:1814</code> |  |
-| <code>drawRichSegments</code> | function | <code>src/utils/printPdf.js:1359</code> |  |
-| <code>drawRichTextBlock</code> | function | <code>src/utils/printPdf.js:1382</code> |  |
-| <code>drawWatermark</code> | function | <code>src/utils/printPdf.js:1414</code> |  |
-| <code>drawWatermarkImage</code> | function | <code>src/utils/printPdf.js:1461</code> | Draw a prepared transparent PNG watermark, scaled to page width and centered. |
-| <code>elementMatchesClassSelectorPart</code> | function | <code>src/utils/printPdf.js:358</code> |  |
-| <code>ensureWritableRichLine</code> | function | <code>src/utils/printPdf.js:544</code> |  |
-| <code>escapeRegExp</code> | function | <code>src/utils/printPdf.js:28</code> | Escape regular-expression metacharacters in literal text. |
-| <code>executeOutputAction</code> | function | <code>src/utils/printPdf.js:2024</code> |  |
-| <code>fitRichSegmentsToWidth</code> | function | <code>src/utils/printPdf.js:1184</code> |  |
-| <code>fitRichSegmentTextToWidth</code> | function | <code>src/utils/printPdf.js:1154</code> |  |
-| <code>flattenRichLines</code> | function | <code>src/utils/printPdf.js:611</code> |  |
-| <code>getElementStyleHints</code> | function | <code>src/utils/printPdf.js:419</code> |  |
-| <code>getImageDimension</code> | function | <code>src/utils/printPdf.js:940</code> |  |
-| <code>getRichLineColumns</code> | function | <code>src/utils/printPdf.js:1073</code> |  |
-| <code>getSelectedPrintableDataUrls</code> | function | <code>src/utils/printPdf.js:2059</code> | Read printable page image URLs from the document renderer. |
-| <code>handlePdfCurrent</code> | function | <code>src/utils/printPdf.js:2245</code> | Generate/print/download a PDF from the currently rendered active page surface. |
-| <code>handlePdfCurrentComparison</code> | function | <code>src/utils/printPdf.js:2268</code> | Generate/print/download a two-page PDF from the currently rendered comparison surfaces. |
-| <code>handlePdfOutput</code> | function | <code>src/utils/printPdf.js:2152</code> |  |
-| <code>htmlToRichLines</code> | function | <code>src/utils/printPdf.js:635</code> | Parse a small, print-template-oriented HTML subset into styled text lines for jsPDF. |
-| <code>imageExtensionFromUrl</code> | function | <code>src/utils/printPdf.js:893</code> |  |
-| <code>imageFormatAttempts</code> | function | <code>src/utils/printPdf.js:951</code> |  |
-| <code>imageToJpegDataUrl</code> | function | <code>src/utils/printPdf.js:914</code> | Convert image to a JPEG data URL only as a last-resort fallback when jsPDF cannot consume the original image element/format directly. |
-| <code>inferImageFormat</code> | function | <code>src/utils/printPdf.js:878</code> |  |
-| <code>isBlockNode</code> | function | <code>src/utils/printPdf.js:435</code> | Check whether an HTML node name should be treated as block-level in PDF text flow. |
-| <code>isBoldFontWeight</code> | function | <code>src/utils/printPdf.js:292</code> | Check whether a CSS font-weight value should be treated as bold text. |
-| <code>layoutRichColumns</code> | function | <code>src/utils/printPdf.js:1228</code> |  |
-| <code>loadImage</code> | function | <code>src/utils/printPdf.js:746</code> |  |
-| <code>loadImagesConcurrently</code> | function | <code>src/utils/printPdf.js:837</code> |  |
-| <code>loadJsPdf</code> | function | <code>src/utils/printPdf.js:1642</code> | Dynamically load the jsPDF constructor used by generated PDF output. |
-| <code>makeTokenContext</code> | function | <code>src/utils/printPdf.js:1495</code> |  |
-| <code>measureRichSegment</code> | function | <code>src/utils/printPdf.js:1122</code> |  |
-| <code>measureRichSegments</code> | function | <code>src/utils/printPdf.js:1134</code> |  |
-| <code>normalizePdfOrientationMode</code> | function | <code>src/utils/printPdf.js:999</code> |  |
-| <code>normalizeQuality</code> | function | <code>src/utils/printPdf.js:228</code> | Normalize canvas/PDF image quality to the browser-supported 0..1 range. |
-| <code>normalizeRichLine</code> | function | <code>src/utils/printPdf.js:1097</code> |  |
-| <code>normalizeRichSegments</code> | function | <code>src/utils/printPdf.js:1056</code> |  |
-| <code>pageFormatForImage</code> | function | <code>src/utils/printPdf.js:1028</code> |  |
-| <code>pageNumberToIndex</code> | function | <code>src/utils/printPdf.js:2128</code> | Convert a 1-based printable page number into the matching 0-based data URL index. |
-| <code>parseTemplateCssClassSelector</code> | function | <code>src/utils/printPdf.js:334</code> | Parse a supported class-only selector into descendant selector parts. |
-| <code>parseTemplateCssStyleRules</code> | function | <code>src/utils/printPdf.js:397</code> | Parse only the small CSS subset used by trusted print header/footer templates. |
-| <code>parseTextStyleDeclarations</code> | function | <code>src/utils/printPdf.js:304</code> |  |
-| <code>PdfPrintOptions</code> | typedef | <code>src/utils/printPdf.js:156</code> |  |
-| <code>PdfRichColumn</code> | typedef | <code>src/utils/printPdf.js:199</code> |  |
-| <code>PdfRichLine</code> | typedef | <code>src/utils/printPdf.js:207</code> |  |
-| <code>PdfRichSegment</code> | typedef | <code>src/utils/printPdf.js:191</code> |  |
-| <code>PdfTemplateCssStyleRule</code> | typedef | <code>src/utils/printPdf.js:185</code> |  |
-| <code>PdfTextStyleHints</code> | typedef | <code>src/utils/printPdf.js:175</code> |  |
-| <code>printableSourceFromElement</code> | function | <code>src/utils/printPdf.js:2168</code> | Extract a safe printable image source from an already-rendered canvas or image element. |
-| <code>printPdfBlob</code> | function | <code>src/utils/printPdf.js:1834</code> | Print a generated PDF through a hidden iframe. |
-| <code>renderOverlayRichLines</code> | function | <code>src/utils/printPdf.js:730</code> |  |
-| <code>reportProgress</code> | function | <code>src/utils/printPdf.js:1510</code> |  |
-| <code>resolveJsPdfConstructor</code> | function | <code>src/utils/printPdf.js:1616</code> | Resolve jsPDF from common ESM/CJS export shapes used by bundlers. |
-| <code>resolvePdfImageLoadConcurrency</code> | function | <code>src/utils/printPdf.js:1523</code> |  |
-| <code>resolvePdfOrientationMode</code> | function | <code>src/utils/printPdf.js:1009</code> |  |
-| <code>resolvePdfWorkerPlan</code> | function | <code>src/utils/printPdf.js:1536</code> | Resolve the generated-PDF worker plan. |
-| <code>richLineHasText</code> | function | <code>src/utils/printPdf.js:513</code> |  |
-| <code>richLineIsEmpty</code> | function | <code>src/utils/printPdf.js:521</code> |  |
-| <code>sanitizeDiagnosticText</code> | function | <code>src/utils/printPdf.js:809</code> |  |
-| <code>sanitizeParsedTemplateDocument</code> | function | <code>src/utils/printPdf.js:498</code> | Keep only the attributes used by the generated-PDF rich text subset. |
-| <code>sanitizeTemplateHtmlForPdf</code> | function | <code>src/utils/printPdf.js:484</code> | Keep generated-PDF print templates inside the small rich-text subset consumed below. |
-| <code>segmentFontStyle</code> | function | <code>src/utils/printPdf.js:1109</code> |  |
-| <code>selectPageContexts</code> | function | <code>src/utils/printPdf.js:2014</code> |  |
-| <code>stripDisallowedTemplateElements</code> | function | <code>src/utils/printPdf.js:447</code> | Remove elements that are never meaningful in generated PDF header/footer text. |
-| <code>swapRichLineBufferContents</code> | function | <code>src/utils/printPdf.js:533</code> | Replace one line buffer with another while preserving the original array object. |
-| <code>templateCssRuleMatchesElement</code> | function | <code>src/utils/printPdf.js:367</code> |  |
-| <code>throwIfAborted</code> | function | <code>src/utils/printPdf.js:265</code> | Stop PDF generation as soon as the caller cancels the operation. |
-| <code>htmlToRichLines~walk</code> | function | <code>src/utils/printPdf.js:650</code> |  |
-| <code>warnDeprecatedPrintableUrlExportAlias</code> | function | <code>src/utils/printPdf.js:2040</code> |  |
-| <code>wrapRichLines</code> | function | <code>src/utils/printPdf.js:1309</code> |  |
-| <code>yieldToBrowser</code> | function | <code>src/utils/printPdf.js:275</code> | Yield one browser paint opportunity so progress updates become visible before expensive synchronous jsPDF operations run on the main thread. |
+| <code>addImageWithFallback</code> | function | <code>src/utils/printPdf.js:968</code> |  |
+| <code>appendRichColumnLine</code> | function | <code>src/utils/printPdf.js:592</code> |  |
+| <code>appendRichLineBreak</code> | function | <code>src/utils/printPdf.js:553</code> |  |
+| <code>appendRichText</code> | function | <code>src/utils/printPdf.js:563</code> |  |
+| <code>asNumber</code> | function | <code>src/utils/printPdf.js:217</code> | Convert a value to a finite number for PDF layout calculations. |
+| <code>blobToDataUrl</code> | function | <code>src/utils/printPdf.js:2348</code> |  |
+| <code>buildPdfPagePlans</code> | function | <code>src/utils/printPdf.js:1560</code> |  |
+| <code>calculateOverlayReserve</code> | function | <code>src/utils/printPdf.js:1605</code> |  |
+| <code>canvasToBlob</code> | function | <code>src/utils/printPdf.js:2333</code> |  |
+| <code>canvasToPngDataUrl</code> | function | <code>src/utils/printPdf.js:2319</code> | Convert a canvas to a PNG data URL without using synchronous toDataURL when browser support for async toBlob is available. |
+| <code>clamp01</code> | function | <code>src/utils/printPdf.js:242</code> | Clamp a numeric value to the inclusive 0..1 range. |
+| <code>collectedSourceLeases</code> | constant | <code>src/utils/printPdf.js:2193</code> | Exact lease entries behind each array returned by collectPrintablePdfSources, so releasePrintablePdfSources releases what was leased rather than one per occurrence. |
+| <code>collectPrintablePdfSources</code> | function | <code>src/utils/printPdf.js:2204</code> | Collect printable page image URLs without creating or opening a PDF. |
+| <code>createAbortError</code> | function | <code>src/utils/printPdf.js:249</code> |  |
+| <code>createDefaultSegment</code> | function | <code>src/utils/printPdf.js:1144</code> |  |
+| <code>createJsPdfOptions</code> | function | <code>src/utils/printPdf.js:1041</code> |  |
+| <code>createPdfFromDocumentHandle</code> | function | <code>src/utils/printPdf.js:2244</code> |  |
+| <code>createPrintPdfBlob</code> | function | <code>src/utils/printPdf.js:1663</code> | Build a PDF blob from page image URLs and print metadata. |
+| <code>createPrintPdfBlobInWorker</code> | function | <code>src/utils/printPdf.js:1581</code> |  |
+| <code>describeImageSource</code> | function | <code>src/utils/printPdf.js:797</code> |  |
+| <code>describeModuleExports</code> | function | <code>src/utils/printPdf.js:1630</code> |  |
+| <code>describeValueType</code> | function | <code>src/utils/printPdf.js:823</code> |  |
+| <code>downloadPdfBlob</code> | function | <code>src/utils/printPdf.js:1815</code> |  |
+| <code>drawRichSegments</code> | function | <code>src/utils/printPdf.js:1360</code> |  |
+| <code>drawRichTextBlock</code> | function | <code>src/utils/printPdf.js:1383</code> |  |
+| <code>drawWatermark</code> | function | <code>src/utils/printPdf.js:1415</code> |  |
+| <code>drawWatermarkImage</code> | function | <code>src/utils/printPdf.js:1462</code> | Draw a prepared transparent PNG watermark, scaled to page width and centered. |
+| <code>elementMatchesClassSelectorPart</code> | function | <code>src/utils/printPdf.js:359</code> |  |
+| <code>ensureWritableRichLine</code> | function | <code>src/utils/printPdf.js:545</code> |  |
+| <code>escapeRegExp</code> | function | <code>src/utils/printPdf.js:29</code> | Escape regular-expression metacharacters in literal text. |
+| <code>executeOutputAction</code> | function | <code>src/utils/printPdf.js:2036</code> |  |
+| <code>fitRichSegmentsToWidth</code> | function | <code>src/utils/printPdf.js:1185</code> |  |
+| <code>fitRichSegmentTextToWidth</code> | function | <code>src/utils/printPdf.js:1155</code> |  |
+| <code>flattenRichLines</code> | function | <code>src/utils/printPdf.js:612</code> |  |
+| <code>getElementStyleHints</code> | function | <code>src/utils/printPdf.js:420</code> |  |
+| <code>getImageDimension</code> | function | <code>src/utils/printPdf.js:941</code> |  |
+| <code>getRichLineColumns</code> | function | <code>src/utils/printPdf.js:1074</code> |  |
+| <code>getSelectedPrintableDataUrls</code> | function | <code>src/utils/printPdf.js:2126</code> | Read printable page image URLs from the document renderer. |
+| <code>handlePdfCompareCurtain</code> | function | <code>src/utils/printPdf.js:2486</code> | Generate/print/download a ONE-page PDF of the curtain view: page A with page B clipped at the current border, each page with its own compare transform. |
+| <code>handlePdfCompareOverlay</code> | function | <code>src/utils/printPdf.js:2472</code> | Generate/print/download a ONE-page PDF of the overlay view: page B over page A \(or swapped\) at the current opacity, each page with its own compare transform. |
+| <code>handlePdfCurrent</code> | function | <code>src/utils/printPdf.js:2369</code> | Generate/print/download a PDF from the currently rendered active page surface. |
+| <code>handlePdfCurrentComparison</code> | function | <code>src/utils/printPdf.js:2400</code> | Generate/print/download a two-page PDF from the currently rendered comparison surfaces. |
+| <code>handlePdfOutput</code> | function | <code>src/utils/printPdf.js:2261</code> |  |
+| <code>htmlToRichLines</code> | function | <code>src/utils/printPdf.js:636</code> | Parse a small, print-template-oriented HTML subset into styled text lines for jsPDF. |
+| <code>imageElementUrl</code> | function | <code>src/utils/printPdf.js:2308</code> | Read the URL an surface currently displays \(empty for any other element\). |
+| <code>imageExtensionFromUrl</code> | function | <code>src/utils/printPdf.js:894</code> |  |
+| <code>imageFormatAttempts</code> | function | <code>src/utils/printPdf.js:952</code> |  |
+| <code>imageToJpegDataUrl</code> | function | <code>src/utils/printPdf.js:915</code> | Convert image to a JPEG data URL only as a last-resort fallback when jsPDF cannot consume the original image element/format directly. |
+| <code>inferImageFormat</code> | function | <code>src/utils/printPdf.js:879</code> |  |
+| <code>isBlockNode</code> | function | <code>src/utils/printPdf.js:436</code> | Check whether an HTML node name should be treated as block-level in PDF text flow. |
+| <code>isBoldFontWeight</code> | function | <code>src/utils/printPdf.js:293</code> | Check whether a CSS font-weight value should be treated as bold text. |
+| <code>isLeasableSurfaceUrl</code> | function | <code>src/utils/printPdf.js:2069</code> | Only blob URLs can be revoked mid-print by the provider; data: and remote URLs need no lease \(releasing them is a no-op\). |
+| <code>layoutRichColumns</code> | function | <code>src/utils/printPdf.js:1229</code> |  |
+| <code>leaseSurfaceBlobUrls</code> | function | <code>src/utils/printPdf.js:2083</code> | Lease the live blob URL behind an already-rendered surface for the duration of a PDF flow. |
+| <code>loadImage</code> | function | <code>src/utils/printPdf.js:747</code> |  |
+| <code>loadImagesConcurrently</code> | function | <code>src/utils/printPdf.js:838</code> |  |
+| <code>loadJsPdf</code> | function | <code>src/utils/printPdf.js:1643</code> | Dynamically load the jsPDF constructor used by generated PDF output. |
+| <code>makeTokenContext</code> | function | <code>src/utils/printPdf.js:1496</code> |  |
+| <code>measureRichSegment</code> | function | <code>src/utils/printPdf.js:1123</code> |  |
+| <code>measureRichSegments</code> | function | <code>src/utils/printPdf.js:1135</code> |  |
+| <code>normalizePdfOrientationMode</code> | function | <code>src/utils/printPdf.js:1000</code> |  |
+| <code>normalizeQuality</code> | function | <code>src/utils/printPdf.js:229</code> | Normalize canvas/PDF image quality to the browser-supported 0..1 range. |
+| <code>normalizeRichLine</code> | function | <code>src/utils/printPdf.js:1098</code> |  |
+| <code>normalizeRichSegments</code> | function | <code>src/utils/printPdf.js:1057</code> |  |
+| <code>pageFormatForImage</code> | function | <code>src/utils/printPdf.js:1029</code> |  |
+| <code>pageNumberToIndex</code> | function | <code>src/utils/printPdf.js:2231</code> | Convert a 1-based printable page number into the matching 0-based data URL index. |
+| <code>parseTemplateCssClassSelector</code> | function | <code>src/utils/printPdf.js:335</code> | Parse a supported class-only selector into descendant selector parts. |
+| <code>parseTemplateCssStyleRules</code> | function | <code>src/utils/printPdf.js:398</code> | Parse only the small CSS subset used by trusted print header/footer templates. |
+| <code>parseTextStyleDeclarations</code> | function | <code>src/utils/printPdf.js:305</code> |  |
+| <code>pdfComposedComparison</code> | function | <code>src/utils/printPdf.js:2441</code> | Shared body of the overlay and curtain PDF output: the compared pages composed onto ONE page, then generated/printed/downloaded like the single active page. |
+| <code>PdfPrintOptions</code> | typedef | <code>src/utils/printPdf.js:157</code> |  |
+| <code>PdfRichColumn</code> | typedef | <code>src/utils/printPdf.js:200</code> |  |
+| <code>PdfRichLine</code> | typedef | <code>src/utils/printPdf.js:208</code> |  |
+| <code>PdfRichSegment</code> | typedef | <code>src/utils/printPdf.js:192</code> |  |
+| <code>PdfTemplateCssStyleRule</code> | typedef | <code>src/utils/printPdf.js:186</code> |  |
+| <code>PdfTextStyleHints</code> | typedef | <code>src/utils/printPdf.js:176</code> |  |
+| <code>printableSourceFromElement</code> | function | <code>src/utils/printPdf.js:2282</code> | Extract a safe printable image source from an already-rendered canvas or image element. |
+| <code>printPdfBlob</code> | function | <code>src/utils/printPdf.js:1835</code> | Print a generated PDF through a hidden iframe. |
+| <code>releasePrintableDataUrls</code> | function | <code>src/utils/printPdf.js:2105</code> | Release print URL leases held through the document renderer. |
+| <code>releasePrintablePdfSources</code> | function | <code>src/utils/printPdf.js:2218</code> | Release URL leases previously acquired through collectPrintablePdfSources when the consumer is done with them \(prebuild/benchmark keep the URLs only while rendering\). |
+| <code>renderOverlayRichLines</code> | function | <code>src/utils/printPdf.js:731</code> |  |
+| <code>reportProgress</code> | function | <code>src/utils/printPdf.js:1511</code> |  |
+| <code>resolveJsPdfConstructor</code> | function | <code>src/utils/printPdf.js:1617</code> | Resolve jsPDF from common ESM/CJS export shapes used by bundlers. |
+| <code>resolvePdfImageLoadConcurrency</code> | function | <code>src/utils/printPdf.js:1524</code> |  |
+| <code>resolvePdfOrientationMode</code> | function | <code>src/utils/printPdf.js:1010</code> |  |
+| <code>resolvePdfWorkerPlan</code> | function | <code>src/utils/printPdf.js:1537</code> | Resolve the generated-PDF worker plan. |
+| <code>richLineHasText</code> | function | <code>src/utils/printPdf.js:514</code> |  |
+| <code>richLineIsEmpty</code> | function | <code>src/utils/printPdf.js:522</code> |  |
+| <code>sanitizeDiagnosticText</code> | function | <code>src/utils/printPdf.js:810</code> |  |
+| <code>sanitizeParsedTemplateDocument</code> | function | <code>src/utils/printPdf.js:499</code> | Keep only the attributes used by the generated-PDF rich text subset. |
+| <code>sanitizeTemplateHtmlForPdf</code> | function | <code>src/utils/printPdf.js:485</code> | Keep generated-PDF print templates inside the small rich-text subset consumed below. |
+| <code>segmentFontStyle</code> | function | <code>src/utils/printPdf.js:1110</code> |  |
+| <code>selectPageContexts</code> | function | <code>src/utils/printPdf.js:2026</code> |  |
+| <code>stripDisallowedTemplateElements</code> | function | <code>src/utils/printPdf.js:448</code> | Remove elements that are never meaningful in generated PDF header/footer text. |
+| <code>swapRichLineBufferContents</code> | function | <code>src/utils/printPdf.js:534</code> | Replace one line buffer with another while preserving the original array object. |
+| <code>templateCssRuleMatchesElement</code> | function | <code>src/utils/printPdf.js:368</code> |  |
+| <code>throwIfAborted</code> | function | <code>src/utils/printPdf.js:266</code> | Stop PDF generation as soon as the caller cancels the operation. |
+| <code>htmlToRichLines~walk</code> | function | <code>src/utils/printPdf.js:651</code> |  |
+| <code>warnDeprecatedPrintableUrlExportAlias</code> | function | <code>src/utils/printPdf.js:2052</code> |  |
+| <code>wrapRichLines</code> | function | <code>src/utils/printPdf.js:1310</code> |  |
+| <code>yieldToBrowser</code> | function | <code>src/utils/printPdf.js:276</code> | Yield one browser paint opportunity so progress updates become visible before expensive synchronous jsPDF operations run on the main thread. |
 | <code>isSafeImageSrc</code> | function | <code>src/utils/printSanitize.js:16</code> | Allow-list image sources used for printing. |
 | <code>applyBraceTokensEscaped</code> | function | <code>src/utils/printTemplate.js:649</code> |  |
 | <code>applyConditionalBlocks</code> | function | <code>src/utils/printTemplate.js:720</code> | Resolve conditional blocks of the form \[\[{{path}}, &amp;quot;content&amp;quot;\]\]. |
@@ -1113,19 +1427,23 @@
 | <code>tryGetDocumentMetadata</code> | function | <code>src/utils/printTemplate.js:435</code> | Read document metadata from a viewer handle without leaking handle-specific checks into the token-context builder. |
 | <code>valueToText</code> | function | <code>src/utils/printTemplate.js:174</code> |  |
 | <code>zeroPad2</code> | function | <code>src/utils/printTemplate.js:94</code> | Format a non-negative date/time component as at least two digits. |
-| <code>module:createPrintPdfBlob</code> | module | <code>src/utils/printUtils.js:68</code> | Create a printable PDF blob from the current print job. |
-| <code>printUtils.default</code> | namespace | <code>src/utils/printUtils.js:80</code> | Default print utilities namespace. |
-| <code>module:downloadPdfBlob</code> | module | <code>src/utils/printUtils.js:78</code> | Download a generated PDF blob. |
-| <code>module:handlePdfCurrent</code> | module | <code>src/utils/printUtils.js:58</code> | Generate a PDF for the current page and open the print dialog. |
-| <code>module:handlePdfCurrentComparison</code> | module | <code>src/utils/printUtils.js:63</code> | Generate a PDF for the current comparison pane and open the print dialog. |
-| <code>module:handlePdfOutput</code> | module | <code>src/utils/printUtils.js:53</code> | Generate a PDF for the current selection/range and open the print dialog. |
+| <code>module:createPrintPdfBlob</code> | module | <code>src/utils/printUtils.js:88</code> | Create a printable PDF blob from the current print job. |
+| <code>printUtils.default</code> | namespace | <code>src/utils/printUtils.js:100</code> | Default print utilities namespace. |
+| <code>module:downloadPdfBlob</code> | module | <code>src/utils/printUtils.js:98</code> | Download a generated PDF blob. |
+| <code>module:handlePdfCompareCurtain</code> | module | <code>src/utils/printUtils.js:83</code> | Generate a one-page PDF of the curtain view of the compare mode and open the print dialog. |
+| <code>module:handlePdfCompareOverlay</code> | module | <code>src/utils/printUtils.js:78</code> | Generate a one-page PDF of the overlay view of the compare mode and open the print dialog. |
+| <code>module:handlePdfCurrent</code> | module | <code>src/utils/printUtils.js:68</code> | Generate a PDF for the current page and open the print dialog. |
+| <code>module:handlePdfCurrentComparison</code> | module | <code>src/utils/printUtils.js:73</code> | Generate a PDF for the current comparison pane and open the print dialog. |
+| <code>module:handlePdfOutput</code> | module | <code>src/utils/printUtils.js:63</code> | Generate a PDF for the current selection/range and open the print dialog. |
 | <code>module:handlePrint</code> | module | <code>src/utils/printUtils.js:23</code> | Print the current selection/range through the HTML path. |
 | <code>module:handlePrintAll</code> | module | <code>src/utils/printUtils.js:28</code> | Print all pages through the HTML path. |
+| <code>module:handlePrintCompareCurtain</code> | module | <code>src/utils/printUtils.js:43</code> | Print the curtain view of the compare mode as one composed page through the HTML path. |
+| <code>module:handlePrintCompareOverlay</code> | module | <code>src/utils/printUtils.js:38</code> | Print the overlay view of the compare mode as one composed page through the HTML path. |
 | <code>module:handlePrintCurrentComparison</code> | module | <code>src/utils/printUtils.js:33</code> | Print the current comparison pane through the HTML path. |
-| <code>module:handlePrintRange</code> | module | <code>src/utils/printUtils.js:38</code> | Print a specific page range through the HTML path. |
-| <code>module:handlePrintSequence</code> | module | <code>src/utils/printUtils.js:43</code> | Print a parsed custom page sequence through the HTML path. |
-| <code>module:parsePrintSequence</code> | module | <code>src/utils/printUtils.js:48</code> | Parse a user-entered &amp;quot;Custom pages&amp;quot; string into a page sequence. |
-| <code>module:printPdfBlob</code> | module | <code>src/utils/printUtils.js:73</code> | Print a generated PDF blob. |
+| <code>module:handlePrintRange</code> | module | <code>src/utils/printUtils.js:48</code> | Print a specific page range through the HTML path. |
+| <code>module:handlePrintSequence</code> | module | <code>src/utils/printUtils.js:53</code> | Print a parsed custom page sequence through the HTML path. |
+| <code>module:parsePrintSequence</code> | module | <code>src/utils/printUtils.js:58</code> | Parse a user-entered &amp;quot;Custom pages&amp;quot; string into a page sequence. |
+| <code>module:printPdfBlob</code> | module | <code>src/utils/printUtils.js:93</code> | Print a generated PDF blob. |
 | <code>module:printUtils</code> | module | <code>src/utils/printUtils.js:2</code> | OpenDocViewer — Print Utilities Facade Re-export the stable print API and parser from the internal modules. |
 | <code>currentLanguage</code> | function | <code>src/utils/printWatermark.js:13</code> |  |
 | <code>normalizeWatermarkMode</code> | function | <code>src/utils/printWatermark.js:38</code> |  |
@@ -1137,77 +1455,92 @@
 | <code>getReloadCacheAesKeyStorageState</code> | function | <code>src/utils/reloadCacheCrypto.js:105</code> |  |
 | <code>STORAGE_PREFIX</code> | constant | <code>src/utils/reloadCacheCrypto.js:12</code> | Short-lived reload-cache key helpers. |
 | <code>createDocumentSourceKey</code> | function | <code>src/utils/reloadCacheIdentity.js:115</code> |  |
-| <code>createPersistedPageAssetKey</code> | function | <code>src/utils/reloadCacheIdentity.js:141</code> |  |
+| <code>createPersistedPageAssetKey</code> | function | <code>src/utils/reloadCacheIdentity.js:143</code> |  |
 | <code>createReloadCacheSessionId</code> | function | <code>src/utils/reloadCacheIdentity.js:41</code> |  |
 | <code>createRenderAssetSignature</code> | function | <code>src/utils/reloadCacheIdentity.js:123</code> |  |
 | <code>describeDocumentSourceKey</code> | function | <code>src/utils/reloadCacheIdentity.js:53</code> |  |
 | <code>part</code> | function | <code>src/utils/reloadCacheIdentity.js:33</code> |  |
 | <code>stableHash</code> | function | <code>src/utils/reloadCacheIdentity.js:14</code> |  |
-| <code>addScenario</code> | function | <code>src/utils/renderDecodeBenchmark.js:434</code> |  |
-| <code>createAbortError</code> | function | <code>src/utils/renderDecodeBenchmark.js:293</code> |  |
-| <code>createScenarios</code> | function | <code>src/utils/renderDecodeBenchmark.js:480</code> |  |
-| <code>createTimeoutError</code> | function | <code>src/utils/renderDecodeBenchmark.js:338</code> |  |
-| <code>delay</code> | function | <code>src/utils/renderDecodeBenchmark.js:304</code> |  |
-| <code>deriveCountsFromMultipliers</code> | function | <code>src/utils/renderDecodeBenchmark.js:221</code> |  |
-| <code>deriveWorkerCountsFromPageTargets</code> | function | <code>src/utils/renderDecodeBenchmark.js:234</code> |  |
-| <code>getHardwareConcurrency</code> | function | <code>src/utils/renderDecodeBenchmark.js:189</code> |  |
-| <code>isRenderDecodeBenchmarkEnabled</code> | function | <code>src/utils/renderDecodeBenchmark.js:285</code> |  |
-| <code>mergePositiveCounts</code> | function | <code>src/utils/renderDecodeBenchmark.js:203</code> |  |
-| <code>normalizeInteger</code> | function | <code>src/utils/renderDecodeBenchmark.js:50</code> |  |
-| <code>normalizeMainThreadConcurrencies</code> | function | <code>src/utils/renderDecodeBenchmark.js:117</code> |  |
-| <code>normalizeMultiplierList</code> | function | <code>src/utils/renderDecodeBenchmark.js:98</code> |  |
-| <code>normalizePdfToImageModes</code> | function | <code>src/utils/renderDecodeBenchmark.js:146</code> |  |
-| <code>normalizePdfWorkerBatchMode</code> | function | <code>src/utils/renderDecodeBenchmark.js:172</code> |  |
-| <code>normalizePositiveNumberList</code> | function | <code>src/utils/renderDecodeBenchmark.js:80</code> |  |
-| <code>normalizeRenderBenchmarkConfig</code> | function | <code>src/utils/renderDecodeBenchmark.js:245</code> |  |
-| <code>normalizeSampleMode</code> | function | <code>src/utils/renderDecodeBenchmark.js:181</code> |  |
-| <code>normalizeVariants</code> | function | <code>src/utils/renderDecodeBenchmark.js:129</code> |  |
-| <code>normalizeWorkerCounts</code> | function | <code>src/utils/renderDecodeBenchmark.js:61</code> |  |
-| <code>resolveScenarioConcurrency</code> | function | <code>src/utils/renderDecodeBenchmark.js:685</code> |  |
-| <code>runLimited</code> | function | <code>src/utils/renderDecodeBenchmark.js:566</code> |  |
-| <code>runRenderDecodeBenchmark</code> | function | <code>src/utils/renderDecodeBenchmark.js:1086</code> |  |
-| <code>runScenario</code> | function | <code>src/utils/renderDecodeBenchmark.js:915</code> |  |
-| <code>selectBenchmarkPages</code> | function | <code>src/utils/renderDecodeBenchmark.js:391</code> |  |
-| <code>summarizeByExtension</code> | function | <code>src/utils/renderDecodeBenchmark.js:590</code> |  |
-| <code>throwIfAborted</code> | function | <code>src/utils/renderDecodeBenchmark.js:329</code> |  |
-| <code>withTimeout</code> | function | <code>src/utils/renderDecodeBenchmark.js:352</code> |  |
+| <code>addScenario</code> | function | <code>src/utils/renderDecodeBenchmark.js:435</code> |  |
+| <code>createAbortError</code> | function | <code>src/utils/renderDecodeBenchmark.js:294</code> |  |
+| <code>createScenarios</code> | function | <code>src/utils/renderDecodeBenchmark.js:481</code> |  |
+| <code>createTimeoutError</code> | function | <code>src/utils/renderDecodeBenchmark.js:339</code> |  |
+| <code>delay</code> | function | <code>src/utils/renderDecodeBenchmark.js:305</code> |  |
+| <code>deriveCountsFromMultipliers</code> | function | <code>src/utils/renderDecodeBenchmark.js:222</code> |  |
+| <code>deriveWorkerCountsFromPageTargets</code> | function | <code>src/utils/renderDecodeBenchmark.js:235</code> |  |
+| <code>getHardwareConcurrency</code> | function | <code>src/utils/renderDecodeBenchmark.js:190</code> |  |
+| <code>isRenderDecodeBenchmarkEnabled</code> | function | <code>src/utils/renderDecodeBenchmark.js:286</code> |  |
+| <code>mergePositiveCounts</code> | function | <code>src/utils/renderDecodeBenchmark.js:204</code> |  |
+| <code>normalizeInteger</code> | function | <code>src/utils/renderDecodeBenchmark.js:51</code> |  |
+| <code>normalizeMainThreadConcurrencies</code> | function | <code>src/utils/renderDecodeBenchmark.js:118</code> |  |
+| <code>normalizeMultiplierList</code> | function | <code>src/utils/renderDecodeBenchmark.js:99</code> |  |
+| <code>normalizePdfToImageModes</code> | function | <code>src/utils/renderDecodeBenchmark.js:147</code> |  |
+| <code>normalizePdfWorkerBatchMode</code> | function | <code>src/utils/renderDecodeBenchmark.js:173</code> |  |
+| <code>normalizePositiveNumberList</code> | function | <code>src/utils/renderDecodeBenchmark.js:81</code> |  |
+| <code>normalizeRenderBenchmarkConfig</code> | function | <code>src/utils/renderDecodeBenchmark.js:246</code> |  |
+| <code>normalizeSampleMode</code> | function | <code>src/utils/renderDecodeBenchmark.js:182</code> |  |
+| <code>normalizeVariants</code> | function | <code>src/utils/renderDecodeBenchmark.js:130</code> |  |
+| <code>normalizeWorkerCounts</code> | function | <code>src/utils/renderDecodeBenchmark.js:62</code> |  |
+| <code>resolveScenarioConcurrency</code> | function | <code>src/utils/renderDecodeBenchmark.js:686</code> |  |
+| <code>runLimited</code> | function | <code>src/utils/renderDecodeBenchmark.js:567</code> |  |
+| <code>runRenderDecodeBenchmark</code> | function | <code>src/utils/renderDecodeBenchmark.js:1087</code> |  |
+| <code>runScenario</code> | function | <code>src/utils/renderDecodeBenchmark.js:916</code> |  |
+| <code>selectBenchmarkPages</code> | function | <code>src/utils/renderDecodeBenchmark.js:392</code> |  |
+| <code>summarizeByExtension</code> | function | <code>src/utils/renderDecodeBenchmark.js:591</code> |  |
+| <code>throwIfAborted</code> | function | <code>src/utils/renderDecodeBenchmark.js:330</code> |  |
+| <code>withTimeout</code> | function | <code>src/utils/renderDecodeBenchmark.js:353</code> |  |
 | <code>clampRenderSurfaceSize</code> | function | <code>src/utils/renderSurfaceBounds.js:25</code> | Clamp a requested raster surface into a conservative browser-safe envelope while preserving its aspect ratio. |
 | <code>MAX_RENDER_SURFACE_DIMENSION</code> | constant | <code>src/utils/renderSurfaceBounds.js:9</code> | OpenDocViewer — conservative raster surface bounds. |
-| <code>clampNumber</code> | function | <code>src/utils/runtimeConfig.js:189</code> | Clamp a numeric config value to a safe range. |
-| <code>DEFAULT_ZOOM_MODE_ALIAS_ENTRIES</code> | constant | <code>src/utils/runtimeConfig.js:44</code> | User-facing zoom-mode aliases mapped to ViewerDefaultZoomMode values. |
-| <code>getKeyboardPrintShortcutBehavior</code> | function | <code>src/utils/runtimeConfig.js:136</code> | Resolve the configured Ctrl/Cmd+P behavior. |
-| <code>getPrintDefaultMode</code> | function | <code>src/utils/runtimeConfig.js:441</code> | Resolve the default print page mode used when the user has not stored an override. |
-| <code>getPrintSelectionWorkspaceConfig</code> | function | <code>src/utils/runtimeConfig.js:466</code> | Resolve the print-selection workspace configuration. |
-| <code>getRuntimeConfig</code> | function | <code>src/utils/runtimeConfig.js:113</code> | Read the merged runtime configuration from the browser environment. |
-| <code>getViewerCustomFitSizeLimits</code> | function | <code>src/utils/runtimeConfig.js:417</code> | Resolve the configured custom-size limits. |
-| <code>getViewerCustomFitWidthFactorPercent</code> | function | <code>src/utils/runtimeConfig.js:403</code> | Resolve the custom-size width factor percentage. |
-| <code>getViewerDefaultZoomMode</code> | function | <code>src/utils/runtimeConfig.js:390</code> | Resolve the initial page zoom mode. |
-| <code>getViewerEdgeScrollPageTurnConfig</code> | function | <code>src/utils/runtimeConfig.js:490</code> | Resolve the optional scroll-at-edge page turn gesture. |
-| <code>getViewerProblemNoticeConfig</code> | function | <code>src/utils/runtimeConfig.js:508</code> | Resolve the configurable viewer-level problem notice. |
-| <code>isDocumentMetadataUiEnabled</code> | function | <code>src/utils/runtimeConfig.js:149</code> | Resolve whether document metadata UI affordances should be available. |
-| <code>KEYBOARD_PRINT_SHORTCUT_BEHAVIORS</code> | constant | <code>src/utils/runtimeConfig.js:30</code> | Runtime validation values for KeyboardPrintShortcutBehavior; the typedef documents the public contract. |
+| <code>clampNumber</code> | function | <code>src/utils/runtimeConfig.js:332</code> | Clamp a numeric config value to a safe range. |
+| <code>COMPARE_ADJUST_TOOLBAR_MODES</code> | constant | <code>src/utils/runtimeConfig.js:33</code> | Runtime validation values for CompareAdjustToolbarMode; the first one is the default. |
+| <code>CompareAdjustToolbarMode</code> | typedef | <code>src/utils/runtimeConfig.js:12</code> |  |
+| <code>DEFAULT_ZOOM_MODE_ALIAS_ENTRIES</code> | constant | <code>src/utils/runtimeConfig.js:47</code> | User-facing zoom-mode aliases mapped to ViewerDefaultZoomMode values. |
+| <code>getCompareAdjustToolbarMode</code> | function | <code>src/utils/runtimeConfig.js:238</code> | Resolve how the main toolbar&#39;s image controls behave in compare mode \( compare.adjust.toolbarMode \). |
+| <code>getKeyboardPrintShortcutBehavior</code> | function | <code>src/utils/runtimeConfig.js:139</code> | Resolve the configured Ctrl/Cmd+P behavior. |
+| <code>getOmpThemeBridgeAllowedOrigins</code> | function | <code>src/utils/runtimeConfig.js:709</code> | Resolve the allowed origins for the opt-in cross-origin theme bridge. |
+| <code>getPdfSignatureInspectionStart</code> | function | <code>src/utils/runtimeConfig.js:279</code> | Resolve when PDF signature inspection may start \( pdfSignatures.inspectAfter \): &#39;firstPage&#39; \(default\) starts once the first page is shown, &#39;allPages&#39; waits until every page of the... |
+| <code>getPrintDefaultMode</code> | function | <code>src/utils/runtimeConfig.js:584</code> | Resolve the default print page mode used when the user has not stored an override. |
+| <code>getPrintSelectionWorkspaceConfig</code> | function | <code>src/utils/runtimeConfig.js:609</code> | Resolve the print-selection workspace configuration. |
+| <code>getRuntimeConfig</code> | function | <code>src/utils/runtimeConfig.js:116</code> | Read the merged runtime configuration from the browser environment. |
+| <code>getThemeDefaultMode</code> | function | <code>src/utils/runtimeConfig.js:692</code> | Resolve the site&#39;s default theme mode — the mode used ONLY while the browser has no stored theme choice \(no shared OMP_THEME_PREFERENCE and no legacy local ODV setting\). |
+| <code>getToolbarLargeButtonsDefault</code> | function | <code>src/utils/runtimeConfig.js:292</code> | Resolve the site default for the &amp;quot;Larger toolbar buttons&amp;quot; preference \( toolbar.largeButtons \). |
+| <code>getViewerCustomFitSizeLimits</code> | function | <code>src/utils/runtimeConfig.js:560</code> | Resolve the configured custom-size limits. |
+| <code>getViewerCustomFitWidthFactorPercent</code> | function | <code>src/utils/runtimeConfig.js:546</code> | Resolve the custom-size width factor percentage. |
+| <code>getViewerDefaultZoomMode</code> | function | <code>src/utils/runtimeConfig.js:533</code> | Resolve the initial page zoom mode. |
+| <code>getViewerEdgeScrollPageTurnConfig</code> | function | <code>src/utils/runtimeConfig.js:633</code> | Resolve the optional scroll-at-edge page turn gesture. |
+| <code>getViewerProblemNoticeConfig</code> | function | <code>src/utils/runtimeConfig.js:651</code> | Resolve the configurable viewer-level problem notice. |
+| <code>isCompareCurtainEnabled</code> | function | <code>src/utils/runtimeConfig.js:211</code> | Resolve whether the compare curtain view is available \( compare.curtain.enabled \). |
+| <code>isCompareCurtainPrintEnabled</code> | function | <code>src/utils/runtimeConfig.js:223</code> | Resolve whether the compare curtain view offers its print action \( compare.curtain.print.enabled \). |
+| <code>isCompareOverlayEnabled</code> | function | <code>src/utils/runtimeConfig.js:187</code> | Resolve whether the compare overlay view is available \( compare.overlay.enabled \). |
+| <code>isCompareOverlayPrintEnabled</code> | function | <code>src/utils/runtimeConfig.js:199</code> | Resolve whether the compare overlay view offers its print action \( compare.overlay.print.enabled \). |
+| <code>isDocumentMetadataUiEnabled</code> | function | <code>src/utils/runtimeConfig.js:152</code> | Resolve whether document metadata UI affordances should be available. |
+| <code>isFineTuneEnabled</code> | function | <code>src/utils/runtimeConfig.js:174</code> | Master capability for page fine tuning and calibration-dependent compare views. |
+| <code>isPdfSignatureInspectionEnabled</code> | function | <code>src/utils/runtimeConfig.js:266</code> | Resolve whether PDF signature inspection runs at all \( pdfSignatures.enabled \). |
+| <code>isSignatureThumbnailPageBadgeEnabled</code> | function | <code>src/utils/runtimeConfig.js:252</code> | Resolve whether every page thumbnail of a signed PDF file shows the small signature symbol. |
+| <code>KEYBOARD_PRINT_SHORTCUT_BEHAVIORS</code> | constant | <code>src/utils/runtimeConfig.js:31</code> | Runtime validation values for KeyboardPrintShortcutBehavior; the typedef documents the public contract. |
 | <code>KeyboardPrintShortcutBehavior</code> | typedef | <code>src/utils/runtimeConfig.js:9</code> |  |
-| <code>normalizeBoolean</code> | function | <code>src/utils/runtimeConfig.js:167</code> | Normalize a runtime flag to a boolean. |
-| <code>normalizeCustomFitSizeLimitPreference</code> | function | <code>src/utils/runtimeConfig.js:364</code> | Normalize the optional user custom-size limits. |
-| <code>normalizeCustomFitWidthFactorPercent</code> | function | <code>src/utils/runtimeConfig.js:335</code> | Normalize a custom fit-width factor. |
-| <code>normalizeDefaultZoomMode</code> | function | <code>src/utils/runtimeConfig.js:303</code> | Normalize a runtime default zoom mode to the internal DocumentViewer mode. |
-| <code>normalizeFloat</code> | function | <code>src/utils/runtimeConfig.js:235</code> | Normalize a floating-point runtime config value and clamp it to the supplied range. |
-| <code>normalizeInteger</code> | function | <code>src/utils/runtimeConfig.js:214</code> | Normalize an integer config value and clamp it to the supplied range. |
-| <code>normalizeOptionalCustomFitFactorPercent</code> | function | <code>src/utils/runtimeConfig.js:346</code> | Normalize an optional custom-size limit percentage. |
-| <code>normalizePrintDefaultMode</code> | function | <code>src/utils/runtimeConfig.js:318</code> | Normalize a user-facing print default mode. |
-| <code>normalizeResetSessionFallbackTarget</code> | function | <code>src/utils/runtimeConfig.js:264</code> | Resolve the configured reset-session fallback target. |
-| <code>normalizeResetSessionTarget</code> | function | <code>src/utils/runtimeConfig.js:252</code> | Normalize the runtime session-reset target. |
-| <code>normalizeZoomModeText</code> | function | <code>src/utils/runtimeConfig.js:278</code> | Normalize a user-facing zoom mode string before alias lookup. |
-| <code>PRINT_DEFAULT_MODE_ALIASES</code> | constant | <code>src/utils/runtimeConfig.js:34</code> | User-facing print default mode aliases mapped to persisted PrintDefaultMode values. |
+| <code>normalizeBoolean</code> | function | <code>src/utils/runtimeConfig.js:310</code> | Normalize a runtime flag to a boolean. |
+| <code>normalizeCustomFitSizeLimitPreference</code> | function | <code>src/utils/runtimeConfig.js:507</code> | Normalize the optional user custom-size limits. |
+| <code>normalizeCustomFitWidthFactorPercent</code> | function | <code>src/utils/runtimeConfig.js:478</code> | Normalize a custom fit-width factor. |
+| <code>normalizeDefaultZoomMode</code> | function | <code>src/utils/runtimeConfig.js:446</code> | Normalize a runtime default zoom mode to the internal DocumentViewer mode. |
+| <code>normalizeFloat</code> | function | <code>src/utils/runtimeConfig.js:378</code> | Normalize a floating-point runtime config value and clamp it to the supplied range. |
+| <code>normalizeInteger</code> | function | <code>src/utils/runtimeConfig.js:357</code> | Normalize an integer config value and clamp it to the supplied range. |
+| <code>normalizeOptionalCustomFitFactorPercent</code> | function | <code>src/utils/runtimeConfig.js:489</code> | Normalize an optional custom-size limit percentage. |
+| <code>normalizePrintDefaultMode</code> | function | <code>src/utils/runtimeConfig.js:461</code> | Normalize a user-facing print default mode. |
+| <code>normalizeResetSessionFallbackTarget</code> | function | <code>src/utils/runtimeConfig.js:407</code> | Resolve the configured reset-session fallback target. |
+| <code>normalizeResetSessionTarget</code> | function | <code>src/utils/runtimeConfig.js:395</code> | Normalize the runtime session-reset target. |
+| <code>normalizeZoomModeText</code> | function | <code>src/utils/runtimeConfig.js:421</code> | Normalize a user-facing zoom mode string before alias lookup. |
+| <code>PRINT_DEFAULT_MODE_ALIASES</code> | constant | <code>src/utils/runtimeConfig.js:37</code> | User-facing print default mode aliases mapped to persisted PrintDefaultMode values. |
 | <code>PrintDefaultMode</code> | typedef | <code>src/utils/runtimeConfig.js:11</code> |  |
-| <code>PrintSelectionWorkspaceConfig</code> | typedef | <code>src/utils/runtimeConfig.js:72</code> |  |
-| <code>RESET_SESSION_TARGETS</code> | constant | <code>src/utils/runtimeConfig.js:32</code> | Runtime validation values for ResetSessionTarget; the typedef documents the public contract. |
-| <code>ResetSessionTarget</code> | typedef | <code>src/utils/runtimeConfig.js:12</code> | Session-reset target for the support/problem notice. |
-| <code>resolveDefaultZoomModeAlias</code> | function | <code>src/utils/runtimeConfig.js:289</code> | Resolve a normalized zoom-mode alias to the internal viewer mode. |
-| <code>ViewerCustomFitSizeLimits</code> | typedef | <code>src/utils/runtimeConfig.js:65</code> |  |
+| <code>PrintSelectionWorkspaceConfig</code> | typedef | <code>src/utils/runtimeConfig.js:75</code> |  |
+| <code>readBooleanSwitch</code> | function | <code>src/utils/runtimeConfig.js:164</code> | Read a strict boolean switch: only a real boolean counts, anything else \(missing, strings such as &amp;quot;false&amp;quot;, numbers, null, objects\) falls back to defaultValue . |
+| <code>RESET_SESSION_TARGETS</code> | constant | <code>src/utils/runtimeConfig.js:35</code> | Runtime validation values for ResetSessionTarget; the typedef documents the public contract. |
+| <code>ResetSessionTarget</code> | typedef | <code>src/utils/runtimeConfig.js:13</code> | Session-reset target for the support/problem notice. |
+| <code>resolveDefaultZoomModeAlias</code> | function | <code>src/utils/runtimeConfig.js:432</code> | Resolve a normalized zoom-mode alias to the internal viewer mode. |
+| <code>ViewerCustomFitSizeLimits</code> | typedef | <code>src/utils/runtimeConfig.js:68</code> |  |
 | <code>ViewerDefaultZoomMode</code> | typedef | <code>src/utils/runtimeConfig.js:10</code> |  |
-| <code>ViewerEdgeScrollPageTurnConfig</code> | typedef | <code>src/utils/runtimeConfig.js:79</code> |  |
-| <code>ViewerProblemNoticeConfig</code> | typedef | <code>src/utils/runtimeConfig.js:87</code> |  |
+| <code>ViewerEdgeScrollPageTurnConfig</code> | typedef | <code>src/utils/runtimeConfig.js:82</code> |  |
+| <code>ViewerProblemNoticeConfig</code> | typedef | <code>src/utils/runtimeConfig.js:90</code> |  |
 | <code>BlobLruCache</code> | class | <code>src/utils/sourceTempStore.js:210</code> |  |
 | <code>SourceTempStore#cleanup</code> | function | <code>src/utils/sourceTempStore.js:586</code> |  |
 | <code>SourceTempStore#cleanupStaleSessions</code> | function | <code>src/utils/sourceTempStore.js:636</code> |  |
@@ -1248,57 +1581,63 @@
 | <code>SourceTempStore#touchIndexedDbRecord</code> | function | <code>src/utils/sourceTempStore.js:858</code> |  |
 | <code>transactionDone</code> | function | <code>src/utils/sourceTempStore.js:134</code> |  |
 | <code>SourceTempStore#updateConfig</code> | function | <code>src/utils/sourceTempStore.js:374</code> | Update runtime thresholds for the active session. |
-| <code>collectConfigDiagnostics</code> | function | <code>src/utils/supportDiagnostics.js:135</code> |  |
-| <code>collectLocationDiagnostics</code> | function | <code>src/utils/supportDiagnostics.js:122</code> |  |
-| <code>collectNavigatorDiagnostics</code> | function | <code>src/utils/supportDiagnostics.js:105</code> |  |
-| <code>collectSupportDiagnostics</code> | function | <code>src/utils/supportDiagnostics.js:303</code> |  |
-| <code>createDefaultDiagnosticsFilename</code> | function | <code>src/utils/supportDiagnostics.js:61</code> |  |
-| <code>downloadJsonFile</code> | function | <code>src/utils/supportDiagnostics.js:337</code> | Download a JSON diagnostics payload in browser environments. |
-| <code>getAppVersionFromWindowGlobals</code> | function | <code>src/utils/supportDiagnostics.js:26</code> |  |
-| <code>hasOwn</code> | function | <code>src/utils/supportDiagnostics.js:52</code> |  |
-| <code>loadLatestBenchmarkResult</code> | function | <code>src/utils/supportDiagnostics.js:246</code> |  |
-| <code>loadLatestPdfBenchmarkResult</code> | function | <code>src/utils/supportDiagnostics.js:262</code> |  |
-| <code>loadLatestRenderDecodeBenchmarkResult</code> | function | <code>src/utils/supportDiagnostics.js:282</code> |  |
-| <code>logDiagnosticsDownloadFailure</code> | function | <code>src/utils/supportDiagnostics.js:81</code> |  |
-| <code>normalizeDownloadFilename</code> | function | <code>src/utils/supportDiagnostics.js:72</code> |  |
-| <code>resolveAppVersion</code> | function | <code>src/utils/supportDiagnostics.js:89</code> |  |
-| <code>resolveBuildId</code> | function | <code>src/utils/supportDiagnostics.js:98</code> |  |
-| <code>resolveImportMetaEnvValue</code> | function | <code>src/utils/supportDiagnostics.js:37</code> |  |
-| <code>saveLatestPdfBenchmarkResult</code> | function | <code>src/utils/supportDiagnostics.js:270</code> |  |
-| <code>saveLatestRenderDecodeBenchmarkResult</code> | function | <code>src/utils/supportDiagnostics.js:290</code> |  |
-| <code>clearCustomFitSizeLimitPreference</code> | function | <code>src/utils/viewerPreferences.js:467</code> |  |
-| <code>clearCustomFitWidthFactorPreference</code> | function | <code>src/utils/viewerPreferences.js:412</code> |  |
-| <code>clearDefaultZoomModePreference</code> | function | <code>src/utils/viewerPreferences.js:377</code> |  |
-| <code>clearPrintDefaultModePreference</code> | function | <code>src/utils/viewerPreferences.js:352</code> |  |
-| <code>CustomFitSizeLimitPreference</code> | typedef | <code>src/utils/viewerPreferences.js:17</code> |  |
-| <code>getCustomFitSizeLimitPreference</code> | function | <code>src/utils/viewerPreferences.js:427</code> |  |
-| <code>getCustomFitWidthFactorPreference</code> | function | <code>src/utils/viewerPreferences.js:386</code> |  |
-| <code>getDefaultZoomModePreference</code> | function | <code>src/utils/viewerPreferences.js:361</code> |  |
-| <code>getLanguagePreference</code> | function | <code>src/utils/viewerPreferences.js:318</code> |  |
-| <code>getPrintDefaultModePreference</code> | function | <code>src/utils/viewerPreferences.js:334</code> |  |
-| <code>getThemeModePreference</code> | function | <code>src/utils/viewerPreferences.js:280</code> |  |
-| <code>getThemePreference</code> | function | <code>src/utils/viewerPreferences.js:251</code> |  |
-| <code>getViewerPreferences</code> | function | <code>src/utils/viewerPreferences.js:209</code> |  |
-| <code>isExplicitTheme</code> | function | <code>src/utils/viewerPreferences.js:46</code> |  |
-| <code>isThemeMode</code> | function | <code>src/utils/viewerPreferences.js:54</code> |  |
-| <code>normalizeDefaultZoomModePreference</code> | function | <code>src/utils/viewerPreferences.js:74</code> |  |
-| <code>normalizePreferences</code> | function | <code>src/utils/viewerPreferences.js:101</code> |  |
-| <code>normalizeThemeModeValue</code> | function | <code>src/utils/viewerPreferences.js:64</code> | Normalize legacy theme-mode values. |
-| <code>parsePreferences</code> | function | <code>src/utils/viewerPreferences.js:144</code> |  |
-| <code>readPreferencesFromCookie</code> | function | <code>src/utils/viewerPreferences.js:156</code> |  |
-| <code>readPreferencesFromStorage</code> | function | <code>src/utils/viewerPreferences.js:173</code> |  |
-| <code>replaceViewerPreferences</code> | function | <code>src/utils/viewerPreferences.js:241</code> | Persist an already-normalized full preference object. |
-| <code>setCustomFitSizeLimitPreference</code> | function | <code>src/utils/viewerPreferences.js:440</code> |  |
-| <code>setCustomFitWidthFactorPreference</code> | function | <code>src/utils/viewerPreferences.js:399</code> |  |
-| <code>setDefaultZoomModePreference</code> | function | <code>src/utils/viewerPreferences.js:369</code> |  |
-| <code>setLanguagePreference</code> | function | <code>src/utils/viewerPreferences.js:327</code> |  |
-| <code>setPrintDefaultModePreference</code> | function | <code>src/utils/viewerPreferences.js:345</code> |  |
-| <code>setThemeModePreference</code> | function | <code>src/utils/viewerPreferences.js:297</code> | Persist the user&#39;s theme mode preference. |
-| <code>setThemePreference</code> | function | <code>src/utils/viewerPreferences.js:270</code> |  |
-| <code>setViewerPreferences</code> | function | <code>src/utils/viewerPreferences.js:219</code> |  |
-| <code>ViewerPreferences</code> | typedef | <code>src/utils/viewerPreferences.js:24</code> |  |
-| <code>writePreferencesToCookie</code> | function | <code>src/utils/viewerPreferences.js:186</code> |  |
-| <code>writePreferencesToStorage</code> | function | <code>src/utils/viewerPreferences.js:199</code> |  |
+| <code>collectConfigDiagnostics</code> | function | <code>src/utils/supportDiagnostics.js:137</code> |  |
+| <code>collectLocationDiagnostics</code> | function | <code>src/utils/supportDiagnostics.js:124</code> |  |
+| <code>collectNavigatorDiagnostics</code> | function | <code>src/utils/supportDiagnostics.js:107</code> |  |
+| <code>collectSupportDiagnostics</code> | function | <code>src/utils/supportDiagnostics.js:308</code> |  |
+| <code>createDefaultDiagnosticsFilename</code> | function | <code>src/utils/supportDiagnostics.js:63</code> |  |
+| <code>downloadJsonFile</code> | function | <code>src/utils/supportDiagnostics.js:342</code> | Download a JSON diagnostics payload in browser environments. |
+| <code>getAppVersionFromWindowGlobals</code> | function | <code>src/utils/supportDiagnostics.js:28</code> |  |
+| <code>hasOwn</code> | function | <code>src/utils/supportDiagnostics.js:54</code> |  |
+| <code>loadLatestBenchmarkResult</code> | function | <code>src/utils/supportDiagnostics.js:251</code> |  |
+| <code>loadLatestPdfBenchmarkResult</code> | function | <code>src/utils/supportDiagnostics.js:267</code> |  |
+| <code>loadLatestRenderDecodeBenchmarkResult</code> | function | <code>src/utils/supportDiagnostics.js:287</code> |  |
+| <code>logDiagnosticsDownloadFailure</code> | function | <code>src/utils/supportDiagnostics.js:83</code> |  |
+| <code>normalizeDownloadFilename</code> | function | <code>src/utils/supportDiagnostics.js:74</code> |  |
+| <code>resolveAppVersion</code> | function | <code>src/utils/supportDiagnostics.js:91</code> |  |
+| <code>resolveBuildId</code> | function | <code>src/utils/supportDiagnostics.js:100</code> |  |
+| <code>resolveImportMetaEnvValue</code> | function | <code>src/utils/supportDiagnostics.js:39</code> |  |
+| <code>saveLatestPdfBenchmarkResult</code> | function | <code>src/utils/supportDiagnostics.js:275</code> |  |
+| <code>saveLatestRenderDecodeBenchmarkResult</code> | function | <code>src/utils/supportDiagnostics.js:295</code> |  |
+| <code>applyToolbarDensityToDocument</code> | function | <code>src/utils/toolbarDensity.js:22</code> | Apply the toolbar density to the document root \(SSR-safe\). |
+| <code>toolbarDensityFor</code> | function | <code>src/utils/toolbarDensity.js:12</code> |  |
+| <code>clearCustomFitSizeLimitPreference</code> | function | <code>src/utils/viewerPreferences.js:493</code> |  |
+| <code>clearCustomFitWidthFactorPreference</code> | function | <code>src/utils/viewerPreferences.js:438</code> |  |
+| <code>clearDefaultZoomModePreference</code> | function | <code>src/utils/viewerPreferences.js:403</code> |  |
+| <code>clearPrintDefaultModePreference</code> | function | <code>src/utils/viewerPreferences.js:378</code> |  |
+| <code>clearThemeSharedRevision</code> | function | <code>src/utils/viewerPreferences.js:329</code> | Clear the stored binding between a local Normal choice and its shared OMP revision. |
+| <code>CustomFitSizeLimitPreference</code> | typedef | <code>src/utils/viewerPreferences.js:20</code> |  |
+| <code>getCustomFitSizeLimitPreference</code> | function | <code>src/utils/viewerPreferences.js:453</code> |  |
+| <code>getCustomFitWidthFactorPreference</code> | function | <code>src/utils/viewerPreferences.js:412</code> |  |
+| <code>getDefaultZoomModePreference</code> | function | <code>src/utils/viewerPreferences.js:387</code> |  |
+| <code>getEffectiveToolbarLargeButtons</code> | function | <code>src/utils/viewerPreferences.js:525</code> | Resolve whether the toolbar uses large buttons: a stored user choice wins, otherwise the runtime config default toolbar.largeButtons \(large unless explicitly false\). |
+| <code>getLanguagePreference</code> | function | <code>src/utils/viewerPreferences.js:338</code> |  |
+| <code>getPrintDefaultModePreference</code> | function | <code>src/utils/viewerPreferences.js:360</code> |  |
+| <code>getThemeModePreference</code> | function | <code>src/utils/viewerPreferences.js:288</code> |  |
+| <code>getThemePreference</code> | function | <code>src/utils/viewerPreferences.js:259</code> |  |
+| <code>getToolbarLargeButtonsPreference</code> | function | <code>src/utils/viewerPreferences.js:505</code> | The user&#39;s stored &amp;quot;Larger toolbar buttons&amp;quot; choice from the theme menu. |
+| <code>getViewerPreferences</code> | function | <code>src/utils/viewerPreferences.js:217</code> |  |
+| <code>isExplicitTheme</code> | function | <code>src/utils/viewerPreferences.js:51</code> |  |
+| <code>isThemeMode</code> | function | <code>src/utils/viewerPreferences.js:59</code> |  |
+| <code>normalizeDefaultZoomModePreference</code> | function | <code>src/utils/viewerPreferences.js:79</code> |  |
+| <code>normalizePreferences</code> | function | <code>src/utils/viewerPreferences.js:106</code> |  |
+| <code>normalizeThemeModeValue</code> | function | <code>src/utils/viewerPreferences.js:69</code> | Normalize legacy theme-mode values. |
+| <code>parsePreferences</code> | function | <code>src/utils/viewerPreferences.js:152</code> |  |
+| <code>readPreferencesFromCookie</code> | function | <code>src/utils/viewerPreferences.js:164</code> |  |
+| <code>readPreferencesFromStorage</code> | function | <code>src/utils/viewerPreferences.js:181</code> |  |
+| <code>replaceViewerPreferences</code> | function | <code>src/utils/viewerPreferences.js:249</code> | Persist an already-normalized full preference object. |
+| <code>setCustomFitSizeLimitPreference</code> | function | <code>src/utils/viewerPreferences.js:466</code> |  |
+| <code>setCustomFitWidthFactorPreference</code> | function | <code>src/utils/viewerPreferences.js:425</code> |  |
+| <code>setDefaultZoomModePreference</code> | function | <code>src/utils/viewerPreferences.js:395</code> |  |
+| <code>setLanguagePreference</code> | function | <code>src/utils/viewerPreferences.js:349</code> | Persist a language choice, or clear it when the normalized value is empty. |
+| <code>setPrintDefaultModePreference</code> | function | <code>src/utils/viewerPreferences.js:371</code> |  |
+| <code>setThemeModePreference</code> | function | <code>src/utils/viewerPreferences.js:305</code> | Persist the user&#39;s theme mode preference. |
+| <code>setThemePreference</code> | function | <code>src/utils/viewerPreferences.js:278</code> |  |
+| <code>setToolbarLargeButtonsPreference</code> | function | <code>src/utils/viewerPreferences.js:514</code> |  |
+| <code>setViewerPreferences</code> | function | <code>src/utils/viewerPreferences.js:227</code> |  |
+| <code>ViewerPreferences</code> | typedef | <code>src/utils/viewerPreferences.js:27</code> |  |
+| <code>writePreferencesToCookie</code> | function | <code>src/utils/viewerPreferences.js:194</code> |  |
+| <code>writePreferencesToStorage</code> | function | <code>src/utils/viewerPreferences.js:207</code> |  |
 | <code>applyZoom</code> | function | <code>src/utils/zoomUtils.js:140</code> | Set a new zoom value using the provided setter, clamped to \[MIN_ZOOM, MAX_ZOOM\]. |
 | <code>calculateFitToScreenZoom</code> | function | <code>src/utils/zoomUtils.js:160</code> | Calculate and set a zoom that fits the render surface within both viewport axes. |
 | <code>calculateFitToWidthZoom</code> | function | <code>src/utils/zoomUtils.js:200</code> | Calculate and set a zoom that fits the render surface width within the pane viewport. |
@@ -1318,5 +1657,6 @@
 | <code>ZOOM_OUT_MULTIPLIER</code> | constant | <code>src/utils/zoomUtils.js:19</code> | Zoom-out multiplier: inverse of +10%, approximately a 9.09% decrease. |
 | <code>ZoomCalcOptions</code> | typedef | <code>src/utils/zoomUtils.js:23</code> | Optional calculation overrides. |
 | <code>createFallbackMainThreadError</code> | function | <code>src/workers/imageWorker.js:44</code> | Creates an error that tells the caller this worker path is unsupported and should be retried on the main thread. |
-| <code>PdfCacheEntry</code> | typedef | <code>src/workers/pdfPageWorker.js:20</code> |  |
+| <code>PdfCacheEntry</code> | typedef | <code>src/workers/pdfPageWorker.js:21</code> |  |
+| <code>module:workers/pdfSignatureWorker</code> | module | <code>src/workers/pdfSignatureWorker.js:1</code> | Web worker entry for PDF signature inspection. |
 | <code>workerScope</code> | constant | <code>src/workers/pdfWorker.js:9</code> | OpenDocViewer - generated PDF worker. |

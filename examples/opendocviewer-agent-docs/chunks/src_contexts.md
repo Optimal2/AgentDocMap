@@ -1,6 +1,6 @@
 # OpenDocViewer / src/contexts
 
-File count: 4. Line count: 3018. JSDoc symbol count: 81.
+File count: 4. Line count: 3455. JSDoc symbol count: 95.
 
 ## src/contexts/themeContext.js
 
@@ -20,7 +20,7 @@ src/contexts/ThemeProvider.jsx OpenDocViewer — Theme state context \(React\) C
 
 Exports: `ThemeProvider`
 
-Local imports: `src/logging/systemLogger.js`, `src/contexts/themeContext.js`, `src/utils/viewerPreferences.js`
+Local imports: `src/logging/systemLogger.js`, `src/contexts/themeContext.js`, `src/utils/ompThemePreference.js`, `src/integrations/ompThemeBridge.js`, `src/utils/runtimeConfig.js`, `src/utils/viewerPreferences.js`, `src/utils/toolbarDensity.js`
 
 Symbols:
 
@@ -31,6 +31,7 @@ Symbols:
 - `applyThemeToDocument` (function) - Apply the resolved theme to the DOM \(SSR\-safe\).
 - `resolveInitialThemeMode` (function) - Resolve the initial theme mode once during provider initialization.
 - `ThemeProvider` (constant) - ThemeProvider component to manage and provide theme\-related state and functions.
+- `ThemeProvider~setToolbarLargeButtons` (constant) - Persist and apply the &quot;Larger toolbar buttons&quot; choice.
 - `ThemeProvider~setThemeMode` (constant) - Persist and apply a theme mode.
 - `ThemeProvider~setThemeExplicit` (constant) - Apply an explicit concrete theme.
 - `ThemeProvider~toggleTheme` (constant) - Toggle between the two highest\-contrast explicit themes.
@@ -38,7 +39,7 @@ Symbols:
 
 ## src/contexts/viewerContext.js
 
-Exports ViewerContext.
+Per\-page compare transform \(utils/compareTransform.js\): scale multiplies the base zoom \(1 \= 100 %\), dx / dy are CSS px at transform scale 1, rotation is degrees in \[0, 360\).
 
 Exports: `ViewerContext`
 
@@ -53,6 +54,9 @@ Symbols:
 - `ViewerRuntimeDiagnostics` (typedef) - No description.
 - `ViewerPageLoadState` (typedef) - No description.
 - `ViewerContextValue` (typedef) - No description.
+- `CompareTransform` (typedef) - Per\-page compare transform \(utils/compareTransform.js\): scale multiplies the base zoom \(1 \= 100 %\), dx / dy are CSS px at transform scale 1, rotation is degrees in \[0, 360\).
+- `CompareOverlayState` (typedef) - No description.
+- `CompareTransformState` (typedef) - No description.
 
 ## src/contexts/ViewerProvider.jsx
 
@@ -60,7 +64,7 @@ OpenDocViewer — Viewer state provider.
 
 Exports: `ViewerProvider`
 
-Local imports: `src/logging/systemLogger.js`, `src/contexts/viewerContext.js`, `src/utils/documentLoadingConfig.js`, `src/utils/sourceTempStore.js`, `src/utils/pageAssetStore.js`, `src/utils/pageAssetRenderer.js`, `src/utils/reloadCacheIdentity.js`, `src/utils/objectUrlRegistry.js`
+Local imports: `src/utils/runtimeConfig.js`, `src/logging/systemLogger.js`, `src/contexts/viewerContext.js`, `src/utils/documentLoadingConfig.js`, `src/utils/sourceTempStore.js`, `src/utils/pageAssetStore.js`, `src/utils/pageAssetRenderer.js`, `src/utils/pdfResolution.js`, `src/utils/pdfResolutionRuntime.js`, `src/utils/reloadCacheIdentity.js`, `src/utils/objectUrlRegistry.js`, `src/hooks/usePdfSignatureReports.js`
 
 Symbols:
 
