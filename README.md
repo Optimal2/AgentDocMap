@@ -8,7 +8,7 @@ open source files.
 [![CI](https://github.com/Optimal2/AgentDocMap/actions/workflows/ci.yml/badge.svg)](https://github.com/Optimal2/AgentDocMap/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/github/package-json/v/Optimal2/AgentDocMap)](package.json)
-![Node](https://img.shields.io/badge/node-%3E%3D22.18.0-339933)
+![Node](https://img.shields.io/badge/node-%5E22.18.0%20%7C%7C%20%3E%3D24.11.0-339933)
 
 Current version: **0.1.1** (`package.json`). The package is marked
 `"private": true` and is not published to npm; it is used from a Git checkout.
@@ -480,7 +480,7 @@ All renderers live in `src/lib/writers.js`.
 
 ## Quick start
 
-Requirements: Node.js 22.18.0 or later (`engines` in `package.json`; CI uses
+Requirements: Node.js 22.18.0 or later in the 22.x line, or 24.11.0 or later (`engines` in `package.json`, matching `@babel/parser` 8; CI uses
 22.18.0) and Git. Runtime dependencies: `@babel/parser` and `jsdoc`.
 
 ```powershell

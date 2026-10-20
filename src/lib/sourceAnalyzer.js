@@ -2,16 +2,10 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { parse } from '@babel/parser';
 
-const PARSER_PLUGINS = [
-  'jsx',
-  'importMeta',
-  'dynamicImport',
-  'classProperties',
-  'objectRestSpread',
-  'optionalChaining',
-  'nullishCoalescingOperator',
-  'topLevelAwait',
-];
+// Babel 8 enables standardized syntax (import.meta, dynamic import, class
+// fields, optional chaining, top-level await, ...) by default; only JSX needs
+// an explicit plugin.
+const PARSER_PLUGINS = ['jsx'];
 
 /** Maximum number of matching line numbers recorded per risk pattern and file. */
 const MAX_RISK_PATTERN_LINES = 12;

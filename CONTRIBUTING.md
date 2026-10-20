@@ -44,8 +44,8 @@ in this public repository.
 
 ## Downstream Impact
 
-OpenDocViewer's workflows check out this repository's default branch without
-pinning a ref. Its "Agent Documentation" workflow regenerates its committed
-`docs-agent/` packet and fails if the result differs. A change that alters
-generated output therefore needs a matching `docs-agent/` regeneration in
-OpenDocViewer.
+OpenDocViewer pins the AgentDocMap revision and Node version it generates with
+in `scripts/agent-docs-environment.json`. Its "Agent Documentation" workflow
+regenerates its committed `docs-agent/` packet with that pin and fails if the
+result differs. Moving the pin past a change that alters generated output
+therefore needs a matching `docs-agent/` regeneration in OpenDocViewer.

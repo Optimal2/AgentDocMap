@@ -9,7 +9,7 @@
     "agentdocmap": "./src/cli.js"
   },
   "engines": {
-    "node": ">=22.18.0"
+    "node": "^22.18.0 || >=24.11.0"
   },
   "scripts": {
     "build:odv": "node src/cli.js generate --target ../OpenDocViewer --out examples/opendocviewer-agent-docs --project-name OpenDocViewer --generated-at example --source-metadata none",
@@ -17,10 +17,15 @@
     "validate": "npm test && npm run build:odv"
   },
   "dependencies": {
-    "@babel/parser": "^7.29.9",
+    "@babel/parser": "^8.0.7",
     "jsdoc": "^4.0.5"
   },
   "overrides": {
-    "linkify-it": "^5.0.2"
+    "catharsis": "^0.11.0",
+    "js2xmlparser": "^5.0.0",
+    "klaw": "^4.1.0",
+    "markdown-it": "^15.0.3",
+    "markdown-it-anchor": "^10.0.0",
+    "mkdirp": "^3.0.1"
   }
 }
