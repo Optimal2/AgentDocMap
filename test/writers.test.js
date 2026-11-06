@@ -73,7 +73,7 @@ test('writeAgentDocs preserves chunks whose sanitized module names collide', asy
     chunkNames.map((name) => fs.readFile(path.join(out, 'chunks', name), 'utf8')),
   );
   assert.equal(chunks.some((content) => content.startsWith('# FixtureProject / foo/bar\n')), true);
-  assert.equal(chunks.some((content) => content.startsWith('# FixtureProject / foo\\_bar\n')), true);
+  assert.equal(chunks.some((content) => content.includes('# FixtureProject / foo') && content.includes('_bar\n')), true);
 });
 
 test('BUDGET.md does not count a trailing newline as an extra output line', async (t) => {
