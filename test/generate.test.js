@@ -39,9 +39,10 @@ test('the generated fixture uses the field names buildAgentMap emits', () => {
   );
 });
 
-test('generateAgentDocs writes an agent packet from existing JSDoc comments', async () => {
+test('generateAgentDocs writes an agent packet from existing JSDoc comments', async (t) => {
   const target = path.resolve('test/fixture-project');
   const out = await fs.mkdtemp(path.join(os.tmpdir(), 'agentdocmap-'));
+  t.after(() => fs.rm(out, { recursive: true, force: true }));
 
   const result = await generateAgentDocs({
     target,
@@ -75,9 +76,10 @@ test('generateAgentDocs writes an agent packet from existing JSDoc comments', as
   assert.equal(agentMap.stats.estimatedSourceTokens > 0, true);
 });
 
-test('generateAgentDocs counts constant-specifier dynamic imports like static imports', async () => {
+test('generateAgentDocs counts constant-specifier dynamic imports like static imports', async (t) => {
   const target = path.resolve('test/fixture-project');
   const out = await fs.mkdtemp(path.join(os.tmpdir(), 'agentdocmap-'));
+  t.after(() => fs.rm(out, { recursive: true, force: true }));
 
   await generateAgentDocs({
     target,
@@ -116,8 +118,9 @@ test('generateAgentDocs counts constant-specifier dynamic imports like static im
   assert.match(dependencies, /- `lazy-formatter`: 1 imports in 1 files/);
 });
 
-test('writeAgentDocs escapes Markdown-sensitive inline values', async () => {
+test('writeAgentDocs escapes Markdown-sensitive inline values', async (t) => {
   const outDir = await fs.mkdtemp(path.join(os.tmpdir(), 'agentdocmap-'));
+  t.after(() => fs.rm(outDir, { recursive: true, force: true }));
 
   await writeAgentDocs({
     outDir,
