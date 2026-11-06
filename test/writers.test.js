@@ -49,6 +49,51 @@ function createMinimalMap() {
   };
 }
 
+test('writeAgentDocs preserves chunks whose sanitized module names collide', async (t) => {
+  const sandbox = await fs.mkdtemp(path.join(os.tmpdir(), 'agentdocmap-collisions-'));
+  t.after(() => fs.rm(sandbox, { recursive: true, force: true }));
+  const target = path.join(sandbox, 'fixture-project');
+  const out = path.join(target, 'docs-agent');
+  await fs.mkdir(target, { recursive: true });
+
+  const map = createMinimalMap();
+  map.modules = ['foo/bar', 'foo_bar'].map((name) => ({
+    name,
+    fileCount: 0,
+    lineCount: 0,
+    docletCount: 0,
+    importantFiles: [],
+  }));
+
+  await writeAgentDocs({ outDir: out, clean: true, targetRoot: target, map });
+  const chunkNames = (await fs.readdir(path.join(out, 'chunks'))).sort();
+  assert.equal(chunkNames.length, 2, 'both modules must have a distinct chunk file');
+
+  const chunks = await Promise.all(
+    chunkNames.map((name) => fs.readFile(path.join(out, 'chunks', name), 'utf8')),
+  );
+  assert.equal(chunks.some((content) => content.startsWith('# FixtureProject / foo/bar\n')), true);
+  assert.equal(chunks.some((content) => content.startsWith('# FixtureProject / foo\\_bar\n')), true);
+});
+
+test('BUDGET.md does not count a trailing newline as an extra output line', async (t) => {
+  const sandbox = await fs.mkdtemp(path.join(os.tmpdir(), 'agentdocmap-lines-'));
+  t.after(() => fs.rm(sandbox, { recursive: true, force: true }));
+  const target = path.join(sandbox, 'fixture-project');
+  const out = path.join(target, 'docs-agent');
+  await fs.mkdir(target, { recursive: true });
+
+  await writeAgentDocs({ outDir: out, clean: true, targetRoot: target, map: createMinimalMap() });
+  const context = await fs.readFile(path.join(out, 'AGENT_CONTEXT.md'), 'utf8');
+  const budget = await fs.readFile(path.join(out, 'BUDGET.md'), 'utf8');
+  assert.equal(context.endsWith('\n'), true);
+
+  const expectedLineCount = context.split('\n').length - 1;
+  const budgetRow = budget.match(/^\| `AGENT_CONTEXT\.md` \| (\d+) \|/m);
+  assert.ok(budgetRow, 'BUDGET.md must include AGENT_CONTEXT.md');
+  assert.equal(Number(budgetRow[1]), expectedLineCount);
+});
+
 test('AGENT_CONTEXT.md renders the source commit from the real generated shape', async () => {
   const sandbox = await fs.mkdtemp(path.join(os.tmpdir(), 'agentdocmap-commit-'));
   const target = path.join(sandbox, 'fixture-project');
@@ -220,8 +265,9 @@ test('DEPENDENCIES.md does not treat Object.prototype member names as declared p
   }
 });
 
-test('writeAgentDocs rejects cleaning the target repository root even when the name is allowlisted', async () => {
+test('writeAgentDocs rejects cleaning the target repository root even when the name is allowlisted', async (t) => {
   const sandbox = await fs.mkdtemp(path.join(os.tmpdir(), 'agentdocmap-guard-'));
+  t.after(() => fs.rm(sandbox, { recursive: true, force: true }));
   const target = path.join(sandbox, 'docs-agent');
   await fs.mkdir(target, { recursive: true });
 
@@ -236,8 +282,9 @@ test('writeAgentDocs rejects cleaning the target repository root even when the n
   );
 });
 
-test('writeAgentDocs rejects cleaning an allowlisted ancestor of the target repository root', async () => {
+test('writeAgentDocs rejects cleaning an allowlisted ancestor of the target repository root', async (t) => {
   const sandbox = await fs.mkdtemp(path.join(os.tmpdir(), 'agentdocmap-guard-'));
+  t.after(() => fs.rm(sandbox, { recursive: true, force: true }));
   const out = path.join(sandbox, 'docs-agent');
   const target = path.join(out, 'fixture-project');
   await fs.mkdir(target, { recursive: true });
@@ -253,8 +300,9 @@ test('writeAgentDocs rejects cleaning an allowlisted ancestor of the target repo
   );
 });
 
-test('writeAgentDocs still allows writing to docs-agent inside the target repository root', async () => {
+test('writeAgentDocs still allows writing to docs-agent inside the target repository root', async (t) => {
   const sandbox = await fs.mkdtemp(path.join(os.tmpdir(), 'agentdocmap-guard-'));
+  t.after(() => fs.rm(sandbox, { recursive: true, force: true }));
   const target = path.join(sandbox, 'fixture-project');
   const out = path.join(target, 'docs-agent');
   await fs.mkdir(target, { recursive: true });
