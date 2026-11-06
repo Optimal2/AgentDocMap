@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { hasOwn } from './fsUtils.js';
@@ -25,6 +26,29 @@ function safeFileName(value) {
   return String(value ?? DEFAULT_MODULE_NAME).replace(/[^a-z0-9._-]+/gi, '_');
 }
 
+function buildChunkPaths(modules) {
+  const modulesByBaseName = new Map();
+  for (const module of modules) {
+    const baseName = safeFileName(module.name);
+    const group = modulesByBaseName.get(baseName) || [];
+    group.push(module);
+    modulesByBaseName.set(baseName, group);
+  }
+
+  const paths = new Map();
+  for (const [baseName, group] of modulesByBaseName) {
+    for (const module of group) {
+      // Preserve established paths unless sanitization creates a collision. In that
+      // case, a stable digest of the exact module key keeps every chunk addressable.
+      const digest = group.length > 1
+        ? `-${createHash('sha256').update(String(module.name ?? DEFAULT_MODULE_NAME)).digest('hex').slice(0, 16)}`
+        : '';
+      paths.set(module, path.join('chunks', `${baseName}${digest}.md`));
+    }
+  }
+  return paths;
+}
+
 export async function writeAgentDocs({ outDir, map, clean, targetRoot }) {
   if (clean) {
     assertSafeCleanOutputDirectory(outDir, targetRoot);
@@ -48,8 +72,9 @@ export async function writeAgentDocs({ outDir, map, clean, targetRoot }) {
     ['symbol-index.json', toJsonString(map.symbols)],
   ]);
 
+  const chunkPaths = buildChunkPaths(map.modules);
   for (const module of map.modules) {
-    outputs.set(path.join('chunks', `${safeFileName(module.name)}.md`), renderModuleChunk(map, module));
+    outputs.set(chunkPaths.get(module), renderModuleChunk(map, module));
   }
 
   outputs.set('BUDGET.md', renderBudget(map, summarizeOutputBudget(outputs)));
@@ -566,7 +591,8 @@ function countLines(text) {
     return 0;
   }
 
-  return text.split(/\r\n|\r|\n/).length;
+  const lines = text.split(/\r\n|\r|\n/);
+  return lines.length - (lines.at(-1) === '' ? 1 : 0);
 }
 
 function estimateTokenCount(text) {
