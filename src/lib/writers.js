@@ -26,25 +26,58 @@ function safeFileName(value) {
   return String(value ?? DEFAULT_MODULE_NAME).replace(/[^a-z0-9._-]+/gi, '_');
 }
 
+function chunkPathKey(relativePath) {
+  return relativePath.split(path.sep).join('/').toLowerCase();
+}
+
 function buildChunkPaths(modules) {
   const modulesByBaseName = new Map();
+  const naturalPaths = new Map();
   for (const module of modules) {
     const baseName = safeFileName(module.name);
-    const group = modulesByBaseName.get(baseName) || [];
+    naturalPaths.set(module, path.join('chunks', `${baseName}.md`));
+    const groupKey = baseName.toLowerCase();
+    const group = modulesByBaseName.get(groupKey) || [];
     group.push(module);
-    modulesByBaseName.set(baseName, group);
+    modulesByBaseName.set(groupKey, group);
   }
 
+  // Natural paths are reserved before any derived path is allocated. Comparisons use
+  // folded case so uniqueness also holds on case-insensitive target filesystems.
+  const reservedPaths = new Set([...naturalPaths.values()].map(chunkPathKey));
+  const allocatedPaths = new Set();
   const paths = new Map();
-  for (const [baseName, group] of modulesByBaseName) {
-    for (const module of group) {
-      // Preserve established paths unless sanitization creates a collision. In that
-      // case, a stable digest of the exact module key keeps every chunk addressable.
-      const digest = group.length > 1
-        ? `-${createHash('sha256').update(String(module.name ?? DEFAULT_MODULE_NAME)).digest('hex').slice(0, 16)}`
-        : '';
-      paths.set(module, path.join('chunks', `${baseName}${digest}.md`));
+  const derivedModules = [];
+  for (const group of modulesByBaseName.values()) {
+    if (group.length === 1) {
+      const module = group[0];
+      const naturalPath = naturalPaths.get(module);
+      paths.set(module, naturalPath);
+      allocatedPaths.add(chunkPathKey(naturalPath));
+    } else {
+      derivedModules.push(...group);
     }
+  }
+
+  derivedModules.sort((moduleA, moduleB) => {
+    const nameA = String(moduleA.name ?? DEFAULT_MODULE_NAME);
+    const nameB = String(moduleB.name ?? DEFAULT_MODULE_NAME);
+    return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
+  });
+  for (const module of derivedModules) {
+    const baseName = safeFileName(module.name);
+    const digest = createHash('sha256').update(String(module.name ?? DEFAULT_MODULE_NAME)).digest('hex').slice(0, 16);
+    const derivedBase = `${baseName}-${digest}`;
+    let candidateBase = derivedBase;
+    let collisionIndex = 1;
+    let candidateKey = chunkPathKey(path.join('chunks', `${candidateBase}.md`));
+    while (reservedPaths.has(candidateKey) || allocatedPaths.has(candidateKey)) {
+      collisionIndex += 1;
+      candidateBase = `${derivedBase}-${collisionIndex}`;
+      candidateKey = chunkPathKey(path.join('chunks', `${candidateBase}.md`));
+    }
+    paths.set(module, path.join('chunks', `${candidateBase}.md`));
+    allocatedPaths.add(candidateKey);
   }
   return paths;
 }
