@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
@@ -49,6 +50,28 @@ function createMinimalMap() {
   };
 }
 
+function createModule(name, fileCount = 0) {
+  return {
+    name,
+    fileCount,
+    lineCount: 0,
+    docletCount: 0,
+    importantFiles: [],
+  };
+}
+
+function moduleDigest(name) {
+  return createHash('sha256').update(name).digest('hex').slice(0, 16);
+}
+
+async function readChunks(out) {
+  const names = (await fs.readdir(path.join(out, 'chunks'))).sort();
+  const contents = await Promise.all(
+    names.map((name) => fs.readFile(path.join(out, 'chunks', name), 'utf8')),
+  );
+  return { names, contents };
+}
+
 test('writeAgentDocs preserves chunks whose sanitized module names collide', async (t) => {
   const sandbox = await fs.mkdtemp(path.join(os.tmpdir(), 'agentdocmap-collisions-'));
   t.after(() => fs.rm(sandbox, { recursive: true, force: true }));
@@ -57,13 +80,7 @@ test('writeAgentDocs preserves chunks whose sanitized module names collide', asy
   await fs.mkdir(target, { recursive: true });
 
   const map = createMinimalMap();
-  map.modules = ['foo/bar', 'foo_bar'].map((name) => ({
-    name,
-    fileCount: 0,
-    lineCount: 0,
-    docletCount: 0,
-    importantFiles: [],
-  }));
+  map.modules = ['foo/bar', 'foo_bar'].map((name) => createModule(name));
 
   await writeAgentDocs({ outDir: out, clean: true, targetRoot: target, map });
   const chunkNames = (await fs.readdir(path.join(out, 'chunks'))).sort();
@@ -73,7 +90,86 @@ test('writeAgentDocs preserves chunks whose sanitized module names collide', asy
     chunkNames.map((name) => fs.readFile(path.join(out, 'chunks', name), 'utf8')),
   );
   assert.equal(chunks.some((content) => content.startsWith('# FixtureProject / foo/bar\n')), true);
-  assert.equal(chunks.some((content) => content.includes('# FixtureProject / foo') && content.includes('_bar\n')), true);
+  const markdownEscape = '\\';
+  assert.equal(chunks.some((content) => content.startsWith(`# FixtureProject / foo${markdownEscape}_bar\n`)), true);
+});
+
+test('writeAgentDocs reserves natural names through repeated derived-name collisions', async (t) => {
+  const sandbox = await fs.mkdtemp(path.join(os.tmpdir(), 'agentdocmap-global-collisions-'));
+  t.after(() => fs.rm(sandbox, { recursive: true, force: true }));
+  const target = path.join(sandbox, 'fixture-project');
+  await fs.mkdir(target, { recursive: true });
+
+  const naturalDigestName = `foo_bar-${moduleDigest('foo/bar')}`;
+  const names = ['foo/bar', 'foo_bar', naturalDigestName, `${naturalDigestName}-2`];
+  const modules = names.map((name, index) => createModule(name, index + 1));
+  const writePackets = async (orderedModules, outName) => {
+    const map = createMinimalMap();
+    map.modules = orderedModules;
+    const out = path.join(target, outName);
+    const written = await writeAgentDocs({ outDir: out, clean: false, targetRoot: target, map });
+    return { out, written, chunks: await readChunks(out) };
+  };
+
+  const first = await writePackets(modules, 'docs-agent');
+  assert.equal(first.chunks.names.length, names.length, 'every module must have a physical chunk');
+  assert.equal(new Set(first.chunks.names.map((name) => name.toLowerCase())).size, names.length);
+  assert.equal(first.chunks.names.includes(`${naturalDigestName}.md`), true, 'the ordinary digest-like name must be preserved');
+  assert.equal(first.chunks.names.includes(`${naturalDigestName}-2.md`), true, 'the second ordinary colliding name must be preserved');
+  assert.equal(first.chunks.names.includes(`${naturalDigestName}-3.md`), true, 'allocation must continue past repeated collisions');
+  assert.equal(first.written.length, 11 + names.length);
+
+  for (let index = 0; index < names.length; index += 1) {
+    const marker = `File count: ${index + 1}.`;
+    assert.equal(first.chunks.contents.filter((content) => content.includes(marker)).length, 1, `chunk content for ${names[index]} must survive exactly once`);
+  }
+  const agentMap = JSON.parse(await fs.readFile(path.join(first.out, 'agent-map.json'), 'utf8'));
+  assert.deepEqual(agentMap.modules.map((module) => module.name), names);
+  const budget = await fs.readFile(path.join(first.out, 'BUDGET.md'), 'utf8');
+  const measured = budget.match(/Output files measured: (\d+)/);
+  assert.ok(measured);
+  assert.equal(Number(measured[1]), 10 + names.length, 'BUDGET.md must count the physically distinct outputs');
+
+  const reversed = await writePackets([...modules].reverse(), 'docs-agent-reversed');
+  const shuffled = await writePackets([modules[2], modules[0], modules[3], modules[1]], 'docs-agent-shuffled');
+  assert.deepEqual(reversed.chunks, first.chunks, 'reverse input order must not change chunk paths or content');
+  assert.deepEqual(shuffled.chunks, first.chunks, 'shuffled input order must not change chunk paths or content');
+});
+
+test('writeAgentDocs separates case-only names on a case-insensitive filesystem', async (t) => {
+  const sandbox = await fs.mkdtemp(path.join(os.tmpdir(), 'agentdocmap-case-collisions-'));
+  t.after(() => fs.rm(sandbox, { recursive: true, force: true }));
+  const target = path.join(sandbox, 'fixture-project');
+  await fs.mkdir(target, { recursive: true });
+
+  const map = createMinimalMap();
+  map.modules = ['Foo', 'foo', 'plain'].map((name, index) => createModule(name, index + 1));
+  const out = path.join(target, 'docs-agent');
+  const written = await writeAgentDocs({ outDir: out, clean: true, targetRoot: target, map });
+  const chunks = await readChunks(out);
+  const expectedNames = [
+    `Foo-${moduleDigest('Foo')}.md`,
+    `foo-${moduleDigest('foo')}.md`,
+    'plain.md',
+  ].sort();
+  assert.deepEqual(chunks.names, expectedNames, 'exact-name digests must distinguish case-only names while preserving an unaffected path');
+  assert.equal(new Set(chunks.names.map((name) => name.toLowerCase())).size, map.modules.length);
+  assert.equal(written.length, 11 + map.modules.length);
+
+  for (let index = 0; index < map.modules.length; index += 1) {
+    const marker = `File count: ${index + 1}.`;
+    assert.equal(chunks.contents.filter((content) => content.includes(marker)).length, 1, `chunk content for ${map.modules[index].name} must survive exactly once`);
+  }
+  const budget = await fs.readFile(path.join(out, 'BUDGET.md'), 'utf8');
+  const measured = budget.match(/Output files measured: (\d+)/);
+  assert.ok(measured);
+  assert.equal(Number(measured[1]), 10 + map.modules.length);
+
+  const reversedMap = createMinimalMap();
+  reversedMap.modules = [...map.modules].reverse();
+  const reversedOut = path.join(target, 'docs-agent-reversed');
+  await writeAgentDocs({ outDir: reversedOut, clean: false, targetRoot: target, map: reversedMap });
+  assert.deepEqual(await readChunks(reversedOut), chunks, 'case-only allocation must be independent of input order');
 });
 
 test('BUDGET.md does not count a trailing newline as an extra output line', async (t) => {
