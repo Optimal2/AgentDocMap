@@ -26,7 +26,7 @@
     "js2xmlparser": "^5.0.0",
     "klaw": "^4.1.0",
     "markdown-it": "^15.0.3",
-    "markdown-it-anchor": "^10.0.0",
+    "markdown-it-anchor": "^10.1.0",
     "mkdirp": "^3.0.1"
   }
 }
