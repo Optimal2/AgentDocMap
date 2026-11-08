@@ -23,6 +23,7 @@
   "overrides": {
     "@babel/types": "^8.1.0",
     "catharsis": "^0.11.0",
+    "entities": "^9.0.0",
     "js2xmlparser": "^5.0.0",
     "klaw": "^4.1.0",
     "markdown-it": "^15.0.3",
