@@ -21,6 +21,7 @@
     "jsdoc": "^4.0.5"
   },
   "overrides": {
+    "@babel/types": "^8.1.0",
     "catharsis": "^0.11.0",
     "js2xmlparser": "^5.0.0",
     "klaw": "^4.1.0",
