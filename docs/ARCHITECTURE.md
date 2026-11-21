@@ -889,12 +889,12 @@ Limits that follow from the code:
   `import()` with a constant specifier are recorded
   (`src/lib/sourceAnalyzer.js`). Files are always parsed as modules
   (`sourceType: 'module'`).
-- **Without a `jsdoc.json`, JSDoc and the inventory see different files.**
-  The inventory scans `src` and `server` recursively. JSDoc is started with
-  `-X src` and no recursion option, so it reads only files directly in
-  `src/`. Files in subfolders and under `server/` then get source-derived
-  summaries but no symbols. This was confirmed by running the generator on a
-  three-file test tree without a `jsdoc.json`.
+- **Without a `jsdoc.json`, JSDoc scans the same default directories as the inventory.**
+  The inventory scans `src` and `server` recursively, and JSDoc is started with
+  `-X -r` plus whichever of the `src` and `server` directories exist,
+  so files in subfolders and under `server/` get symbols too (`src/lib/jsdocDoclets.js`).
+  When neither directory exists, no doclets are collected instead of failing.
+  Covered by `test/jsdocDoclets.test.js`.
 - **Doclets are filtered by file name, not by directory.** JSDoc selects its
   own files from `jsdoc.json`. A documented file inside a directory that the
   inventory skips as sensitive, for example `src/secrets/a.js`, still

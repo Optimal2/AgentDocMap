@@ -268,7 +268,7 @@ What the tool reads from the target:
 | --- | --- | --- |
 | `jsdoc.json` → `source.include` | Directories to scan | `src` and `server` |
 | `jsdoc.json` → `source.includePattern` / `excludePattern` | File filters | `.js/.jsx/.mjs/.cjs`; excludes `node_modules`, `dist`, `docs`, `coverage`, `.git`, `.agentdocmap` |
-| `jsdoc.json` (whole file) | Passed to `jsdoc -c` | JSDoc runs on `src` |
+| `jsdoc.json` (whole file) | Passed to `jsdoc -c` | JSDoc runs recursively on the `src` and `server` directories that exist |
 | `package.json` | Name, version, description, scripts, dependencies | Project name falls back to the folder name |
 | Git metadata | Commit, date, branch, dirty flag; default `--generated-at` | Commit, date and branch are `null`, the dirty flag is `false` (so `false` does not prove a clean work tree); timestamp is the current time |
 

@@ -12,7 +12,16 @@ export async function collectJsdocDoclets({ projectRoot, targetRoot, jsdocConfig
   if (await pathExists(jsdocConfigPath)) {
     args.push('-c', jsdocConfigPath);
   } else {
-    args.push('src');
+    const sources = [];
+    for (const dir of ['src', 'server']) {
+      if (await pathExists(path.join(targetRoot, dir))) {
+        sources.push(dir);
+      }
+    }
+    if (sources.length === 0) {
+      return [];
+    }
+    args.push('-r', ...sources);
   }
 
   const result = spawnSync(process.execPath, args, {
