@@ -115,8 +115,8 @@ flowchart LR
 
 Derived from `src/cli.js`, `src/index.js` (`generateAgentDocs`) and the
 modules in `src/lib/`: `fileInventory.js`, `sourceAnalyzer.js`,
-`jsdocDoclets.js`, `gitInfo.js`, `mapBuilder.js`, `writers.js`,
-`outputGuard.js`. `gitInfo.js` is skipped when `--source-metadata none` is
+`jsdocDoclets.js`, `gitInfo.js`, `mapBuilder.js`, `writers.js`, `outputGuard.js`,
+`projectSignals.js`, `fsUtils.js`. `gitInfo.js` is skipped when `--source-metadata none` is
 set.
 
 | Module | Responsibility |
@@ -124,6 +124,7 @@ set.
 | `src/cli.js` | Parses arguments, rejects unknown options, prints totals. |
 | `src/index.js` | Orchestrates one run; reads `package.json` and `jsdoc.json` from the target. |
 | `src/lib/fileInventory.js` | Walks `jsdoc.json` `source.include` (default `src`, `server`), applies include/exclude patterns, drops sensitive file and directory names. |
+| `src/lib/fsUtils.js` | Shared path, JSON and text helpers (`readJsonIfExists`, `firstSentence`, `hasOwn`). |
 | `src/lib/sourceAnalyzer.js` | Parses each file with `@babel/parser` (JSX, dynamic import, top-level await, ...) and records imports, exports, declarations, leading JSDoc summary, roles and risk patterns. |
 | `src/lib/jsdocDoclets.js` | Runs `node_modules/jsdoc/jsdoc.js -X -c <target>/jsdoc.json` (or `-X src` when there is no config) and parses the JSON. |
 | `src/lib/gitInfo.js` | Reads commit, commit date, branch and dirty state with `git`. |
@@ -318,7 +319,7 @@ has one export (5) and one doclet (3).
 
 For a real-size example, `examples/opendocviewer-agent-docs/` holds the
 committed packet for OpenDocViewer. At the time that snapshot was generated,
-it covered 114 source files, 49,449 source lines and 1,318 JSDoc symbols in
+it covered 148 source files, 60,676 source lines and 1,658 JSDoc symbols in
 30 output files. It is a calibration snapshot: it is regenerated when
 generator behavior changes, not every time OpenDocViewer changes.
 
@@ -549,44 +550,44 @@ variable, or a sibling `../AgentDocMap` checkout, and then runs
 `src/cli.js generate` with `--out docs-agent`,
 `--generated-at committed-docs` and `--source-metadata none`.
 
-Two OpenDocViewer GitHub Actions workflows check out this repository:
+OpenDocViewer pins the Node version and the AgentDocMap revision used to generate in `scripts/agent-docs-environment.json`. Two GitHub Actions workflows read that pin:
 
-- **Agent Documentation** (`.github/workflows/agent-docs.yml`, every push and
-  pull request): checks out AgentDocMap next to OpenDocViewer, regenerates
-  `docs-agent/` and fails on `git diff --exit-code -- docs-agent` if the
-  committed packet is stale.
-- **Release** (`.github/workflows/release.yml`, on version tags): checks out
-  AgentDocMap into `_tools/AgentDocMap`, builds the packet and attaches it to
-  the GitHub release as `OpenDocViewer-agent-docs-<tag>.zip`.
+- **Agent Documentation** (`.github/workflows/agent-docs.yml`, on push, tags,
+  pull requests and manual dispatch): checks out AgentDocMap at the pinned
+  revision next to OpenDocViewer, regenerates `docs-agent/` and verifies it
+  with `node scripts/verify-agent-docs-fresh.mjs`, which rejects modified, deleted, staged and untracked files under `docs-agent/`.
+- **Release** (`.github/workflows/release.yml`, on version tags): checks out AgentDocMap
+  at the pinned revision into `_tools/AgentDocMap`, builds the packet and attaches
+  it to the GitHub release as `OpenDocViewer-agent-docs-<tag>.zip` (next to the dist, docs and SBOM files).
 
 ```mermaid
 sequenceDiagram
     autonumber
     participant GH as GitHub Actions<br/>(ODV release.yml)
     participant ODV as OpenDocViewer checkout
-    participant ADM as _tools/AgentDocMap
+    participant ADM as _tools/AgentDocMap<br/>(pinned revision)
     participant CLI as AgentDocMap src/cli.js
     participant REL as GitHub release
 
     GH->>ODV: actions/checkout (tag)
-    GH->>ADM: actions/checkout Optimal2/AgentDocMap<br/>path _tools/AgentDocMap
-    GH->>ODV: npm ci, npm test, npm run build, npm run doc
-    GH->>ADM: npm ci
+    GH->>ADM: actions/checkout Optimal2/AgentDocMap<br/>ref pinned revision, path _tools/AgentDocMap
+    GH->>ODV: npm ci (clean install)
+    GH->>ADM: npm ci, then ODV: npm test, npm run build, npm run doc
     GH->>ODV: npm run doc:agent -- --agentdocmap-root _tools/AgentDocMap
     ODV->>CLI: node src/cli.js generate --target ODV root --out docs-agent<br/>--generated-at committed-docs --source-metadata none
     CLI->>ODV: read jsdoc.json, package.json, source files
     CLI->>CLI: jsdoc -X, Babel parse, buildAgentMap()
     CLI->>ODV: write docs-agent/
     GH->>GH: zip docs-agent/ into OpenDocViewer-agent-docs-tag.zip
-    GH->>REL: upload with dist and docs zips
+    GH->>REL: upload with dist, docs and SBOM files
 ```
 
-Derived from OpenDocViewer's `.github/workflows/release.yml` (steps "Check out
+Derived from OpenDocViewer's `.github/workflows/release.yml` (steps "Read agent-docs environment pin", "Check out
 AgentDocMap", "Install AgentDocMap deps", "Build agent docs", "Package agent
-docs") and `scripts/generate-agent-docs.mjs`. Neither workflow pins an
-AgentDocMap ref, so both use the current default branch: a generator change
-here can make OpenDocViewer's "Agent Documentation" check fail until
-`docs-agent/` is regenerated there.
+docs"), `.github/workflows/agent-docs.yml` (same pin, regenerate plus
+verify step) and `scripts/generate-agent-docs.mjs`. Both workflows use the
+pinned revision, so moving the pin past a generator change that alters
+output needs a matching `docs-agent/` regeneration in OpenDocViewer.
 
 ## Security
 
