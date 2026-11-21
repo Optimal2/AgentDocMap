@@ -270,7 +270,7 @@ What the tool reads from the target:
 | `jsdoc.json` → `source.includePattern` / `excludePattern` | File filters | `.js/.jsx/.mjs/.cjs`; excludes `node_modules`, `dist`, `docs`, `coverage`, `.git`, `.agentdocmap` |
 | `jsdoc.json` (whole file) | Passed to `jsdoc -c` | JSDoc runs on `src` |
 | `package.json` | Name, version, description, scripts, dependencies | Project name falls back to the folder name |
-| Git metadata | Commit, date, branch, dirty flag; default `--generated-at` | Fields are `null`; timestamp is the current time |
+| Git metadata | Commit, date, branch, dirty flag; default `--generated-at` | Commit, date and branch are `null`, the dirty flag is `false` (so `false` does not prove a clean work tree); timestamp is the current time |
 
 ## CLI reference
 
@@ -358,7 +358,7 @@ output needs a matching `docs-agent/` regeneration in OpenDocViewer.
 See [SECURITY.md](SECURITY.md) for supported versions and how to report a
 vulnerability. Built-in protections, each covered by tests in `test/`:
 
-- **Sensitive files are not read.** `.env*`, key and certificate files, SSH
+- **Sensitive files are kept out of the inventory.** `.env*`, key and certificate files, SSH
   keys, `.npmrc`/`.netrc`-style credential files, `secret.*`/`token.*`-style
   files, `*.local.*` configs, and directories such as `secrets/`,
   `credentials/`, `.aws/` are skipped by the inventory
@@ -367,16 +367,24 @@ vulnerability. Built-in protections, each covered by tests in `test/`:
   sensitive directory can still contribute doclets when the target's
   `jsdoc.json` makes JSDoc read it (see
   [Known limits](docs/ARCHITECTURE.md#known-limits-and-trade-offs)).
+  The JSDoc child process selects and reads its own files, so it can still
+  read a sensitive file from disk; the filters only keep such files out of
+  the packet.
 - **Package scripts are redacted** before output: token/secret/password
   assignments, `Authorization` headers, credentials in URLs and npm
   `_authToken` values become `***` (`redactScript()` in
   `src/lib/mapBuilder.js`).
-- **Untrusted text is escaped** when rendered into Markdown tables and inline
-  text (`src/lib/writers.js`).
+- **Most untrusted text is escaped** when rendered into Markdown tables and
+  inline text (`src/lib/writers.js`). A few values are written unescaped:
+  undeclared package names in `DEPENDENCIES.md` and file paths in the import
+  hub and report lists (see
+  [Known limits](docs/ARCHITECTURE.md#known-limits-and-trade-offs)).
 - **Output deletion is guarded** (see [CLI reference](#cli-reference)).
 
 AgentDocMap does not run target application code, but JSDoc loads any
-`plugins` listed in the target's `jsdoc.json`. Treat the target as trusted
+`plugins` listed in the target's `jsdoc.json`, and in the default
+`--source-metadata git` mode Git reads the target's `.git/config`, which can
+name programs that Git starts. Treat the target as trusted
 input, and review a packet before publishing it.
 
 ## Development and tests

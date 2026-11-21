@@ -32,8 +32,11 @@ documentation from private repositories in public reports.
 AgentDocMap reads source files and JSDoc comments from a target repository and
 writes generated documentation. It does not execute target application code
 and makes no network requests. However, it runs the JSDoc CLI with the
-target's `jsdoc.json`, and JSDoc loads any `plugins` listed there, so treat
-target source trees as input that should come from repositories you trust.
+target's `jsdoc.json`, and JSDoc loads any `plugins` listed there. Unless
+`--source-metadata none` is used, it also runs `git` in the target, and Git
+reads the target's `.git/config`, which can name programs that Git starts.
+Treat target source trees as input that should come from repositories you
+trust.
 
 Trust boundaries, each protection and its known limits are described in
 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#security-model).
@@ -41,8 +44,9 @@ Trust boundaries, each protection and its known limits are described in
 Built-in protections:
 
 - sensitive file and directory names (`.env*`, keys and certificates,
-  credential config files, `secrets/`, `.aws/`, ...) are skipped
-  (`src/lib/fileInventory.js`)
+  credential config files, `secrets/`, `.aws/`, ...) are kept out of the
+  file inventory (`src/lib/fileInventory.js`); the JSDoc child process
+  selects its own files and can still read them from disk
 - secrets in package scripts are redacted before output
   (`redactScript()` in `src/lib/mapBuilder.js`)
 - the output directory is only deleted when it passes
