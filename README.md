@@ -362,14 +362,14 @@ vulnerability. Built-in protections, each covered by tests in `test/`:
   keys, `.npmrc`/`.netrc`-style credential files, `secret.*`/`token.*`-style
   files, `*.local.*` configs, and directories such as `secrets/`,
   `credentials/`, `.aws/` are skipped by the inventory
-  (`src/lib/fileInventory.js`). Doclets are dropped when their file name is
-  sensitive (`isSensitiveFileName()`); a file with an ordinary name inside a
-  sensitive directory can still contribute doclets when the target's
-  `jsdoc.json` makes JSDoc read it (see
-  [Known limits](docs/ARCHITECTURE.md#known-limits-and-trade-offs)).
+  (`src/lib/fileInventory.js`). Doclets are dropped when their file name or
+  directory is sensitive (`isSensitiveFileName()`,
+  `isSensitiveRelativePath()` in `src/lib/fileInventory.js`,
+  `isSensitiveDocletPath()` in `src/lib/mapBuilder.js`).
   The JSDoc child process selects and reads its own files, so it can still
-  read a sensitive file from disk; the filters only keep such files out of
-  the packet.
+  read a sensitive file from disk (see
+  [Known limits](docs/ARCHITECTURE.md#known-limits-and-trade-offs));
+  the filters keep such files out of the packet.
 - **Package scripts are redacted** before output: token/secret/password
   assignments, `Authorization` headers, credentials in URLs and npm
   `_authToken` values become `***` (`redactScript()` in
@@ -409,6 +409,8 @@ Test files:
 | `test/secretSafety.test.js` | Sensitive-file exclusion and script redaction. |
 | `test/outputGuard.test.js` | `assertSafeCleanOutputDirectory()` rules. |
 | `test/concurrency.test.js` | Deterministic output across parallel runs; concurrent runs into one directory. |
+| `test/jsdocDoclets.test.js` | JSDoc fallback without `jsdoc.json`: recursive scan of `src` and `server`. |
+| `test/cli.test.js` | CLI argument parsing, including rejected option values. |
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for change guidelines.
 

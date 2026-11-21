@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 
+import { realpathSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { generateAgentDocs } from './index.js';
 
 function printHelp() {
@@ -29,7 +32,16 @@ Options:
 `);
 }
 
-function parseArgs(argv) {
+function takeValue(args, index) {
+  const value = args[index + 1];
+  if (value === undefined || value.startsWith('-')) {
+    throw new Error(`Missing value for option: ${args[index]}`);
+  }
+
+  return value;
+}
+
+export function parseArgs(argv) {
   const args = [...argv];
   const command = args.shift();
   const options = { clean: true };
@@ -37,15 +49,20 @@ function parseArgs(argv) {
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i];
     if (arg === '--target') {
-      options.target = args[++i];
+      options.target = takeValue(args, i);
+      i += 1;
     } else if (arg === '--out') {
-      options.out = args[++i];
+      options.out = takeValue(args, i);
+      i += 1;
     } else if (arg === '--project-name') {
-      options.projectName = args[++i];
+      options.projectName = takeValue(args, i);
+      i += 1;
     } else if (arg === '--generated-at') {
-      options.generatedAt = args[++i];
+      options.generatedAt = takeValue(args, i);
+      i += 1;
     } else if (arg === '--source-metadata') {
-      options.sourceMetadata = args[++i];
+      options.sourceMetadata = takeValue(args, i);
+      i += 1;
     } else if (arg === '--no-clean') {
       options.clean = false;
     } else if (arg === '-h' || arg === '--help') {
@@ -56,6 +73,18 @@ function parseArgs(argv) {
   }
 
   return { command, options };
+}
+
+function isDirectlyInvoked() {
+  if (!process.argv[1]) {
+    return false;
+  }
+
+  try {
+    return realpathSync(path.resolve(process.argv[1])) === realpathSync(fileURLToPath(import.meta.url));
+  } catch {
+    return false;
+  }
 }
 
 async function main() {
@@ -86,7 +115,10 @@ async function main() {
   console.log(`Indexed ${result.stats.fileCount} files and ${result.stats.docletCount} JSDoc doclets.`);
 }
 
-main().catch((error) => {
-  console.error(error instanceof Error ? error.message : String(error));
-  process.exitCode = 1;
-});
+const invokedDirectly = isDirectlyInvoked();
+if (invokedDirectly) {
+  main().catch((error) => {
+    console.error(error instanceof Error ? error.message : String(error));
+    process.exitCode = 1;
+  });
+}

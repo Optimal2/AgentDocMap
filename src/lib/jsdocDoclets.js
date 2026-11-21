@@ -28,6 +28,7 @@ export async function collectJsdocDoclets({ projectRoot, targetRoot, jsdocConfig
     cwd: targetRoot,
     encoding: 'utf8',
     maxBuffer: 1024 * 1024 * 80,
+    windowsHide: true,
   });
 
   if (result.error) {

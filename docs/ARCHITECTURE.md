@@ -261,7 +261,8 @@ Step by step:
 All steps are in `src/lib/mapBuilder.js`.
 
 1. **Normalize doclets** (`normalizeDoclets()`). Doclets of kind `package` are
-   dropped. Doclets whose file name is sensitive are dropped. Doclets that are
+   dropped. Doclets whose file name or directory is sensitive are dropped
+   (`isSensitiveRelativePath()`). Doclets that are
    `undocumented`, or that have no text, no parameters, no return value, no
    example and no structural kind, are dropped (`isAgentUsefulDoclet()`).
    HTML is stripped (`plainText()`), the description is cut to the first
@@ -541,7 +542,8 @@ The target needs no AgentDocMap-specific file. The contract is the table in
 `node <AgentDocMap>/node_modules/jsdoc/jsdoc.js -X -c <target>/jsdoc.json`
 with the target root as working directory. `-X` makes JSDoc print its doclets
 as JSON on standard output instead of generating a site. Without a
-`jsdoc.json` the arguments are `-X src`. Standard output is limited to 80 MiB
+`jsdoc.json` the arguments are `-X -r` plus whichever of the `src` and `server`
+directories exist (no doclets are collected when neither exists). Standard output is limited to 80 MiB
 (`maxBuffer` in `src/lib/jsdocDoclets.js`).
 
 The JSDoc version is the one in AgentDocMap's `package-lock.json`, not one
@@ -719,9 +721,11 @@ flowchart LR
   in `SENSITIVE_DIRECTORY_NAMES` (`secrets`, `credentials`, `passwords`,
   `tokens`, `.aws`, `.env` and their singular forms)
   (`src/lib/fileInventory.js`, `test/secretSafety.test.js`).
-- **Doclets from sensitive file names are dropped.** `normalizeDoclets()`
-  filters on the doclet's file name with `isSensitiveFileName()`
-  (`src/lib/mapBuilder.js`). It does not filter on directory names; see
+- **Doclets from sensitive files and directories are dropped.**
+  `normalizeDoclets()` filters on the doclet's file name with
+  `isSensitiveFileName()` and on its directory with `isSensitiveRelativePath()`
+  (`src/lib/mapBuilder.js`, `src/lib/fileInventory.js`; `test/secretSafety.test.js`).
+  JSDoc still reads such files from disk; see
   [Known limits](#known-limits-and-trade-offs).
 - **Package scripts are redacted.** `redactScript()` masks `KEY=value`
   assignments whose key contains `TOKEN`, `SECRET`, `PASSWORD`, `PASS`,
@@ -821,14 +825,16 @@ AgentDocMap is run on demand. There is no service to monitor.
   generation against `test/fixture-project/` (`test/generate.test.js`),
   writer output (`test/writers.test.js`), secret safety
   (`test/secretSafety.test.js`), the output guard
-  (`test/outputGuard.test.js`) and concurrency (`test/concurrency.test.js`).
+  (`test/outputGuard.test.js`), concurrency (`test/concurrency.test.js`), the JSDoc
+  fallback without `jsdoc.json` (`test/jsdocDoclets.test.js`) and CLI argument
+  parsing (`test/cli.test.js`).
 
 Known failure modes:
 
 | Symptom | Cause | Where |
 | --- | --- | --- |
 | `JSDoc is not installed. Run npm install in the AgentDocMap repository.` | `node_modules/jsdoc/jsdoc.js` is missing in the AgentDocMap checkout. | `src/lib/jsdocDoclets.js` |
-| `JSDoc failed with exit code <n>.` followed by JSDoc's own output | Invalid `jsdoc.json`, a failing plugin, or a missing `src` directory when there is no `jsdoc.json`. | `src/lib/jsdocDoclets.js` |
+| `JSDoc failed with exit code <n>.` followed by JSDoc's own output | Invalid `jsdoc.json` or a failing plugin. When there is no `jsdoc.json` and neither `src` nor `server` exists, no doclets are collected instead of failing. | `src/lib/jsdocDoclets.js` |
 | `Unable to parse JSDoc JSON output` | JSDoc printed something other than JSON, for example a plugin writing to standard output. | `src/lib/jsdocDoclets.js` |
 | A buffer error from the JSDoc child process | JSDoc output exceeded 80 MiB. | `maxBuffer` in `src/lib/jsdocDoclets.js` |
 | `Refusing to clean unsafe AgentDocMap output directory` | The `--out` name is not on the allow list. Rename it or use `--no-clean`. | `src/lib/outputGuard.js` |
@@ -895,13 +901,13 @@ Limits that follow from the code:
   so files in subfolders and under `server/` get symbols too (`src/lib/jsdocDoclets.js`).
   When neither directory exists, no doclets are collected instead of failing.
   Covered by `test/jsdocDoclets.test.js`.
-- **Doclets are filtered by file name, not by directory.** JSDoc selects its
-  own files from `jsdoc.json`. A documented file inside a directory that the
-  inventory skips as sensitive, for example `src/secrets/a.js`, still
-  produces doclets when JSDoc is configured to recurse. Its symbols and a
-  placeholder file record then appear in the packet. This was confirmed by
-  running the generator with a recursive `jsdoc.json`. JSDoc also reads such
-  files from disk before any AgentDocMap filter applies.
+- **Doclets are filtered after JSDoc reads them.** JSDoc selects its own
+  files from `jsdoc.json` and reads them from disk before any AgentDocMap
+  filter applies. A documented file inside a directory that the inventory
+  skips as sensitive, for example `src/secrets/a.js`, is still read, but its
+  doclets are dropped from the packet by `isSensitiveDocletPath()`, so neither
+  its symbols nor a placeholder file record appear. Covered by
+  `test/secretSafety.test.js` ("drops doclets from sensitive directories").
 - **Some values from the target are written without escaping.**
   `src/lib/writers.js` places these values between literal backticks with no
   escaping: the package name in "Imported But Not Declared Directly" in

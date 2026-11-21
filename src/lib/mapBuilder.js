@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { firstSentence, normalizeRelativePath, toPosixPath, truncateText } from './fsUtils.js';
-import { isSensitiveFileName } from './fileInventory.js';
+import { isSensitiveFileName, isSensitiveRelativePath } from './fileInventory.js';
 import { ENTRYPOINT_NAMES } from './projectSignals.js';
 
 /**
@@ -268,6 +268,7 @@ function normalizeDoclets({ targetRoot, doclets }) {
   return doclets
     .filter((doclet) => doclet.kind !== 'package')
     .filter((doclet) => !isSensitiveFileName(doclet.meta?.filename || ''))
+    .filter((doclet) => !isSensitiveDocletPath(targetRoot, doclet))
     .filter(isAgentUsefulDoclet)
     .map((doclet) => {
       const file = normalizeDocletFile(targetRoot, doclet);
@@ -294,6 +295,11 @@ function normalizeDoclets({ targetRoot, doclets }) {
         examples: (doclet.examples || []).length,
       };
     });
+}
+
+function isSensitiveDocletPath(targetRoot, doclet) {
+  const file = normalizeDocletFile(targetRoot, doclet);
+  return file !== null && isSensitiveRelativePath(file);
 }
 
 function isAgentUsefulDoclet(doclet) {

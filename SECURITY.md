@@ -45,7 +45,9 @@ Built-in protections:
 
 - sensitive file and directory names (`.env*`, keys and certificates,
   credential config files, `secrets/`, `.aws/`, ...) are kept out of the
-  file inventory (`src/lib/fileInventory.js`); the JSDoc child process
+  file inventory (`src/lib/fileInventory.js`), and doclets from sensitive
+  files and directories are dropped from the packet (`normalizeDoclets()`
+  in `src/lib/mapBuilder.js`); the JSDoc child process
   selects its own files and can still read them from disk
 - secrets in package scripts are redacted before output
   (`redactScript()` in `src/lib/mapBuilder.js`)

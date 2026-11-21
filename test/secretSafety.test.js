@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
-import { collectSourceFiles, isSensitiveFileName } from '../src/lib/fileInventory.js';
+import { collectSourceFiles, isSensitiveFileName, isSensitiveRelativePath } from '../src/lib/fileInventory.js';
 import { buildAgentMap, redactScript } from '../src/lib/mapBuilder.js';
 import { writeAgentDocs } from '../src/lib/writers.js';
 
@@ -47,6 +47,17 @@ test('isSensitiveFileName recognises common sensitive file names', () => {
   assert.equal(isSensitiveFileName('index.js'), false);
   assert.equal(isSensitiveFileName('tokenValidator.js'), false);
   assert.equal(isSensitiveFileName('README.md'), false);
+});
+
+test('isSensitiveRelativePath recognises sensitive directories', () => {
+  assert.equal(isSensitiveRelativePath('src/normal.js'), false);
+  assert.equal(isSensitiveRelativePath('src/tokenValidator.js'), false);
+  assert.equal(isSensitiveRelativePath('src/secrets/a.js'), true);
+  assert.equal(isSensitiveRelativePath('src/.aws/credentials'), true);
+  assert.equal(isSensitiveRelativePath('server/Credentials/app.js'), true);
+  assert.equal(isSensitiveRelativePath('src/.env'), true);
+  assert.equal(isSensitiveRelativePath('src/config.local.js'), true);
+  assert.equal(isSensitiveRelativePath('a.js'), false);
 });
 
 test('collectSourceFiles excludes sensitive file names', async () => {
@@ -111,6 +122,59 @@ test('collectSourceFiles excludes aws credentials and agentdocmap working direct
     assert.equal(paths.includes('server/.htpasswd'), false, 'htpasswd file is excluded');
     assert.equal(paths.includes('server/config.secret.js'), false, 'secret-pattern file is excluded');
     assert.equal(paths.includes('.agentdocmap/state.json'), false, 'agentdocmap working directory is excluded');
+  });
+});
+
+test('collectSourceFiles excludes an explicitly included sensitive directory', async () => {
+  await withTempDir('agentdocmap-secret-', async (target) => {
+    await writeFiles(target, {
+      'src/ok.js': 'export const ok = 1;',
+      'src/secrets/a.js': 'export const a = 1;',
+    });
+
+    const files = await collectSourceFiles({
+      targetRoot: target,
+      jsdocConfig: { source: { include: ['src/secrets'] } },
+    });
+    const paths = files.map((file) => file.relativePath);
+
+    assert.equal(paths.includes('src/secrets/a.js'), false, 'sensitive directory stays excluded even when explicitly included');
+  });
+});
+
+test('buildAgentMap drops doclets from sensitive directories', async () => {
+  await withTempDir('agentdocmap-target-', async (targetRoot) => {
+    const map = buildAgentMap({
+      projectName: 'SecretProject',
+      targetRoot,
+      generatedBy: 'AgentDocMap',
+      sourceMetadata: 'none',
+      generatedAtUtc: 'example',
+      git: { commit: null, commitDate: null, branch: null, dirty: null },
+      packageJson: { name: 'secret-project' },
+      sourceAnalysis: { files: [] },
+      doclets: [
+        {
+          kind: 'function',
+          name: 'leak',
+          longname: 'leak',
+          description: 'Secret helper that must stay out of the packet.',
+          meta: { filename: 'a.js', path: path.join(targetRoot, 'src', 'secrets'), lineno: 1 },
+        },
+        {
+          kind: 'function',
+          name: 'ok',
+          longname: 'ok',
+          description: 'Public helper that stays in the packet.',
+          meta: { filename: 'b.js', path: path.join(targetRoot, 'src'), lineno: 1 },
+        },
+      ],
+    });
+
+    const names = map.symbols.map((symbol) => symbol.name);
+    assert.equal(names.includes('leak'), false, 'doclet from a sensitive directory is dropped');
+    assert.equal(names.includes('ok'), true, 'doclet from an ordinary directory is kept');
+    assert.equal(map.files.some((file) => file.path.split('/').includes('secrets')), false);
   });
 });
 

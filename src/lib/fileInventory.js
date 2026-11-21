@@ -30,6 +30,22 @@ const SENSITIVE_DIRECTORY_NAMES = new Set([
   'token',
 ]);
 
+/**
+ * True when a target-relative posix path points at a sensitive file or
+ * inside a sensitive directory. Doclets carry their directory in
+ * `meta.path`, so filtering on the file name alone is not enough: a file
+ * with an ordinary name under `secrets/` must be treated as sensitive too.
+ */
+export function isSensitiveRelativePath(relativePath) {
+  const segments = String(relativePath || '').split('/');
+  const fileName = segments[segments.length - 1] || '';
+  if (isSensitiveFileName(fileName)) {
+    return true;
+  }
+
+  return segments.slice(0, -1).some((segment) => isSensitiveDirectoryName(segment));
+}
+
 export function isSensitiveFileName(fileName) {
   return SENSITIVE_NAME_PATTERNS.some((pattern) => pattern.test(fileName));
 }
@@ -49,8 +65,7 @@ export async function collectSourceFiles({ targetRoot, jsdocConfig }) {
     const absolute = path.resolve(targetRoot, include);
     await walk(absolute, async (filePath) => {
       const relative = normalizeRelativePath(targetRoot, filePath);
-      const fileName = path.basename(filePath);
-      if (includePattern.test(filePath) && !excludePattern.test(`${relative}/`) && !isSensitiveFileName(fileName)) {
+      if (includePattern.test(filePath) && !excludePattern.test(`${relative}/`) && !isSensitiveRelativePath(relative)) {
         files.push({ absolutePath: filePath, relativePath: relative });
       }
     });
