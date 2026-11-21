@@ -18,9 +18,7 @@ Current version: **0.1.1** (`package.json`). The package is marked
 - [What it is](#what-it-is)
 - [What it is not](#what-it-is-not)
 - [Architecture](#architecture)
-- [Main flow: from source files to an agent packet](#main-flow-from-source-files-to-an-agent-packet)
 - [Example: input and output](#example-input-and-output)
-- [The map data model](#the-map-data-model)
 - [Output files](#output-files)
 - [Quick start](#quick-start)
 - [CLI reference](#cli-reference)
@@ -69,122 +67,25 @@ Current version: **0.1.1** (`package.json`). The package is marked
 
 ## Architecture
 
-```mermaid
-flowchart LR
-    subgraph Target["Target repository"]
-        PJ["package.json"]
-        JC["jsdoc.json"]
-        SRC["Source files<br/>.js .jsx .mjs .cjs"]
-        GIT[".git"]
-    end
+AgentDocMap is one Node.js process with no server, no database and no network
+access. `src/cli.js` calls `generateAgentDocs()` in `src/index.js`, which runs
+five steps in order:
 
-    subgraph ADM["AgentDocMap"]
-        CLI["src/cli.js<br/>parseArgs + validation"]
-        IDX["src/index.js<br/>generateAgentDocs()"]
-        INV["fileInventory.js<br/>collectSourceFiles()"]
-        ANA["sourceAnalyzer.js<br/>analyzeSources()<br/>@babel/parser"]
-        DOC["jsdocDoclets.js<br/>collectJsdocDoclets()<br/>jsdoc -X"]
-        GI["gitInfo.js<br/>getGitInfo()"]
-        MB["mapBuilder.js<br/>buildAgentMap()"]
-        WR["writers.js<br/>writeAgentDocs()"]
-        OG["outputGuard.js<br/>assertSafeCleanOutputDirectory()"]
-    end
+1. `collectSourceFiles()` lists the target's source files
+   (`src/lib/fileInventory.js`).
+2. `analyzeSources()` parses them with `@babel/parser`
+   (`src/lib/sourceAnalyzer.js`).
+3. `collectJsdocDoclets()` runs the JSDoc CLI in explain mode
+   (`src/lib/jsdocDoclets.js`).
+4. `buildAgentMap()` merges both into one map (`src/lib/mapBuilder.js`).
+5. `writeAgentDocs()` renders and writes the packet (`src/lib/writers.js`),
+   after `assertSafeCleanOutputDirectory()` has approved deleting the old
+   one (`src/lib/outputGuard.js`).
 
-    OUT["Output packet<br/>AGENT_CONTEXT.md, agent-map.json,<br/>chunks/*.md, ..."]
-    AGENT["AI coding agent"]
-
-    CLI --> IDX
-    PJ --> IDX
-    JC --> INV
-    JC --> DOC
-    SRC --> INV
-    INV --> ANA
-    SRC --> DOC
-    GIT --> GI
-    IDX --> INV
-    IDX --> DOC
-    IDX --> GI
-    ANA --> MB
-    DOC --> MB
-    GI --> MB
-    MB --> WR
-    OG -. "guards --clean" .-> WR
-    WR --> OUT
-    OUT --> AGENT
-```
-
-Derived from `src/cli.js`, `src/index.js` (`generateAgentDocs`) and the
-modules in `src/lib/`: `fileInventory.js`, `sourceAnalyzer.js`,
-`jsdocDoclets.js`, `gitInfo.js`, `mapBuilder.js`, `writers.js`, `outputGuard.js`,
-`projectSignals.js`, `fsUtils.js`. `gitInfo.js` is skipped when `--source-metadata none` is
-set.
-
-| Module | Responsibility |
-| --- | --- |
-| `src/cli.js` | Parses arguments, rejects unknown options, prints totals. |
-| `src/index.js` | Orchestrates one run; reads `package.json` and `jsdoc.json` from the target. |
-| `src/lib/fileInventory.js` | Walks `jsdoc.json` `source.include` (default `src`, `server`), applies include/exclude patterns, drops sensitive file and directory names. |
-| `src/lib/fsUtils.js` | Shared path, JSON and text helpers (`readJsonIfExists`, `firstSentence`, `hasOwn`). |
-| `src/lib/sourceAnalyzer.js` | Parses each file with `@babel/parser` (JSX, dynamic import, top-level await, ...) and records imports, exports, declarations, leading JSDoc summary, roles and risk patterns. |
-| `src/lib/jsdocDoclets.js` | Runs `node_modules/jsdoc/jsdoc.js -X -c <target>/jsdoc.json` (or `-X src` when there is no config) and parses the JSON. |
-| `src/lib/gitInfo.js` | Reads commit, commit date, branch and dirty state with `git`. |
-| `src/lib/mapBuilder.js` | Filters and normalizes doclets, resolves local imports, scores files, groups modules, collects cross-cutting signals, redacts secrets in package scripts. |
-| `src/lib/writers.js` | Renders Markdown/JSON, escapes untrusted text, computes the token budget, writes files. |
-| `src/lib/outputGuard.js` | Refuses to delete an output directory unless it is safe (see [CLI reference](#cli-reference)). |
-| `src/lib/projectSignals.js` | Shared list of entrypoint file names (`index.js`, `main.jsx`, `App.jsx`, `vite.config.js`, ...). |
-
-## Main flow: from source files to an agent packet
-
-```mermaid
-flowchart TD
-    A["Target repository"] --> B["collectSourceFiles()<br/>include dirs from jsdoc.json<br/>skip node_modules, dist, docs, coverage,<br/>.git, .env*, keys, secrets/ ..."]
-    A --> C["collectJsdocDoclets()<br/>node jsdoc.js -X -c jsdoc.json"]
-    A --> G["getGitInfo()<br/>or null metadata with<br/>--source-metadata none"]
-    B --> D["analyzeSources()<br/>imports, exports, declarations,<br/>roles, risk patterns"]
-    C --> E["normalizeDoclets()<br/>drop undocumented and sensitive-file doclets,<br/>strip HTML, first sentence only"]
-    D --> F["buildAgentMap()"]
-    E --> F
-    G --> F
-    F --> F1["Attach doclets to files"]
-    F1 --> F2["summarizeFile()<br/>summary + confidence + source"]
-    F2 --> F3["Resolve local imports,<br/>count incoming imports and package usage"]
-    F3 --> F4["scoreFile()<br/>entrypoint, incoming imports,<br/>exports, doclets, size"]
-    F4 --> F5["buildModules(), buildCrossCutting(),<br/>buildRecommendations(), redact scripts"]
-    F5 --> M[("agent-map.json<br/>schemaVersion 1")]
-    M --> W["writeAgentDocs()"]
-    W --> W1["assertSafeCleanOutputDirectory()<br/>then delete old output (--clean)"]
-    W1 --> W2["Render Markdown views + chunks/*.md"]
-    W2 --> W3["renderBudget() over all outputs"]
-    W3 --> P["Packet on disk"]
-    P --> Q["Agent reads AGENT_CONTEXT.md first,<br/>then MODULES.md, FILE_MAP.md, ..."]
-    P --> R["CI: git diff --exit-code<br/>on the committed packet"]
-```
-
-Derived from `generateAgentDocs` in `src/index.js`, `buildAgentMap`,
-`normalizeDoclets`, `summarizeFile`, `scoreFile`, `buildModules`,
-`buildCrossCutting` and `buildRecommendations` in `src/lib/mapBuilder.js`, and
-`writeAgentDocs` / `renderBudget` in `src/lib/writers.js`. The CI step at the
-bottom is the OpenDocViewer "Agent Documentation" workflow described in
-[Use in OpenDocViewer](#use-in-opendocviewer).
-
-Details that matter when reading the output:
-
-- **Summaries carry confidence.** `summarizeFile()` picks, in order: a
-  `@module` doclet, a leading file-level JSDoc block, the best-scoring doclet
-  for an exported or declared name, then source exports/declarations. Each
-  file gets `summaryConfidence` (`high`, `medium`, `low`) and `summarySource`
-  (`module-doclet`, `leading-jsdoc`, `doclet`, `source-export`,
-  `source-declaration`, `none`).
-- **Importance score.** `scoreFile()` adds 80 for entrypoint names, 20 for
-  files under `server/`, up to 60 for incoming local imports (8 each), up to
-  30 for exports, up to 24 for doclets and up to 20 for file size. The top 20
-  become `importantFiles`.
-- **Modules.** `moduleKeyForPath()` groups `src/<folder>` and
-  `src/components/<folder>` into separate modules; each module becomes one
-  file in `chunks/`.
-- **Roles** (`detectRoles()`): `hook`, `context`, `worker`, `test`, `config`.
-  **Risk patterns** (`RISK_PATTERNS`): `dangerouslySetInnerHTML`, `eval(`,
-  `.innerHTML`, with up to 12 line numbers per file.
+The full description is in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md):
+components and their dependencies, the runtime flows step by step, the
+`agent-map.json` schema, integration points, configuration, the security
+model, operations and known limits, with diagrams.
 
 ## Example: input and output
 
@@ -323,143 +224,6 @@ it covered 148 source files, 60,676 source lines and 1,658 JSDoc symbols in
 30 output files. It is a calibration snapshot: it is regenerated when
 generator behavior changes, not every time OpenDocViewer changes.
 
-## The map data model
-
-`agent-map.json` is the full structured map; every Markdown file is a view of
-it. `symbol-index.json` is `symbols` on its own.
-
-```mermaid
-classDiagram
-    class AgentMap {
-        schemaVersion = 1
-        project
-        generated
-        stats
-        recommendations : string[]
-        packageUsage : PackageUsage[]
-        importantFiles : FilePointer[]
-        crossCutting
-        modules : Module[]
-        files : File[]
-        symbols : Symbol[]
-    }
-    class Project {
-        name
-        packageName
-        packageVersion
-        description
-        packageScripts : redacted
-        dependencies
-        devDependencies
-    }
-    class Generated {
-        by = "AgentDocMap"
-        atUtc
-        sourceMetadata : git or none
-        sourceCommit
-        sourceBranch
-        sourceDirty
-    }
-    class Stats {
-        fileCount
-        sourceLineCount
-        docletCount
-        documentedFileCount
-        lowConfidenceSummaryCount
-        parseErrorCount
-        packageDependencyCount
-        devDependencyCount
-        estimatedSourceTokens
-    }
-    class File {
-        path
-        lines
-        extension
-        jsdocBlockCount
-        sourceSummary
-        imports : Import[]
-        exports : Export[]
-        declarations : Declaration[]
-        parseError
-        signals : roles, riskPatterns
-        doclets : Symbol[]
-        moduleKey
-        localImports : Import[]
-        packageImports : Import[]
-        incomingLocalImports
-        importanceScore
-        summary
-        summaryConfidence : high, medium, low
-        summarySource
-    }
-    class Import {
-        source
-        specifiers : string[]
-        line
-        kind : static or dynamic
-        resolved
-    }
-    class Symbol {
-        id
-        name
-        longname
-        kind
-        scope
-        file
-        line
-        description
-        params
-        returns
-        examples : count
-    }
-    class Module {
-        name
-        fileCount
-        lineCount
-        docletCount
-        importantFiles : FilePointer[]
-    }
-    class FilePointer {
-        path
-        score
-        lines
-        incomingLocalImports
-        doclets : count
-        summary
-        summaryConfidence
-    }
-    class PackageUsage {
-        packageName
-        importCount
-        dynamicImportCount
-        files : string[]
-    }
-    class CrossCutting {
-        roles : role, files[]
-        riskPatterns : key, description, files[]
-    }
-
-    AgentMap *-- Project
-    AgentMap *-- Generated
-    AgentMap *-- Stats
-    AgentMap *-- "0..*" File
-    AgentMap *-- "0..*" Symbol
-    AgentMap *-- "0..*" Module
-    AgentMap *-- "0..*" PackageUsage
-    AgentMap *-- CrossCutting
-    AgentMap o-- "0..20" FilePointer : importantFiles
-    File *-- "0..*" Import
-    File o-- "0..*" Symbol : doclets
-    Module o-- "0..8" FilePointer
-    Import ..> File : resolved path
-```
-
-Derived from the object returned by `buildAgentMap()` and from
-`toFilePointer()`, `buildModules()`, `countPackageUsage()` and
-`buildCrossCutting()` in `src/lib/mapBuilder.js`, and from the per-file record
-built by `analyzeFile()` in `src/lib/sourceAnalyzer.js`. Field names match
-the JSON keys. `resolved` exists only on `localImports`.
-
 ## Output files
 
 | File | Content | Rendered by |
@@ -474,7 +238,7 @@ the JSON keys. `resolved` exists only on `localImports`.
 | `REPORT.md` | Coverage, parse errors, low-confidence summaries. | `renderReport` |
 | `BUDGET.md` | Output size and token estimate (one token per four characters). | `renderBudget` |
 | `chunks/<module>.md` | Compact context for one module. | `renderModuleChunk` |
-| `agent-map.json` | The full map (see the data model above). | `toJsonString` |
+| `agent-map.json` | The full map (see [the map schema](docs/ARCHITECTURE.md#the-map-schema)). | `toJsonString` |
 | `symbol-index.json` | Normalized JSDoc symbol list. | `toJsonString` |
 
 All renderers live in `src/lib/writers.js`.
@@ -597,8 +361,12 @@ vulnerability. Built-in protections, each covered by tests in `test/`:
 - **Sensitive files are not read.** `.env*`, key and certificate files, SSH
   keys, `.npmrc`/`.netrc`-style credential files, `secret.*`/`token.*`-style
   files, `*.local.*` configs, and directories such as `secrets/`,
-  `credentials/`, `.aws/` are skipped by the inventory, and their doclets are
-  dropped (`isSensitiveFileName()` in `src/lib/fileInventory.js`).
+  `credentials/`, `.aws/` are skipped by the inventory
+  (`src/lib/fileInventory.js`). Doclets are dropped when their file name is
+  sensitive (`isSensitiveFileName()`); a file with an ordinary name inside a
+  sensitive directory can still contribute doclets when the target's
+  `jsdoc.json` makes JSDoc read it (see
+  [Known limits](docs/ARCHITECTURE.md#known-limits-and-trade-offs)).
 - **Package scripts are redacted** before output: token/secret/password
   assignments, `Authorization` headers, credentials in URLs and npm
   `_authToken` values become `***` (`redactScript()` in
@@ -641,6 +409,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for change guidelines.
 | Document | Purpose |
 | --- | --- |
 | [README.md](README.md) | This overview. |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Architecture description: components, flows, data, integration, security, operations, limits. |
 | [AGENTS.md](AGENTS.md) | Instructions for AI agents working in this repository. |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Change guidelines and validation. |
 | [SECURITY.md](SECURITY.md) | Supported versions, reporting, security model. |

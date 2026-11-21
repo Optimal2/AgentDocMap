@@ -35,6 +35,9 @@ and makes no network requests. However, it runs the JSDoc CLI with the
 target's `jsdoc.json`, and JSDoc loads any `plugins` listed there, so treat
 target source trees as input that should come from repositories you trust.
 
+Trust boundaries, each protection and its known limits are described in
+[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#security-model).
+
 Built-in protections:
 
 - sensitive file and directory names (`.env*`, keys and certificates,
