@@ -1,6 +1,6 @@
 # OpenDocViewer / src/components/DocumentToolbar
 
-File count: 19. Line count: 8059. JSDoc symbol count: 138.
+File count: 21. Line count: 8229. JSDoc symbol count: 117.
 
 ## src/components/DocumentToolbar/AboutOverlayDialog.jsx
 
@@ -22,7 +22,7 @@ Main toolbar UI for page navigation, zoom, comparison, image adjustments, help, 
 
 Exports: `DocumentToolbar`
 
-Local imports: `src/logging/userLogger.js`, `src/logging/systemLogger.js`, `src/components/DocumentToolbar/PageNavigationButtons.jsx`, `src/components/DocumentToolbar/ZoomButtons.jsx`, `src/components/DocumentToolbar/SplitToolbarButton.jsx`, `src/components/DocumentToolbar/LanguageMenuButton.jsx`, `src/components/DocumentToolbar/ThemeMenuButton.jsx`, `src/components/DocumentToolbar/PrintPipelineDialogs.jsx`, `src/components/DocumentToolbar/usePrintPipeline.js`, `src/components/DocumentToolbar/HelpMenuButton.jsx`, `src/components/DocumentToolbar/ManualOverlayDialog.jsx`, `src/components/DocumentToolbar/AboutOverlayDialog.jsx`
+Local imports: `src/logging/userLogger.js`, `src/logging/systemLogger.js`, `src/components/DocumentToolbar/PageNavigationButtons.jsx`, `src/components/DocumentToolbar/ZoomButtons.jsx`, `src/components/DocumentToolbar/SplitToolbarButton.jsx`, `src/components/DocumentToolbar/LanguageMenuButton.jsx`, `src/components/DocumentToolbar/ThemeMenuButton.jsx`, `src/components/DocumentToolbar/PrintPipelineDialogs.jsx`, `src/components/DocumentToolbar/usePrintPipeline.js`, `src/components/DocumentToolbar/HelpMenuButton.jsx`, `src/components/DocumentToolbar/OcrToolbarActions.jsx`, `src/components/DocumentToolbar/ManualOverlayDialog.jsx`
 
 Symbols:
 
@@ -32,12 +32,12 @@ Symbols:
 - `ZoomState` (typedef) - Zoom display state used by the newer toolbar UX paths.
 - `DocumentToolbarProps` (typedef) - Props for \{@link DocumentToolbar\}.
 - `SLIDER_CENTER_RANGE` (constant) - Range \(±\) around 100% where sliders snap back to the neutral value.
+- `OCR_BENCHMARK_KEEP_AROUND_SHOWN_PAGE` (constant) - Pages on either side of the shown page whose renders the OCR benchmark leaves to the viewer.
 - `ONE_TO_ONE_EPS` (constant) - Epsilon for considering zoom ≈ 100% \(0.5%\).
 - `makePdfResolutionPageKey` (function) - No description.
 - `isPdfPage` (function) - No description.
 - `DocumentToolbar` (function) - Toolbar shell for page navigation, zoom, comparison, image adjustments, help, language, and print entry.
 - `<anonymous>~handlePointerDown` (function) - No description.
-- `<anonymous>~handleEscape` (function) - No description.
 
 ## src/components/DocumentToolbar/HelpMenuButton.jsx
 
@@ -45,7 +45,7 @@ Toolbar help menu with entries for the manual and About dialog.
 
 Exports: `HelpMenuButton`
 
-Local imports: `src/components/common/StatusLed.jsx`
+Local imports: `src/utils/runtimeConfig.js`, `src/utils/manualEnabled.js`, `src/components/common/StatusLed.jsx`
 
 Symbols:
 
@@ -63,24 +63,13 @@ Symbols:
 - `module.exports` (function) - No description.
 - `<anonymous>~handleEscape` (function) - No description.
 
-## src/components/DocumentToolbar/hooks/usePrintRangeConfig.js
-
-Runtime\-configuration derivation for PrintRangeDialog.
-
-Exports: `usePrintRangeConfig`
-
-Local imports: `src/utils/localizedValue.js`, `src/utils/runtimeConfig.js`, `src/utils/viewerPreferences.js`, `src/components/DocumentToolbar/printRangeDialogHelpers.js`
-
-Symbols:
-
-- `module:usePrintRangeConfig` (module) - Runtime\-configuration derivation for PrintRangeDialog.
-- `module:usePrintRangeConfig.usePrintRangeConfig` (function) - No description.
-
 ## src/components/DocumentToolbar/LanguageMenuButton.jsx
 
 Compact language selector for the toolbar.
 
 Exports: `LanguageMenuButton`
+
+Local imports: `src/contexts/readAloudContext.js`
 
 Symbols:
 
@@ -88,29 +77,55 @@ Symbols:
 - `<anonymous>~handlePointerDown` (function) - No description.
 - `<anonymous>~handleKeyDown` (function) - No description.
 - `LanguageMenuButton~handleSelectLanguage` (function) - No description.
+- `LanguageMenuButton~closeMenu` (function) - Close the menu and give the focus back to the button \(a choice unmounts the focused item\).
 
 ## src/components/DocumentToolbar/ManualOverlayDialog.jsx
 
-Manual overlay that loads simple external HTML fragments from the public help folder.
+Manual overlay: modal dialog chrome \(title bar, reload, open\-in\-new\-tab and close buttons, focus trap, Escape and backdrop handling\) around the shared \{@link ManualView\}, which loads, filters, searches and navigates the
 
 Exports: `ManualOverlayDialog`
 
-Local imports: `src/utils/runtimeConfig.js`, `src/utils/manualSources.js`, `src/utils/manualContentsTree.js`
+Local imports: `src/components/Manual/ManualView.jsx`, `src/components/Manual/manualDocument.js`, `src/utils/runtimeConfig.js`
 
 Symbols:
 
-- `isRewritableRelativeUrl` (function) - No description.
-- `sanitizeManualHtml` (function) - No description.
-- `rewriteManualHtml` (function) - No description.
-- `appendManualRefreshToken` (function) - No description.
-- `removeManualRefreshToken` (function) - No description.
-- `MANUAL_SEARCH_MIN_LENGTH` (constant) - Minimum query length before the manual search runs.
-- `MANUAL_SEARCH_DEBOUNCE_MS` (constant) - Debounce delay before a typed query is applied to the rendered manual text.
-- `MANUAL_SEARCH_HIGHLIGHT_NAME` (constant) - Name of the shared CSS Custom Highlight covering every manual search hit.
-- `MANUAL_SEARCH_CURRENT_HIGHLIGHT_NAME` (constant) - Name of the CSS Custom Highlight covering only the current manual search hit.
-- `MANUAL_SEARCH_MARK_ATTRIBUTE` (constant) - Attribute marking fallback &lt;mark&gt; wrappers with their hit index.
-- `createManualSearchFolder` (function) - Build a case\-folding function that lowers one character through the UI locale, so Swedish characters such as å/ä/ö fold correctly instead of by raw code units.
-- `foldManualSearchText` (function) - Case\-fold text one code point at a time and keep, for every folded code unit, the original code\-unit range of the character it came from.
+- `MANUAL_TITLE_ID` (constant) - Id of the dialog title.
+- `MANUAL_DIALOG_IDS` (constant) - Ids the dialog renders around the manual view.
+- `module.exports` (function) - No description.
+- `ManualOverlayDialog~handleManualTabTrap` (function) - Keep forward and reverse Tab navigation inside the open modal dialog.
+
+## src/components/DocumentToolbar/OcrSearchBar.jsx
+
+Search in the recognised text, from the toolbar: a search button right after the image\-adjustment group that doubles as the page's OCR status \(an LED on the button and the status in a visually hidden live region; the but
+
+Exports: `OcrSearchBar`
+
+Local imports: `src/contexts/viewerContext.js`, `src/components/common/StatusLed.jsx`, `src/utils/ocrPageKey.js`, `src/utils/ocrStatus.js`, `src/utils/ocrSearch.js`, `src/utils/ocrSearchPlacement.js`, `src/components/DocumentViewer/hooks/useViewerEffects.js`, `src/utils/ocrBoostStatus.js`, `src/utils/ocrProgress.js`, `src/utils/runtimeConfig.js`
+
+Symbols:
+
+- `OCR_PENDING_STATUSES` (constant) - Statuses \(src/ocr/queue.js OCR\_PAGE\_STATUS\) of a page still waiting for OCR.
+- `OCR_ACTIVE_STATUSES` (constant) - Statuses of a page being worked on right now: one for each of the queue's pages in flight.
+- `OCR_FINAL_STATUSES` (constant) - Statuses of a page whose outcome is final: nothing more will be done about it.
+- `OCR_TOOLTIP_STATUS_KEYS` (constant) - Status keys \(utils/ocrStatus.js\) of a displayed page without text to search, for a reason that stands still: said in the search button's tooltip, which otherwise only names the bu...
+- `matchIdOf` (function) - No description.
+- `module.exports` (function) - No description.
+- `OcrSearchBar~goToMatch` (constant) - No description.
+- `OcrSearchBar~step` (constant) - Enter / the arrows: a current match on another page is shown first \(the position does not move\), unless its page was already asked for \(a hidden page lands on the nearest shown on...
+- `OcrSearchBar~handleInputKeyDown` (function) - No description.
+- `OcrSearchBar~handlePanelKeyDown` (function) - Escape closes the field from any of its controls.
+
+## src/components/DocumentToolbar/OcrToolbarActions.jsx
+
+The toolbar's OCR group, right after the image\-adjustment group: a separator and the search in the text layers \(OcrSearchBar.jsx\), behind its runtime switches: \- \`ocr.search.enabled\` \(default true; only the literal false
+
+Exports: `OcrToolbarActions`
+
+Local imports: `src/components/DocumentToolbar/OcrSearchBar.jsx`, `src/utils/runtimeConfig.js`
+
+Symbols:
+
+- `module.exports` (function) - No description.
 
 ## src/components/DocumentToolbar/PageNavigationButtons.jsx
 
@@ -123,16 +138,6 @@ Local imports: `src/hooks/useAcceleratingHoldRepeat.js`
 Symbols:
 
 - `clampPage` (function) - Page navigation button group.
-
-## src/components/DocumentToolbar/printFieldLabels.js
-
-Visible label for an optional/required print\-dialog field.
-
-Exports: `resolvePrintFieldLabel`
-
-Symbols:
-
-- `resolvePrintFieldLabel` (function) - No description.
 
 ## src/components/DocumentToolbar/PrintPipelineDialogs.jsx
 
@@ -159,26 +164,6 @@ Local imports: `src/components/DocumentToolbar/usePrintRangeDialog.js`, `src/com
 Symbols:
 
 - `PrintSubmitDetail` (typedef) - Structured payload returned to the caller on submit.
-
-## src/components/DocumentToolbar/printRangeDialogHelpers.js
-
-Pure helpers and shared constants for the print\-range dialog.
-
-Exports: `getCfg`, `safeRegex`, `hasTextValue`, `resolveOptionPrintText`, `resolvePrintAction`, `normalizePdfOrientationMode`, `buildSelectedOptionDetails`, `ensureODVPrintCSS`
-
-Local imports: `src/utils/localizedValue.js`
-
-Symbols:
-
-- `module:printRangeDialogHelpers` (module) - Pure helpers and shared constants for the print\-range dialog.
-- `module:printRangeDialogHelpers.getCfg` (function) - Read the runtime configuration \(merged defaults \+ site overrides\).
-- `module:printRangeDialogHelpers.safeRegex` (function) - Build a safe RegExp from optional pattern/flags.
-- `module:printRangeDialogHelpers.hasTextValue` (function) - No description.
-- `module:printRangeDialogHelpers.resolveOptionPrintText` (function) - Resolve the string that should be used on physical print/log output for an option.
-- `module:printRangeDialogHelpers.resolvePrintAction` (function) - Resolve a configurable print dialog action.
-- `module:printRangeDialogHelpers.normalizePdfOrientationMode` (function) - No description.
-- `module:printRangeDialogHelpers.buildSelectedOptionDetails` (function) - Build token\-friendly details for the selected option without forcing templates to use list indexes.
-- `module:printRangeDialogHelpers.ensureODVPrintCSS` (function) - Ensure base print CSS is injected once per document.
 
 ## src/components/DocumentToolbar/SplitToolbarButton.jsx
 
@@ -218,6 +203,63 @@ Local imports: `src/contexts/themeContext.js`
 Symbols:
 
 - `module.exports` (member) - Exported ThemeToggleButton component.
+
+## src/components/DocumentToolbar/ZoomButtons.jsx
+
+Zoom control cluster: \[ \- \] \[ % editable \] \[ \+ \] \| \[ 1:1 \] \[ Fit Page \] \[ Fit Width \] \[ Custom Fit \] \- When the field is NOT focused, it renders like “100%”.
+
+Exports: `ZoomButtons`
+
+Local imports: `src/hooks/useAcceleratingHoldRepeat.js`, `src/components/DocumentToolbar/SplitToolbarButton.jsx`
+
+Symbols:
+
+- `BASIC_CUSTOM_SIZE_FIELDS` (constant) - Fields shown by default \(window width\) vs.
+- `AdvancedCustomSizeDisclosure` (function) - &quot;Advanced&quot; disclosure for the secondary custom\-size fields \(window height, actual size\).
+- `parsePercentInput` (function) - Parse a percent\-like string safely.
+
+## src/components/DocumentToolbar/hooks/usePrintRangeConfig.js
+
+Runtime\-configuration derivation for PrintRangeDialog.
+
+Exports: `usePrintRangeConfig`
+
+Local imports: `src/utils/localizedValue.js`, `src/utils/runtimeConfig.js`, `src/integrations/integrationSettings.js`, `src/utils/viewerPreferences.js`, `src/components/DocumentToolbar/printRangeDialogHelpers.js`
+
+Symbols:
+
+- `module:usePrintRangeConfig` (module) - Runtime\-configuration derivation for PrintRangeDialog.
+- `module:usePrintRangeConfig.usePrintRangeConfig` (function) - No description.
+
+## src/components/DocumentToolbar/printFieldLabels.js
+
+Visible label for an optional/required print\-dialog field.
+
+Exports: `resolvePrintFieldLabel`
+
+Symbols:
+
+- `resolvePrintFieldLabel` (function) - No description.
+
+## src/components/DocumentToolbar/printRangeDialogHelpers.js
+
+Pure helpers and shared constants for the print\-range dialog.
+
+Exports: `getCfg`, `safeRegex`, `hasTextValue`, `resolveOptionPrintText`, `resolvePrintAction`, `normalizePdfOrientationMode`, `buildSelectedOptionDetails`, `ensureODVPrintCSS`
+
+Local imports: `src/utils/localizedValue.js`
+
+Symbols:
+
+- `module:printRangeDialogHelpers` (module) - Pure helpers and shared constants for the print\-range dialog.
+- `module:printRangeDialogHelpers.getCfg` (function) - Read the runtime configuration \(merged defaults \+ site overrides\).
+- `module:printRangeDialogHelpers.safeRegex` (function) - Build a safe RegExp from optional pattern/flags.
+- `module:printRangeDialogHelpers.hasTextValue` (function) - No description.
+- `module:printRangeDialogHelpers.resolveOptionPrintText` (function) - Resolve the string that should be used on physical print/log output for an option.
+- `module:printRangeDialogHelpers.resolvePrintAction` (function) - Resolve a configurable print dialog action.
+- `module:printRangeDialogHelpers.normalizePdfOrientationMode` (function) - No description.
+- `module:printRangeDialogHelpers.buildSelectedOptionDetails` (function) - Build token\-friendly details for the selected option without forcing templates to use list indexes.
+- `module:printRangeDialogHelpers.ensureODVPrintCSS` (function) - Ensure base print CSS is injected once per document.
 
 ## src/components/DocumentToolbar/usePdfPrebuildAllPages.js
 
@@ -283,17 +325,3 @@ Symbols:
 - `usePrintRangeController~composeSubmitDetail` (constant) - Compose and validate the print payload for the current dialog state.
 - `usePrintRangeController~submitWithBackend` (constant) - No description.
 - `usePrintRangeController~submitPrintDirect` (constant) - No description.
-
-## src/components/DocumentToolbar/ZoomButtons.jsx
-
-Zoom control cluster: \[ \- \] \[ % editable \] \[ \+ \] \| \[ 1:1 \] \[ Fit Page \] \[ Fit Width \] \[ Custom Fit \] \- When the field is NOT focused, it renders like “100%”.
-
-Exports: `ZoomButtons`
-
-Local imports: `src/hooks/useAcceleratingHoldRepeat.js`, `src/components/DocumentToolbar/SplitToolbarButton.jsx`
-
-Symbols:
-
-- `BASIC_CUSTOM_SIZE_FIELDS` (constant) - Fields shown by default \(window width\) vs.
-- `AdvancedCustomSizeDisclosure` (function) - &quot;Advanced&quot; disclosure for the secondary custom\-size fields \(window height, actual size\).
-- `parsePercentInput` (function) - Parse a percent\-like string safely.

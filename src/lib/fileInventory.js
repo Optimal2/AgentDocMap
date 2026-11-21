@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { normalizeRelativePath } from './fsUtils.js';
+import { compareText, normalizeRelativePath } from './fsUtils.js';
 
 const DEFAULT_INCLUDE = ['src', 'server'];
 const DEFAULT_INCLUDE_PATTERN = /\.(js|jsx|mjs|cjs)$/i;
@@ -75,7 +75,7 @@ export async function collectSourceFiles({ targetRoot, jsdocConfig }) {
     });
   }
 
-  return files.sort((left, right) => left.relativePath.localeCompare(right.relativePath));
+  return files.sort((left, right) => compareText(left.relativePath, right.relativePath));
 }
 
 function normalizeIncludes(value) {

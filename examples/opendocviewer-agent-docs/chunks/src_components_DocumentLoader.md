@@ -1,24 +1,6 @@
 # OpenDocViewer / src/components/DocumentLoader
 
-File count: 8. Line count: 4112. JSDoc symbol count: 106.
-
-## src/components/DocumentLoader/batchHandler.js
-
-OpenDocViewer — Minimal, fair worker\-batch scheduler Distribute image\-decoding jobs across a pool of Web Workers without monopolizing the main thread.
-
-Exports: `batchHandler`
-
-Local imports: `src/logging/systemLogger.js`
-
-Symbols:
-
-- `WorkerJob` (typedef) - A single decoding/rendering unit handed to a worker.
-- `Batch` (typedef) - A batch groups one or more jobs of the same file type.
-- `InsertPageAtIndex` (typedef) - Signature for the function that inserts a page record at a specific index.
-- `WorkerMessageHandler` (typedef) - Handle a worker's message and insert results.
-- `PUMP_DELAY_MS` (constant) - Small delay so the event loop can breathe between pumps \(ms\).
-- `pump` (function) - Schedule a short, fair distribution pass: Assigns at most one batch per idle worker.
-- `batchHandler` (constant) - Batch scheduler entry point.
+File count: 8. Line count: 4133. JSDoc symbol count: 106.
 
 ## src/components/DocumentLoader/DemoControls.jsx
 
@@ -38,7 +20,7 @@ OpenDocViewer — Document loader orchestrator.
 
 Exports: `DocumentLoader`
 
-Local imports: `src/contexts/viewerContext.js`, `src/logging/systemLogger.js`, `src/components/DocumentLoader/documentLoaderUtils.js`, `src/utils/documentLoadingConfig.js`, `src/components/DocumentLoader/LoadPressureDialog.jsx`, `src/utils/publicAssetUrl.js`, `src/utils/reloadCacheIdentity.js`
+Local imports: `src/utils/modernImageSignatures.js`, `src/contexts/viewerContext.js`, `src/logging/systemLogger.js`, `src/components/DocumentLoader/documentLoaderUtils.js`, `src/utils/documentLoadingConfig.js`, `src/components/DocumentLoader/LoadPressureDialog.jsx`, `src/utils/publicAssetUrl.js`, `src/utils/reloadCacheIdentity.js`
 
 Symbols:
 
@@ -54,6 +36,39 @@ Symbols:
 - `inferUrlExtension` (function) - No description.
 - `normalizeExtension` (function) - No description.
 - `isSupportedSourceExtension` (function) - No description.
+
+## src/components/DocumentLoader/LoadPressureDialog.jsx
+
+Large\-load warning dialog shown before / during very heavy loading runs.
+
+Exports: `LoadPressureDialog`
+
+Local imports: `src/utils/documentLoadingConfig.js`
+
+Symbols:
+
+- `LoadPressureDialogSummary` (typedef) - No description.
+- `LoadPressureDialogProps` (typedef) - No description.
+- `module.exports` (function) - Large\-load warning dialog shown before / during very heavy loading runs.
+- `LoadPressureDialog~tr` (function) - No description.
+
+## src/components/DocumentLoader/batchHandler.js
+
+OpenDocViewer — Minimal, fair worker\-batch scheduler Distribute image\-decoding jobs across a pool of Web Workers without monopolizing the main thread.
+
+Exports: `batchHandler`
+
+Local imports: `src/logging/systemLogger.js`
+
+Symbols:
+
+- `WorkerJob` (typedef) - A single decoding/rendering unit handed to a worker.
+- `Batch` (typedef) - A batch groups one or more jobs of the same file type.
+- `InsertPageAtIndex` (typedef) - Signature for the function that inserts a page record at a specific index.
+- `WorkerMessageHandler` (typedef) - Handle a worker's message and insert results.
+- `PUMP_DELAY_MS` (constant) - Small delay so the event loop can breathe between pumps \(ms\).
+- `pump` (function) - Schedule a short, fair distribution pass: Assigns at most one batch per idle worker.
+- `batchHandler` (constant) - Batch scheduler entry point.
 
 ## src/components/DocumentLoader/documentLoaderUtils.js
 
@@ -73,21 +88,6 @@ Symbols:
 - `getTotalPages` (constant) - Determine total pages for a given document by inspecting its buffer and type.
 - `getTiffMetadata` (constant) - Extract light\-weight metadata from a TIFF buffer \(best\-effort\).
 - `generateThumbnail` (constant) - Create a small thumbnail data URL for a given image URL.
-
-## src/components/DocumentLoader/LoadPressureDialog.jsx
-
-Large\-load warning dialog shown before / during very heavy loading runs.
-
-Exports: `LoadPressureDialog`
-
-Local imports: `src/utils/documentLoadingConfig.js`
-
-Symbols:
-
-- `LoadPressureDialogSummary` (typedef) - No description.
-- `LoadPressureDialogProps` (typedef) - No description.
-- `module.exports` (function) - Large\-load warning dialog shown before / during very heavy loading runs.
-- `LoadPressureDialog~tr` (function) - No description.
 
 ## src/components/DocumentLoader/mainThreadRenderer.js
 

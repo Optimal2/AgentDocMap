@@ -384,10 +384,10 @@ vulnerability. Built-in protections, each covered by tests in `test/`:
 - **Output deletion is guarded** (see [CLI reference](#cli-reference)).
 
 AgentDocMap does not run target application code, but JSDoc loads any
-`plugins` listed in the target's `jsdoc.json`, and in the default
-`--source-metadata git` mode Git reads the target's `.git/config`, which can
-name programs that Git starts. Treat the target as trusted
-input, and review a packet before publishing it.
+`plugins` listed in the target's `jsdoc.json`. In the default
+`--source-metadata git` mode Git reads the target's `.git/config`;
+AgentDocMap disables `core.fsmonitor` and optional Git locks. Treat the target
+as trusted input, and review a packet before publishing it.
 
 ## Development and tests
 

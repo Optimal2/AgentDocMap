@@ -1,6 +1,6 @@
 # OpenDocViewer / src/components/DocumentViewer
 
-File count: 17. Line count: 7631. JSDoc symbol count: 154.
+File count: 17. Line count: 7787. JSDoc symbol count: 157.
 
 ## src/components/DocumentViewer/CompareCurtainButton.jsx
 
@@ -59,19 +59,6 @@ Symbols:
 - `CompareTransformControls` (function) - No description.
 - `CompareTransformControls~setImage` (function) - No description.
 
-## src/components/DocumentViewer/compareViewKeys.js
-
-File: src/components/DocumentViewer/compareViewKeys.js Keyboard targets shared by the full\-surface compare views \(CompareOverlayView.jsx, CompareCurtainView.jsx\): which focused el...
-
-Exports: `isOwnKeyTarget`, `shouldEscapeCloseView`, `hasActiveModalDialog`
-
-Symbols:
-
-- `module:compareViewKeys` (module) - File: src/components/DocumentViewer/compareViewKeys.js Keyboard targets shared by the full\-surface compare views \(CompareOverlayView.jsx, CompareCurtainView.jsx\): which focused el...
-- `module:compareViewKeys.isOwnKeyTarget` (function) - Keys typed into fields \(and controls that handle their own arrows\) must not reach the view.
-- `module:compareViewKeys.shouldEscapeCloseView` (function) - Escape closes the view unless a text field has focus \(Escape undoes its typed value there\).
-- `module:compareViewKeys.hasActiveModalDialog` (function) - No description.
-
 ## src/components/DocumentViewer/CompareZoomOverlay.jsx
 
 Per\-pane “post\-zoom” controls shown in comparison mode, tucked behind the pane marker ring at the top\-left of each pane.
@@ -92,7 +79,7 @@ OpenDocViewer — Document Viewer \(Container\) Tie together: • Toolbar \(acti
 
 Exports: `DocumentViewer`
 
-Local imports: `src/components/DocumentViewer/DocumentViewerToolbar.jsx`, `src/components/DocumentViewer/DocumentViewerThumbnails.jsx`, `src/components/DocumentViewer/DocumentViewerRender.jsx`, `src/components/DocumentViewer/CompareOverlayView.jsx`, `src/components/DocumentViewer/CompareCurtainView.jsx`, `src/components/PrintSelectionWorkspace.jsx`, `src/components/DocumentToolbar/PrintPipelineDialogs.jsx`, `src/components/DocumentToolbar/usePrintPipeline.js`, `src/components/Resizer.jsx`, `src/logging/systemLogger.js`, `src/contexts/viewerContext.js`, `src/components/DocumentViewer/useDocumentViewer.js`
+Local imports: `src/components/DocumentViewer/DocumentViewerToolbar.jsx`, `src/components/DocumentViewer/DocumentViewerThumbnails.jsx`, `src/components/DocumentViewer/DocumentViewerRender.jsx`, `src/components/ReadAloudProvider.jsx`, `src/components/DocumentViewer/CompareOverlayView.jsx`, `src/components/DocumentViewer/CompareCurtainView.jsx`, `src/components/PrintSelectionWorkspace.jsx`, `src/components/DocumentToolbar/PrintPipelineDialogs.jsx`, `src/components/DocumentToolbar/usePrintPipeline.js`, `src/components/Resizer.jsx`, `src/logging/systemLogger.js`, `src/contexts/viewerContext.js`
 
 Symbols:
 
@@ -109,7 +96,7 @@ OpenDocViewer — Main Viewer Rendering Wrapper Render the primary document pane
 
 Exports: `DocumentViewerRender`
 
-Local imports: `src/components/DocumentRender.jsx`, `src/components/DocumentViewer/CompareZoomOverlay.jsx`, `src/components/DocumentViewer/CompareTransformControls.jsx`, `src/contexts/viewerContext.js`, `src/utils/compareTransform.js`, `src/utils/imageAdjustments.js`, `src/utils/runtimeConfig.js`, `src/utils/documentMetadata.js`
+Local imports: `src/components/DocumentRender.jsx`, `src/components/DocumentViewer/CompareZoomOverlay.jsx`, `src/components/DocumentViewer/CompareTransformControls.jsx`, `src/contexts/viewerContext.js`, `src/utils/compareTransform.js`, `src/utils/imageAdjustments.js`, `src/utils/runtimeConfig.js`, `src/components/DocumentViewer/hooks/useViewerEffects.js`, `src/utils/documentMetadata.js`, `src/components/KeyTips.jsx`, `src/contexts/readAloudContext.js`, `src/components/ReadAloudMenuItem.jsx`
 
 Symbols:
 
@@ -153,6 +140,19 @@ Symbols:
 - `PageNumberSetter` (typedef) - React\-like numeric/original page setter used by the toolbar adapter.
 - `DocumentViewerToolbarProps` (typedef) - Props consumed by DocumentViewerToolbar.
 - `DocumentViewerToolbar` (function) - Renders the toolbar for the document viewer by delegating to .
+
+## src/components/DocumentViewer/compareViewKeys.js
+
+File: src/components/DocumentViewer/compareViewKeys.js Keyboard targets shared by the full\-surface compare views \(CompareOverlayView.jsx, CompareCurtainView.jsx\): which focused el...
+
+Exports: `isOwnKeyTarget`, `shouldEscapeCloseView`, `hasActiveModalDialog`
+
+Symbols:
+
+- `module:compareViewKeys` (module) - File: src/components/DocumentViewer/compareViewKeys.js Keyboard targets shared by the full\-surface compare views \(CompareOverlayView.jsx, CompareCurtainView.jsx\): which focused el...
+- `module:compareViewKeys.isOwnKeyTarget` (function) - Keys typed into fields \(and controls that handle their own arrows\) must not reach the view.
+- `module:compareViewKeys.shouldEscapeCloseView` (function) - Escape closes the view unless a text field has focus \(Escape undoes its typed value there\).
+- `module:compareViewKeys.hasActiveModalDialog` (function) - No description.
 
 ## src/components/DocumentViewer/hooks/useCompareOverlay.js
 

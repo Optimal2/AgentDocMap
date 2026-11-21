@@ -1,12 +1,14 @@
 # OpenDocViewer / src/components
 
-File count: 18. Line count: 7855. JSDoc symbol count: 103.
+File count: 22. Line count: 8637. JSDoc symbol count: 121.
 
 ## src/components/CanvasRenderer.jsx
 
 OpenDocViewer — Absolute\-positioned Canvas Renderer Render a &lt;canvas&gt; element for a single page at a specified zoom factor.
 
 Exports: `CanvasRenderer`
+
+Local imports: `src/utils/canvasBitmapSize.js`
 
 Symbols:
 
@@ -53,7 +55,7 @@ OpenDocViewer — Active page renderer.
 
 Exports: `DocumentRender`
 
-Local imports: `src/contexts/viewerContext.js`, `src/logging/systemLogger.js`, `src/components/ImageRenderer.jsx`, `src/components/CanvasRenderer.jsx`, `src/components/LoadingMessage.jsx`, `src/utils/zoomUtils.js`, `src/utils/documentLoadingConfig.js`, `src/utils/renderSurfaceBounds.js`, `src/utils/imageAdjustments.js`, `src/utils/printCore.js`, `src/utils/compareTransform.js`
+Local imports: `src/contexts/viewerContext.js`, `src/logging/systemLogger.js`, `src/components/ImageRenderer.jsx`, `src/components/CanvasRenderer.jsx`, `src/components/LoadingMessage.jsx`, `src/components/OcrTextLayer.jsx`, `src/utils/ocrPageKey.js`, `src/utils/zoomUtils.js`, `src/utils/documentLoadingConfig.js`, `src/utils/renderSurfaceBounds.js`, `src/utils/imageAdjustments.js`, `src/utils/printCore.js`
 
 Symbols:
 
@@ -115,6 +117,22 @@ Symbols:
 - `ImgEventHandler` (typedef) - Image load/error handler.
 - `ImageRenderer` (constant) - ImageRenderer component.
 
+## src/components/KeyTips.jsx
+
+Key tips: hold \`?\` and every toolbar button shows its name in a small label under it, so the icons can be learnt without hovering them one by one; release the key and the labels go.
+
+Exports: `KeyTips`
+
+Local imports: `src/hooks/useKeyTipsHeld.js`, `src/utils/keyTipLayout.js`
+
+Symbols:
+
+- `BUTTON_SELECTOR` (constant) - Buttons the tips name: every button in a toolbar.
+- `buttonName` (function) - The accessible name of a button, as the tip shows it.
+- `measureKeyTips` (function) - Measure the visible toolbar buttons and lay their tips out.
+- `KeyTipLayer` (function) - The overlay with one label per toolbar button; mounted only while the key is held.
+- `module.exports` (function) - No description.
+
 ## src/components/LoadingMessage.jsx
 
 OpenDocViewer — Loading / Error Message Simple, accessible message block that reflects the current page load status.
@@ -141,6 +159,21 @@ Symbols:
 - `LoadingSpinner.propTypes.label` (member) - Accessible label announced by assistive technologies.
 - `LoadingSpinner.propTypes.className` (member) - Extra classes to append to the root element.
 
+## src/components/OcrTextLayer.jsx
+
+Selectable, invisible text over a recognised page image.
+
+Exports: `OCR_WORD_SELECTED_CLASS`, `OCR_WORD_MATCH_CLASS`, `OCR_WORD_CURRENT_MATCH_CLASS`, `OcrTextLayer`
+
+Local imports: `src/utils/ocrTextLayout.js`, `src/utils/ocrSearch.js`
+
+Symbols:
+
+- `OCR_WORD_SELECTED_CLASS` (constant) - Class of a word that the current selection touches.
+- `OCR_WORD_MATCH_CLASS` (constant) - Class of a word inside a match of the toolbar's OCR search.
+- `OCR_WORD_CURRENT_MATCH_CLASS` (constant) - Class of a word inside the current match of the toolbar's OCR search.
+- `OcrTextLayer` (function) - No description.
+
 ## src/components/PrintSelectionWorkspace.jsx
 
 Full\-window print\-selection workspace.
@@ -156,6 +189,30 @@ Symbols:
 - `<anonymous>~handleKeyDown` (function) - No description.
 - `<anonymous>~handleMove` (function) - No description.
 - `<anonymous>~handleDone` (function) - No description.
+
+## src/components/ReadAloudMenuItem.jsx
+
+The page context menu's read\-aloud entry \(DocumentViewer/DocumentViewerRender.jsx\): "Read the selection aloud" while nothing is being read, greyed with the reason in its tooltip when nothing can be read \(no selection in
+
+Exports: `ReadAloudMenuItem`
+
+Local imports: `src/contexts/readAloudContext.js`
+
+Symbols:
+
+- `module.exports` (function) - No description.
+
+## src/components/ReadAloudProvider.jsx
+
+Provides the read\-aloud state \(hooks/useReadAloud.js\) to the page's context menu and the toolbar's language menu \(contexts/readAloudContext.js\).
+
+Exports: `ReadAloudProvider`
+
+Local imports: `src/contexts/readAloudContext.js`, `src/hooks/useReadAloud.js`
+
+Symbols:
+
+- `module.exports` (function) - No description.
 
 ## src/components/Resizer.jsx
 
@@ -176,7 +233,7 @@ Symbols:
 
 ## src/components/SignatureDetailsDialog.jsx
 
-Signature details dialog \(browser integrity and optional gateway trust\).
+Signature details dialog \(browser integrity\).
 
 Exports: `SignatureDetailsDialog`
 
@@ -186,11 +243,16 @@ Symbols:
 
 - `getKindLabel` (function) - No description.
 - `getSigningTimeSourceLabel` (function) - No description.
+- `getSignerSourceNote` (function) - Note for a signer name that is not backed by a verified signature: a name from the self\-declared PDF /Name, or a certificate name on a signature that did not verify.
+- `getPassedChecks` (function) - What was checked and passed for one signature, in display order.
+- `getInformationLines` (function) - Information lines after the always\-on line: the integrity code of an intact or not\-checked signature \(problems are explained next to the status instead\) and a signing\-time check t...
+- `getProblemLines` (function) - Problem explanation shown next to the status: the integrity code of a warning or error, then a signing\-time warning.
+- `ICON_BY_SEVERITY` (constant) - Material Icons ligature per severity \(same as SignatureStatusBadge\).
+- `measureCommonDialogHeight` (function) - The dialog height that suits every file tab: the natural height of the tallest file group that fits under the dialog's CSS max\-height.
 - `module.exports` (function) - No description.
 - `<anonymous>~handleEscape` (function) - No description.
 - `SignatureDetailsDialog~handleTabKeyDown` (function) - Arrow keys, Home and End move between file tabs \(automatic activation\).
 - `SignatureDetailsDialog~handleTabTrap` (function) - Keep Tab navigation inside the dialog while it is open.
-- `SignatureDetailsDialog~orEmpty` (function) - No description.
 
 ## src/components/SignatureOverviewButton.jsx
 

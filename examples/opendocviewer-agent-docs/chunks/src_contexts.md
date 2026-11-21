@@ -1,18 +1,6 @@
 # OpenDocViewer / src/contexts
 
-File count: 4. Line count: 3455. JSDoc symbol count: 95.
-
-## src/contexts/themeContext.js
-
-Create the Theme context with a safe default to avoid undefined access if a consumer is mounted outside the provider by mistake.
-
-Exports: `ThemeContext`
-
-Symbols:
-
-- `ThemeMode` (typedef) - Theme identifier.
-- `ThemeContextValue` (typedef) - Context value shape for the theme.
-- `ThemeContext` (constant) - Create the Theme context with a safe default to avoid undefined access if a consumer is mounted outside the provider by mistake.
+File count: 5. Line count: 3647. JSDoc symbol count: 101.
 
 ## src/contexts/ThemeProvider.jsx
 
@@ -37,27 +25,6 @@ Symbols:
 - `ThemeProvider~toggleTheme` (constant) - Toggle between the two highest\-contrast explicit themes.
 - `<anonymous>~onChange` (function) - No description.
 
-## src/contexts/viewerContext.js
-
-Per\-page compare transform \(utils/compareTransform.js\): scale multiplies the base zoom \(1 \= 100 %\), dx / dy are CSS px at transform scale 1, rotation is degrees in \[0, 360\).
-
-Exports: `ViewerContext`
-
-Symbols:
-
-- `ViewerPageEntry` (typedef) - No description.
-- `DocumentSessionInitOptions` (typedef) - No description.
-- `DisposeDocumentSessionOptions` (typedef) - No description.
-- `StoreSourceBlobInput` (typedef) - No description.
-- `EnsurePageAssetOptions` (typedef) - No description.
-- `ViewerSourceDescriptor` (typedef) - No description.
-- `ViewerRuntimeDiagnostics` (typedef) - No description.
-- `ViewerPageLoadState` (typedef) - No description.
-- `ViewerContextValue` (typedef) - No description.
-- `CompareTransform` (typedef) - Per\-page compare transform \(utils/compareTransform.js\): scale multiplies the base zoom \(1 \= 100 %\), dx / dy are CSS px at transform scale 1, rotation is degrees in \[0, 360\).
-- `CompareOverlayState` (typedef) - No description.
-- `CompareTransformState` (typedef) - No description.
-
 ## src/contexts/ViewerProvider.jsx
 
 OpenDocViewer — Viewer state provider.
@@ -80,3 +47,46 @@ Symbols:
 - `getPageAt` (function) - No description.
 - `resolvePatch` (function) - No description.
 - `touchCacheEntry` (function) - No description.
+
+## src/contexts/readAloudContext.js
+
+The read\-aloud state shared by the page's context menu \("Read the selection aloud" / "Stop reading aloud", components/ReadAloudMenuItem.jsx\) and the toolbar's language menu \(the "Reading language" section, DocumentToolba
+
+Exports: `ReadAloudContext`
+
+Symbols:
+
+- `ReadAloudState` (typedef) - The read\-aloud state shared by the page's context menu \(&quot;Read the selection aloud&quot; / &quot;Stop reading aloud&quot;, components/ReadAloudMenuItem.jsx\) and the toolbar's...
+
+## src/contexts/themeContext.js
+
+Create the Theme context with a safe default to avoid undefined access if a consumer is mounted outside the provider by mistake.
+
+Exports: `ThemeContext`
+
+Symbols:
+
+- `ThemeMode` (typedef) - Theme identifier.
+- `ThemeContextValue` (typedef) - Context value shape for the theme.
+- `ThemeContext` (constant) - Create the Theme context with a safe default to avoid undefined access if a consumer is mounted outside the provider by mistake.
+
+## src/contexts/viewerContext.js
+
+Per\-page compare transform \(utils/compareTransform.js\): scale multiplies the base zoom \(1 \= 100 %\), dx / dy are CSS px at transform scale 1, rotation is degrees in \[0, 360\).
+
+Exports: `ViewerContext`
+
+Symbols:
+
+- `ViewerPageEntry` (typedef) - No description.
+- `DocumentSessionInitOptions` (typedef) - No description.
+- `DisposeDocumentSessionOptions` (typedef) - No description.
+- `StoreSourceBlobInput` (typedef) - No description.
+- `EnsurePageAssetOptions` (typedef) - No description.
+- `ViewerSourceDescriptor` (typedef) - No description.
+- `ViewerRuntimeDiagnostics` (typedef) - No description.
+- `ViewerPageLoadState` (typedef) - No description.
+- `ViewerContextValue` (typedef) - No description.
+- `CompareTransform` (typedef) - Per\-page compare transform \(utils/compareTransform.js\): scale multiplies the base zoom \(1 \= 100 %\), dx / dy are CSS px at transform scale 1, rotation is degrees in \[0, 360\).
+- `CompareOverlayState` (typedef) - No description.
+- `CompareTransformState` (typedef) - No description.

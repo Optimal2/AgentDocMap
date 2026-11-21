@@ -1,6 +1,16 @@
 # OpenDocViewer / src/utils
 
-File count: 51. Line count: 20060. JSDoc symbol count: 811.
+File count: 69. Line count: 24993. JSDoc symbol count: 1041.
+
+## src/utils/canvasBitmapSize.js
+
+Resize the bitmap of a canvas only when the requested size differs from its current size.
+
+Exports: `applyCanvasBitmapSize`
+
+Symbols:
+
+- `applyCanvasBitmapSize` (function) - Resize the bitmap of a canvas only when the requested size differs from its current size.
 
 ## src/utils/compareCurtain.js
 
@@ -154,6 +164,34 @@ Symbols:
 - `module:imageAdjustments.needsCanvas` (function) - Whether the page must be drawn on the canvas instead of the plain &lt;img&gt; .
 - `module:imageAdjustments.buildImageFilter` (function) - The canvas 2d filter for the adjustments, composed as brightness, contrast, grayscale, invert.
 
+## src/utils/jxlDecode.js
+
+Decode frame 1 in our Rust/WASM codec.
+
+Exports: `MAX_JXL_PIXELS`, `decodeJxl`
+
+Local imports: `src/utils/modernImageSignatures.js`
+
+Symbols:
+
+- `MAX_JXL_PIXELS` (constant) - Decode\-time input bound: 100 megapixels, checked before any rendered frame is allocated.
+- `decodeJxl` (function) - Decode frame 1 in our Rust/WASM codec.
+
+## src/utils/keyTipLayout.js
+
+Where the key tips go \(components/KeyTips.jsx\): one label under each toolbar button, centred on the button, packed into rows so that the labels of neighbouring buttons do not cover each other.
+
+Exports: `KEY_TIP_GAP`, `KEY_TIP_MAX_ROWS`, `packKeyTips`
+
+Symbols:
+
+- `KEY_TIP_GAP` (constant) - Gap between two labels in a row and between the rows \(CSS px\).
+- `KEY_TIP_MAX_ROWS` (constant) - Rows the labels may spread over before they are allowed to overlap.
+- `KeyTipInput` (typedef) - No description.
+- `KeyTipPlacement` (typedef) - No description.
+- `packKeyTips` (function) - No description.
+- `packKeyTips~rowEnds` (constant) - Right edge of the last label in each row.
+
 ## src/utils/localizedValue.js
 
 Localized string resolver for admin\-supplied config values.
@@ -188,18 +226,31 @@ Symbols:
 - `findManualSectionId` (function) - Id of the section that contains the node: the last listed heading at or before it in document order, or '' when the node comes before the first heading.
 - `countManualMatchesPerSection` (function) - Count search hits per section in a single merge pass.
 
+## src/utils/manualEnabled.js
+
+The single switch that turns the user manual off for an installation.
+
+Exports: `isManualEnabled`, `isManualEnabled`
+
+Symbols:
+
+- `isManualEnabled` (function) - No description.
+
 ## src/utils/manualSources.js
 
 Resolves which manual HTML file the help dialog shows.
 
-Exports: `DEFAULT_SITE_MANUAL_TEMPLATE`, `DEFAULT_FALLBACK_MANUAL_TEMPLATE`, `interpolateManualTemplate`, `buildManualCandidates`, `isApplicationShellHtml`, `resolveManualSource`
+Exports: `DEFAULT_SITE_MANUAL_TEMPLATE`, `DEFAULT_FALLBACK_MANUAL_TEMPLATE`, `interpolateManualTemplate`, `resolveManualSourceMode`, `buildManualLanguageCandidates`, `buildManualCandidates`, `isApplicationShellHtml`, `resolveManualSource`
 
 Symbols:
 
 - `DEFAULT_SITE_MANUAL_TEMPLATE` (constant) - Resolves which manual HTML file the help dialog shows.
 - `toText` (function) - No description.
 - `interpolateManualTemplate` (function) - No description.
-- `buildManualCandidates` (function) - Candidate manual URLs in priority order: site before default, UI language before fallback language.
+- `invalidSourceDescription` (function) - Formats an invalid value for diagnostics without invoking a host object's string coercion.
+- `resolveManualSourceMode` (function) - Resolve help.manual.source.
+- `buildManualLanguageCandidates` (function) - Language preference shared by fetched and generated manuals.
+- `buildManualCandidates` (function) - Candidate manual URLs in priority order: UI language before fallback language.
 - `isApplicationShellHtml` (function) - True when the HTML is OpenDocViewer's own application shell rather than a manual.
 - `ManualCandidateResponse` (typedef) - No description.
 - `resolveManualSource` (function) - Fetch candidates in order and return the first one the server delivers as a manual.
@@ -218,6 +269,17 @@ Symbols:
 - `readJsHeapLimitMiB` (function) - No description.
 - `resolveTier` (function) - No description.
 - `getRuntimeMemoryProfile` (function) - No description.
+
+## src/utils/modernImageSignatures.js
+
+Identify modern raster formats by bytes, independently of names and MIME hints.
+
+Exports: `hasJxlSignature`, `hasAvifSignature`
+
+Symbols:
+
+- `hasJxlSignature` (function) - Identify modern raster formats by bytes, independently of names and MIME hints.
+- `hasAvifSignature` (function) - Accept AVIF major or compatible brands only within the first ISO BMFF ftyp box.
 
 ## src/utils/navigationUtils.js
 
@@ -241,16 +303,164 @@ Symbols:
 
 Centralized helpers for object/blob URL lifecycle management.
 
-Exports: `createTrackedObjectUrl`, `revokeTrackedObjectUrl`, `revokeTrackedObjectUrls`, `isTrackedObjectUrl`, `getTrackedObjectUrlCount`, `revokeAllTrackedObjectUrls`
+Exports: `createTrackedObjectUrl`, `revokeTrackedObjectUrl`, `getTrackedObjectUrlSourceFormat`, `revokeTrackedObjectUrls`, `isTrackedObjectUrl`, `getTrackedObjectUrlCount`, `revokeAllTrackedObjectUrls`
 
 Symbols:
 
+- `TRACKED_URL_SOURCE_FORMATS` (constant) - Original formats that must remain lossless when their displayed asset is printed.
 - `createTrackedObjectUrl` (function) - No description.
 - `revokeTrackedObjectUrl` (function) - No description.
+- `getTrackedObjectUrlSourceFormat` (function) - Return the original JXL/AVIF MIME type for a tracked URL, or an empty string for other assets.
 - `revokeTrackedObjectUrls` (function) - No description.
 - `isTrackedObjectUrl` (function) - Check whether a blob/object URL is still tracked as live by the viewer.
 - `getTrackedObjectUrlCount` (function) - No description.
 - `revokeAllTrackedObjectUrls` (function) - Revoke every tracked object URL.
+
+## src/utils/ocrBoostStatus.js
+
+What the toolbar says about the OCR boost \(components/DocumentToolbar/OcrSearchBar.jsx\): one key per situation with its English fallback text \(public/locales/&lt;lng&gt;/common.json, \`ocr.boost\`\), the number of engines to name
+
+Exports: `OCR_BOOST_FALLBACK`, `describeOcrBoost`
+
+Symbols:
+
+- `OCR_BOOST_FALLBACK` (constant) - Keys of ocr.boost and their English fallbacks.
+- `OcrBoostDescription` (typedef) - No description.
+- `describeOcrBoost` (function) - No description.
+
+## src/utils/ocrLanguageCodes.js
+
+Tesseract language codes \(\`ocr.languages\`\) and the ISO 639\-1 language each one reads: what the read\-aloud menu offers and the language guess chooses among.
+
+Exports: `OCR_TO_SPEECH_LANGUAGE`, `speechLanguagesForOcr`
+
+Symbols:
+
+- `speechLanguagesForOcr` (function) - The ISO 639\-1 languages of a list of Tesseract codes, each once, in order; codes without a known language are left out.
+
+## src/utils/ocrLoader.js
+
+The only door into the OCR module.
+
+Exports: `loadOcrModule`, `isOcrModuleRequested`, `isPdfTextModuleRequested`, `resetOcrModuleForTests`
+
+Local imports: `src/utils/runtimeConfig.js`, `src/ocr/index.js`, `src/ocr/pdfText.js`
+
+Symbols:
+
+- `modulePromise` (member) - The full module \(OCR on\).
+- `textModulePromise` (member) - The text\-only entry \(only a PDF page's own text\).
+- `loadOcrModule` (function) - No description.
+- `isOcrModuleRequested` (function) - True once the full module's import has been requested in this session.
+- `isPdfTextModuleRequested` (function) - True once the text\-only entry's import has been requested in this session.
+- `resetOcrModuleForTests` (function) - Test hook: forget the cached imports so the next call imports again.
+
+## src/utils/ocrPageKey.js
+
+Key of one document page in the OCR result map \(\`ocrPages\` on the viewer context\).
+
+Exports: `makeOcrPageKey`, `ocrPageKeyOf`
+
+Symbols:
+
+- `SEPARATOR` (constant) - Key of one document page in the OCR result map \( ocrPages on the viewer context\).
+- `makeOcrPageKey` (function) - No description.
+- `ocrPageKeyOf` (function) - No description.
+
+## src/utils/ocrProgress.js
+
+How long the pages still waiting for OCR will take, for the toolbar's OCR button \(components/DocumentToolbar/OcrSearchBar.jsx\): an estimate from the pace of the pages that were finished lately, and the text that says it
+
+Exports: `OCR_PROGRESS_WINDOW_MS`, `OCR_PROGRESS_MIN_PAGES`, `OCR_PROGRESS_FALLBACK`, `createOcrProgressEstimator`, `describeOcrTimeLeft`, `describeOcrTimeLeftShort`
+
+Symbols:
+
+- `OCR_PROGRESS_WINDOW_MS` (constant) - Finished pages older than this say nothing about the pace now.
+- `OCR_PROGRESS_MIN_PAGES` (constant) - Pages that must have been finished since the starting point before a pace is trusted.
+- `MIN_SAMPLES` (constant) - Measurements kept however old they are, so a slow client still gets a pace.
+- `OCR_PROGRESS_FALLBACK` (constant) - Keys of ocr.progress and their English fallbacks.
+- `SHORT_SECONDS_STEP` (constant) - Under a minute the short form counts seconds in steps of this many.
+- `createOcrProgressEstimator` (function) - No description.
+- `record` (function) - Tell the estimator how many pages are finished now.
+- `remainingMs` (function) - No description.
+- `expiresInMs` (function) - No description.
+- `describeOcrTimeLeft` (function) - The words for an estimate: which ocr.progress key, and its figures.
+- `describeOcrTimeLeftShort` (function) - The short words for an estimate, for the details the button unfolds: which ocr.progress key, and its figures.
+
+## src/utils/ocrSearch.js
+
+Search in recognised text: the toolbar's OCR search \(components/DocumentToolbar/OcrSearchBar.jsx\) and the text layer's match marks \(components/OcrTextLayer.jsx\) both go through these functions, on the same outcomes, so t
+
+Exports: `normalizeOcrSearchTerm`, `ocrSearchIndexOf`, `findOcrMatches`, `findOcrMatchesInOutcome`, `searchOcrPages`
+
+Local imports: `src/utils/ocrTextLayout.js`
+
+Symbols:
+
+- `OcrSearchIndex` (typedef) - No description.
+- `OcrSearchMatch` (typedef) - No description.
+- `indexes` (constant) - Index per outcome; outcomes are immutable objects from the result cache.
+- `normalizeOcrSearchTerm` (function) - The form a term is matched in: whitespace collapsed to single spaces, trimmed, lower\-cased.
+- `ocrSearchIndexOf` (function) - Build \(or reuse\) the search index of a done outcome.
+- `findOcrMatches` (function) - All matches of a term in an index, in reading order, without overlaps.
+- `findOcrMatchesInOutcome` (function) - Matches of a term in one outcome \(the index is built on first use\).
+- `OcrDocumentMatch` (typedef) - No description.
+- `searchOcrPages` (function) - Matches of a term across the recognised pages of a document, in page order, each page's matches in reading order.
+
+## src/utils/ocrSearchPlacement.js
+
+Where the toolbar's OCR search field goes and how wide it is \(components/DocumentToolbar/OcrSearchBar.jsx\): inline in the toolbar, grown out of the button to the right into the room the toolbar's spacer leaves, or, when
+
+Exports: `OCR_SEARCH_PANEL_WIDTH`, `OCR_SEARCH_PANEL_MIN_INLINE_WIDTH`, `OCR_SEARCH_INPUT_MIN_WIDTH`, `OCR_SEARCH_INPUT_PREFERRED_WIDTH`, `OCR_SEARCH_PANEL_HANG_INSET`, `OCR_SEARCH_PANEL_MARGIN`, `OCR_SEARCH_PANEL_HANG_GAP`, `resolveOcrSearchPlacement`, `measureOcrSearchInputMinWidth`, `measureOcrSearchContentWidth`, `measureOcrSearchPlacement`, `OCR_DETAILS_UNFOLDED_MARGIN_EM`, `resolveOcrDetailsRoom`, `resolveOcrDetailsWidth`, `measureOcrDetailsWidth`
+
+Symbols:
+
+- `OCR_SEARCH_PANEL_WIDTH` (constant) - Full width of the field \(CSS px\).
+- `OCR_SEARCH_PANEL_MIN_INLINE_WIDTH` (constant) - Below this inline width the field hangs under the toolbar instead.
+- `OCR_SEARCH_INPUT_MIN_WIDTH` (constant) - The input's least width \(CSS px\), as .toolbar\-ocr\-search\-input has it.
+- `OCR_SEARCH_INPUT_PREFERRED_WIDTH` (constant) - The input's width the field asks for \(CSS px, laid out\) when it has been measured: room for a few words of a term.
+- `OCR_SEARCH_PANEL_HANG_INSET` (constant) - Padding and border a hanging field adds around its contents \(CSS px, both sides\).
+- `OCR_SEARCH_PANEL_MARGIN` (constant) - Air kept between the field and the rest of the toolbar; half of it to the viewport edge when hanging.
+- `OCR_SEARCH_PANEL_HANG_GAP` (constant) - Air between the toolbar's lower edge and a hanging field.
+- `OcrSearchPlacement` (typedef) - No description.
+- `resolveOcrSearchPlacement` (function) - No description.
+- `measureOcrSearchInputMinWidth` (function) - The input's least width as laid out \(CSS px\): its min\-width , plus its padding and border when they lie outside it \(the input is content\-box: 48 px of content and 14 px around it\).
+- `measureOcrSearchContentWidth` (function) - CSS px the field's contents need with the input at its minimum: every child but the input at its width \(the status is not shrunk, so its width is its text's\), the gaps between the...
+- `measureOcrSearchPlacement` (function) - Gather the measures for resolveOcrSearchPlacement from the DOM around the search's root.
+
+## src/utils/ocrStatus.js
+
+The per\-page OCR status the toolbar's search button shows \(components/DocumentToolbar/OcrSearchBar.jsx\): one key per outcome state, its English fallback text \(public/locales/&lt;lng&gt;/common.json, \`ocr.status\`\) and the LED s
+
+Exports: `OCR_STATUS_FALLBACK`, `OCR_STATUS_LED`, `ocrStatusKeyOf`, `hasSearchableOcrText`
+
+Symbols:
+
+- `OCR_STATUS_FALLBACK` (constant) - Status keys and their English fallbacks.
+- `OCR_STATUS_LED` (constant) - LED state \(components/common/StatusLed.jsx\) per status key; '' \(no outcome yet\) is off.
+- `ocrStatusKeyOf` (function) - Status key of a page's OCR outcome.
+- `hasSearchableOcrText` (function) - Whether a page's recognised text can be searched: the outcome is final and holds words.
+
+## src/utils/ocrTextLayout.js
+
+Geometry of the OCR text layer \(components/OcrTextLayer.jsx\): the recognised words grouped into lines, where each line and word goes inside the page frame, and how the invisible text is fitted to the recognised boxes.
+
+Exports: `OCR_LAYER_FONT_FAMILY`, `OCR_WORD_JOINER`, `countCharacters`, `measureWordWidth`, `ocrReadingOrder`, `layoutOcrLines`, `isOcrLayerSelection`, `ocrSelectionText`
+
+Symbols:
+
+- `OCR_LAYER_FONT_FAMILY` (constant) - Font used for the invisible words; width is fitted per word so the family only affects fallback estimates.
+- `FALLBACK_ADVANCE` (constant) - Average advance per character relative to the font size, used when text cannot be measured.
+- `OCR_WORD_JOINER` (constant) - The character that joins the words of a line without offering a wrap opportunity.
+- `MIN_LETTER_SPACING_EM` (constant) - Tightest letter\-spacing, relative to the font size.
+- `countCharacters` (function) - The number of typographic characters in text : letter\-spacing is added after each grapheme cluster, not after each code point \(a letter and its combining accent are one\).
+- `measureWordWidth` (function) - Width of text at fontSize px, measured with a canvas context when one exists \(jsdom and print have none, then an estimate keeps the layout consistent\).
+- `OcrWordPlacement` (typedef) - No description.
+- `OcrLinePlacement` (typedef) - No description.
+- `OcrLayout` (typedef) - No description.
+- `ocrReadingOrder` (function) - The words of an outcome in reading order, grouped into lines by the rule the text layer lays them out with: a word whose box starts below the vertical middle of the previous word'...
+- `layoutOcrLines` (function) - Place the words of an outcome inside an unrotated frame of frameWidth × frameHeight CSS px, grouped into lines.
+- `isOcrLayerSelection` (function) - Whether a selection lies within OCR text layers only \(one or several pages\), so that its text can be read line by line and a copy of it replaced.
 
 ## src/utils/ompThemePreference.js
 
@@ -281,7 +491,7 @@ OpenDocViewer — hybrid page\-asset renderer.
 
 Exports: `createPageAssetRenderer`, `PageAssetRenderer`
 
-Local imports: `src/utils/documentLoadingConfig.js`, `src/utils/pageAssetWorkerPool.js`, `src/utils/pdfPageWorkerPool.js`, `src/utils/pdfjsDocumentOptions.js`, `src/utils/pdfResolution.js`, `src/utils/pdfResolutionRuntime.js`
+Local imports: `src/utils/documentLoadingConfig.js`, `src/utils/pageAssetWorkerPool.js`, `src/utils/pdfPageWorkerPool.js`, `src/utils/pdfjsDocumentOptions.js`, `src/utils/pdfResolution.js`, `src/utils/pdfResolutionRuntime.js`, `src/utils/jxlDecode.js`
 
 Symbols:
 
@@ -360,17 +570,6 @@ Symbols:
 - `describeBenchmarkBatchPlan` (function) - Describe the actual batch plan for one benchmark run.
 - `createScenarioLabel` (function) - No description.
 - `createScenarioKey` (function) - No description.
-
-## src/utils/pdfjsDocumentOptions.js
-
-Shared pdf.js document\-loading options.
-
-Exports: `withPdfJsDocumentOptions`, `PDFJS_WASM_BASE_URL`
-
-Symbols:
-
-- `PDFJS_WASM_BASE_URL` (constant) - Shared pdf.js document\-loading options.
-- `withPdfJsDocumentOptions` (function) - No description.
 
 ## src/utils/pdfPageWorkerPool.js
 
@@ -481,76 +680,107 @@ Symbols:
 - `module:utils/pdfSignatureDocuments.getSignatureFileHeading` (function) - Heading for one file of a multi\-file document: &quot;File k of m: name&quot;, or &quot;File k of m&quot; when no file name is available.
 - `module:utils/pdfSignatureDocuments.getSignatureFilePages` (function) - Page range of a file inside its document, &quot;Pages 19–24&quot; or &quot;Page 3&quot;; '' when unknown.
 
-## src/utils/pdfSignatureGateway.js
-
-Optional gateway trust enrichment.
-
-Exports: `getGatewaySignatureContext`, `mergeGatewaySignatureReport`, `createGatewaySignatureClient`
-
-Local imports: `src/utils/pdfSignatureStatus.js`
-
-Symbols:
-
-- `module:utils/pdfSignatureGateway` (module) - Optional gateway trust enrichment.
-- `module:utils/pdfSignatureGateway.getGatewaySignatureContext` (function) - Resolve only HTTP source routes on the viewer's own origin, preserving the path base.
-- `module:utils/pdfSignatureGateway~validationDisabled` (function) - The gateway answered that server validation is switched off.
-- `module:utils/pdfSignatureGateway.mergeGatewaySignatureReport` (function) - Accept only unambiguous server entries.
-- `module:utils/pdfSignatureGateway.createGatewaySignatureClient` (function) - Create viewer\-local state for disabled gateway sessions.
-
 ## src/utils/pdfSignatureInspector.js
 
 PDF signature inspection \- the single entry point for application code.
 
 Exports: `getDocumentSignatures`, `disposePdfSignatureWorker`, `getDocumentSignatures`
 
-Local imports: `../workers/pdfSignatureWorker.js?worker`, `src/utils/pdfSignatures.js`
+Local imports: `../workers/pdfSignatureWorker.js?worker`, `src/utils/pdfSignatures.js`, `src/utils/pdfSignatureRenderCheck.js`
 
 Symbols:
 
 - `module:utils/pdfSignatureInspector` (module) - PDF signature inspection \- the single entry point for application code.
+- `module:utils/pdfSignatureInspector~InspectionError` (class) - Rejection reason that carries the integrity code for the placeholder report.
 - `module:utils/pdfSignatureInspector~workerHandle` (member) - Lazily created worker handle: \{ worker, broken, pending \} where pending maps requestId to its resolve/reject callbacks.
 - `module:utils/pdfSignatureInspector.getDocumentSignatures` (function) - Inspect the signatures of one document.
 - `module:utils/pdfSignatureInspector.disposePdfSignatureWorker` (function) - Terminate the signature worker \(e.g.
+
+## src/utils/pdfSignatureRenderCheck.js
+
+pdf.js differential confirmation for appended revisions.
+
+Exports: `RENDER_CHECK_STARTUP_MS`, `RENDER_CHECK_PER_PAGE_MS`, `RENDER_CHECK_MAX_TOTAL_MS`, `RENDER_CHECK_PAGE_WATCHDOG_MS`, `RENDER_CHECK_MAX_PAGES`, `renderCheckLimits`, `renderCheckBudgetMs`, `renderCheckVerdict`, `createRenderComparator`, `resolveResource`
+
+Symbols:
+
+- `module:utils/pdfSignatureRenderCheck` (module) - pdf.js differential confirmation for appended revisions.
+- `module:utils/pdfSignatureRenderCheck.RENDER_CHECK_STARTUP_MS` (constant) - Allowance for loading pdf.js and opening both revisions, in ms.
+- `module:utils/pdfSignatureRenderCheck.RENDER_CHECK_PER_PAGE_MS` (constant) - Allowance per page \(both revisions\), in ms.
+- `module:utils/pdfSignatureRenderCheck.RENDER_CHECK_MAX_TOTAL_MS` (constant) - Absolute cap for all comparisons of one comparator \(one file\), in ms.
+- `module:utils/pdfSignatureRenderCheck.RENDER_CHECK_PAGE_WATCHDOG_MS` (constant) - Longest one page, or the document\-level sections, may take, in ms.
+- `module:utils/pdfSignatureRenderCheck.RENDER_CHECK_MAX_PAGES` (constant) - Page budget: larger documents are not compared \(fail closed\).
+- `module:utils/pdfSignatureRenderCheck~RenderCheckLimits` (typedef) - No description.
+- `module:utils/pdfSignatureRenderCheck.renderCheckLimits` (function) - The time limits, with optional overrides \(positive numbers only\).
+- `module:utils/pdfSignatureRenderCheck.renderCheckBudgetMs` (function) - Wall\-clock budget for comparing a document of pageCount pages: startup \+ pageCount x per page, never more than the total cap.
+- `module:utils/pdfSignatureRenderCheck~RenderCheckError` (class) - Raised for anything that prevents a complete comparison.
+- `module:utils/pdfSignatureRenderCheck~RenderCheckResult` (typedef) - No description.
+- `module:utils/pdfSignatureRenderCheck.renderCheckVerdict` (function) - Map a comparison result to a signature verdict.
+
+## src/utils/pdfSignatureRevisions.js
+
+Appended\-revision classifier for PDF signatures.
+
+Exports: `createRevisionLog`, `installRevisionLogHooks`, `allDicts`, `classifyAppendedRevisions`, `hasEscapedSecurityKey`, `decodeXrefStream`
+
+Symbols:
+
+- `module:utils/pdfSignatureRevisions` (module) - Appended\-revision classifier for PDF signatures.
+- `module:utils/pdfSignatureRevisions~RevisionVerdict` (typedef) - No description.
+- `module:utils/pdfSignatureRevisions~EXEMPT_CATALOG_KEYS` (constant) - Catalog entries an unsigned update may add or change without touching content.
+- `module:utils/pdfSignatureRevisions~DTS_FIELD_KEYS` (constant) - Keys a new document\-timestamp field \(merged with its widget\) may carry.
+- `module:utils/pdfSignatureRevisions~DTS_WIDGET_KEYS` (constant) - Keys a separate widget of a new document\-timestamp field may carry.
+- `module:utils/pdfSignatureRevisions~SECURITY_KEYS` (constant) - Keys whose spelling must agree between pdf\-lib and pdf.js \(see hasEscapedSecurityKey\).
+- `module:utils/pdfSignatureRevisions.createRevisionLog` (function) - Create an empty revision log.
+- `module:utils/pdfSignatureRevisions~noteStream` (function) - Called by the structural\-stream decoder for a top\-level ObjStm/XRef stream.
+- `module:utils/pdfSignatureRevisions.installRevisionLogHooks` (function) - Install the revision\-log hooks on a pdf\-lib PDFParser INSTANCE \(never on a prototype\).
+- `module:utils/pdfSignatureRevisions.allDicts` (function) - The single enumeration point for revision rules.
+- `module:utils/pdfSignatureRevisions~Verdict` (class) - No description.
+- `module:utils/pdfSignatureRevisions.classifyAppendedRevisions` (function) - Classify the unsigned data appended after a signature's covered range.
+
+## src/utils/pdfSignatureStatus.js
+
+Signature UI status helpers for browser integrity.
+
+Exports: `INTEGRITY_CODES`, `SIGNING_TIME_CODES`, `normalizeSignatureIntegrity`, `normalizeUncheckedSeverity`, `normalizeSigningTimeCheck`, `getSignatureSeverity`, `getReportSignatureSeverity`, `getIntegrityLabel`, `getIntegrityCodeText`, `getSigningTimeCheckLabel`, `getSigningTimeWarningSignature`, `getWorstSignatureIntegrity`, `getSignatureCount`, `reportHasSignatures`, `formatSignatureTime`
+
+Symbols:
+
+- `module:utils/pdfSignatureStatus` (module) - Signature UI status helpers for browser integrity.
+- `module:utils/pdfSignatureStatus~SEVERITY_BY_INTEGRITY` (constant) - Severity class per integrity status.
+- `module:utils/pdfSignatureStatus~INTEGRITY_ALIASES` (constant) - Legacy values accepted from older caches.
+- `module:utils/pdfSignatureStatus~INTEGRITY_WORST_FIRST` (constant) - Integrity statuses ordered worst\-first.
+- `module:utils/pdfSignatureStatus.INTEGRITY_CODES` (constant) - Closed set of integrityCode values produced by utils/pdfSignatures.js and utils/pdfSignatureInspector.js.
+- `module:utils/pdfSignatureStatus~SEVERITY_BY_SIGNING_TIME_CHECK` (constant) - Severity per signing\-time check.
+- `module:utils/pdfSignatureStatus.SIGNING_TIME_CODES` (constant) - Closed set of signingTimeCode values; texts under signatures.signingTimeCode.&lt;code&gt; .
+- `module:utils/pdfSignatureStatus.normalizeSignatureIntegrity` (function) - Fail closed for missing, unexpected and inherited property names: anything outside the known set \(after resolving legacy aliases\) is unreadable .
+- `module:utils/pdfSignatureStatus.normalizeUncheckedSeverity` (function) - The site switch pdfSignatures.uncheckedSeverity : exactly 'warning' shows not\-checked signatures as warnings; anything else keeps them 'ok'.
+- `module:utils/pdfSignatureStatus.normalizeSigningTimeCheck` (function) - Missing values mean the check was not performed; an unknown string fails closed to outside\-validity \(a warning\).
+- `module:utils/pdfSignatureStatus.getSignatureSeverity` (function) - Severity of one signature: the worse of its integrity and its signing\-time check.
+- `module:utils/pdfSignatureStatus.getReportSignatureSeverity` (function) - Worst severity across all signatures.
 
 ## src/utils/pdfSignatures.js
 
 PDF signature collection \- level 1 integrity inspection.
 
-Exports: `SUPPORTED_SUBFILTERS`, `parsePdfDateString`, `unreadableSignatureReport`, `installIndirectObjectHeaderProbe`, `collectPdfSignatures`
+Exports: `SUPPORTED_SUBFILTERS`, `parsePdfDateString`, `notCheckedSignatureReport`, `indeterminateSignatureReport`, `installIndirectObjectHeaderProbe`, `collectPdfSignatures`
+
+Local imports: `src/utils/pdfSignatureRevisions.js`, `src/utils/pdfSignatureRenderCheck.js`
 
 Symbols:
 
 - `module:utils/pdfSignatures` (module) - PDF signature collection \- level 1 integrity inspection.
-- `module:utils/pdfSignatures~PdfSignatureInfo` (typedef) - One inspected PDF signature \(level\-1 integrity view; trust is never evaluated here \- see the trust property\).
+- `module:utils/pdfSignatures~PdfSignatureInfo` (typedef) - One inspected PDF signature \(level\-1 integrity view\).
+- `module:utils/pdfSignatures~PdfSignatureIntegrity` (typedef) - Produced integrity values.
+- `module:utils/pdfSignatures~PdfSignatureIntegrityCode` (typedef) - Closed set of integrity codes \(see INTEGRITY\_CODES in utils/pdfSignatureStatus.js\).
 - `module:utils/pdfSignatures~PdfSignatureReport` (typedef) - No description.
 - `module:utils/pdfSignatures.SUPPORTED_SUBFILTERS` (constant) - SubFilters with level\-1 handling.
+- `module:utils/pdfSignatures~WEBCRYPTO_HASHES` (constant) - Hash names WebCrypto implements.
+- `module:utils/pdfSignatures~DECODABLE_STREAM_FILTERS` (constant) - Structural stream filters pdf\-lib's decodePDFRawStream can decode.
+- `module:utils/pdfSignatures~ViewerLimitError` (class) - A check the viewer could not perform because of its own limits \(budget, missing algorithm, failing machinery\), with no evidence of a defect.
 - `module:utils/pdfSignatures~pdfText` (function) - Decode a PDF text string object \(literal string or hex string\) to a JS string, honouring the UTF\-16BE byte\-order mark.
 - `module:utils/pdfSignatures.parsePdfDateString` (function) - Parse a PDF date string \(&quot;D:YYYYMMDDHHmmSS\+02'30'&quot;, also without the D: prefix, with partial fields, or without a timezone \- a missing timezone is treated as UTC\).
 - `module:utils/pdfSignatures~discoverSignatures` (function) - Walk every indirect object; collect signature dictionaries together with the field dictionary that references them \(for /T\).
-- `module:utils/pdfSignatures.unreadableSignatureReport` (function) - Report an inspection failure without claiming that the document is unsigned.
-- `module:utils/pdfSignatures.installIndirectObjectHeaderProbe` (function) - pdf\-lib's skipJibberish probes every byte of leading junk with matchIndirectObjectHeader, which throws \(building an Error\) on each miss: \~17 us per byte, so a 64 KiB prefix cost a...
-- `module:utils/pdfSignatures.collectPdfSignatures` (function) - Collect signature information from PDF bytes.
-
-## src/utils/pdfSignatureStatus.js
-
-Signature UI status helpers for browser integrity and gateway trust.
-
-Exports: `getSignatureSeverity`, `getReportSignatureSeverity`, `normalizeSignatureIntegrity`, `getIntegrityLabel`, `getWorstSignatureIntegrity`, `getSignatureCount`, `reportHasSignatures`, `normalizeSignatureTrust`, `getWorstSignatureTrust`, `getTrustLabel`, `TRUST_REASON_CODES`, `getTrustReasonText`, `getSignatureTrustState`, `getTrustExplanation`, `formatSignatureTime`
-
-Symbols:
-
-- `module:utils/pdfSignatureStatus` (module) - Signature UI status helpers for browser integrity and gateway trust.
-- `module:utils/pdfSignatureStatus~SEVERITY_BY_INTEGRITY` (constant) - Severity classes used for colours/icons: intact is neutral/positive, modified\-after\-signing and unsupported are warnings, and digest\-mismatch, signature\-invalid and unreadable are...
-- `module:utils/pdfSignatureStatus~INTEGRITY_WORST_FIRST` (constant) - Integrity statuses ordered worst\-first.
-- `module:utils/pdfSignatureStatus.getSignatureSeverity` (function) - Map one integrity status to its severity class.
-- `module:utils/pdfSignatureStatus.getReportSignatureSeverity` (function) - Worst severity across integrity and trust for all signatures.
-- `module:utils/pdfSignatureStatus.normalizeSignatureIntegrity` (function) - Fail closed for missing, unexpected and inherited property names.
-- `module:utils/pdfSignatureStatus.getIntegrityLabel` (function) - Shared localized status text for the badge tooltip and details dialog.
-- `module:utils/pdfSignatureStatus.getWorstSignatureIntegrity` (function) - The worst integrity status among a document's signatures, or null when there are none.
-- `module:utils/pdfSignatureStatus.getSignatureCount` (function) - No description.
-- `module:utils/pdfSignatureStatus.reportHasSignatures` (function) - No description.
-- `module:utils/pdfSignatureStatus~TRUST_WORST_FIRST` (constant) - Trust verdicts ordered worst\-first.
-- `module:utils/pdfSignatureStatus.normalizeSignatureTrust` (function) - No description.
 
 ## src/utils/pdfWorkerDispatcher.js
 
@@ -574,6 +804,17 @@ Symbols:
 - `batchProgressUnitsFromEvent` (function) - Convert worker phases to deterministic job units: 1 unit for loading the PDF engine per batch 1 unit per loaded page image 1 unit per generated page 1 unit for finalizing each par...
 - `runLimitedTasks` (function) - Run async work with a small in\-process dispatcher.
 - `runPdfWorkerTask` (function) - No description.
+
+## src/utils/pdfjsDocumentOptions.js
+
+Shared pdf.js document\-loading options.
+
+Exports: `withPdfJsDocumentOptions`, `PDFJS_WASM_BASE_URL`
+
+Symbols:
+
+- `PDFJS_WASM_BASE_URL` (constant) - Shared pdf.js document\-loading options.
+- `withPdfJsDocumentOptions` (function) - No description.
 
 ## src/utils/performanceOverlayFlag.js
 
@@ -651,7 +892,7 @@ OpenDocViewer — Generated PDF print backend.
 
 Exports: `createPrintPdfBlob`, `downloadPdfBlob`, `printPdfBlob`, `collectPrintablePdfSources`, `releasePrintablePdfSources`, `createPdfFromDocumentHandle`, `handlePdfOutput`, `handlePdfCurrent`, `handlePdfCurrentComparison`, `handlePdfCompareOverlay`, `handlePdfCompareCurtain`
 
-Local imports: `src/logging/systemLogger.js`, `src/utils/printTemplate.js`, `src/utils/localizedValue.js`, `src/utils/printSanitize.js`, `src/utils/printWatermark.js`, `src/utils/documentLoadingConfig.js`, `src/utils/pdfWorkerDispatcher.js`, `src/utils/printCore.js`
+Local imports: `src/logging/systemLogger.js`, `src/utils/printTemplate.js`, `src/utils/localizedValue.js`, `src/utils/printSanitize.js`, `src/utils/printWatermark.js`, `src/utils/documentLoadingConfig.js`, `src/utils/pdfWorkerDispatcher.js`, `src/utils/printCore.js`, `src/utils/objectUrlRegistry.js`
 
 Symbols:
 
@@ -812,7 +1053,7 @@ Symbols:
 
 Runtime configuration helpers.
 
-Exports: `COMPARE_ADJUST_TOOLBAR_MODES`, `getRuntimeConfig`, `getKeyboardPrintShortcutBehavior`, `isDocumentMetadataUiEnabled`, `isFineTuneEnabled`, `isCompareOverlayEnabled`, `isCompareOverlayPrintEnabled`, `isCompareCurtainEnabled`, `isCompareCurtainPrintEnabled`, `getCompareAdjustToolbarMode`, `isSignatureThumbnailPageBadgeEnabled`, `isPdfSignatureInspectionEnabled`, `getPdfSignatureInspectionStart`, `getToolbarLargeButtonsDefault`, `normalizePrintDefaultMode`, `normalizeCustomFitWidthFactorPercent`, `normalizeOptionalCustomFitFactorPercent`, `normalizeCustomFitSizeLimitPreference`, `getViewerDefaultZoomMode`, `getViewerCustomFitWidthFactorPercent`, `getViewerCustomFitSizeLimits`, `getPrintDefaultMode`, `getPrintSelectionWorkspaceConfig`, `getViewerEdgeScrollPageTurnConfig`, `getViewerProblemNoticeConfig`, `getThemeDefaultMode`, `getOmpThemeBridgeAllowedOrigins`
+Exports: `COMPARE_ADJUST_TOOLBAR_MODES`, `PDF_SIGNATURE_UNCHECKED_SEVERITIES`, `getRuntimeConfig`, `getKeyboardPrintShortcutBehavior`, `isDocumentMetadataUiEnabled`, `isFineTuneEnabled`, `isCompareOverlayEnabled`, `isCompareOverlayPrintEnabled`, `isCompareCurtainEnabled`, `isCompareCurtainPrintEnabled`, `getCompareAdjustToolbarMode`, `isSignatureThumbnailPageBadgeEnabled`, `isPdfSignatureInspectionEnabled`, `getPdfSignatureInspectionStart`, `getPdfSignatureUncheckedSeverity`, `DEFAULT_OCR_LANGUAGES`, `OCR_LANGUAGE_PRESETS`, `isOcrEnabled`, `isPdfTextLayerEnabled`, `isPageTextEnabled`, `isOcrLineRemovalEnabled`, `isOcrWholeDocumentEnabled`, `isOcrBenchmarkEnabled`, `isOcrBoostBenchmarkEnabled`, `OCR_BOOST_HARD_MAX_WORKER_COUNT`, `OCR_BOOST_DEFAULTS`, `isOcrBoostEnabled`, `normalizeOcrBoostConfig`, `DEFAULT_OCR_WORKER_COUNT`, `MAX_OCR_WORKER_COUNT`, `OCR_WORKER_POLICY_DEFAULTS`, `describeOcrWorkerCount`, `normalizeOcrWorkerPolicy`, `resolveOcrWorkerPlan`, `resolveOcrWorkerCount`, `isSpeechLanguageAutoDetectEnabled`, `isOcrSearchEnabled`, `isOcrSearchCtrlFOverrideEnabled`, `isReadAloudEnabled`, `describeOcrLanguages`, `getOcrLanguages`, `OCR_ASSET_BASE_URL_REJECTIONS`, `describeOcrAssetBaseUrl`, `getOcrAssetBaseUrl`, `getToolbarLargeButtonsDefault`, `normalizePrintDefaultMode`, `normalizeCustomFitWidthFactorPercent`, `normalizeOptionalCustomFitFactorPercent`, `normalizeCustomFitSizeLimitPreference`, `getViewerDefaultZoomMode`, `getViewerCustomFitWidthFactorPercent`, `getViewerCustomFitSizeLimits`, `getPrintDefaultMode`, `getPrintSelectionWorkspaceConfig`, `getViewerEdgeScrollPageTurnConfig`, `getViewerProblemNoticeConfig`, `getThemeDefaultMode`, `getOmpThemeBridgeAllowedOrigins`
 
 Symbols:
 
@@ -820,14 +1061,14 @@ Symbols:
 - `ViewerDefaultZoomMode` (typedef) - No description.
 - `PrintDefaultMode` (typedef) - No description.
 - `CompareAdjustToolbarMode` (typedef) - No description.
+- `PdfSignatureUncheckedSeverity` (typedef) - No description.
 - `ResetSessionTarget` (typedef) - Session\-reset target for the support/problem notice.
 - `KEYBOARD_PRINT_SHORTCUT_BEHAVIORS` (constant) - Runtime validation values for KeyboardPrintShortcutBehavior; the typedef documents the public contract.
 - `COMPARE_ADJUST_TOOLBAR_MODES` (constant) - Runtime validation values for CompareAdjustToolbarMode; the first one is the default.
+- `PDF_SIGNATURE_UNCHECKED_SEVERITIES` (constant) - Runtime validation values for PdfSignatureUncheckedSeverity; the first one is the default.
 - `RESET_SESSION_TARGETS` (constant) - Runtime validation values for ResetSessionTarget; the typedef documents the public contract.
 - `PRINT_DEFAULT_MODE_ALIASES` (constant) - User\-facing print default mode aliases mapped to persisted PrintDefaultMode values.
 - `DEFAULT_ZOOM_MODE_ALIAS_ENTRIES` (constant) - User\-facing zoom\-mode aliases mapped to ViewerDefaultZoomMode values.
-- `ViewerCustomFitSizeLimits` (typedef) - No description.
-- `PrintSelectionWorkspaceConfig` (typedef) - No description.
 
 ## src/utils/sourceTempStore.js
 
@@ -852,11 +1093,73 @@ Symbols:
 - `SourceMeta` (typedef) - No description.
 - `PutSourceOptions` (typedef) - No description.
 
+## src/utils/speech.js
+
+Reading text aloud with the browser's speech synthesis \(Web Speech API, \`window.speechSynthesis\`\).
+
+Exports: `SPEECH_MAX_CHUNK_LENGTH`, `isSpeechSynthesisAvailable`, `resolveSpeechLanguage`, `splitSpeechChunks`, `isLocalSpeechVoice`, `speechLocaleLabel`, `pickSpeechVoice`, `speakText`
+
+Symbols:
+
+- `SPEECH_MAX_CHUNK_LENGTH` (constant) - Longest chunk handed to the synthesiser \(characters\).
+- `isSpeechSynthesisAvailable` (function) - No description.
+- `resolveSpeechLanguage` (function) - The speech locale for a viewer UI language \('sv' → 'sv\-SE'\); other codes pass through.
+- `splitSpeechChunks` (function) - Split text into chunks the synthesiser reads through: lines first, then sentences, then at word boundaries when a sentence is still too long.
+- `canonicalLocale` (function) - A voice's locale in canonical form \('sv\_se' → 'sv\-SE'\), or '' for none.
+- `isLocalSpeechVoice` (function) - Whether a voice runs on the machine.
+- `speechLocaleLabel` (function) - The name of a locale in the UI language \('sv\-SE' in Swedish: &quot;svenska \(Sverige\)&quot;\), through Intl.DisplayNames where the browser has it, else the code itself.
+- `pickSpeechVoice` (function) - The local voice to use for a locale: exact locale first, then the same base language \(the browser's default voice first among equals\), else null.
+- `SpeechController` (typedef) - No description.
+- `speakText` (function) - Speak text aloud with a local voice.
+
+## src/utils/standardManual.js
+
+Filter and sanitize the bundled standard manual for a supplied runtime config.
+
+Exports: `filterStandardManual`
+
+Local imports: `src/utils/standardManualRules.js`
+
+Symbols:
+
+- `sanitizeManualHtml` (function) - No description.
+- `headingLevel` (function) - No description.
+- `guideContainerFor` (function) - The embedded guide is a hard boundary.
+- `findHeadingSegment` (function) - No description.
+- `headingSegmentRange` (function) - No description.
+- `localFragmentId` (function) - Decode a same\-document fragment.
+- `recordRemovedSubtree` (function) - Remember ids and lightbox references before a subtree leaves the document.
+- `removeHeadingSegment` (function) - No description.
+- `matchesOcrRule` (function) - No description.
+- `filterHeadingRules` (function) - Apply exact\-id and OCR heading rules to a parsed manual.
+- `isInsideRange` (function) - No description.
+- `normalizedText` (function) - No description.
+
+## src/utils/standardManualRules.js
+
+Resolve every site switch that can hide standard\-manual content.
+
+Exports: `standardManualLogicalRules`, `standardManualSectionRules`, `standardManualSelectionPartialRules`, `standardManualOcrSectionRules`, `standardManualRuleIds`, `resolveStandardManualRuleStates`
+
+Local imports: `src/utils/runtimeConfig.js`
+
+Symbols:
+
+- `requiredDocument` (function) - No description.
+- `localizedGuideRule` (function) - Declare the actual authored aliases for one logical section.
+- `standardManualLogicalRules` (constant) - Generator\-validated logical rules.
+- `standardManualSectionRules` (constant) - Exact\-id heading rules.
+- `standardManualSelectionPartialRules` (constant) - Structural cleanup for selection sections that also contain ordinary Delete/printing help.
+- `standardManualOcrSectionRules` (constant) - OCR headings use the same id in standalone and embedded guides.
+- `standardManualRuleIds` (constant) - A flat compatibility list of every real element id referenced by the logical manifest.
+- `failOpen` (function) - Read a UI predicate without letting a host\-owned Proxy/getter hide manual content.
+- `resolveStandardManualRuleStates` (function) - Resolve every site switch that can hide standard\-manual content.
+
 ## src/utils/supportDiagnostics.js
 
 Support diagnostics helpers for opt\-in troubleshooting tools.
 
-Exports: `loadLatestPdfBenchmarkResult`, `saveLatestPdfBenchmarkResult`, `loadLatestRenderDecodeBenchmarkResult`, `saveLatestRenderDecodeBenchmarkResult`, `collectSupportDiagnostics`, `downloadJsonFile`
+Exports: `loadLatestPdfBenchmarkResult`, `saveLatestPdfBenchmarkResult`, `loadLatestRenderDecodeBenchmarkResult`, `saveLatestRenderDecodeBenchmarkResult`, `loadLatestOcrBenchmarkResult`, `saveLatestOcrBenchmarkResult`, `loadLatestOcrBoostBenchmarkResult`, `saveLatestOcrBoostBenchmarkResult`, `collectSupportDiagnostics`, `downloadJsonFile`
 
 Local imports: `src/utils/runtimeConfig.js`, `src/utils/documentLoadingConfig.js`, `src/utils/pdfResolutionRuntime.js`, `src/utils/pdfPrebuildPlan.js`, `src/utils/pdfPrintCacheKey.js`
 
@@ -890,7 +1193,7 @@ Symbols:
 
 Lightweight persisted viewer preferences.
 
-Exports: `getViewerPreferences`, `setViewerPreferences`, `getThemePreference`, `setThemePreference`, `getThemeModePreference`, `setThemeModePreference`, `clearThemeSharedRevision`, `getLanguagePreference`, `setLanguagePreference`, `getPrintDefaultModePreference`, `setPrintDefaultModePreference`, `clearPrintDefaultModePreference`, `getDefaultZoomModePreference`, `setDefaultZoomModePreference`, `clearDefaultZoomModePreference`, `getCustomFitWidthFactorPreference`, `setCustomFitWidthFactorPreference`, `clearCustomFitWidthFactorPreference`, `getCustomFitSizeLimitPreference`, `setCustomFitSizeLimitPreference`, `clearCustomFitSizeLimitPreference`, `getToolbarLargeButtonsPreference`, `setToolbarLargeButtonsPreference`, `getEffectiveToolbarLargeButtons`
+Exports: `getViewerPreferences`, `setViewerPreferences`, `getThemePreference`, `setThemePreference`, `getThemeModePreference`, `setThemeModePreference`, `clearThemeSharedRevision`, `getLanguagePreference`, `setLanguagePreference`, `getSpeechLanguagePreference`, `setSpeechLanguagePreference`, `getPrintDefaultModePreference`, `setPrintDefaultModePreference`, `clearPrintDefaultModePreference`, `getDefaultZoomModePreference`, `setDefaultZoomModePreference`, `clearDefaultZoomModePreference`, `getCustomFitWidthFactorPreference`, `setCustomFitWidthFactorPreference`, `clearCustomFitWidthFactorPreference`, `getCustomFitSizeLimitPreference`, `setCustomFitSizeLimitPreference`, `clearCustomFitSizeLimitPreference`, `getToolbarLargeButtonsPreference`, `setToolbarLargeButtonsPreference`, `getEffectiveToolbarLargeButtons`
 
 Local imports: `src/utils/runtimeConfig.js`
 

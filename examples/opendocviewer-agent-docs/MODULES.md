@@ -7,9 +7,21 @@ File count: 2. Line count: 508. JSDoc symbol count: 7.
 - `server/system-log-server.js` - System Log Server — standalone Express endpoint for structured system logs.
 - `server/user-log-server.js` - User Action Log Server — standalone Express endpoint for print/user\-action audit events.
 
+## src/ErrorBoundary.jsx
+
+File count: 1. Line count: 297. JSDoc symbol count: 12.
+
+- `src/ErrorBoundary.jsx` - OpenDocViewer — React Error Boundary \- Catch unexpected render/runtime errors in descendant components.
+
+## src/PerformanceMonitor.jsx
+
+File count: 1. Line count: 1346. JSDoc symbol count: 20.
+
+- `src/PerformanceMonitor.jsx` - src/PerformanceMonitor.jsx OpenDocViewer — Lightweight Performance HUD \- Provide optional, low\-impact visibility into runtime performance and viewer state.
+
 ## src/app
 
-File count: 3. Line count: 782. JSDoc symbol count: 20.
+File count: 3. Line count: 822. JSDoc symbol count: 21.
 
 - `src/app/AppBootstrap.jsx` - Application bootstrap React component.
 - `src/app/OpenDocViewer.jsx` - src/app/OpenDocViewer.jsx Main application shell for the viewer.
@@ -17,26 +29,20 @@ File count: 3. Line count: 782. JSDoc symbol count: 20.
 
 ## src/components
 
-File count: 18. Line count: 7855. JSDoc symbol count: 103.
+File count: 22. Line count: 8637. JSDoc symbol count: 121.
 
-- `src/components/DocumentThumbnailList.jsx` - OpenDocViewer — Deterministic thumbnail strip.
 - `src/components/DocumentRender.jsx` - OpenDocViewer — Active page renderer.
+- `src/components/DocumentThumbnailList.jsx` - OpenDocViewer — Deterministic thumbnail strip.
 - `src/components/PrintSelectionWorkspace.jsx` - Full\-window print\-selection workspace.
+- `src/components/OcrTextLayer.jsx` - Selectable, invisible text over a recognised page image.
+- `src/components/SignatureDetailsDialog.jsx` - Signature details dialog \(browser integrity\).
 - `src/components/Resizer.jsx` - OpenDocViewer — Resizer Small, focusable separator used to let users resize adjacent panels \(e.g., sidebar/content\) via mouse drag or keyboard interaction.
-- `src/components/SignatureDetailsDialog.jsx` - Signature details dialog \(browser integrity and optional gateway trust\).
+- `src/components/KeyTips.jsx` - Key tips: hold \`?\` and every toolbar button shows its name in a small label under it, so the icons can be learnt without hovering them one by one; release the key and the labels go.
 - `src/components/LoadingSpinner.jsx` - OpenDocViewer — Loading Spinner Minimal, accessible loading indicator.
-- `src/components/ViewerProblemNotice.jsx` - OpenDocViewer — configurable viewer\-level problem notice.
-- `src/components/SignatureOverviewDialog.jsx` - Signature overview dialog, opened from the toolbar overview button.
-
-## src/components/common
-
-File count: 1. Line count: 36. JSDoc symbol count: 1.
-
-- `src/components/common/StatusLed.jsx` - Small reusable LED\-style status indicator.
 
 ## src/components/DocumentLoader
 
-File count: 8. Line count: 4112. JSDoc symbol count: 106.
+File count: 8. Line count: 4133. JSDoc symbol count: 106.
 
 - `src/components/DocumentLoader/documentLoaderUtils.js` - OpenDocViewer — Loader Utilities Helper utilities used by the DocumentLoader pipeline: • Build document URL lists \(pattern mode and demo mode\) • Fetch as ArrayBuffer \(with optional AbortSignal\) • Page counting \(PDF / TIF
 - `src/components/DocumentLoader/DocumentLoader.js` - OpenDocViewer — Document loader orchestrator.
@@ -49,20 +55,20 @@ File count: 8. Line count: 4112. JSDoc symbol count: 106.
 
 ## src/components/DocumentToolbar
 
-File count: 19. Line count: 8059. JSDoc symbol count: 138.
+File count: 21. Line count: 8229. JSDoc symbol count: 117.
 
 - `src/components/DocumentToolbar/printRangeDialogHelpers.js` - Pure helpers and shared constants for the print\-range dialog.
 - `src/components/DocumentToolbar/usePrintPipeline.js` - File: src/components/DocumentToolbar/usePrintPipeline.js The ONE print pipeline of the viewer: print dialog target, print options, user print log, the direct\-versus\-generated\-PDF...
 - `src/components/DocumentToolbar/usePrintRangeDialog.js` - Hook \+ helpers for PrintRangeDialog.
 - `src/components/DocumentToolbar/DocumentToolbar.jsx` - Main toolbar UI for page navigation, zoom, comparison, image adjustments, help, language, and print entry.
-- `src/components/DocumentToolbar/ManualOverlayDialog.jsx` - Manual overlay that loads simple external HTML fragments from the public help folder.
-- `src/components/DocumentToolbar/usePdfPrebuildAllPages.js` - Background prebuild/cache for configured "all pages" generated\-PDF variants.
+- `src/components/DocumentToolbar/OcrSearchBar.jsx` - Search in the recognised text, from the toolbar: a search button right after the image\-adjustment group that doubles as the page's OCR status \(an LED on the button and the status in a visually hidden live region; the but
 - `src/components/DocumentToolbar/ThemeMenuButton.jsx` - Compact theme selector for the toolbar.
-- `src/components/DocumentToolbar/PrintPipelineDialogs.jsx` - The dialogs of the ONE print pipeline \(usePrintPipeline.js\): the print dialog and the generated\-PDF progress \(modal, or a dock while working in the background\).
+- `src/components/DocumentToolbar/usePdfPrebuildAllPages.js` - Background prebuild/cache for configured "all pages" generated\-PDF variants.
+- `src/components/DocumentToolbar/LanguageMenuButton.jsx` - Compact language selector for the toolbar.
 
 ## src/components/DocumentViewer
 
-File count: 17. Line count: 7631. JSDoc symbol count: 154.
+File count: 17. Line count: 7787. JSDoc symbol count: 157.
 
 - `src/components/DocumentViewer/hooks/useViewerEffects.js` - File: src/components/DocumentViewer/hooks/useViewerEffects.js Cross\-cutting viewer effects.
 - `src/components/DocumentViewer/useDocumentViewer.js` - Primary viewer\-state hook.
@@ -73,34 +79,54 @@ File count: 17. Line count: 7631. JSDoc symbol count: 154.
 - `src/components/DocumentViewer/hooks/useViewerKeyboardNavigation.js` - Global keyboard navigation, zoom, rotation, and selection shortcuts for DocumentViewer.
 - `src/components/DocumentViewer/DocumentViewer.jsx` - OpenDocViewer — Document Viewer \(Container\) Tie together: • Toolbar \(actions, zoom, adjustments\) • Thumbnails \(navigation \+ selection reset\) • Main renderer \(canvas/img\) This component wires ViewerContext state into the
 
+## src/components/Manual
+
+File count: 4. Line count: 1751. JSDoc symbol count: 50.
+
+- `src/components/Manual/manualSearch.js` - In\-manual text search: locale\-aware case folding, match collection over the rendered manual and highlighting through the CSS Custom Highlight API with a \`&lt;mark&gt;\` fallback.
+- `src/components/Manual/manualNavigation.js` - Scrolling, focus and URL\-fragment helpers for navigating inside a rendered manual.
+- `src/components/Manual/ManualView.jsx` - Shared manual body: loads the configured manual source for the current UI language, filters the standard manual by enabled features, renders a contents tree built from the h2/h3 headings, an in\-manual search with highlig
+- `src/components/Manual/manualDocument.js` - Manual source loading and HTML preparation shared by every manual host \(the overlay dialog and a full\-page view\).
+
+## src/components/common
+
+File count: 1. Line count: 36. JSDoc symbol count: 1.
+
+- `src/components/common/StatusLed.jsx` - Small reusable LED\-style status indicator.
+
 ## src/contexts
 
-File count: 4. Line count: 3455. JSDoc symbol count: 95.
+File count: 5. Line count: 3647. JSDoc symbol count: 101.
 
 - `src/contexts/viewerContext.js` - Per\-page compare transform \(utils/compareTransform.js\): scale multiplies the base zoom \(1 \= 100 %\), dx / dy are CSS px at transform scale 1, rotation is degrees in \[0, 360\).
 - `src/contexts/ViewerProvider.jsx` - OpenDocViewer — Viewer state provider.
 - `src/contexts/ThemeProvider.jsx` - src/contexts/ThemeProvider.jsx OpenDocViewer — Theme state context \(React\) Centralize theme handling with: \- explicit themes: normal / light / dark \- an implicit system\-following startup mode when the user has not chosen
+- `src/contexts/readAloudContext.js` - The read\-aloud state shared by the page's context menu \("Read the selection aloud" / "Stop reading aloud", components/ReadAloudMenuItem.jsx\) and the toolbar's language menu \(the "Reading language" section, DocumentToolba
 - `src/contexts/themeContext.js` - Create the Theme context with a safe default to avoid undefined access if a consumer is mounted outside the provider by mistake.
 
-## src/ErrorBoundary.jsx
+## src/generated
 
-File count: 1. Line count: 297. JSDoc symbol count: 12.
+File count: 2. Line count: 4. JSDoc symbol count: 0.
 
-- `src/ErrorBoundary.jsx` - OpenDocViewer — React Error Boundary \- Catch unexpected render/runtime errors in descendant components.
+- `src/generated/standard-manual/manual.en.js` - Default export for manual.en.
+- `src/generated/standard-manual/manual.sv.js` - Default export for manual.sv.
 
 ## src/hooks
 
-File count: 5. Line count: 777. JSDoc symbol count: 26.
+File count: 10. Line count: 1813. JSDoc symbol count: 56.
 
+- `src/hooks/useOcrTextLayers.js` - Runs OCR for the pages near the viewer's focus and exposes the outcomes per page.
 - `src/hooks/useNavigationModifierState.js` - Shared modifier\-key state for navigation and compare\-aware viewer actions.
 - `src/hooks/usePageTimer.js` - OpenDocViewer — Continuous Page Navigation Timer \(React hook\) Provide a tiny utility for press\-and\-hold page navigation: \- Invokes a caller\-supplied callback immediately \(leading edge\) and then repeatedly after an initia
+- `src/hooks/useReadAloud.js` - Read the selected recognised text aloud: the state behind the page's context menu entry and the toolbar's "Reading language" section \(contexts/readAloudContext.js\).
+- `src/hooks/useDocumentLoadSettled.js` - OpenDocViewer — has the document finished loading, as far as OCR is concerned?
+- `src/hooks/useKeyTipsHeld.js` - Whether the key tips key \(\`?\`\) is held: the one piece of the key tips \(components/KeyTips.jsx\) that lives while the viewer runs.
 - `src/hooks/usePageNavigation.js` - OpenDocViewer — Page Navigation Hook \(React\) Provide memoized handlers for page navigation \(first/prev/next/last\) and continuous navigation timers suitable for press\-and\-hold UI \(e.g., mousedown\).
 - `src/hooks/useAcceleratingHoldRepeat.js` - Reusable press\-and\-hold behavior for toolbar buttons.
-- `src/hooks/usePdfSignatureReports.js` - Browser PDF signature inspection and optional gateway trust enrichment.
 
 ## src/i18n.js
 
-File count: 1. Line count: 562. JSDoc symbol count: 21.
+File count: 1. Line count: 567. JSDoc symbol count: 21.
 
 - `src/i18n.js` - i18n bootstrap for OpenDocViewer.
 
@@ -112,8 +138,9 @@ File count: 1. Line count: 67. JSDoc symbol count: 2.
 
 ## src/integrations
 
-File count: 8. Line count: 2276. JSDoc symbol count: 59.
+File count: 9. Line count: 2517. JSDoc symbol count: 72.
 
+- `src/integrations/integrationSettings.js` - Per\-integration settings carried by a Portable Document Bundle.
 - `src/integrations/ompThemeBridge.js` - Opt\-in cross\-origin theme bridge for the shared OMP theme preference.
 - `src/integrations/parentBridge.js` - Same\-origin parent\-window bootstrap adapter.
 - `src/integrations/normalizePortableBundle.js` - Normalizes multiple host payload shapes into the project's neutral portable bundle shape.
@@ -121,20 +148,34 @@ File count: 8. Line count: 2276. JSDoc symbol count: 59.
 - `src/integrations/viewerEvents.js` - OpenDocViewer — Tiny Event Emitter/Listener Utilities \(Browser\-only\) Lightweight helpers for broadcasting and listening to app\-level DOM events.
 - `src/integrations/sessionToken.js` - OpenDocViewer — Session Token Reader \(Browser\-only\) Decode an optional Base64/URL\-safe Base64 JSON payload provided via the query string: ?sessiondata\=&lt;base64&gt; This enables hosts to pass a compact, self\-contained “portab
 - `src/integrations/sessionUrl.js` - Fetch a host\-prepared Portable Document Bundle from a short URL query value.
-- `src/integrations/urlParams.js` - OpenDocViewer — URL Parameter Reader \(Browser\-only\) Read a minimal set of query parameters to bootstrap the viewer in “pattern mode”, i.e.
 
 ## src/logging
 
-File count: 2. Line count: 779. JSDoc symbol count: 48.
+File count: 2. Line count: 782. JSDoc symbol count: 48.
 
 - `src/logging/systemLogger.js` - src/logging/systemLogger.js OpenDocViewer — Frontend Logging Controller \(ESM\) \- Provide a small, dependency\-light logging facade for the browser app.
 - `src/logging/userLogger.js` - UserLogController — client\-side controller for \*\*user\*\* print logs \(backend\-agnostic\).
 
-## src/PerformanceMonitor.jsx
+## src/manual\-page
 
-File count: 1. Line count: 1346. JSDoc symbol count: 20.
+File count: 3. Line count: 178. JSDoc symbol count: 4.
 
-- `src/PerformanceMonitor.jsx` - src/PerformanceMonitor.jsx OpenDocViewer — Lightweight Performance HUD \- Provide optional, low\-impact visibility into runtime performance and viewer state.
+- `src/manual-page/main.jsx` - Entry of the stand\-alone manual page \(manual/index.html\).
+- `src/manual-page/ManualPage.jsx` - The stand\-alone manual page \(served as \`&lt;ODV base&gt;/manual/\`\): a header with the page title and the viewer's own theme and language menus, and the shared manual view filling the rest.
+- `src/manual-page/mountManualPage.jsx` - Mount the stand\-alone manual page into a container, the way src/index.jsx mounts the viewer: apply the shared theme and toolbar density to the document before the first render, then render the page inside the viewer's Th
+
+## src/ocr
+
+File count: 23. Line count: 4963. JSDoc symbol count: 209.
+
+- `src/ocr/index.js` - Entry point of the OCR module: the file the viewer imports while OCR is on, and only through \`src/utils/ocrLoader.js\` with \`import\(\)\` after \`isOcrEnabled\(\)\` returned true.
+- `src/ocr/prepareImageCore.js` - The image preparation itself, written for both threads: the dedicated worker \(src/ocr/prepareWorker.js\) runs it off the main thread, and prepareImage.js runs it on the main thread where the browser gives the worker no de
+- `src/ocr/classify.js` - Decides, per page, whether OCR is worth running.
+- `src/ocr/lineRemoval.js` - Ruling\-line removal before recognition: the pre\-processing step for ruled tables and forms.
+- `src/ocr/boostBenchmark.js` - Opt\-in OCR \*boost\* benchmark \(\`ocr.boostBenchmark.enabled\`\): the same measurement as benchmark.js, but at and above the ceiling of the viewer's own worker policy.
+- `src/ocr/engine.js` - Thin wrapper around a tesseract.js worker.
+- `src/ocr/imagePreparer.js` - Hands page images to the preparation worker \(src/ocr/prepareWorker.js\) and falls back to the main thread where it cannot.
+- `src/ocr/benchmark.js` - Opt\-in OCR benchmark \(\`ocr.benchmark.enabled\`\): recognises a sample of the loaded document's pages once per scenario and reports what each scenario cost, so a site can measure how many workers \(\`ocr.workerCount\`\), which
 
 ## src/schemas
 
@@ -150,20 +191,20 @@ File count: 1. Line count: 102. JSDoc symbol count: 13.
 
 ## src/utils
 
-File count: 51. Line count: 20060. JSDoc symbol count: 811.
+File count: 69. Line count: 24993. JSDoc symbol count: 1041.
 
-- `src/utils/documentLoadingConfig.js` - OpenDocViewer — runtime helpers for fetch/render/memory policies.
 - `src/utils/runtimeConfig.js` - Runtime configuration helpers.
+- `src/utils/documentLoadingConfig.js` - OpenDocViewer — runtime helpers for fetch/render/memory policies.
+- `src/utils/viewerPreferences.js` - Lightweight persisted viewer preferences.
 - `src/utils/compareTransform.js` - File: src/utils/compareTransform.js Free per\-page transform for the compare view: stepless scale, free pan and 0.1 degree rotation, one transform per compared page \( primary \= lef...
 - `src/utils/imageAdjustments.js` - File: src/utils/imageAdjustments.js Per\-pane pixel adjustments \(brightness, contrast, grayscale, invert\) and the quarter turn the canvas draws.
-- `src/utils/viewerPreferences.js` - Lightweight persisted viewer preferences.
-- `src/utils/pdfSignatureStatus.js` - Signature UI status helpers for browser integrity and gateway trust.
+- `src/utils/pdfSignatureStatus.js` - Signature UI status helpers for browser integrity.
 - `src/utils/pdfResolution.js` - Pure, per\-page PDF display resolution policy shared by browser and worker renderers.
 - `src/utils/printPdf.js` - OpenDocViewer — Generated PDF print backend.
 
 ## src/workers
 
-File count: 4. Line count: 1609. JSDoc symbol count: 4.
+File count: 4. Line count: 1707. JSDoc symbol count: 5.
 
 - `src/workers/pdfWorker.js` - OpenDocViewer \- generated PDF worker.
 - `src/workers/imageWorker.js` - OpenDocViewer — image / TIFF worker.

@@ -71,6 +71,12 @@ async function analyzeFile({ targetRoot, sourceFile }) {
     return result;
   }
 
+  // Babel stores recoverable syntax errors on the AST instead of throwing.
+  // Keep the best-effort analysis, but expose the first error in the report.
+  if (ast.errors?.length > 0) {
+    result.parseError = ast.errors[0].message;
+  }
+
   walkAst(ast.program, (node) => {
     if (node.type === 'ImportDeclaration') {
       result.imports.push({

@@ -21,7 +21,11 @@ export async function getGitInfo(cwd) {
 
 async function git(cwd, args) {
   try {
-    const result = await execFileAsync('git', args, { cwd, windowsHide: true });
+    const result = await execFileAsync('git', ['-c', 'core.fsmonitor=false', ...args], {
+      cwd,
+      windowsHide: true,
+      env: { ...process.env, GIT_OPTIONAL_LOCKS: '0' },
+    });
     return result.stdout.trim();
   } catch {
     return null;

@@ -1,6 +1,6 @@
 # OpenDocViewer / src/hooks
 
-File count: 5. Line count: 777. JSDoc symbol count: 26.
+File count: 10. Line count: 1813. JSDoc symbol count: 56.
 
 ## src/hooks/useAcceleratingHoldRepeat.js
 
@@ -13,6 +13,35 @@ Local imports: `src/logging/systemLogger.js`
 Symbols:
 
 - `module.exports` (function) - No description.
+
+## src/hooks/useDocumentLoadSettled.js
+
+OpenDocViewer — has the document finished loading, as far as OCR is concerned?
+
+Exports: `DOCUMENT_LOAD_STALL_MS`, `useDocumentLoadSettled`
+
+Symbols:
+
+- `DOCUMENT_LOAD_STALL_MS` (constant) - After the run, how long without a newly rendered page before the load counts as settled anyway.
+- `pageKeyOf` (function) - No description.
+- `hasBeenShown` (function) - Rendered at full size, or failed: either way nothing more is coming for this page.
+- `module.exports` (function) - No description.
+- `useDocumentLoadSettled~seenRef` (constant) - Keys of the pages rendered \(or failed\) at least once since the last run began.
+- `useDocumentLoadSettled~stalledRef` (constant) - True after the stall time ran out: the pages still missing are waited for no longer.
+
+## src/hooks/useKeyTipsHeld.js
+
+Whether the key tips key \(\`?\`\) is held: the one piece of the key tips \(components/KeyTips.jsx\) that lives while the viewer runs.
+
+Exports: `KEY_TIPS_KEY`, `useKeyTipsHeld`, `useKeyTipsHeld`
+
+Local imports: `src/components/DocumentViewer/hooks/useViewerEffects.js`
+
+Symbols:
+
+- `KEY_TIPS_KEY` (constant) - The key that shows the tips while held.
+- `useKeyTipsHeld` (function) - No description.
+- `<anonymous>~heldCode` (member) - The physical key that was pressed, so its release ends the hold whatever key it reports then.
 
 ## src/hooks/useNavigationModifierState.js
 
@@ -30,6 +59,41 @@ Symbols:
 - `<anonymous>~clearState` (function) - No description.
 - `<anonymous>~syncModifierState` (function) - No description.
 - `<anonymous>~handleVisibilityChange` (function) - No description.
+
+## src/hooks/useOcrModule.js
+
+Loads the OCR module once a page can have a text layer: \`ocr.enabled\` is the literal true, or \`pdfTextLayer.enabled\` is \(a PDF page's own text without OCR\).
+
+Exports: `useOcrModule`
+
+Local imports: `src/logging/systemLogger.js`, `src/utils/ocrLoader.js`, `src/utils/runtimeConfig.js`
+
+Symbols:
+
+- `module.exports` (function) - No description.
+
+## src/hooks/useOcrTextLayers.js
+
+Runs OCR for the pages near the viewer's focus and exposes the outcomes per page.
+
+Exports: `OCR_IDLE_SHUTDOWN_MS`, `PDF_TEXT_ONLY_CONCURRENCY`, `OCR_BOOST_ACTIVITY_EVENTS`, `OCR_BOOST_POINTER_SLOP_PX`, `createPointerTravelFilter`, `useOcrTextLayers`
+
+Local imports: `src/logging/systemLogger.js`, `src/utils/ocrPageKey.js`, `src/utils/runtimeConfig.js`, `src/utils/ocrLanguageCodes.js`
+
+Symbols:
+
+- `OCR_IDLE_SHUTDOWN_MS` (constant) - Idle time after which the OCR worker is terminated to free its memory.
+- `PDF_TEXT_ONLY_CONCURRENCY` (constant) - PDF pages read at a time while nothing is recognised \( pdfTextLayer.enabled with OCR off\).
+- `OCR_BOOST_ACTIVITY_EVENTS` (constant) - Window events that count as input for the boost: they end the boosted state and restart the idle clock.
+- `OCR_BOOST_POINTER_SLOP_PX` (constant) - How far \(CSS pixels\) the pointer must travel before a pointer move counts as input for the boost, where the site says nothing else \( ocr.boost.pointerTravelPx , whose default this...
+- `createPointerTravelFilter` (function) - Tell pointer moves that travel from those that do not.
+- `createPointerTravelFilter~resting` (constant) - Resting place per pointer type: a handful of entries at most.
+- `OCR_BOOST_PENDING_STATUSES` (constant) - Queue statuses \(src/ocr/queue.js OCR\_PAGE\_STATUS\) of a page still to do.
+- `readBoostConfig` (function) - No description.
+- `reportedThreads` (function) - No description.
+- `module.exports` (function) - No description.
+- `useOcrTextLayers~boostRef` (constant) - The boost control and its triggers while the boost is on: \{ controller, onPlanned, detach \} .
+- `useOcrTextLayers~planRef` (constant) - What the last window plan decided for the pages in flight, for the boost to restore.
 
 ## src/hooks/usePageNavigation.js
 
@@ -69,14 +133,30 @@ Symbols:
 
 ## src/hooks/usePdfSignatureReports.js
 
-Browser PDF signature inspection and optional gateway trust enrichment.
+Browser PDF signature inspection.
 
 Exports: `usePdfSignatureReports`
 
-Local imports: `src/utils/pdfSignatureInspector.js`, `src/utils/pdfSignatures.js`, `src/utils/pdfSignatureGateway.js`
+Local imports: `src/utils/pdfSignatureInspector.js`, `src/utils/pdfSignatures.js`
 
 Symbols:
 
-- `module:hooks/usePdfSignatureReports` (module) - Browser PDF signature inspection and optional gateway trust enrichment.
+- `module:hooks/usePdfSignatureReports` (module) - Browser PDF signature inspection.
 - `module:hooks/usePdfSignatureReports~isPdfPage` (function) - No description.
 - `module:hooks/usePdfSignatureReports` (function) - No description.
+
+## src/hooks/useReadAloud.js
+
+Read the selected recognised text aloud: the state behind the page's context menu entry and the toolbar's "Reading language" section \(contexts/readAloudContext.js\).
+
+Exports: `layerSelection`, `normalizeStoredLanguage`, `useReadAloud`
+
+Local imports: `src/utils/ocrTextLayout.js`, `src/utils/runtimeConfig.js`, `src/utils/ocrLanguageCodes.js`, `src/utils/speech.js`, `src/utils/viewerPreferences.js`
+
+Symbols:
+
+- `LEGACY_FOLLOW_UI` (constant) - Preference value an older viewer stored for &quot;follow the interface language&quot;; no longer offered, it counts as automatic.
+- `layerSelection` (function) - The selection inside the text layers: its text as it reads on the page, and the language the text flow of its start was given \(the page's guessed language\), or null outside the la...
+- `normalizeStoredLanguage` (function) - A stored reading\-language choice in today's form: one of the OCR languages, else null \(automatic\).
+- `module.exports` (function) - No description.
+- `useReadAloud~chooseLanguage` (constant) - No description.

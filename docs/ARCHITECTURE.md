@@ -243,8 +243,8 @@ Step by step:
    cannot be read is skipped silently (`walk()` in
    `src/lib/fileInventory.js`). The result is sorted by relative path.
 6. `analyzeSources()` reads and parses the files one at a time
-   (`src/lib/sourceAnalyzer.js`). A parse exception is stored in the file's
-   `parseError` field and does not stop the run.
+   (`src/lib/sourceAnalyzer.js`). A parse exception or recovered Babel error
+   is stored in the file's `parseError` field and does not stop the run.
 7. `collectJsdocDoclets()` runs JSDoc. A missing JSDoc installation, a
    non-zero exit code or unparsable output throws and ends the run
    (`src/lib/jsdocDoclets.js`). Nothing has been written at this point, so an
@@ -308,7 +308,9 @@ verified example (see [Integration points](#integration-points)).
 AgentDocMap supports this flow through deterministic output: with a fixed
 `--generated-at` and `--source-metadata none`, two runs over the same source
 produce identical files (`test/concurrency.test.js`, "produces deterministic
-output across isolated parallel runs").
+output across isolated parallel runs"). Explicit text sorting uses
+`compareText()` from `src/lib/fsUtils.js`, which compares UTF-16 code units
+without depending on the runtime locale.
 
 ## Data
 
@@ -553,18 +555,16 @@ installed in the target.
 
 `getGitInfo()` runs `git rev-parse HEAD`, `git show -s --format=%cI HEAD`,
 `git branch --show-current` and `git status --short` in the target
-(`src/lib/gitInfo.js`). No other Git command is run. The commands are started
-with the caller's environment and the target's own Git configuration; the
-code sets neither `GIT_OPTIONAL_LOCKS=0` nor any configuration override. Two
-consequences follow from how Git works, not from AgentDocMap code:
+(`src/lib/gitInfo.js`). No other Git command is run. Every command receives
+`-c core.fsmonitor=false` and the caller's environment plus
+`GIT_OPTIONAL_LOCKS=0`. Two consequences follow from how Git works:
 
-- `git status` refreshes the index when it can, so it may rewrite the
-  target's `.git/index`. None of the four commands changes tracked content,
-  the work tree or history.
-- Git reads the target's `.git/config`. Some settings there name a program
-  that Git starts, for example `core.fsmonitor` during `git status`. The
-  target's Git configuration is therefore executable input, like
-  `jsdoc.json`.
+- Optional index refreshes are disabled, so `git status` does not take an
+  optional lock to rewrite the target's `.git/index`. None of the four
+  commands changes tracked content, the work tree or history.
+- Git still reads the target's other `.git/config` settings, but the explicit
+  `core.fsmonitor=false` override prevents that setting from starting the
+  program named by the target.
 
 `--source-metadata none` starts no `git` process at all (`src/index.js`).
 
@@ -697,11 +697,10 @@ flowchart LR
   `plugins` it lists, so a hostile target can run code in the JSDoc child
   process (`SECURITY.md`, `src/lib/jsdocDoclets.js`). Run AgentDocMap only on
   repositories you trust.
-- **The target's Git configuration is executable input too.** In the default
-  mode `--source-metadata git`, the `git` child processes read the target's
-  `.git/config`, and settings such as `core.fsmonitor` make `git status`
-  start the program they name (`src/lib/gitInfo.js` passes no option that
-  prevents it). `--source-metadata none` avoids Git completely.
+- **The target's Git configuration is still input.** In the default mode
+  `--source-metadata git`, the `git` child processes read the target's
+  `.git/config`. AgentDocMap overrides `core.fsmonitor=false` and sets
+  `GIT_OPTIONAL_LOCKS=0`; `--source-metadata none` avoids Git completely.
 - **Source files are data.** `@babel/parser` builds a syntax tree; no target
   code is imported or evaluated (`src/lib/sourceAnalyzer.js`).
 - **The JSDoc child process chooses its own files.** The sensitive-name
@@ -770,9 +769,8 @@ packet itself:
   `--source-metadata none` was used. `sourceDirty: null` means status could
   not be read or was disabled; `false` means Git reported no changes.
 - `generated.atUtc` records the label of the run.
-- `REPORT.md` records parse errors and low-confidence summaries. Syntax
-  errors that the parser recovers from are not recorded; see
-  [Known limits](#known-limits-and-trade-offs).
+- `REPORT.md` records parse errors and low-confidence summaries, including
+  the first recovered Babel error for each affected source file.
 
 When a packet is committed, Git history is the audit trail of who changed it
 and when.
@@ -839,7 +837,6 @@ Known failure modes:
 | A JSON syntax error at start | The target's `package.json` or `jsdoc.json` is not valid JSON. | `readJsonIfExists()` in `src/lib/fsUtils.js` |
 | A packet with zero files and no error | The include directories do not exist in the target. Unreadable directories are skipped silently. | `walk()` in `src/lib/fileInventory.js` |
 | A half-written packet | The run failed or was stopped after the delete step. Writing is not atomic. Run it again. | `writeAgentDocs()` in `src/lib/writers.js` |
-| A committed packet differs between machines | Sort order depends on the runtime's collation; see below. | `localeCompare` calls in `src/lib/mapBuilder.js` and `src/lib/writers.js` |
 
 ## Known limits and trade-offs
 
@@ -916,25 +913,16 @@ Limits that follow from the code:
   protected, except for allowed outputs beneath the OS temp directory inside
   them. These checks are lexical; the temporary
   directory comes from `os.tmpdir()`, which follows `TMPDIR`, `TMP` or `TEMP`.
-- **Git is run with the target's configuration.** See
-  [Git (child process contract)](#git-child-process-contract): `git status`
-  may rewrite `.git/index`, `.git/config` can name programs that Git starts,
-  and a failed status call reports `sourceDirty: null`.
-- **Recovered syntax errors are invisible.** `@babel/parser` runs with
-  `errorRecovery: true`, and the errors it collects on the syntax tree are
-  never read (`analyzeFile()` in `src/lib/sourceAnalyzer.js`). `parseError`,
-  `stats.parseErrorCount` and `REPORT.md` therefore show only errors the
-  parser could not recover from. A file with a recoverable syntax error is
-  analysed as if it were valid.
+- **Git reads non-overridden target configuration.** See
+  [Git (child process contract)](#git-child-process-contract): AgentDocMap
+  disables `core.fsmonitor` and optional locks, and a failed status call
+  reports `sourceDirty: null`.
+- **Recovered syntax errors are reported, not fatal.** `@babel/parser` runs
+  with `errorRecovery: true`. `analyzeFile()` stores the first entry from
+  `ast.errors` in `parseError` and continues its best-effort AST analysis, so
+  the file contributes to `stats.parseErrorCount` and appears in `REPORT.md`.
 - **Child processes are hidden on Windows.** JSDoc's `spawnSync` and Git's
   `execFile` calls set `windowsHide: true`, following `AGENTS.md`.
-- **Sort order depends on the runtime's collation.** Paths and names are
-  sorted with `String.prototype.localeCompare` without an explicit locale
-  (`src/lib/fileInventory.js`, `src/lib/mapBuilder.js`,
-  `src/lib/writers.js`). Two machines with different default locales or ICU
-  data can order non-ASCII or mixed-case names differently. OpenDocViewer
-  works around this by pinning a collation in its
-  `scripts/agent-docs-environment.json`.
 - **Concurrent runs into one output directory are not safe.** Each run
   deletes and recreates the directory. The test only requires that at least
   one of four runs completes (`test/concurrency.test.js`).
@@ -954,5 +942,3 @@ Limits that follow from the code:
 - That GitHub Actions actually runs `.github/workflows/ci.yml` successfully
   was not checked; only the workflow file was read.
 - The exact error text when JSDoc output exceeds 80 MiB was not reproduced.
-- Collation differences between machines were not reproduced; the statement
-  follows from the `localeCompare` calls and from OpenDocViewer's pin.

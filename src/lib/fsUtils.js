@@ -5,6 +5,11 @@ export function toPosixPath(value) {
   return value.split(path.sep).join('/');
 }
 
+/** Compare strings by UTF-16 code unit, independently of the runtime locale. */
+export function compareText(left, right) {
+  return left < right ? -1 : left > right ? 1 : 0;
+}
+
 export async function pathExists(filePath) {
   try {
     await fs.access(filePath);

@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { hasOwn } from './fsUtils.js';
+import { compareText, hasOwn } from './fsUtils.js';
 import { assertSafeCleanOutputDirectory } from './outputGuard.js';
 import { isRuntimeEntrypointPath } from './projectSignals.js';
 
@@ -237,7 +237,7 @@ function renderDependencies(map) {
     '| --- | --- | ---: | --- |',
   ];
 
-  for (const [name, version] of Object.entries(runtimeDeps).sort(([nameA], [nameB]) => nameA.localeCompare(nameB))) {
+  for (const [name, version] of Object.entries(runtimeDeps).sort(([nameA], [nameB]) => compareText(nameA, nameB))) {
     const usage = usageByName.get(name);
     lines.push(`| ${formatMarkdownTableCode(name)} | ${formatMarkdownTableCode(version)} | ${formatImportCount(usage)} | ${formatUsageFiles(usage)} |`);
   }
@@ -245,7 +245,7 @@ function renderDependencies(map) {
   lines.push('', '## Development Dependencies', '');
   lines.push('| Package | Version | Observed source imports |');
   lines.push('| --- | --- | ---: |');
-  for (const [name, version] of Object.entries(devDeps).sort(([nameA], [nameB]) => nameA.localeCompare(nameB))) {
+  for (const [name, version] of Object.entries(devDeps).sort(([nameA], [nameB]) => compareText(nameA, nameB))) {
     const usage = usageByName.get(name);
     lines.push(`| ${formatMarkdownTableCode(name)} | ${formatMarkdownTableCode(version)} | ${formatImportCount(usage)} |`);
   }
@@ -298,7 +298,7 @@ function renderEntrypoints(map) {
   const scripts = map.project.packageScripts || {};
   const entrypointFiles = map.files.filter((file) => isRuntimeEntrypointPath(file.path));
   const importHubs = [...map.files]
-    .sort((fileA, fileB) => fileB.incomingLocalImports - fileA.incomingLocalImports || fileA.path.localeCompare(fileB.path))
+    .sort((fileA, fileB) => fileB.incomingLocalImports - fileA.incomingLocalImports || compareText(fileA.path, fileB.path))
     .slice(0, MAX_IMPORT_HUBS_DISPLAY);
 
   const lines = [
@@ -608,7 +608,7 @@ function summarizeOutputBudget(outputs) {
         estimatedTokenCount: estimateTokenCount(text),
       };
     })
-    .sort((fileA, fileB) => fileB.estimatedTokenCount - fileA.estimatedTokenCount || fileA.path.localeCompare(fileB.path));
+    .sort((fileA, fileB) => fileB.estimatedTokenCount - fileA.estimatedTokenCount || compareText(fileA.path, fileB.path));
 
   return {
     fileCount: files.length,

@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { firstSentence, normalizeRelativePath, toPosixPath, truncateText } from './fsUtils.js';
+import { compareText, firstSentence, normalizeRelativePath, toPosixPath, truncateText } from './fsUtils.js';
 import { isSensitiveFileName, isSensitiveRelativePath } from './fileInventory.js';
 import { ENTRYPOINT_NAMES } from './projectSignals.js';
 
@@ -151,9 +151,9 @@ export function buildAgentMap({
   }
 
   const packageUsage = countPackageUsage(files);
-  files.sort((left, right) => left.path.localeCompare(right.path));
+  files.sort((left, right) => compareText(left.path, right.path));
   const importantFiles = [...files]
-    .sort((left, right) => right.importanceScore - left.importanceScore || left.path.localeCompare(right.path))
+    .sort((left, right) => right.importanceScore - left.importanceScore || compareText(left.path, right.path))
     .slice(0, 20)
     .map(toFilePointer);
 
@@ -161,7 +161,7 @@ export function buildAgentMap({
   const crossCutting = buildCrossCutting(files);
   const symbols = normalizedDoclets
     .filter((doclet) => doclet.name && doclet.file)
-    .sort((left, right) => left.file.localeCompare(right.file) || left.name.localeCompare(right.name));
+    .sort((left, right) => compareText(left.file, right.file) || compareText(left.name, right.name));
   const sourceLineCount = files.reduce((sum, file) => sum + (file.lines || 0), 0);
 
   return {
@@ -233,7 +233,7 @@ function countPackageUsage(files) {
       dynamicImportCount: entry.dynamicImportCount,
       files: [...entry.files].sort(),
     }))
-    .sort((left, right) => right.importCount - left.importCount || left.packageName.localeCompare(right.packageName));
+    .sort((left, right) => right.importCount - left.importCount || compareText(left.packageName, right.packageName));
 }
 
 /**
@@ -526,10 +526,10 @@ function buildModules(files) {
     .map((module) => ({
       ...module,
       importantFiles: module.importantFiles
-        .sort((left, right) => right.score - left.score || left.path.localeCompare(right.path))
+        .sort((left, right) => right.score - left.score || compareText(left.path, right.path))
         .slice(0, 8),
     }))
-    .sort((left, right) => left.name.localeCompare(right.name));
+    .sort((left, right) => compareText(left.name, right.name));
 }
 
 function moduleKeyForPath(filePath) {
@@ -591,15 +591,15 @@ function buildCrossCutting(files) {
     roles: [...roles.entries()]
       .map(([role, roleFiles]) => ({
         role,
-        files: roleFiles.sort((left, right) => right.score - left.score || left.path.localeCompare(right.path)),
+        files: roleFiles.sort((left, right) => right.score - left.score || compareText(left.path, right.path)),
       }))
-      .sort((left, right) => left.role.localeCompare(right.role)),
+      .sort((left, right) => compareText(left.role, right.role)),
     riskPatterns: [...riskPatterns.values()]
       .map((pattern) => ({
         ...pattern,
-        files: pattern.files.sort((left, right) => left.path.localeCompare(right.path)),
+        files: pattern.files.sort((left, right) => compareText(left.path, right.path)),
       }))
-      .sort((left, right) => left.key.localeCompare(right.key)),
+      .sort((left, right) => compareText(left.key, right.key)),
   };
 }
 
@@ -623,7 +623,7 @@ function buildRecommendations(files, symbols) {
   }
 
   if (parseErrors > 0) {
-    recommendations.push(`${parseErrors} files could not be parsed by the source analyzer; check REPORT.md for details.`);
+    recommendations.push(`${parseErrors} files have parse errors; check REPORT.md for details.`);
   }
 
   if (lowConfidenceSummaries > 0) {

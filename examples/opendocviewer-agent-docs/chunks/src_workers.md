@@ -1,10 +1,12 @@
 # OpenDocViewer / src/workers
 
-File count: 4. Line count: 1609. JSDoc symbol count: 4.
+File count: 4. Line count: 1707. JSDoc symbol count: 5.
 
 ## src/workers/imageWorker.js
 
 OpenDocViewer — image / TIFF worker.
+
+Local imports: `src/utils/jxlDecode.js`
 
 Symbols:
 
@@ -24,11 +26,12 @@ Symbols:
 
 Web worker entry for PDF signature inspection.
 
-Local imports: `src/utils/pdfSignatures.js`
+Local imports: `src/utils/pdfSignatures.js`, `src/utils/pdfjsDocumentOptions.js`
 
 Symbols:
 
 - `module:workers/pdfSignatureWorker` (module) - Web worker entry for PDF signature inspection.
+- `module:workers/pdfSignatureWorker~loadPdfjs` (function) - The viewer's pdf.js build, loaded only when an appended revision needs the differential confirmation.
 
 ## src/workers/pdfWorker.js
 
