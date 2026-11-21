@@ -63,6 +63,10 @@ export async function collectSourceFiles({ targetRoot, jsdocConfig }) {
 
   for (const include of includes) {
     const absolute = path.resolve(targetRoot, include);
+    const relativeInclude = path.relative(targetRoot, absolute);
+    if (relativeInclude === '..' || relativeInclude.startsWith(`..${path.sep}`) || path.isAbsolute(relativeInclude)) {
+      throw new Error(`Source include is outside the target root: ${include}`);
+    }
     await walk(absolute, async (filePath) => {
       const relative = normalizeRelativePath(targetRoot, filePath);
       if (includePattern.test(filePath) && !excludePattern.test(`${relative}/`) && !isSensitiveRelativePath(relative)) {

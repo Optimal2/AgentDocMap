@@ -131,8 +131,8 @@ Arrows inside the AgentDocMap box are `import` statements in the named files.
 | `src/lib/fileInventory.js` | `collectSourceFiles()`: walks the include directories, applies the include and exclude patterns, drops sensitive file and directory names. Exports `isSensitiveFileName()`. | `fsUtils.js`, `node:fs` |
 | `src/lib/sourceAnalyzer.js` | `analyzeSources()`: parses each file and records lines, imports (static and constant-specifier dynamic), exports, declarations, leading JSDoc summary, roles and risk patterns. | `@babel/parser`, `node:fs` |
 | `src/lib/jsdocDoclets.js` | `collectJsdocDoclets()`: runs the JSDoc CLI from AgentDocMap's own `node_modules` and parses its JSON output. | `jsdoc` (as a child process), `fsUtils.js` |
-| `src/lib/gitInfo.js` | `getGitInfo()`: commit, commit date, branch and dirty flag of the target. A failing `git` call yields `null` for commit, commit date and branch, and `false` for the dirty flag. | `git` on `PATH` |
-| `src/lib/mapBuilder.js` | `buildAgentMap()`: filters and normalizes doclets, attaches them to files, summarizes and scores files, resolves local imports, builds modules, package usage, cross-cutting signals and recommendations. `redactScript()` masks secrets in package scripts. | `fsUtils.js`, `fileInventory.js`, `projectSignals.js` |
+| `src/lib/gitInfo.js` | `getGitInfo()`: commit, commit date, branch and dirty flag of the target. A failing `git` call yields `null` for the corresponding field, including the dirty flag. | `git` on `PATH` |
+| `src/lib/mapBuilder.js` | `buildAgentMap()`: filters and normalizes doclets, attaches them to files, summarizes and scores files, resolves local imports, builds modules, package usage, cross-cutting signals and recommendations. `redactScript()` masks secrets in package scripts and dependency versions. | `fsUtils.js`, `fileInventory.js`, `projectSignals.js` |
 | `src/lib/writers.js` | `writeAgentDocs()`: renders every Markdown and JSON output, escapes most untrusted text (the gaps are listed under [Known limits](#known-limits-and-trade-offs)), allocates chunk file names, computes the output budget, writes the files. | `outputGuard.js`, `projectSignals.js`, `fsUtils.js`, `node:crypto` |
 | `src/lib/outputGuard.js` | `assertSafeCleanOutputDirectory()`: decides whether the output directory may be deleted. | `node:os`, `node:path` |
 | `src/lib/projectSignals.js` | `ENTRYPOINT_FILE_NAMES`, `ENTRYPOINT_NAMES` and `isRuntimeEntrypointPath()`. The map builder imports `ENTRYPOINT_NAMES`; the writers import `isRuntimeEntrypointPath()`. | none |
@@ -569,10 +569,9 @@ consequences follow from how Git works, not from AgentDocMap code:
 `--source-metadata none` starts no `git` process at all (`src/index.js`).
 
 When a `git` call fails, for example because `git` is missing or the target
-is not a Git repository, `commit`, `commitDate` and `branch` become `null`,
-but `dirty` becomes `false`, because it is `Boolean(status)` of a `null`
-status (`getGitInfo()`). `sourceDirty: false` therefore does not prove a
-clean work tree. Only `--source-metadata none` writes `sourceDirty: null`.
+is not a Git repository, its corresponding field becomes `null`
+(`getGitInfo()`). `sourceDirty: false` means status was read and was empty;
+`sourceDirty: null` means status is unknown or `--source-metadata none` was used.
 
 ### Consumers of the packet
 
@@ -646,7 +645,7 @@ Settings come from two places, and they do not overlap:
 | `--generated-at <text>` | target commit date, then the current time | Label written into the packet. A fixed value makes output reproducible. |
 | `--source-metadata git\|none` | `git` | `none` skips Git and writes no commit, branch or dirty flag. |
 | `--no-clean` | clean is on | Skips the delete step and the output directory guard. |
-| `jsdoc.json` `source.include` | `src`, `server` | Directories to scan. Each entry is resolved with `path.resolve(targetRoot, entry)`, so an absolute path or a `..` path scans outside the target. |
+| `jsdoc.json` `source.include` | `src`, `server` | Directories to scan. Each entry is resolved with `path.resolve(targetRoot, entry)`; generation fails if the result is outside the target. Absolute paths inside the target are allowed. |
 | `jsdoc.json` `source.includePattern` | `.js/.jsx/.mjs/.cjs` | File filter, compiled with `new RegExp()`. |
 | `jsdoc.json` `source.excludePattern` | see [Integration points](#integration-points) | Path filter. A custom pattern replaces the default pattern. |
 
@@ -727,7 +726,7 @@ flowchart LR
   (`src/lib/mapBuilder.js`, `src/lib/fileInventory.js`; `test/secretSafety.test.js`).
   JSDoc still reads such files from disk; see
   [Known limits](#known-limits-and-trade-offs).
-- **Package scripts are redacted.** `redactScript()` masks `KEY=value`
+- **Package scripts and dependency versions are redacted.** `redactScript()` masks `KEY=value`
   assignments whose key contains `TOKEN`, `SECRET`, `PASSWORD`, `PASS`,
   `API_KEY`, `AUTH`, `CREDENTIAL` or `PRIVATE_KEY`, `Authorization` header
   values, credentials in URLs and npm `_authToken` values
@@ -736,14 +735,13 @@ flowchart LR
   (`NON_SECRET_KEY_SUFFIXES`).
 - **Most untrusted text is escaped.** Summaries, descriptions, symbol names,
   script names and commands, declared package names and versions, and file
-  paths in most lists and tables are escaped or wrapped in a safely fenced
+  paths in lists and tables are escaped or wrapped in a safely fenced
   code span before they are placed in Markdown text, table cells and HTML
   fragments (`escapeMarkdownInline()`, `escapeMarkdownTableCell()`,
   `escapeHtmlText()`, `formatMarkdownCode()` and `formatMarkdownTableCode()`
   in `src/lib/writers.js`; `test/generate.test.js`, "escapes
-  Markdown-sensitive inline values"). Some values are written without
-  escaping; they are listed under
-  [Known limits](#known-limits-and-trade-offs). The JSON files are written
+  Markdown-sensitive inline values", and `test/writers.test.js`, "protects
+  code spans in dependency, entrypoint and report lists"). The JSON files are written
   with `JSON.stringify` and need no Markdown escaping.
 - **Object lookups by untrusted keys are guarded.** Package names such as
   `constructor` are looked up with `hasOwn()` (`src/lib/fsUtils.js`;
@@ -755,9 +753,9 @@ flowchart LR
   digits, `.`, `_` and `-`, or starts with `agentdocmap-` directly inside the
   operating system's temporary directory. It always refuses the target root
   and its ancestors, the current working directory, home directories, drive
-  roots and system directories (`src/lib/outputGuard.js`,
-  `test/outputGuard.test.js`). Apart from the target root and its ancestors,
-  the refused directories are matched on their exact path only; see
+  roots, system directories and their descendants (`src/lib/outputGuard.js`,
+  `test/outputGuard.test.js`). Home and working directories are protected
+  only on exact matches; see
   [Known limits](#known-limits-and-trade-offs).
 - **CI has read-only repository permissions** (`permissions: contents: read`
   in `.github/workflows/ci.yml`).
@@ -769,9 +767,8 @@ packet itself:
 
 - `generated.sourceCommit`, `sourceBranch` and `sourceDirty` in
   `agent-map.json` record which source state was read, unless
-  `--source-metadata none` was used. `sourceDirty: false` together with
-  `sourceCommit: null` means that Git could not be read, not that the work
-  tree was clean.
+  `--source-metadata none` was used. `sourceDirty: null` means status could
+  not be read or was disabled; `false` means Git reported no changes.
 - `generated.atUtc` records the label of the run.
 - `REPORT.md` records parse errors and low-confidence summaries. Syntax
   errors that the parser recovers from are not recorded; see
@@ -827,7 +824,7 @@ AgentDocMap is run on demand. There is no service to monitor.
   (`test/secretSafety.test.js`), the output guard
   (`test/outputGuard.test.js`), concurrency (`test/concurrency.test.js`), the JSDoc
   fallback without `jsdoc.json` (`test/jsdocDoclets.test.js`) and CLI argument
-  parsing (`test/cli.test.js`).
+  parsing (`test/cli.test.js`), and unavailable Git status (`test/gitInfo.test.js`).
 
 Known failure modes:
 
@@ -870,15 +867,11 @@ Deliberate trade-offs:
   are navigation hints, not analysis. A risk pattern also matches inside
   comments and strings.
 - **Redaction is pattern-based.** `redactScript()` covers package scripts
-  only. Secrets written in source comments or JSDoc text are not detected.
-  Two further gaps follow from the code in `src/lib/mapBuilder.js`:
-  an unquoted value that starts with the word `through` is left readable,
-  so that `PASS=through` stays legible (`SAFE_UNQUOTED_VALUE`); this also
-  leaves a value such as `PASSWORD=through-xyz` unmasked. And the version
-  strings in `dependencies` and `devDependencies` are copied to
-  `agent-map.json` and `DEPENDENCIES.md` without redaction, so a Git URL
-  with embedded credentials used as a version is published as written
-  (`buildAgentMap()`).
+  and version strings in `dependencies` and `devDependencies`, including
+  HTTP(S) URLs with embedded credentials. Secrets written in source comments
+  or JSDoc text are not detected. Only the complete unquoted value `through`
+  is exempted so that `PASS=through` stays legible (`SAFE_UNQUOTED_VALUE`);
+  values such as `PASS=through-xyz` are masked.
   Review a packet before publishing it (`SECURITY.md`).
 
 Limits that follow from the code:
@@ -908,50 +901,33 @@ Limits that follow from the code:
   doclets are dropped from the packet by `isSensitiveDocletPath()`, so neither
   its symbols nor a placeholder file record appear. Covered by
   `test/secretSafety.test.js` ("drops doclets from sensitive directories").
-- **Some values from the target are written without escaping.**
-  `src/lib/writers.js` places these values between literal backticks with no
-  escaping: the package name in "Imported But Not Declared Directly" in
-  `DEPENDENCIES.md` (`renderDependencies()`; the name comes from an import
-  specifier in target source through `packageNameFromImport()` in
-  `src/lib/mapBuilder.js`), the file path in "Import Hubs" in
-  `ENTRYPOINTS.md` (`renderEntrypoints()`), and the file paths in "Import
-  Hubs", "Largest Files" and "Files without JSDoc doclets" in `REPORT.md`
-  (`renderReport()`). An import specifier or file name that contains a
-  backtick, `<` or a line break therefore reaches the packet as written and
-  can break out of the code span or add Markdown or HTML. The existing
-  escaping test does not cover these lines. `BUDGET.md` also prints paths
-  without escaping, but those are output file names that `safeFileName()`
-  has already reduced to a safe character set.
-- **`source.include` can point outside the target.** `collectSourceFiles()`
-  resolves each entry with `path.resolve(targetRoot, include)` and does not
-  check that the result is inside the target
-  (`src/lib/fileInventory.js`). An absolute path or a `..` path is scanned,
-  and the files appear in the packet with `../` paths. JSDoc reads the same
-  setting from the same file.
-- **The output guard is name-based.** A directory named `docs-agent`, or one
-  whose name ends in `-agent-docs`, may be deleted wherever it is, for
-  example below a system directory or a home directory. The refused
-  directories are compared on their exact path
-  (`sensitiveOutputPaths.has(normalized)` in `src/lib/outputGuard.js`), so
-  their subdirectories are not protected; only the target root gets an
-  ancestor check. The temporary directory comes from `os.tmpdir()`, which
-  follows `TMPDIR`, `TMP` or `TEMP`.
+- **Code spans normalize target text.** `formatMarkdownCode()` collapses
+  whitespace and chooses a backtick fence longer than any run in the value,
+  including dependency, import hub and report lists. `BUDGET.md` prints
+  generated output paths already restricted by `safeFileName()`.
+- **Include containment is lexical.** `collectSourceFiles()` rejects an
+  include that resolves outside the target before analysis or JSDoc runs.
+  This does not resolve filesystem aliases or sandbox JSDoc plugins.
+- **The output guard combines names and path checks.** Output needs an
+  allowed name, must not be the target root or its ancestor, and must not
+  equal a protected home, working directory or filesystem root. System
+  directories and all their descendants are refused. Named outputs below
+  a home directory remain allowed. Windows user-data directories are also
+  protected, except for allowed outputs beneath the OS temp directory inside
+  them. These checks are lexical; the temporary
+  directory comes from `os.tmpdir()`, which follows `TMPDIR`, `TMP` or `TEMP`.
 - **Git is run with the target's configuration.** See
   [Git (child process contract)](#git-child-process-contract): `git status`
   may rewrite `.git/index`, `.git/config` can name programs that Git starts,
-  and a failed Git call reports `sourceDirty: false`.
+  and a failed status call reports `sourceDirty: null`.
 - **Recovered syntax errors are invisible.** `@babel/parser` runs with
   `errorRecovery: true`, and the errors it collects on the syntax tree are
   never read (`analyzeFile()` in `src/lib/sourceAnalyzer.js`). `parseError`,
   `stats.parseErrorCount` and `REPORT.md` therefore show only errors the
   parser could not recover from. A file with a recoverable syntax error is
   analysed as if it were valid.
-- **The JSDoc child process is not started hidden.** `spawnSync` in
-  `src/lib/jsdocDoclets.js` does not set `windowsHide`, while the `git`
-  calls in `src/lib/gitInfo.js` do. On Windows a console window can
-  therefore appear when the parent has no console. This deviates from the
-  repository rule in `AGENTS.md` ("Run everything headless") and is a code
-  defect that this document only records.
+- **Child processes are hidden on Windows.** JSDoc's `spawnSync` and Git's
+  `execFile` calls set `windowsHide: true`, following `AGENTS.md`.
 - **Sort order depends on the runtime's collation.** Paths and names are
   sorted with `String.prototype.localeCompare` without an explicit locale
   (`src/lib/fileInventory.js`, `src/lib/mapBuilder.js`,

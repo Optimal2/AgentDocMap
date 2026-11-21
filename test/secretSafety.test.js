@@ -195,6 +195,35 @@ test('redactScript masks common secret patterns', () => {
   );
 });
 
+test('redactScript exempts only the complete unquoted through value', () => {
+  for (const suffix of ['-xyz', '.xyz', '/xyz', ':xyz']) {
+    assert.equal(redactScript(`PASS=through${suffix}`), 'PASS=***');
+  }
+  for (const delimiter of ['', ' node app.js', ';node app.js']) {
+    assert.equal(redactScript(`PASS=through${delimiter}`), `PASS=through${delimiter}`);
+  }
+});
+
+test('collectSourceFiles rejects includes outside the target', async () => {
+  await withTempDir('agentdocmap-includes-', async (sandbox) => {
+    const targetRoot = path.join(sandbox, 'target');
+    await writeFiles(sandbox, {
+      'target/src/ok.js': 'export const ok = 1;',
+      'target-sibling/src/outside.js': 'export const outside = 1;',
+    });
+    for (const include of ['../target-sibling/src', path.join(sandbox, 'target-sibling/src')]) {
+      await assert.rejects(
+        collectSourceFiles({ targetRoot, jsdocConfig: { source: { include: [include] } } }),
+        /Source include is outside the target root/,
+      );
+    }
+    for (const include of ['src', path.join(targetRoot, 'src'), '.']) {
+      const files = await collectSourceFiles({ targetRoot, jsdocConfig: { source: { include: [include] } } });
+      assert.deepEqual(files.map((file) => file.relativePath), ['src/ok.js']);
+    }
+  });
+});
+
 test('redactScript avoids false positives for legitimate key names', () => {
   assert.equal(redactScript('TOKEN_EXPIRY_DAYS=30'), 'TOKEN_EXPIRY_DAYS=30');
   assert.equal(redactScript('AUTHORITY=http://example.com'), 'AUTHORITY=http://example.com');
@@ -255,7 +284,7 @@ test('buildAgentMap redacts package scripts before exposing them', () => {
   assert.equal(scripts['git:push'].includes('https://***:***@github.com'), true);
 });
 
-test('writeAgentDocs writes redacted scripts to ENTRYPOINTS.md and agent-map.json', async () => {
+test('writeAgentDocs writes redacted scripts and dependency versions to Markdown and JSON', async () => {
   await withTempDir('agentdocmap-secret-', async (outDir) => {
     const map = buildAgentMap({
       projectName: 'SecretProject',
@@ -266,6 +295,8 @@ test('writeAgentDocs writes redacted scripts to ENTRYPOINTS.md and agent-map.jso
       git: { commit: null, commitDate: null, branch: null, dirty: null },
       packageJson: {
         name: 'secret-project',
+        dependencies: { runtime: 'git+https://user:dependency-value@example.com/repo.git' },
+        devDependencies: { tool: 'https://development-value@example.com/repo.tgz', ordinary: '^1.2.3' },
         scripts: {
           'deploy:prod': 'API_KEY=abc123 DEPLOY_TOKEN=xyz node deploy.js',
         },
@@ -288,5 +319,13 @@ test('writeAgentDocs writes redacted scripts to ENTRYPOINTS.md and agent-map.jso
 
     const agentMap = JSON.parse(await fs.readFile(path.join(outDir, 'agent-map.json'), 'utf8'));
     assert.equal(agentMap.project.packageScripts['deploy:prod'].includes('abc123'), false);
+    assert.equal(agentMap.project.dependencies.runtime, 'git+https://***:***@example.com/repo.git');
+    assert.equal(agentMap.project.devDependencies.tool, 'https://***@example.com/repo.tgz');
+    assert.equal(agentMap.project.devDependencies.ordinary, '^1.2.3');
+    const dependencies = await fs.readFile(path.join(outDir, 'DEPENDENCIES.md'), 'utf8');
+    assert.equal(dependencies.includes('dependency-value'), false);
+    assert.equal(dependencies.includes('development-value'), false);
+    assert.equal(dependencies.includes('https://***:***@example.com/repo.git'), true);
+    assert.equal(dependencies.includes('https://***@example.com/repo.tgz'), true);
   });
 });

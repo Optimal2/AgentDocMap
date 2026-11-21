@@ -15,7 +15,7 @@ export async function getGitInfo(cwd) {
     commit: commit || null,
     commitDate: commitDate || null,
     branch: branch || null,
-    dirty: Boolean(status),
+    dirty: status === null ? null : Boolean(status),
   };
 }
 

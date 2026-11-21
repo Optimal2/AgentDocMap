@@ -60,6 +60,29 @@ function createModule(name, fileCount = 0) {
   };
 }
 
+test('writeAgentDocs protects code spans in dependency, entrypoint and report lists', async (t) => {
+  const sandbox = await fs.mkdtemp(path.join(os.tmpdir(), 'agentdocmap-inline-'));
+  t.after(() => fs.rm(sandbox, { recursive: true, force: true }));
+  const out = path.join(sandbox, 'docs-agent');
+  const map = createMinimalMap();
+  const filePath = 'src/a`<tag>\nnext.js';
+  const packageName = 'pkg`<tag>\nnext';
+  map.files = [{
+    path: filePath, lines: 10, incomingLocalImports: 2, doclets: [], summary: '',
+    summaryConfidence: 'low', roles: [],
+  }];
+  map.packageUsage = [{ packageName, importCount: 1, files: [filePath] }];
+  await writeAgentDocs({ outDir: out, clean: true, targetRoot: path.join(sandbox, 'target'), map });
+  const dependencies = await fs.readFile(path.join(out, 'DEPENDENCIES.md'), 'utf8');
+  const entrypoints = await fs.readFile(path.join(out, 'ENTRYPOINTS.md'), 'utf8');
+  const report = await fs.readFile(path.join(out, 'REPORT.md'), 'utf8');
+  assert.ok(dependencies.includes('- ``pkg`<tag> next``: 1 imports in 1 files'));
+  assert.ok(entrypoints.includes('- ``src/a`<tag> next.js``: 2 incoming local imports'));
+  assert.ok(report.includes('- ``src/a`<tag> next.js``: 2 incoming local imports'));
+  assert.ok(report.includes('- ``src/a`<tag> next.js``: 10 lines'));
+  assert.ok(report.includes('- ``src/a`<tag> next.js``\n'));
+});
+
 function moduleDigest(name) {
   return createHash('sha256').update(name).digest('hex').slice(0, 16);
 }

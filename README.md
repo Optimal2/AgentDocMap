@@ -270,7 +270,7 @@ What the tool reads from the target:
 | `jsdoc.json` → `source.includePattern` / `excludePattern` | File filters | `.js/.jsx/.mjs/.cjs`; excludes `node_modules`, `dist`, `docs`, `coverage`, `.git`, `.agentdocmap` |
 | `jsdoc.json` (whole file) | Passed to `jsdoc -c` | JSDoc runs recursively on the `src` and `server` directories that exist |
 | `package.json` | Name, version, description, scripts, dependencies | Project name falls back to the folder name |
-| Git metadata | Commit, date, branch, dirty flag; default `--generated-at` | Commit, date and branch are `null`, the dirty flag is `false` (so `false` does not prove a clean work tree); timestamp is the current time |
+| Git metadata | Commit, date, branch, dirty flag; default `--generated-at` | Unavailable fields are `null`, including the dirty flag when status cannot be read; timestamp is the current time |
 
 ## CLI reference
 
@@ -297,10 +297,11 @@ directory:
   `-` only), or is `agentdocmap-*` directly inside the OS temp directory; and
 - is not the target root or one of its ancestors, the current working
   directory, a home directory, a drive root, or a system directory
-  (`/etc`, `/usr`, `%ProgramFiles%`, `%SystemRoot%`, ...).
+  (`/etc`, `/usr`, `%ProgramFiles%`, `%SystemRoot%`, ...) or any of its descendants.
 
 Writing to `<target>/docs-agent` is allowed. Use `--no-clean` for any other
-directory.
+directory. Windows user-data directories are protected too, with an exception
+for allowed outputs beneath the OS temp directory inside them.
 
 ## Use in OpenDocViewer
 
@@ -370,15 +371,16 @@ vulnerability. Built-in protections, each covered by tests in `test/`:
   read a sensitive file from disk (see
   [Known limits](docs/ARCHITECTURE.md#known-limits-and-trade-offs));
   the filters keep such files out of the packet.
-- **Package scripts are redacted** before output: token/secret/password
+- **Package scripts and dependency versions are redacted** before output: token/secret/password
   assignments, `Authorization` headers, credentials in URLs and npm
   `_authToken` values become `***` (`redactScript()` in
   `src/lib/mapBuilder.js`).
-- **Most untrusted text is escaped** when rendered into Markdown tables and
-  inline text (`src/lib/writers.js`). A few values are written unescaped:
-  undeclared package names in `DEPENDENCIES.md` and file paths in the import
-  hub and report lists (see
-  [Known limits](docs/ARCHITECTURE.md#known-limits-and-trade-offs)).
+- **Untrusted text is escaped** when rendered into Markdown tables and
+  inline text, including code spans in dependency, import hub and report
+  lists (`src/lib/writers.js`).
+- **Source includes must resolve inside the target.** An out-of-target
+  `source.include` entry causes generation to fail before analysis or JSDoc runs.
+  This is a lexical path check, not a filesystem sandbox.
 - **Output deletion is guarded** (see [CLI reference](#cli-reference)).
 
 AgentDocMap does not run target application code, but JSDoc loads any
@@ -406,7 +408,8 @@ Test files:
 | --- | --- |
 | `test/generate.test.js` | End-to-end generation against `test/fixture-project/`, dynamic-import counting, Markdown escaping. |
 | `test/writers.test.js` | Rendered `AGENT_CONTEXT.md` and `DEPENDENCIES.md` content; output guard through `writeAgentDocs()`. |
-| `test/secretSafety.test.js` | Sensitive-file exclusion and script redaction. |
+| `test/secretSafety.test.js` | Sensitive-file exclusion, include boundaries, script and dependency version redaction. |
+| `test/gitInfo.test.js` | Unknown Git status when the target cannot be read. |
 | `test/outputGuard.test.js` | `assertSafeCleanOutputDirectory()` rules. |
 | `test/concurrency.test.js` | Deterministic output across parallel runs; concurrent runs into one directory. |
 | `test/jsdocDoclets.test.js` | JSDoc fallback without `jsdoc.json`: recursive scan of `src` and `server`. |

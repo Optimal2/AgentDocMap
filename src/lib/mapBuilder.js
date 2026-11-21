@@ -35,7 +35,7 @@ const SAFE_UNQUOTED_VALUE = 'through';
 const SENSITIVE_SCRIPT_REPLACEMENTS = [
   {
     // Unquoted value: KEY=value -> KEY=***
-    pattern: new RegExp(`(${SECRET_ASSIGNMENT_KEY})(?!${SAFE_UNQUOTED_VALUE}\\b)([^\\s;\`'"]+)`, 'gi'),
+    pattern: new RegExp(`(${SECRET_ASSIGNMENT_KEY})(?!${SAFE_UNQUOTED_VALUE}(?=[\\s;]|$))([^\\s;\`'"]+)`, 'gi'),
     replacement: '$1***',
   },
   {
@@ -82,6 +82,12 @@ function redactPackageScripts(scripts) {
     result[name] = typeof command === 'string' ? redactScript(command) : command;
   }
   return result;
+}
+
+function redactDependencyVersions(dependencies) {
+  return Object.fromEntries(
+    Object.entries(dependencies || {}).map(([name, version]) => [name, redactScript(version)]),
+  );
 }
 
 export function buildAgentMap({
@@ -166,8 +172,8 @@ export function buildAgentMap({
       packageVersion: packageJson?.version || null,
       description: packageJson?.description || null,
       packageScripts: redactPackageScripts(packageJson?.scripts),
-      dependencies: packageJson?.dependencies || {},
-      devDependencies: packageJson?.devDependencies || {},
+      dependencies: redactDependencyVersions(packageJson?.dependencies),
+      devDependencies: redactDependencyVersions(packageJson?.devDependencies),
     },
     generated: {
       by: generatedBy,

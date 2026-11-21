@@ -95,6 +95,47 @@ test('assertSafeCleanOutputDirectory rejects cleaning common system directories'
   assertRejectedAsUnsafeOrOverlapping(outDir, path.join(os.tmpdir(), 'agentdocmap-target'));
 });
 
+test('assertSafeCleanOutputDirectory rejects allowlisted names beneath system directories', () => {
+  const systemPaths = process.platform === 'win32'
+    ? [process.env.ProgramData, process.env.ProgramFiles, process.env.SystemRoot,
+      process.env.LOCALAPPDATA, process.env.APPDATA].filter(Boolean)
+    : ['/etc', '/usr', '/var'];
+  assert.ok(systemPaths.length > 0);
+  for (const systemPath of systemPaths) {
+    for (const relativePath of ['nested/docs-agent', 'nested/example-agent-docs', '..nested/docs-agent']) {
+      assertRejectedAsUnsafeOrOverlapping(
+        path.join(systemPath, relativePath), path.join(os.tmpdir(), 'agentdocmap-target'),
+      );
+    }
+  }
+});
+
+test('assertSafeCleanOutputDirectory allows named output under the home directory', () => {
+  assert.doesNotThrow(() => assertSafeCleanOutputDirectory(
+    path.join(os.homedir(), 'projects', 'docs-agent'), path.join(os.homedir(), 'target'),
+  ));
+});
+
+test('assertSafeCleanOutputDirectory preserves temporary output beneath Windows user data', {
+  skip: process.platform !== 'win32',
+}, (t) => {
+  const userDataPath = process.env.LOCALAPPDATA || process.env.APPDATA;
+  assert.ok(userDataPath);
+  const tempRoot = path.join(userDataPath, 'Temp');
+  t.mock.method(os, 'tmpdir', () => tempRoot);
+  assert.doesNotThrow(() => assertSafeCleanOutputDirectory(
+    path.join(tempRoot, 'agentdocmap-test', 'docs-agent'), path.join(tempRoot, 'target'),
+  ));
+});
+
+test('assertSafeCleanOutputDirectory protects system descendants even when configured as temp', (t) => {
+  const systemPath = getKnownSensitiveOutputPath();
+  t.mock.method(os, 'tmpdir', () => systemPath);
+  assertRejectedAsUnsafeOrOverlapping(
+    path.join(systemPath, 'agentdocmap-test'), path.join(os.homedir(), 'target'),
+  );
+});
+
 test('assertSafeCleanOutputDirectory rejects cleaning the current filesystem root', () => {
   const outDir = path.parse(process.cwd()).root;
 

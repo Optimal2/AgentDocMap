@@ -258,7 +258,7 @@ function renderDependencies(map) {
     lines.push('No undeclared package imports were detected.');
   } else {
     for (const item of undeclared) {
-      lines.push(`- \`${item.packageName}\`: ${item.importCount} imports in ${item.files.length} files`);
+      lines.push(`- ${formatMarkdownCode(item.packageName)}: ${item.importCount} imports in ${item.files.length} files`);
     }
   }
 
@@ -330,7 +330,7 @@ function renderEntrypoints(map) {
 
   lines.push('', '## Import Hubs', '');
   for (const file of importHubs) {
-    lines.push(`- \`${file.path}\`: ${file.incomingLocalImports} incoming local imports`);
+    lines.push(`- ${formatMarkdownCode(file.path)}: ${file.incomingLocalImports} incoming local imports`);
   }
 
   return finishMarkdown(lines);
@@ -386,11 +386,11 @@ function renderReport(map) {
     '',
     '## Import Hubs',
     '',
-    ...importHubs.map((file) => `- \`${file.path}\`: ${file.incomingLocalImports} incoming local imports`),
+    ...importHubs.map((file) => `- ${formatMarkdownCode(file.path)}: ${file.incomingLocalImports} incoming local imports`),
     '',
     '## Largest Files',
     '',
-    ...largest.map((file) => `- \`${file.path}\`: ${file.lines || 0} lines`),
+    ...largest.map((file) => `- ${formatMarkdownCode(file.path)}: ${file.lines || 0} lines`),
     '',
     '## Next Iteration Signals',
     '',
@@ -400,7 +400,7 @@ function renderReport(map) {
     lines.push('- Files without JSDoc doclets are covered by source-derived summaries only.');
     lines.push('');
     lines.push('Files without JSDoc doclets:');
-    lines.push(...undocumented.map((file) => `- \`${file.path}\``));
+    lines.push(...undocumented.map((file) => `- ${formatMarkdownCode(file.path)}`));
     lines.push('');
   }
 
