@@ -51,7 +51,7 @@ Built-in protections:
   selects its own files and can still read them from disk
 - secrets in package scripts and dependency versions are redacted before output
   (`redactScript()` in `src/lib/mapBuilder.js`)
-- the output directory is only deleted when it passes
+- the output directory is only replaced when it passes
   `assertSafeCleanOutputDirectory()` (`src/lib/outputGuard.js`)
 
 Recommended use:

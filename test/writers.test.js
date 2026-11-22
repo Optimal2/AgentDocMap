@@ -60,6 +60,122 @@ function createModule(name, fileCount = 0) {
   };
 }
 
+async function createExistingOutput(t) {
+  const sandbox = await fs.mkdtemp(path.join(os.tmpdir(), 'agentdocmap-replace-'));
+  t.after(() => fs.rm(sandbox, { recursive: true, force: true }));
+  const outDir = path.join(sandbox, 'docs-agent');
+  const targetRoot = path.join(sandbox, 'target');
+  const options = { outDir, clean: true, targetRoot, map: createMinimalMap() };
+  const previous = {
+    'AGENT_CONTEXT.md': 'Previous context',
+    'chunks/old.md': 'Previous chunk',
+  };
+  await fs.mkdir(path.join(outDir, 'chunks'), { recursive: true });
+  for (const [name, content] of Object.entries(previous)) {
+    await fs.writeFile(path.join(outDir, name), content, 'utf8');
+  }
+  return { sandbox, options, previous };
+}
+
+async function assertPreviousOutput({ sandbox, options: { outDir }, previous }) {
+  assert.deepEqual(await fs.readdir(sandbox), ['docs-agent']);
+  const entries = await fs.readdir(outDir, { recursive: true });
+  assert.deepEqual(entries.sort(), ['AGENT_CONTEXT.md', 'chunks', path.join('chunks', 'old.md')].sort());
+  for (const [name, content] of Object.entries(previous)) {
+    assert.equal(await fs.readFile(path.join(outDir, name), 'utf8'), content);
+  }
+}
+
+test('writeAgentDocs keeps the previous packet when a staged write fails', async (t) => {
+  const fixture = await createExistingOutput(t);
+  const injectedError = new Error('Injected write failure');
+  const writeFile = fs.writeFile;
+  t.mock.method(fs, 'writeFile', async (file, ...args) => {
+    if (path.basename(file) === 'DEPENDENCIES.md') {
+      const stagingDir = path.dirname(file);
+      assert.equal(path.dirname(stagingDir), fixture.sandbox);
+      assert.notEqual(stagingDir, fixture.options.outDir);
+      assert.match(await fs.readFile(path.join(stagingDir, 'AGENT_CONTEXT.md'), 'utf8'), /FixtureProject/);
+      throw injectedError;
+    }
+    return writeFile(file, ...args);
+  });
+
+  await assert.rejects(writeAgentDocs(fixture.options), (error) => error === injectedError);
+  await assertPreviousOutput(fixture);
+});
+
+test('writeAgentDocs keeps the previous packet when Windows blocks moving it aside', async (t) => {
+  const fixture = await createExistingOutput(t);
+  const injectedError = Object.assign(new Error('Injected sharing violation'), { code: 'EPERM' });
+  const rename = fs.rename;
+  t.mock.method(fs, 'rename', async (from, to) => {
+    if (from === fixture.options.outDir) throw injectedError;
+    await rename(from, to);
+  });
+
+  await assert.rejects(writeAgentDocs(fixture.options), (error) => error === injectedError);
+  await assertPreviousOutput(fixture);
+});
+
+test('writeAgentDocs restores the old packet when publishing the staged directory fails', async (t) => {
+  const fixture = await createExistingOutput(t);
+  const injectedError = Object.assign(new Error('Injected publish failure'), { code: 'EACCES' });
+  const rename = fs.rename;
+  let restoreAttempts = 0;
+  t.mock.method(fs, 'rename', async (from, to) => {
+    if (to === fixture.options.outDir) {
+      if (path.basename(from).startsWith('.agentdocmap-stage-')) {
+        await assert.rejects(fs.lstat(to), { code: 'ENOENT' });
+        throw injectedError;
+      }
+      restoreAttempts += 1;
+      if (restoreAttempts === 1) throw Object.assign(new Error('Injected sharing violation'), { code: 'EBUSY' });
+    }
+    await rename(from, to);
+  });
+
+  await assert.rejects(writeAgentDocs(fixture.options), (error) => error === injectedError);
+  assert.equal(restoreAttempts, 2);
+  await assertPreviousOutput(fixture);
+});
+
+test('writeAgentDocs replaces the complete packet and removes the previous files', async (t) => {
+  const { sandbox, options } = await createExistingOutput(t);
+  const written = await writeAgentDocs(options);
+
+  const entries = await fs.readdir(options.outDir, { recursive: true });
+  assert.deepEqual(entries.sort(), [
+    'chunks',
+    ...written.map((file) => path.relative(options.outDir, file)),
+  ].sort());
+  assert.equal(written.length, 11);
+  assert.match(await fs.readFile(path.join(options.outDir, 'AGENT_CONTEXT.md'), 'utf8'), /FixtureProject/);
+  assert.deepEqual(await fs.readdir(sandbox), ['docs-agent']);
+});
+
+test('writeAgentDocs keeps the new packet if removing the old backup fails partway', async (t) => {
+  const { sandbox, options } = await createExistingOutput(t);
+  const injectedError = Object.assign(new Error('Injected backup cleanup failure'), { code: 'EBUSY' });
+  const rm = fs.rm;
+  let backupDir;
+  t.mock.method(fs, 'rm', async (directory, ...args) => {
+    if (path.basename(directory).startsWith('.agentdocmap-backup-')) {
+      backupDir = directory;
+      await rm(path.join(directory, 'previous', 'AGENT_CONTEXT.md'));
+      throw injectedError;
+    }
+    await rm(directory, ...args);
+  });
+
+  await assert.rejects(writeAgentDocs(options), (error) => error === injectedError);
+  assert.deepEqual((await fs.readdir(sandbox)).sort(), [path.basename(backupDir), 'docs-agent'].sort());
+  const packet = JSON.parse(await fs.readFile(path.join(options.outDir, 'agent-map.json'), 'utf8'));
+  assert.deepEqual(packet, options.map);
+  assert.equal((await fs.readdir(options.outDir)).length, 12);
+  assert.deepEqual(await fs.readdir(path.join(options.outDir, 'chunks')), []);
+});
+
 test('writeAgentDocs protects code spans in dependency, entrypoint and report lists', async (t) => {
   const sandbox = await fs.mkdtemp(path.join(os.tmpdir(), 'agentdocmap-inline-'));
   t.after(() => fs.rm(sandbox, { recursive: true, force: true }));

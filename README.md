@@ -10,7 +10,7 @@ open source files.
 [![Version](https://img.shields.io/github/package-json/v/Optimal2/AgentDocMap)](package.json)
 ![Node](https://img.shields.io/badge/node-%5E22.18.0%20%7C%7C%20%3E%3D24.11.0-339933)
 
-Current version: **0.1.1** (`package.json`). The package is marked
+Current version: **0.1.2** (`package.json`). The package is marked
 `"private": true` and is not published to npm; it is used from a Git checkout.
 
 ## Contents
@@ -78,9 +78,9 @@ five steps in order:
 3. `collectJsdocDoclets()` runs the JSDoc CLI in explain mode
    (`src/lib/jsdocDoclets.js`).
 4. `buildAgentMap()` merges both into one map (`src/lib/mapBuilder.js`).
-5. `writeAgentDocs()` renders and writes the packet (`src/lib/writers.js`),
-   after `assertSafeCleanOutputDirectory()` has approved deleting the old
-   one (`src/lib/outputGuard.js`).
+5. `writeAgentDocs()` renders and writes the packet (`src/lib/writers.js`).
+   By default it checks the destination with `assertSafeCleanOutputDirectory()`
+   and stages a complete replacement beside the destination.
 
 The full description is in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md):
 components and their dependencies, the runtime flows step by step, the
@@ -286,12 +286,16 @@ agentdocmap generate --target <repo> --out <dir> [--project-name <name>]
 | `--project-name <name>` | Display name. Defaults to `package.json` `name`, then the folder name. |
 | `--generated-at <text>` | Timestamp or label written into the output. Defaults to the target's last commit date, which keeps output stable for an unchanged commit. |
 | `--source-metadata <git\|none>` | `git` (default) embeds commit, branch and dirty flag. Use `none` for packets committed into the target repository itself, where the commit hash would change the output on every commit. |
-| `--no-clean` | Do not delete the output directory first. |
+| `--no-clean` | Write files in place and keep files no longer generated. |
 | `-h`, `--help` | Show help. |
 
-**Output directory guard.** By default the output directory is deleted before
-writing. `assertSafeCleanOutputDirectory()` only allows that when the
-directory:
+**Output directory replacement.** By default the generator writes a complete
+packet in a temporary sibling directory, then moves the old packet aside and
+renames the new one into place. A write failure preserves the old packet. If
+the final rename fails, the generator moves the old packet back. Readers may
+briefly see a missing directory between the two renames.
+
+`assertSafeCleanOutputDirectory()` allows replacement when the directory:
 
 - is named `docs-agent`, or ends in `-agent-docs` (letters, digits, `.`, `_`,
   `-` only), or is `agentdocmap-*` directly inside the OS temp directory; and
@@ -381,7 +385,7 @@ vulnerability. Built-in protections, each covered by tests in `test/`:
 - **Source includes must resolve inside the target.** An out-of-target
   `source.include` entry causes generation to fail before analysis or JSDoc runs.
   This is a lexical path check, not a filesystem sandbox.
-- **Output deletion is guarded** (see [CLI reference](#cli-reference)).
+- **Output directory replacement is guarded** (see [CLI reference](#cli-reference)).
 
 AgentDocMap does not run target application code, but JSDoc loads any
 `plugins` listed in the target's `jsdoc.json`. In the default
@@ -407,7 +411,7 @@ Test files:
 | File | Covers |
 | --- | --- |
 | `test/generate.test.js` | End-to-end generation against `test/fixture-project/`, dynamic-import counting, Markdown escaping. |
-| `test/writers.test.js` | Rendered `AGENT_CONTEXT.md` and `DEPENDENCIES.md` content; output guard through `writeAgentDocs()`. |
+| `test/writers.test.js` | Rendered content, output guard, and packet replacement and recovery through `writeAgentDocs()`. |
 | `test/secretSafety.test.js` | Sensitive-file exclusion, include boundaries, script and dependency version redaction. |
 | `test/gitInfo.test.js` | Unknown Git status when the target cannot be read. |
 | `test/outputGuard.test.js` | `assertSafeCleanOutputDirectory()` rules. |

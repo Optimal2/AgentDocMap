@@ -133,8 +133,8 @@ Arrows inside the AgentDocMap box are `import` statements in the named files.
 | `src/lib/jsdocDoclets.js` | `collectJsdocDoclets()`: runs the JSDoc CLI from AgentDocMap's own `node_modules` and parses its JSON output. | `jsdoc` (as a child process), `fsUtils.js` |
 | `src/lib/gitInfo.js` | `getGitInfo()`: commit, commit date, branch and dirty flag of the target. A failing `git` call yields `null` for the corresponding field, including the dirty flag. | `git` on `PATH` |
 | `src/lib/mapBuilder.js` | `buildAgentMap()`: filters and normalizes doclets, attaches them to files, summarizes and scores files, resolves local imports, builds modules, package usage, cross-cutting signals and recommendations. `redactScript()` masks secrets in package scripts and dependency versions. | `fsUtils.js`, `fileInventory.js`, `projectSignals.js` |
-| `src/lib/writers.js` | `writeAgentDocs()`: renders every Markdown and JSON output, escapes most untrusted text (the gaps are listed under [Known limits](#known-limits-and-trade-offs)), allocates chunk file names, computes the output budget, writes the files. | `outputGuard.js`, `projectSignals.js`, `fsUtils.js`, `node:crypto` |
-| `src/lib/outputGuard.js` | `assertSafeCleanOutputDirectory()`: decides whether the output directory may be deleted. | `node:os`, `node:path` |
+| `src/lib/writers.js` | `writeAgentDocs()`: renders Markdown and JSON, allocates chunk names, computes the output budget and publishes the packet. | `outputGuard.js`, `projectSignals.js`, `fsUtils.js`, `node:crypto`, `node:timers/promises` |
+| `src/lib/outputGuard.js` | `assertSafeCleanOutputDirectory()`: decides whether the output directory may be replaced. | `node:os`, `node:path` |
 | `src/lib/projectSignals.js` | `ENTRYPOINT_FILE_NAMES`, `ENTRYPOINT_NAMES` and `isRuntimeEntrypointPath()`. The map builder imports `ENTRYPOINT_NAMES`; the writers import `isRuntimeEntrypointPath()`. | none |
 | `src/lib/fsUtils.js` | Path, JSON and text helpers (`readJsonIfExists`, `normalizeRelativePath`, `firstSentence`, `truncateText`, `hasOwn`). | `node:fs` |
 
@@ -167,7 +167,7 @@ flowchart TB
         subgraph FS["Local file system"]
             ADMDIR["AgentDocMap checkout<br/>src/, node_modules/"]
             TGT["Target repository<br/>sources are only read;<br/>git may refresh .git/index"]
-            OUTD["Output directory<br/>deleted and rewritten"]
+            OUTD["Output directory<br/>replaced after staging"]
         end
     end
 
@@ -221,7 +221,7 @@ sequenceDiagram
     MB-->>IDX: map (schemaVersion 1)
     IDX->>WR: writeAgentDocs(outDir, map, clean, targetRoot)
     WR->>OG: assertSafeCleanOutputDirectory() when clean
-    WR->>WR: delete O, render outputs, compute BUDGET.md, write files
+    WR->>WR: render outputs, compute BUDGET.md, stage and replace O when clean
     WR-->>IDX: list of written files
     IDX-->>CLI: outDir, outputFiles, stats
     CLI-->>U: two summary lines, exit code 0
@@ -250,9 +250,13 @@ Step by step:
    (`src/lib/jsdocDoclets.js`). Nothing has been written at this point, so an
    existing packet is left untouched.
 8. `buildAgentMap()` merges both inputs (see [Flow 2](#flow-2-how-the-map-is-built)).
-9. `writeAgentDocs()` checks the output directory, deletes it, renders all
-   outputs in memory, computes `BUDGET.md` from the other outputs and writes
-   the files (`src/lib/writers.js`).
+9. `writeAgentDocs()` checks the destination in clean mode, renders the
+   files in memory and computes `BUDGET.md`. It writes the packet to a
+   temporary sibling directory, takes a per-output swap lock, moves the old
+   directory aside and renames the staged directory into place. If that
+   rename fails, it restores the previous packet. It removes the backup
+   after publishing the new packet. With `--no-clean` it writes in place
+   (`src/lib/writers.js`).
 10. `src/cli.js` prints `AgentDocMap wrote <n> files to <dir>` and
     `Indexed <n> files and <n> JSDoc doclets.`
 
@@ -644,7 +648,7 @@ Settings come from two places, and they do not overlap:
 | `--project-name <name>` | `package.json` `name`, then the folder name | Display name (`src/index.js`). |
 | `--generated-at <text>` | target commit date, then the current time | Label written into the packet. A fixed value makes output reproducible. |
 | `--source-metadata git\|none` | `git` | `none` skips Git and writes no commit, branch or dirty flag. |
-| `--no-clean` | clean is on | Skips the delete step and the output directory guard. |
+| `--no-clean` | clean is on | Writes in place and skips the output directory guard. |
 | `jsdoc.json` `source.include` | `src`, `server` | Directories to scan. Each entry is resolved with `path.resolve(targetRoot, entry)`; generation fails if the result is outside the target. Absolute paths inside the target are allowed. |
 | `jsdoc.json` `source.includePattern` | `.js/.jsx/.mjs/.cjs` | File filter, compiled with `new RegExp()`. |
 | `jsdoc.json` `source.excludePattern` | see [Integration points](#integration-points) | Path filter. A custom pattern replaces the default pattern. |
@@ -653,9 +657,8 @@ The settings that change behaviour most:
 
 - `--generated-at` together with `--source-metadata none` decides whether a
   committed packet stays byte-stable between commits.
-- `--no-clean` decides whether the output directory is deleted. With
-  `--no-clean`, files from an earlier run that are no longer produced stay in
-  place.
+- With `--no-clean`, files from an earlier run that are no longer produced
+  stay in place. A failed write can leave a partially updated packet.
 - `source.include` decides the whole scope of the packet.
 
 Limits such as "top 20 important files" or "12 symbols per file" are
@@ -746,8 +749,8 @@ flowchart LR
   `constructor` are looked up with `hasOwn()` (`src/lib/fsUtils.js`;
   `test/writers.test.js`, "does not treat Object.prototype member names as
   declared packages").
-- **Deleting the output directory is guarded.**
-  `assertSafeCleanOutputDirectory()` allows deletion only when the directory
+- **Replacing the output directory is guarded.**
+  `assertSafeCleanOutputDirectory()` allows replacement when the directory
   is named `docs-agent`, or ends in `-agent-docs` and contains only letters,
   digits, `.`, `_` and `-`, or starts with `agentdocmap-` directly inside the
   operating system's temporary directory. It always refuses the target root
@@ -788,7 +791,7 @@ and when.
   `package.json` raises eight transitive dependencies of `jsdoc` and
   `@babel/parser` to newer major versions.
 - **Versioning.** The version is the `version` field in `package.json`,
-  currently 0.1.1. The repository has no changelog file and no release
+  currently 0.1.2. The repository has no changelog file and no release
   workflow. Consumers pin a Git commit instead of a version number
   (see [OpenDocViewer](#opendocviewer-dependent-repository)).
 - **Output schema version.** `schemaVersion` in `agent-map.json` is
@@ -836,7 +839,7 @@ Known failure modes:
 | `Refusing to clean AgentDocMap output directory because it overlaps the target repository root` | `--out` is the target root or one of its ancestors. | `src/lib/outputGuard.js` |
 | A JSON syntax error at start | The target's `package.json` or `jsdoc.json` is not valid JSON. | `readJsonIfExists()` in `src/lib/fsUtils.js` |
 | A packet with zero files and no error | The include directories do not exist in the target. Unreadable directories are skipped silently. | `walk()` in `src/lib/fileInventory.js` |
-| A half-written packet | The run failed or was stopped after the delete step. Writing is not atomic. Run it again. | `writeAgentDocs()` in `src/lib/writers.js` |
+| A sharing violation while replacing a packet on Windows | Close the program holding the directory or file open and run generation again. If the error names a retained backup, restore it to the output path after releasing the handle. | `writeAgentDocs()` in `src/lib/writers.js` |
 
 ## Known limits and trade-offs
 
@@ -923,9 +926,17 @@ Limits that follow from the code:
   the file contributes to `stats.parseErrorCount` and appears in `REPORT.md`.
 - **Child processes are hidden on Windows.** JSDoc's `spawnSync` and Git's
   `execFile` calls set `windowsHide: true`, following `AGENTS.md`.
-- **Concurrent runs into one output directory are not safe.** Each run
-  deletes and recreates the directory. The test only requires that at least
-  one of four runs completes (`test/concurrency.test.js`).
+- **Clean-mode swaps use two directory renames.** Readers can see a brief
+  gap, and an interrupted process can leave the packet in
+  `.agentdocmap-backup-*/previous` and a stale `.agentdocmap-lock-*` directory
+  beside the destination. With all writers stopped, move the saved packet
+  back if the destination is missing and remove the stale lock. A persistent
+  filesystem error during rollback can also leave a backup at the path
+  reported in the error. If backup removal fails after publishing, the new
+  packet stays in place and the error identifies the backup cleanup failure.
+- **Concurrent clean-mode runs stage independently.** A run can fail if
+  another run holds the destination's swap lock. Concurrent in-place
+  writes with `--no-clean` can interleave.
 - **Sequential and in memory.** Files are parsed one at a time and the whole
   map and every output are held in memory before writing
   (`analyzeSources()`, `writeAgentDocs()`). JSDoc blocks the event loop while

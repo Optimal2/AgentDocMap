@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { setTimeout as delay } from 'node:timers/promises';
 import { compareText, hasOwn } from './fsUtils.js';
 import { assertSafeCleanOutputDirectory } from './outputGuard.js';
 import { isRuntimeEntrypointPath } from './projectSignals.js';
@@ -21,6 +22,8 @@ const TABLE_CELL_ESCAPE_PATTERN = /\r\n|\r|\n|[&<>"'\\|`[\]()]/g;
 const INLINE_ESCAPE_PATTERN = /[<>\\`*_{}[\]()#+\-=!|~]/g;
 const HTML_ESCAPE_PATTERN = /[&<>"']/g;
 const BACKTICK_RUN_PATTERN = /`+/g;
+const REMOVE_TEMP_DIRECTORY_OPTIONS = { recursive: true, force: true, maxRetries: 3, retryDelay: 50 };
+const TRANSIENT_RENAME_ERRORS = new Set(['EACCES', 'EBUSY', 'EPERM']);
 
 function safeFileName(value) {
   return String(value ?? DEFAULT_MODULE_NAME).replace(/[^a-z0-9._-]+/gi, '_');
@@ -85,11 +88,7 @@ function buildChunkPaths(modules) {
 export async function writeAgentDocs({ outDir, map, clean, targetRoot }) {
   if (clean) {
     assertSafeCleanOutputDirectory(outDir, targetRoot);
-    await fs.rm(outDir, { recursive: true, force: true });
   }
-
-  await fs.mkdir(outDir, { recursive: true });
-  await fs.mkdir(path.join(outDir, 'chunks'), { recursive: true });
 
   const outputs = new Map([
     ['AGENT_CONTEXT.md', renderAgentContext(map)],
@@ -112,15 +111,85 @@ export async function writeAgentDocs({ outDir, map, clean, targetRoot }) {
 
   outputs.set('BUDGET.md', renderBudget(map, summarizeOutputBudget(outputs)));
 
-  const written = [];
-  for (const [relativePath, content] of outputs) {
-    const filePath = path.join(outDir, relativePath);
-    await fs.mkdir(path.dirname(filePath), { recursive: true });
-    await fs.writeFile(filePath, content, 'utf8');
-    written.push(filePath);
+  if (clean) {
+    const destination = path.resolve(outDir);
+    const parent = path.dirname(destination);
+    await fs.mkdir(parent, { recursive: true });
+    const stagedDir = await fs.mkdtemp(path.join(parent, '.agentdocmap-stage-'));
+    try {
+      await writeOutputFiles(stagedDir, outputs);
+      await replaceOutputDirectory(destination, stagedDir);
+    } finally {
+      await fs.rm(stagedDir, REMOVE_TEMP_DIRECTORY_OPTIONS);
+    }
+  } else {
+    await writeOutputFiles(outDir, outputs);
   }
 
-  return written;
+  return [...outputs.keys()].map((relativePath) => path.join(outDir, relativePath));
+}
+
+async function writeOutputFiles(outDir, outputs) {
+  await fs.mkdir(path.join(outDir, 'chunks'), { recursive: true });
+  for (const [relativePath, content] of outputs) {
+    await fs.writeFile(path.join(outDir, relativePath), content, 'utf8');
+  }
+}
+
+async function replaceOutputDirectory(outDir, stagedDir) {
+  const parent = path.dirname(outDir);
+  const outputKey = createHash('sha256').update(path.basename(outDir).toLowerCase()).digest('hex');
+  const swapLock = path.join(parent, `.agentdocmap-lock-${outputKey}`);
+  await fs.mkdir(swapLock);
+  try {
+    const backupDir = await fs.mkdtemp(path.join(parent, '.agentdocmap-backup-'));
+    const previousDir = path.join(backupDir, 'previous');
+    let previousMoved = false;
+    let preserveBackup = false;
+    try {
+      try {
+        await fs.rename(outDir, previousDir);
+        previousMoved = true;
+      } catch (error) {
+        if (error.code !== 'ENOENT') throw error;
+      }
+
+      try {
+        await fs.rename(stagedDir, outDir);
+      } catch (publishError) {
+        if (previousMoved) {
+          try {
+            await restorePreviousOutput(previousDir, outDir);
+          } catch (restoreError) {
+            preserveBackup = true;
+            throw new AggregateError(
+              [publishError, restoreError],
+              `Could not publish or restore agent docs. Previous output is at "${previousDir}".`,
+            );
+          }
+        }
+        throw publishError;
+      }
+    } finally {
+      // Once the new packet is published, a failed removal may leave a partial
+      // backup. Keep the complete new packet in place in that case.
+      if (!preserveBackup) await fs.rm(backupDir, REMOVE_TEMP_DIRECTORY_OPTIONS);
+    }
+  } finally {
+    await fs.rmdir(swapLock);
+  }
+}
+
+async function restorePreviousOutput(previousDir, outDir) {
+  for (let retries = 0; ; retries += 1) {
+    try {
+      await fs.rename(previousDir, outDir);
+      return;
+    } catch (error) {
+      if (retries === 3 || !TRANSIENT_RENAME_ERRORS.has(error.code)) throw error;
+      await delay(50 * (retries + 1));
+    }
+  }
 }
 
 function renderAgentContext(map) {

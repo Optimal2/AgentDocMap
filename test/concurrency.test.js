@@ -87,15 +87,19 @@ test('concurrent same-directory runs complete without crashing the process', asy
       ),
     );
 
-    // Concurrent writes to the same output directory are not guaranteed to
-    // succeed because each run deletes and recreates the directory. This test
-    // only verifies that the process remains stable and does not throw
-    // unhandled errors.
+    // A competing clean run can fail to acquire the swap lock.
     const fulfilled = results.filter((result) => result.status === 'fulfilled').length;
     const failureDiagnostics = formatSettledFailureDiagnostics(results);
     assert.ok(
       fulfilled > 0,
       `at least one concurrent run should complete. Failures: ${failureDiagnostics || 'none'}`,
     );
+    const completed = results.find((result) => result.status === 'fulfilled').value;
+    const entries = await fs.readdir(out, { recursive: true });
+    assert.deepEqual(entries.sort(), [
+      'chunks',
+      ...completed.outputFiles.map((file) => path.relative(out, file)),
+    ].sort());
+    assert.deepEqual(await fs.readdir(sandbox), ['shared-agent-docs']);
   });
 });

@@ -18,16 +18,16 @@ Options:
   --target <path>        Target repository root.
   --out <path>           Output directory. Recommended names are 'docs-agent' or
                          any directory ending in '-agent-docs' (e.g.
-                         'examples/opendocviewer-agent-docs'). When --clean is
-                         used (the default), the directory must be one of those
+                         'examples/opendocviewer-agent-docs'). With the default
+                         replacement, the directory must be one of those
                          names or a temporary directory prefixed with
                          'agentdocmap-'. Use --no-clean to write to any
-                         directory without deleting it first.
+                         directory in place.
   --project-name <name>  Display name used in generated docs.
   --generated-at <text>  Timestamp/label override. Defaults to target commit date.
   --source-metadata <mode>
                          Source metadata mode: git or none. Defaults to git.
-  --no-clean             Do not delete the output directory before writing.
+  --no-clean             Write files in place and keep files no longer generated.
   -h, --help             Show help.
 `);
 }
