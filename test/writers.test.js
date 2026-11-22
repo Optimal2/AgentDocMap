@@ -561,6 +561,21 @@ async function directoryExists(candidate) {
   }
 }
 
+/**
+ * Returns a target repository root that does not lie beneath `outDir`, so the
+ * guard's separate "overlaps the target repository root" rejection cannot fire
+ * and mask the unsafe-directory rejection under test. The OS temp directory is
+ * not usable for this: on Windows it normally lives beneath the home directory.
+ * The path is only compared, never created. A filesystem root has no sibling,
+ * so no target root is passed for it.
+ */
+function unrelatedTargetRoot(outDir) {
+  const resolved = path.resolve(outDir);
+  const parent = path.dirname(resolved);
+  if (parent === resolved) return undefined;
+  return path.join(parent, `${path.basename(resolved)}-agentdocmap-target`);
+}
+
 test('writeAgentDocs rejects cleaning common system directories', async (t) => {
   // The home directory is always protected by the guard and always exists, so the
   // test never depends on host environment variables or on a fixed POSIX layout.
@@ -579,16 +594,29 @@ test('writeAgentDocs rejects cleaning common system directories', async (t) => {
     t.diagnostic('WARNING: Reduced system-directory guard coverage: neither ProgramData nor SystemRoot identifies an existing directory; only the home directory is tested.');
   }
 
+  // Fail closed: if the guard ever let one of these directories through, the
+  // writer would go on to stage and swap a real home or system directory. Every
+  // mutating filesystem call is replaced for the duration of this test, so a
+  // regression fails the assertions below without touching the disk.
+  const mutatingCalls = [];
+  for (const method of ['mkdir', 'mkdtemp', 'writeFile', 'rename', 'rm', 'rmdir']) {
+    t.mock.method(fs, method, async (...args) => {
+      mutatingCalls.push(`${method}(${args[0]})`);
+      throw new Error(`Unexpected filesystem mutation in a guard test: ${method}`);
+    });
+  }
+
   for (const outDir of outDirs) {
     await assert.rejects(
       writeAgentDocs({
         outDir,
         clean: true,
-        targetRoot: path.join(os.tmpdir(), 'agentdocmap-target'),
+        targetRoot: unrelatedTargetRoot(outDir),
         map: createMinimalMap(),
       }),
       /Refusing to clean unsafe AgentDocMap output directory/,
       `expected the guard to reject ${outDir}`,
     );
   }
+  assert.deepEqual(mutatingCalls, [], 'the guard must reject before any filesystem mutation');
 });
