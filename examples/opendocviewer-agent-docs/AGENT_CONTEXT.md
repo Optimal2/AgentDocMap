@@ -23,10 +23,10 @@ Source commit: not embedded
 
 ## Stats
 
-- Source files: 211
-- Source lines: 75249
-- JSDoc symbols: 2202
-- Files with JSDoc: 206
+- Source files: 220
+- Source lines: 75724
+- JSDoc symbols: 2224
+- Files with JSDoc: 214
 - Low-confidence summaries: 2
 - Parse errors: 0
 
@@ -38,8 +38,8 @@ Source commit: not embedded
 - `src/utils/viewerPreferences.js` - Lightweight persisted viewer preferences.
 - `src/utils/compareTransform.js` - File: src/utils/compareTransform.js Free per\-page transform for the compare view: stepless scale, free pan and 0.1 degree rotation, one transform per compared page \( primary \= lef...
 - `src/utils/imageAdjustments.js` - File: src/utils/imageAdjustments.js Per\-pane pixel adjustments \(brightness, contrast, grayscale, invert\) and the quarter turn the canvas draws.
-- `src/utils/pdfSignatureStatus.js` - Signature UI status helpers for browser integrity.
 - `src/logging/systemLogger.js` - src/logging/systemLogger.js OpenDocViewer — Frontend Logging Controller \(ESM\) \- Provide a small, dependency\-light logging facade for the browser app.
+- `src/utils/pdfSignatureStatus.js` - Signature UI status helpers for browser integrity.
 - `src/utils/pdfResolution.js` - Pure, per\-page PDF display resolution policy shared by browser and worker renderers.
 - `src/utils/printPdf.js` - OpenDocViewer — Generated PDF print backend.
 - `src/utils/supportDiagnostics.js` - Support diagnostics helpers for opt\-in troubleshooting tools.
@@ -47,6 +47,6 @@ Source commit: not embedded
 
 ## Agent Notes
 
-- 5 files have no JSDoc doclets; AgentDocMap uses source\-derived summaries for them.
+- 6 files have no JSDoc doclets; AgentDocMap uses source\-derived summaries for them.
 - 2 files have low\-confidence summaries; inspect REPORT.md before relying on them for task planning.
 - Use AGENT\_CONTEXT.md first, then SYMBOL\_INDEX.md by file path to avoid loading the whole symbol JSON.

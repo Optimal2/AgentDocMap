@@ -220,8 +220,8 @@ has one export (5) and one doclet (3).
 
 For a real-size example, `examples/opendocviewer-agent-docs/` holds the
 committed packet for OpenDocViewer. At the time that snapshot was generated,
-it covered 148 source files, 60,676 source lines and 1,658 JSDoc symbols in
-30 output files. It is a calibration snapshot: it is regenerated when
+it covered 220 source files, 75,724 source lines and 2,224 JSDoc symbols in
+34 output files. It is a calibration snapshot: it is regenerated when
 generator behavior changes, not every time OpenDocViewer changes.
 
 ## Output files

@@ -2,13 +2,45 @@
 
 | Symbol | Kind | File | Summary |
 | --- | --- | --- | --- |
-| <code>ALLOWED_ORIGINS</code> | constant | <code>server/system-log-server.js:141</code> | Optional CORS for /log |
-| <code>LOG_TOKEN</code> | constant | <code>server/system-log-server.js:135</code> | Token gate for /log |
-| <code>TRUST_PROXY_RAW</code> | constant | <code>server/system-log-server.js:128</code> | Trust proxy for accurate req.ip |
-| <code>logLimiter</code> | constant | <code>server/system-log-server.js:165</code> | Rate limit for ingestion |
-| <code>requireLogToken</code> | function | <code>server/system-log-server.js:175</code> | Token auth middleware |
-| <code>resolveUser</code> | function | <code>server/user-log-server.js:117</code> | Resolve user identity without cookies. |
-| <code>sameOriginGuard</code> | function | <code>server/user-log-server.js:135</code> | Blocks cross-site requests using Origin/Referer/Sec-Fetch-Site signals. |
+| <code>createAccessLogger</code> | function | <code>server/accessLog.js:26</code> |  |
+| <code>normalizeClientAddress</code> | function | <code>server/clientAddress.js:23</code> | A reverse proxy may add the client&#39;s source port to the address it forwards \(IIS ARR does by default: &amp;quot;203.0.113.5:49152&amp;quot;, &amp;quot;\[2001:db8::1\]:49152&amp;quot;\). |
+| <code>decodeHeaderValue</code> | function | <code>server/headerText.js:20</code> | Node hands header values over decoded as latin1, one character per byte. |
+| <code>strictUtf8</code> | constant | <code>server/headerText.js:4</code> | Text of an HTTP header value as the sender wrote it. |
+| <code>PRINT_LOG_RETENTION_DEFAULT_DAYS</code> | constant | <code>server/logRetention.js:10</code> | Print records \( print-*.log \) are the audit trail of who printed what, and for whom. |
+| <code>pruneRotatedLogs</code> | function | <code>server/logRetention.js:36</code> | Delete rotated log files whose modification time is beyond the retention period. |
+| <code>resolvePrintLogRetentionDays</code> | function | <code>server/logRetention.js:20</code> | Retention for the print records of the user log server. |
+| <code>scheduleLogRetention</code> | function | <code>server/logRetention.js:59</code> | Repeat retention while a long-running service stays up. |
+| <code>createRejectionReporter</code> | function | <code>server/rateLimitConfig.js:43</code> | Report a rejected client at most once per window, so that records lost to the rate limit are visible in the error log without one line per rejected request. |
+| <code>resolveRateLimitPerMinute</code> | function | <code>server/rateLimitConfig.js:19</code> | Read a requests-per-minute limit from an environment value. |
+| <code>createRollingLog~appendConfirmed</code> | function | <code>server/rollingLog.js:147</code> | Write one line and confirm that it is in the file at the log file&#39;s path. |
+| <code>createRollingLog~closeAll</code> | function | <code>server/rollingLog.js:249</code> | Close every open file \(for a clean shutdown and for tests\). |
+| <code>createRollingLog</code> | function | <code>server/rollingLog.js:63</code> |  |
+| <code>describeWriteError</code> | function | <code>server/rollingLog.js:262</code> | What to put in the error log about a failed write: the error code and message, never the record that could not be written. |
+| <code>createRollingLog~drop</code> | function | <code>server/rollingLog.js:75</code> | Stop using an open file. |
+| <code>createRollingLog~entryFor</code> | function | <code>server/rollingLog.js:91</code> | The open file for the prefix, opening it when needed. |
+| <code>createRollingLog~givenUp</code> | function | <code>server/rollingLog.js:84</code> | Thrown inside a write that was given up; its caller has been answered already. |
+| <code>createRollingLog~isAtPath</code> | function | <code>server/rollingLog.js:137</code> | Whether the file at the path is still the open file. |
+| <code>resolveLogWriteTimeoutMs</code> | function | <code>server/rollingLog.js:48</code> | Read the write timeout from an environment value: a whole number of milliseconds from 100 to 600000. |
+| <code>createRollingLog~tails</code> | constant | <code>server/rollingLog.js:70</code> | One chain of writes per file, so that lines keep the order of the calls. |
+| <code>createRollingLog~toStderr</code> | function | <code>server/rollingLog.js:211</code> | Last resort when a log line cannot be written to its file. |
+| <code>createRollingLog~write</code> | function | <code>server/rollingLog.js:178</code> | Append one line to today&#39;s file for the prefix. |
+| <code>createRollingLog~writeBestEffort</code> | function | <code>server/rollingLog.js:239</code> | Write a line whose loss is tolerable \(an access-log line\). |
+| <code>createRollingLog~writeOrStderr</code> | function | <code>server/rollingLog.js:223</code> | Write a line that must not be lost quietly \(an error-log line\). |
+| <code>ALLOWED_ORIGINS</code> | constant | <code>server/system-log-server.js:156</code> | Optional CORS for /log |
+| <code>LOG_TOKEN</code> | constant | <code>server/system-log-server.js:150</code> | Token gate for /log |
+| <code>TRUST_PROXY_RAW</code> | constant | <code>server/system-log-server.js:143</code> | Trust proxy for accurate req.ip |
+| <code>rateLimitSetting</code> | constant | <code>server/system-log-server.js:183</code> | Rate limit for ingestion |
+| <code>reportWriteFailure</code> | function | <code>server/system-log-server.js:88</code> | Error-log line for a record that could not be written: which log and why, never the record. |
+| <code>requireLogToken</code> | function | <code>server/system-log-server.js:223</code> | Token auth middleware |
+| <code>writeRolling</code> | function | <code>server/system-log-server.js:82</code> | Write a line that must not be lost quietly \(an error-log line\). |
+| <code>reportWriteFailure</code> | function | <code>server/user-log-server.js:104</code> | Error-log line for a record that could not be written: which log and why, never the record. |
+| <code>resolveUser</code> | function | <code>server/user-log-server.js:150</code> | Resolve user identity without cookies. |
+| <code>sameOriginGuard</code> | function | <code>server/user-log-server.js:169</code> | Blocks cross-site requests using Origin/Referer/Sec-Fetch-Site signals. |
+| <code>writeRolling</code> | function | <code>server/user-log-server.js:98</code> | Write a line that must not be lost quietly \(an error-log line\). |
+| <code>LOOPBACK_ADDRESSES</code> | constant | <code>server/userLogOrigin.js:4</code> | Evaluate the browser origin signals used by the user print-log endpoint. |
+| <code>resolveUserLogHosts</code> | function | <code>server/userLogOrigin.js:15</code> | The hosts the browser may have addressed: the request&#39;s own Host header and, only when the request arrives over loopback, the X-Forwarded-Host that the reverse proxy on the same m... |
+| <code>neutralizeForWhom</code> | function | <code>server/userLogPayload.js:17</code> | The print log has never carried &amp;quot;$&amp;quot; or &amp;quot;#&amp;quot; in the recipient. |
+| <code>readPrintLogFields</code> | function | <code>server/userLogPayload.js:4</code> | Compatibility reader for form posts and the viewer&#39;s JSON print envelope. |
 | <code>ErrorBoundaryProps</code> | typedef | <code>src/ErrorBoundary.jsx:103</code> | Props for the ErrorBoundary component. |
 | <code>ErrorBoundaryState</code> | typedef | <code>src/ErrorBoundary.jsx:115</code> | Internal state for the ErrorBoundary. |
 | <code>IS_DEV</code> | constant | <code>src/ErrorBoundary.jsx:34</code> | Determine whether we are in development mode. |
@@ -107,7 +139,7 @@
 | <code>readBlobHeadBytes</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:340</code> |  |
 | <code>readUint32LittleEndian</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:910</code> |  |
 | <code>redactUrlForLog</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:563</code> |  |
-| <code>&lt;anonymous&gt;~resolve</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:1608</code> |  |
+| <code>&lt;anonymous&gt;~resolve</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:1610</code> |  |
 | <code>resolveDocumentSourceContext</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:975</code> | Extract multi-document source context from an entry or placeholder input. |
 | <code>resolveEntries</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:1125</code> |  |
 | <code>resolveExactPlannedPageCount</code> | function | <code>src/components/DocumentLoader/DocumentLoader.js:492</code> |  |
@@ -318,15 +350,15 @@
 | <code>module:usePrintPipeline~PrintPipelineParams</code> | typedef | <code>src/components/DocumentToolbar/usePrintPipeline.js:115</code> |  |
 | <code>module:usePrintPipeline~PrintSubmitDetail</code> | typedef | <code>src/components/DocumentToolbar/usePrintPipeline.js:86</code> | Detail payload emitted by the print dialog. |
 | <code>module:usePrintPipeline~canPrintComposedView</code> | function | <code>src/components/DocumentToolbar/usePrintPipeline.js:47</code> | Read capability at use time, including delayed submits from a stale dialog. |
-| <code>module:usePrintPipeline~usePrintPipeline~dispatchPrintRequest</code> | constant | <code>src/components/DocumentToolbar/usePrintPipeline.js:523</code> | Execute the actual print helper after the dialog has resolved the user&#39;s choices. |
-| <code>module:usePrintPipeline~usePrintPipeline~handlePrintSubmit</code> | constant | <code>src/components/DocumentToolbar/usePrintPipeline.js:719</code> | Handle the dialog submit event and dispatch the correct print action. |
+| <code>module:usePrintPipeline~usePrintPipeline~dispatchPrintRequest</code> | constant | <code>src/components/DocumentToolbar/usePrintPipeline.js:525</code> | Execute the actual print helper after the dialog has resolved the user&#39;s choices. |
+| <code>module:usePrintPipeline~usePrintPipeline~handlePrintSubmit</code> | constant | <code>src/components/DocumentToolbar/usePrintPipeline.js:721</code> | Handle the dialog submit event and dispatch the correct print action. |
 | <code>module:usePrintPipeline.isComposedCompareDetail</code> | function | <code>src/components/DocumentToolbar/usePrintPipeline.js:66</code> | True for the dialog detail of a compare-view print \( activeScope compare-overlay / compare-curtain \): both compared pages composed onto one page. |
 | <code>module:usePrintPipeline~isPdfAbortError</code> | function | <code>src/components/DocumentToolbar/usePrintPipeline.js:56</code> |  |
 | <code>module:usePrintPipeline~usePrintPipeline~makePrintOptions</code> | constant | <code>src/components/DocumentToolbar/usePrintPipeline.js:301</code> |  |
 | <code>module:usePrintPipeline</code> | function | <code>src/components/DocumentToolbar/usePrintPipeline.js:149</code> | The single print pipeline shared by the toolbar and the compare views. |
 | <code>module:usePrintPipeline.normalizeToolbarPageNumber</code> | function | <code>src/components/DocumentToolbar/usePrintPipeline.js:78</code> | Clamp a page number to the visible page range. |
-| <code>module:usePrintPipeline~usePrintPipeline~openComposedPrintDialog</code> | constant | <code>src/components/DocumentToolbar/usePrintPipeline.js:749</code> | Compare-view entry: the same dialog, printing the view as one composed page. |
-| <code>module:usePrintPipeline~usePrintPipeline~openToolbarPrintDialog</code> | constant | <code>src/components/DocumentToolbar/usePrintPipeline.js:739</code> | Toolbar entry: the dialog for the viewer&#39;s own pages. |
+| <code>module:usePrintPipeline~usePrintPipeline~openComposedPrintDialog</code> | constant | <code>src/components/DocumentToolbar/usePrintPipeline.js:751</code> | Compare-view entry: the same dialog, printing the view as one composed page. |
+| <code>module:usePrintPipeline~usePrintPipeline~openToolbarPrintDialog</code> | constant | <code>src/components/DocumentToolbar/usePrintPipeline.js:741</code> | Toolbar entry: the dialog for the viewer&#39;s own pages. |
 | <code>module:usePrintPipeline~usePrintPipeline~resolvePrintPageContexts</code> | constant | <code>src/components/DocumentToolbar/usePrintPipeline.js:251</code> | Resolve page metadata objects aligned with the printed page sequence. |
 | <code>module:usePrintPipeline~usePrintPipeline~resolvePrintPageCount</code> | constant | <code>src/components/DocumentToolbar/usePrintPipeline.js:229</code> | Estimate the number of pages the user is about to print. |
 | <code>module:usePrintPipeline~usePrintPipeline~resolvePrintPageNumbers</code> | constant | <code>src/components/DocumentToolbar/usePrintPipeline.js:265</code> |  |
@@ -340,11 +372,11 @@
 | <code>usePrintRangeController~extras</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:410</code> |  |
 | <code>usePrintRangeController~makeDescendingSequence</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:282</code> |  |
 | <code>usePrintRangeController~onDialogKeyDown</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:270</code> |  |
-| <code>usePrintRangeController~restoreFromDetail</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:521</code> | Restore the dialog state from the latest successfully prepared print. |
-| <code>usePrintRangeController~submitPdfDownload</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:510</code> |  |
-| <code>usePrintRangeController~submitPrintDirect</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:502</code> |  |
-| <code>usePrintRangeController~submitPrintPdf</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:505</code> |  |
-| <code>usePrintRangeController~submitWithBackend</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:489</code> |  |
+| <code>usePrintRangeController~restoreFromDetail</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:533</code> | Restore the dialog state from the latest successfully prepared print. |
+| <code>usePrintRangeController~submitPdfDownload</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:522</code> |  |
+| <code>usePrintRangeController~submitPrintDirect</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:514</code> |  |
+| <code>usePrintRangeController~submitPrintPdf</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:517</code> |  |
+| <code>usePrintRangeController~submitWithBackend</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:501</code> |  |
 | <code>usePrintRangeController</code> | function | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:64</code> | Hook that encapsulates state, derived values, effects and handlers for PrintRangeDialog. |
 | <code>usePrintRangeController~validateRange</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:291</code> |  |
 | <code>usePrintRangeController~validateUserFields</code> | constant | <code>src/components/DocumentToolbar/usePrintRangeDialog.js:303</code> |  |
@@ -452,59 +484,60 @@
 | <code>PrintPageSequence</code> | typedef | <code>src/components/DocumentViewer/useDocumentViewer.js:80</code> |  |
 | <code>SelectionMask</code> | typedef | <code>src/components/DocumentViewer/useDocumentViewer.js:79</code> |  |
 | <code>ViewerPageTarget</code> | typedef | <code>src/components/DocumentViewer/useDocumentViewer.js:81</code> |  |
-| <code>ZoomMode</code> | typedef | <code>src/components/DocumentViewer/useDocumentViewer.js:483</code> | Sticky zoom modes used by the viewer \(subset is used here\). |
-| <code>ZoomState</code> | typedef | <code>src/components/DocumentViewer/useDocumentViewer.js:488</code> | Zoom state \(mode + current numeric scale\). |
-| <code>useDocumentViewer~activateComparePane</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1547</code> | Open compare mode when needed and make the right pane the default target. |
-| <code>useDocumentViewer~activatePrimaryPane</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1539</code> |  |
-| <code>useDocumentViewer~applyThumbnailWidth</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1622</code> | Mouse down handler for the thumbnail resizer; listens for mousemove/up on window. |
-| <code>buildDocumentSelectionModel</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:359</code> |  |
+| <code>ZoomMode</code> | typedef | <code>src/components/DocumentViewer/useDocumentViewer.js:498</code> | Sticky zoom modes used by the viewer \(subset is used here\). |
+| <code>ZoomState</code> | typedef | <code>src/components/DocumentViewer/useDocumentViewer.js:503</code> | Zoom state \(mode + current numeric scale\). |
+| <code>useDocumentViewer~activateComparePane</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1554</code> | Open compare mode when needed and make the right pane the default target. |
+| <code>useDocumentViewer~activatePrimaryPane</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1546</code> |  |
+| <code>useDocumentViewer~applyThumbnailWidth</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1629</code> | Mouse down handler for the thumbnail resizer; listens for mousemove/up on window. |
+| <code>buildDocumentSelectionModel</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:374</code> |  |
 | <code>buildImageRotationDependencyKey</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:142</code> |  |
 | <code>buildSelectionMaskFromPrintPageSequence</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:265</code> | Build an inclusion mask from a print-page sequence. |
-| <code>buildVisibleDocumentNavigationModel</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:437</code> | Build the visible-document grouping used by document-level navigation. |
+| <code>buildVisibleDocumentNavigationModel</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:452</code> | Build the visible-document grouping used by document-level navigation. |
 | <code>clampPage</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:49</code> | Clamp a 1-based page number into \[1, total\]. |
-| <code>useDocumentViewer~closeCompare</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1575</code> | Close compare mode without affecting the left page. |
-| <code>findNearestVisiblePageNumber</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:302</code> | Resolve the nearest visible page number for a requested original page index. |
-| <code>useDocumentViewer~getDocumentNavigationState</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:735</code> | Resolve document-navigation state for the requested pane. |
-| <code>getPageDocumentNavigationMeta</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:411</code> |  |
-| <code>useDocumentViewer~goToFirstDocument</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1301</code> | Jump to the first page of the first visible document. |
-| <code>useDocumentViewer~goToFirstPage</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1257</code> | Jump to the first visible page in the requested target pane. |
-| <code>useDocumentViewer~goToLastDocument</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1313</code> | Jump to the first page of the last visible document. |
-| <code>useDocumentViewer~goToLastPage</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1266</code> | Jump to the last visible page in the requested target pane. |
-| <code>useDocumentViewer~goToNextDocument</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1289</code> | Jump to the first page of the next visible document. |
-| <code>useDocumentViewer~goToNextPage</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1248</code> | Move one page forward in the requested target pane. |
-| <code>useDocumentViewer~goToPreviousDocument</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1277</code> | Jump to the first page of the previous visible document \(or to the current document start when the active pane already points inside the first visible document\). |
-| <code>useDocumentViewer~goToPreviousPage</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1239</code> | Move one page backward in the requested target pane. |
-| <code>useDocumentViewer~handleCompare</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1557</code> | Toggle compare mode. |
-| <code>useDocumentViewer~handlePageNumberChange</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1155</code> | Change the primary page using an original page number \(or a visible-page updater function when called from navigation helpers\). |
-| <code>useDocumentViewer~handlePrimaryDisplayStateChange</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1203</code> | Keep requested-page state and the actually displayed page synchronized for diagnostics. |
-| <code>useDocumentViewer~handleVisiblePageNumberChange</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1164</code> | Change the primary page by a visible page number from the thumbnail strip. |
+| <code>useDocumentViewer~closeCompare</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1582</code> | Close compare mode without affecting the left page. |
+| <code>findNearestVisiblePageNumber</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:317</code> | Resolve the nearest visible page number for a requested original page index. |
+| <code>useDocumentViewer~getDocumentNavigationState</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:748</code> | Resolve document-navigation state for the requested pane. |
+| <code>getPageDocumentNavigationMeta</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:426</code> |  |
+| <code>useDocumentViewer~goToFirstDocument</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1310</code> | Jump to the first page of the first visible document. |
+| <code>useDocumentViewer~goToFirstPage</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1266</code> | Jump to the first visible page in the requested target pane. |
+| <code>useDocumentViewer~goToLastDocument</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1322</code> | Jump to the first page of the last visible document. |
+| <code>useDocumentViewer~goToLastPage</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1275</code> | Jump to the last visible page in the requested target pane. |
+| <code>useDocumentViewer~goToNextDocument</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1298</code> | Jump to the first page of the next visible document. |
+| <code>useDocumentViewer~goToNextPage</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1257</code> | Move one page forward in the requested target pane. |
+| <code>useDocumentViewer~goToPreviousDocument</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1286</code> | Jump to the first page of the previous visible document \(or to the current document start when the active pane already points inside the first visible document\). |
+| <code>useDocumentViewer~goToPreviousPage</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1248</code> | Move one page backward in the requested target pane. |
+| <code>useDocumentViewer~handleCompare</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1564</code> | Toggle compare mode. |
+| <code>useDocumentViewer~handlePageNumberChange</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1164</code> | Change the primary page using an original page number \(or a visible-page updater function when called from navigation helpers\). |
+| <code>useDocumentViewer~handlePrimaryDisplayStateChange</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1212</code> | Keep requested-page state and the actually displayed page synchronized for diagnostics. |
+| <code>useDocumentViewer~handleVisiblePageNumberChange</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1173</code> | Change the primary page by a visible page number from the thumbnail strip. |
 | <code>hasExcludedPages</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:175</code> | Return true when the normalized mask excludes at least one page from the current session. |
-| <code>useDocumentViewer~hideDocumentFromSelection</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1030</code> | Immediately exclude every page that belongs to the same document as the provided original page index. |
-| <code>useDocumentViewer~hidePageFromSelection</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:992</code> | Immediately exclude a page from the active selection and apply the filtered session. |
+| <code>useDocumentViewer~hideDocumentFromSelection</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1041</code> | Immediately exclude every page that belongs to the same document as the provided original page index. |
+| <code>useDocumentViewer~hidePageFromSelection</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1005</code> | Immediately exclude a page from the active selection and apply the filtered session. |
 | <code>isNaturalPrintPageSequence</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:284</code> |  |
 | <code>masksEqual</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:192</code> | Compare two selection masks over the active page count. |
+| <code>normalizeCustomPrintSelectionState</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:302</code> | Normalize a custom selection while preserving an explicitly empty selection. |
 | <code>normalizeOriginalPageIndex</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:223</code> | Normalize a zero-based original page index and reject invalid/out-of-range values. |
 | <code>normalizePrintPageSequence</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:237</code> |  |
 | <code>normalizeRotationDegrees</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:65</code> | Normalize a rotation angle into the canonical 0..359 range used by the canvas renderer. |
 | <code>normalizeSelectionMask</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:155</code> | Normalize a persisted/host-provided page-selection mask to the current page count. |
-| <code>normalizeViewerPaneTarget</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:501</code> | Normalize any pane key into the viewer&#39;s two supported navigation targets. |
-| <code>&lt;anonymous&gt;~onMove</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:1708</code> |  |
-| <code>resolveDocumentSelectionPageNumber</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:342</code> | Resolve a page&#39;s 1-based page number within the current document-selection group. |
+| <code>normalizeViewerPaneTarget</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:516</code> | Normalize any pane key into the viewer&#39;s two supported navigation targets. |
+| <code>&lt;anonymous&gt;~onMove</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:1715</code> |  |
+| <code>resolveDocumentSelectionPageNumber</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:357</code> | Resolve a page&#39;s 1-based page number within the current document-selection group. |
 | <code>resolveEffectiveCustomFitSizeLimits</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:115</code> | Resolve effective custom-fit limits from a preferred value set and runtime config. |
-| <code>useDocumentViewer~resolveNearestVisibleOriginalPageNumber</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:813</code> |  |
+| <code>useDocumentViewer~resolveNearestVisibleOriginalPageNumber</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:826</code> |  |
 | <code>resolveOriginalIndexFromPrintPageNumber</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:207</code> | Convert a 1-based print/session page number to a zero-based original page index. |
-| <code>resolveProposedVisiblePageNumber</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:326</code> | Resolve either a direct visible-page value or a React setState-style updater function. |
-| <code>useDocumentViewer~resolveTargetOriginalPageNumber</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1107</code> | Resolve the next original 1-based page number from a visible-page update. |
-| <code>useDocumentViewer~selectForCompare</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1590</code> | Select a page for the right-hand compare pane. |
-| <code>useDocumentViewer~setActivePane</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1532</code> | Set the default pane for compare-aware navigation and editing actions. |
-| <code>useDocumentViewer~setComparePageNumber</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1191</code> | Change the compare page using an original page number \(or a visible-page updater function when called from compare navigation helpers\). |
-| <code>useDocumentViewer~setIsExpanded</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1520</code> | Setter for the editing controls visibility. |
-| <code>useDocumentViewer~setVisibleComparePageNumber</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1177</code> | Change the compare page by a visible page number from the toolbar page field. |
-| <code>useDocumentViewer~setZoomMode</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1427</code> | Set zoom mode directly \(&#39;FIT_PAGE&#39;\|&#39;FIT_WIDTH&#39;\|&#39;FIT_CUSTOM&#39;\|&#39;ACTUAL_SIZE&#39;\|&#39;CUSTOM&#39;\). |
-| <code>useDocumentViewer~thumbnailSelectionPageNumber</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1231</code> | The thumbnail pane should react immediately when the user changes page. |
-| <code>useDocumentViewer~toggleFitZoomMode</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1504</code> | Toggle between the two fit modes from the page surface. |
-| <code>useDocumentViewer~updatePageTarget</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1130</code> | Generic primary/compare page setter that accepts either a visible-page updater function or a concrete original page number. |
-| <code>useDocumentViewer</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:522</code> | Hook that centralizes viewer UI state and event handlers. |
+| <code>resolveProposedVisiblePageNumber</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:341</code> | Resolve either a direct visible-page value or a React setState-style updater function. |
+| <code>useDocumentViewer~resolveTargetOriginalPageNumber</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1116</code> | Resolve the next original 1-based page number from a visible-page update. |
+| <code>useDocumentViewer~selectForCompare</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1597</code> | Select a page for the right-hand compare pane. |
+| <code>useDocumentViewer~setActivePane</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1539</code> | Set the default pane for compare-aware navigation and editing actions. |
+| <code>useDocumentViewer~setComparePageNumber</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1200</code> | Change the compare page using an original page number \(or a visible-page updater function when called from compare navigation helpers\). |
+| <code>useDocumentViewer~setIsExpanded</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1527</code> | Setter for the editing controls visibility. |
+| <code>useDocumentViewer~setVisibleComparePageNumber</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1186</code> | Change the compare page by a visible page number from the toolbar page field. |
+| <code>useDocumentViewer~setZoomMode</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1434</code> | Set zoom mode directly \(&#39;FIT_PAGE&#39;\|&#39;FIT_WIDTH&#39;\|&#39;FIT_CUSTOM&#39;\|&#39;ACTUAL_SIZE&#39;\|&#39;CUSTOM&#39;\). |
+| <code>useDocumentViewer~thumbnailSelectionPageNumber</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1240</code> | The thumbnail pane should react immediately when the user changes page. |
+| <code>useDocumentViewer~toggleFitZoomMode</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1511</code> | Toggle between the two fit modes from the page surface. |
+| <code>useDocumentViewer~updatePageTarget</code> | constant | <code>src/components/DocumentViewer/useDocumentViewer.js:1139</code> | Generic primary/compare page setter that accepts either a visible-page updater function or a concrete original page number. |
+| <code>useDocumentViewer</code> | function | <code>src/components/DocumentViewer/useDocumentViewer.js:537</code> | Hook that centralizes viewer UI state and event handlers. |
 | <code>ImageRenderer</code> | constant | <code>src/components/ImageRenderer.jsx:51</code> | ImageRenderer component. |
 | <code>ImgEventHandler</code> | typedef | <code>src/components/ImageRenderer.jsx:28</code> | Image load/error handler. |
 | <code>BUTTON_SELECTOR</code> | constant | <code>src/components/KeyTips.jsx:25</code> | Buttons the tips name: every button in a toolbar. |
@@ -792,8 +825,8 @@
 | <code>resolveLoadPath</code> | function | <code>src/i18n.js:384</code> | Resolve the final translation URL at request time \(with cache buster\). |
 | <code>sanitizeI18nPathSegment</code> | function | <code>src/i18n.js:155</code> | Keep i18n URL template substitutions constrained to plain path segments. |
 | <code>syncDocumentLanguage</code> | function | <code>src/i18n.js:347</code> | Keep the document language synchronized with the active UI language. |
-| <code>container</code> | constant | <code>src/index.jsx:52</code> | Mount the app into #root. |
-| <code>isDev</code> | constant | <code>src/index.jsx:42</code> | Determine environment and set a sensible client-side log level. |
+| <code>container</code> | constant | <code>src/index.jsx:58</code> | Mount the app into #root. |
+| <code>isDev</code> | constant | <code>src/index.jsx:44</code> | Determine environment and set a sensible client-side log level. |
 | <code>BootstrapAny</code> | typedef | <code>src/integrations/bootstrapRuntime.js:44</code> |  |
 | <code>BootstrapDebugInfo</code> | typedef | <code>src/integrations/bootstrapRuntime.js:33</code> | Opaque information about how startup data reached the viewer. |
 | <code>BootstrapDetectOptions</code> | typedef | <code>src/integrations/bootstrapRuntime.js:58</code> | Options controlling bootstrap diagnostics collection. |
@@ -852,20 +885,13 @@
 | <code>ALLOWED_PROTOCOLS</code> | constant | <code>src/integrations/sessionUrl.js:52</code> | Protocols a session URL may use. |
 | <code>MAX_RESPONSE_TEXT_LEN</code> | constant | <code>src/integrations/sessionUrl.js:10</code> | Fetch a host-prepared Portable Document Bundle from a short URL query value. |
 | <code>SessionUrlResult</code> | typedef | <code>src/integrations/sessionUrl.js:13</code> |  |
-| <code>readFromSessionUrl</code> | function | <code>src/integrations/sessionUrl.js:94</code> | Read and fetch a session payload URL from the viewer query string. |
+| <code>readFromSessionUrl</code> | function | <code>src/integrations/sessionUrl.js:118</code> | Read and fetch a session payload URL from the viewer query string. |
+| <code>utf8ByteLength</code> | function | <code>src/integrations/sessionUrl.js:74</code> | UTF-8 byte length of a string, without allocating an encoded copy. |
 | <code>UrlParamsData</code> | typedef | <code>src/integrations/urlParams.js:32</code> |  |
 | <code>UrlParamsResult</code> | typedef | <code>src/integrations/urlParams.js:39</code> |  |
 | <code>parsePositiveInt</code> | function | <code>src/integrations/urlParams.js:64</code> | Parse a positive integer from a string. |
 | <code>pick</code> | function | <code>src/integrations/urlParams.js:51</code> | Pick the first non-empty value among a list of candidate query keys. |
 | <code>readFromUrlParams</code> | function | <code>src/integrations/urlParams.js:83</code> | Reads common query params used by the demo and other hosts. |
-| <code>ODVEventHandler</code> | typedef | <code>src/integrations/viewerEvents.js:29</code> | Listener signature for ODV events. |
-| <code>OnceEventResult</code> | typedef | <code>src/integrations/viewerEvents.js:43</code> | Result returned by onceODVEvent when the event fires. |
-| <code>OnceOptions</code> | typedef | <code>src/integrations/viewerEvents.js:37</code> | Options for onceODVEvent. |
-| <code>clearTimeoutSafe</code> | function | <code>src/integrations/viewerEvents.js:187</code> | Clear a timer if it exists \(tiny helper\). |
-| <code>createCustomEvent</code> | function | <code>src/integrations/viewerEvents.js:56</code> | Create a CustomEvent with best-effort fallback for older browsers. |
-| <code>emitODVEvent</code> | function | <code>src/integrations/viewerEvents.js:79</code> | Emit a namespaced OpenDocViewer event with an optional detail payload. |
-| <code>onODVEvent</code> | function | <code>src/integrations/viewerEvents.js:110</code> | Attach a listener for a given OpenDocViewer event. |
-| <code>onceODVEvent</code> | function | <code>src/integrations/viewerEvents.js:152</code> | Wait for a single occurrence of an event and resolve with { event, detail } . |
 | <code>LOG_LEVELS</code> | constant | <code>src/logging/systemLogger.js:44</code> | Valid log levels in ascending verbosity. |
 | <code>LogController</code> | class | <code>src/logging/systemLogger.js:243</code> | LogController — small facade around console + optional HTTP forwarding. |
 | <code>LogLevel</code> | typedef | <code>src/logging/systemLogger.js:41</code> |  |
@@ -897,23 +923,24 @@
 | <code>shouldEnableBackendLogging</code> | function | <code>src/logging/systemLogger.js:234</code> | Decide whether backend log forwarding may be enabled. |
 | <code>LogController#shouldLog</code> | member | <code>src/logging/systemLogger.js:363</code> | Internal: should this level be logged at all \(console or backend\)? |
 | <code>LogController#warn</code> | member | <code>src/logging/systemLogger.js:462</code> |  |
-| <code>BootContext</code> | typedef | <code>src/logging/userLogger.js:37</code> |  |
-| <code>PrintLogPayload</code> | typedef | <code>src/logging/userLogger.js:43</code> |  |
-| <code>UserIdentity</code> | typedef | <code>src/logging/userLogger.js:31</code> |  |
-| <code>__DEV__</code> | constant | <code>src/logging/userLogger.js:61</code> | True when running in dev \(for debug logging only\). |
-| <code>UserLogController#_captureCookieFingerprint</code> | function | <code>src/logging/userLogger.js:170</code> | Internal: hash document.cookie once \(non-blocking\). |
-| <code>abToBase64</code> | function | <code>src/logging/userLogger.js:112</code> | Base64 from ArrayBuffer \(for cookie fingerprint\). |
-| <code>debug</code> | function | <code>src/logging/userLogger.js:64</code> | Dev-only logger. |
-| <code>getRuntimeConfig</code> | function | <code>src/logging/userLogger.js:73</code> | Safely read runtime config from window. |
-| <code>UserLogController#initContext</code> | function | <code>src/logging/userLogger.js:162</code> | Initialize context near iframe/viewer creation. |
-| <code>isSameOrigin</code> | function | <code>src/logging/userLogger.js:93</code> | Determine if the target URL is same-origin with current document. |
-| <code>UserLogController#setUserResolver</code> | function | <code>src/logging/userLogger.js:144</code> | Optional identity resolver supplied by host app. |
-| <code>UserLogController#setViewerVersion</code> | function | <code>src/logging/userLogger.js:152</code> | Optional viewer version to add in meta.viewerVersion. |
-| <code>sha256Base64</code> | function | <code>src/logging/userLogger.js:122</code> | Async SHA-256 of a string → &amp;quot;sha256- &amp;quot; \(or null\). |
-| <code>UserLogController#submitPrint</code> | function | <code>src/logging/userLogger.js:191</code> | Submit a &amp;quot;print&amp;quot; user-log event. |
-| <code>toAbsoluteUrl</code> | function | <code>src/logging/userLogger.js:84</code> | Make absolute using document.baseURI when available. |
-| <code>tzOffset</code> | function | <code>src/logging/userLogger.js:102</code> | Return timezone offset as &amp;quot;+HH:MM&amp;quot; or &amp;quot;-HH:MM&amp;quot;. |
-| <code>userLog</code> | constant | <code>src/logging/userLogger.js:309</code> | Export singleton instance. |
+| <code>BootContext</code> | typedef | <code>src/logging/userLogger.js:42</code> |  |
+| <code>PrintLogPayload</code> | typedef | <code>src/logging/userLogger.js:48</code> |  |
+| <code>UserIdentity</code> | typedef | <code>src/logging/userLogger.js:36</code> |  |
+| <code>__DEV__</code> | constant | <code>src/logging/userLogger.js:68</code> | True when running in dev \(for debug logging only\). |
+| <code>UserLogController#_captureCookieFingerprint</code> | function | <code>src/logging/userLogger.js:184</code> | Internal: hash document.cookie once \(non-blocking\). |
+| <code>abToBase64</code> | function | <code>src/logging/userLogger.js:126</code> | Base64 from ArrayBuffer \(for cookie fingerprint\). |
+| <code>debug</code> | function | <code>src/logging/userLogger.js:71</code> | Dev-only logger. |
+| <code>getRuntimeConfig</code> | function | <code>src/logging/userLogger.js:80</code> | Safely read runtime config from window. |
+| <code>UserLogController#initContext</code> | function | <code>src/logging/userLogger.js:176</code> | Initialize context near iframe/viewer creation. |
+| <code>isSameOrigin</code> | function | <code>src/logging/userLogger.js:100</code> | Determine if the target URL is same-origin with current document. |
+| <code>nonEmptyString</code> | function | <code>src/logging/userLogger.js:119</code> | Trimmed non-empty string, or null. |
+| <code>UserLogController#setUserResolver</code> | function | <code>src/logging/userLogger.js:158</code> | Optional identity resolver supplied by host app. |
+| <code>UserLogController#setViewerVersion</code> | function | <code>src/logging/userLogger.js:166</code> | Optional viewer version to add in meta.viewerVersion. |
+| <code>sha256Base64</code> | function | <code>src/logging/userLogger.js:136</code> | Async SHA-256 of a string → &amp;quot;sha256- &amp;quot; \(or null\). |
+| <code>UserLogController#submitPrint</code> | function | <code>src/logging/userLogger.js:205</code> | Submit a &amp;quot;print&amp;quot; user-log event. |
+| <code>toAbsoluteUrl</code> | function | <code>src/logging/userLogger.js:91</code> | Make absolute using document.baseURI when available. |
+| <code>tzOffset</code> | function | <code>src/logging/userLogger.js:109</code> | Return timezone offset as &amp;quot;+HH:MM&amp;quot; or &amp;quot;-HH:MM&amp;quot;. |
+| <code>userLog</code> | constant | <code>src/logging/userLogger.js:325</code> | Export singleton instance. |
 | <code>module.exports</code> | function | <code>src/manual-page/ManualPage.jsx:67</code> |  |
 | <code>readUrlFragment</code> | function | <code>src/manual-page/ManualPage.jsx:35</code> |  |
 | <code>syncUrlFragment</code> | function | <code>src/manual-page/ManualPage.jsx:50</code> | Put the section being read into the URL fragment without adding a history entry. |
@@ -1127,24 +1154,11 @@
 | <code>OCR_WINDOW_BEHIND</code> | constant | <code>src/ocr/window.js:18</code> | Pages queued before each focus page. |
 | <code>maxOcrWindowSize</code> | function | <code>src/ocr/window.js:27</code> |  |
 | <code>planOcrWindow</code> | function | <code>src/ocr/window.js:45</code> | Ordered page indexes to process: focus pages first, then the pages after them \(nearest first\), then the pages before them; with wholeDocument , then every remaining page, from the... |
-| <code>CreateBundleResult</code> | typedef | <code>src/schemas/portableBundle.js:82</code> | Result object for createPortableBundle |
 | <code>PORTABLE_BUNDLE_SCHEMA_VERSION</code> | constant | <code>src/schemas/portableBundle.js:29</code> | Schema version of this portable bundle definition. |
 | <code>PortableDocumentBundle</code> | typedef | <code>src/schemas/portableBundle.js:65</code> | A portable bundle groups a session and an array of document entries. |
 | <code>PortableDocumentEntry</code> | typedef | <code>src/schemas/portableBundle.js:53</code> | A single document entry containing one or more files. |
 | <code>PortableDocumentFile</code> | typedef | <code>src/schemas/portableBundle.js:39</code> | A single file reference inside a document. |
 | <code>PortableSession</code> | typedef | <code>src/schemas/portableBundle.js:31</code> | Session context for a bundle. |
-| <code>ValidateReport</code> | typedef | <code>src/schemas/portableBundle.js:74</code> | Validation report for a bundle. |
-| <code>createPortableBundle</code> | function | <code>src/schemas/portableBundle.js:343</code> | Convenience constructor: normalize → \(optionally validate\) → freeze. |
-| <code>extFromString</code> | function | <code>src/schemas/portableBundle.js:107</code> | Extract lowercase file extension from a string \(best-effort\). |
-| <code>freezePortableBundle</code> | function | <code>src/schemas/portableBundle.js:326</code> | Create a shallow, immutable copy of a normalized bundle \(Object.freeze tree\). |
-| <code>normalizeDocumentEntry</code> | function | <code>src/schemas/portableBundle.js:225</code> | Normalize a single document entry. |
-| <code>normalizeDocumentFile</code> | function | <code>src/schemas/portableBundle.js:197</code> | Normalize a file entry. |
-| <code>normalizeMetadataAliasDetails</code> | function | <code>src/schemas/portableBundle.js:150</code> | Preserve a richer semantic alias object map without trying to deeply validate every property. |
-| <code>normalizeMetadataAliases</code> | function | <code>src/schemas/portableBundle.js:126</code> | Normalize an alias-based metadata object to a predictable string map. |
-| <code>normalizeMetadataIndex</code> | function | <code>src/schemas/portableBundle.js:172</code> | Preserve a raw metadata lookup map without imposing a rigid record schema here. |
-| <code>normalizePortableBundle</code> | function | <code>src/schemas/portableBundle.js:253</code> | Normalize a bundle to a predictable, minimally validated shape: Ensures session.id and stringifies known fields. |
-| <code>toObject</code> | function | <code>src/schemas/portableBundle.js:98</code> | Coerce unknown input to a plain object \(or return null\). |
-| <code>validatePortableBundle</code> | function | <code>src/schemas/portableBundle.js:283</code> | Validate a normalized \(or raw\) bundle. |
 | <code>BumpPostZoom</code> | typedef | <code>src/types/jsdoc-types.js:85</code> | Step the per-pane post-zoom by ±0.1. |
 | <code>DocumentRenderHandle</code> | typedef | <code>src/types/jsdoc-types.js:67</code> | Minimal imperative handle exposed by the page renderer for printing. |
 | <code>FallbackRenderer</code> | typedef | <code>src/types/jsdoc-types.js:58</code> | Render function signature for ErrorBoundary fallbacks. |
@@ -1400,6 +1414,13 @@
 | <code>measureWordWidth</code> | function | <code>src/utils/ocrTextLayout.js:62</code> | Width of text at fontSize px, measured with a canvas context when one exists \(jsdom and print have none, then an estimate keeps the layout consistent\). |
 | <code>ocrReadingOrder</code> | function | <code>src/utils/ocrTextLayout.js:136</code> | The words of an outcome in reading order, grouped into lines by the rule the text layer lays them out with: a word whose box starts below the vertical middle of the previous word&#39;... |
 | <code>ocrSelectionText</code> | function | <code>src/utils/ocrTextLayout.js:267</code> | The plain text of a selection inside the layer as it reads on the page: the words of a line separated by spaces \(the DOM joins them with no-break spaces\) and the lines by newlines... |
+| <code>OLDER_NAMES</code> | constant | <code>src/utils/olderConfigNameWarnings.js:32</code> | Each entry answers whether its older name is set to a value that the reader accepts, which is exactly when the older name decides the result. |
+| <code>OlderConfigName</code> | typedef | <code>src/utils/olderConfigNameWarnings.js:17</code> |  |
+| <code>findOlderConfigNamesInUse</code> | function | <code>src/utils/olderConfigNameWarnings.js:68</code> | The older names that are in use in a runtime configuration. |
+| <code>formatOlderConfigNameWarning</code> | function | <code>src/utils/olderConfigNameWarnings.js:102</code> |  |
+| <code>reported</code> | constant | <code>src/utils/olderConfigNameWarnings.js:108</code> | Older names already reported during this page load. |
+| <code>resetOlderConfigNameWarnings</code> | function | <code>src/utils/olderConfigNameWarnings.js:140</code> | For tests: forget what has been reported, as a new page load would. |
+| <code>warnAboutOlderConfigNames</code> | function | <code>src/utils/olderConfigNameWarnings.js:117</code> | Warn in the browser console about each older name in use, once per page load and per name. |
 | <code>OdvThemeMode</code> | typedef | <code>src/utils/ompThemePreference.js:42</code> | ODV theme mode \(the shared modes plus the viewer-specific Normal variant\). |
 | <code>OdvThemeName</code> | typedef | <code>src/utils/ompThemePreference.js:47</code> | Concrete ODV palette. |
 | <code>SharedThemeMode</code> | typedef | <code>src/utils/ompThemePreference.js:37</code> | Shared OMP theme mode. |
@@ -1422,12 +1443,12 @@
 | <code>sharedThemeRevisionTime</code> | function | <code>src/utils/ompThemePreference.js:81</code> | Read the base-36 creation time, matching the OMP preference ordering contract. |
 | <code>writeSharedToCookie</code> | function | <code>src/utils/ompThemePreference.js:150</code> |  |
 | <code>writeSharedToStorage</code> | function | <code>src/utils/ompThemePreference.js:169</code> |  |
-| <code>PageAssetDescriptor</code> | typedef | <code>src/utils/pageAssetRenderer.js:36</code> |  |
-| <code>PageAssetRendererOptions</code> | typedef | <code>src/utils/pageAssetRenderer.js:30</code> |  |
-| <code>RenderPageAssetOptions</code> | typedef | <code>src/utils/pageAssetRenderer.js:44</code> |  |
-| <code>PageAssetRenderer#renderPageAsset</code> | function | <code>src/utils/pageAssetRenderer.js:669</code> | Render one requested page asset. |
-| <code>PageAssetRenderer#renderPdfPageAssetBatch</code> | function | <code>src/utils/pageAssetRenderer.js:541</code> | Render a PDF page set through the PDF worker pool as one partitioned batch. |
-| <code>PageAssetRenderer#resolvePdfPageResolution</code> | function | <code>src/utils/pageAssetRenderer.js:791</code> | Read page geometry only when a persisted asset needs an exact resolution identity. |
+| <code>PageAssetDescriptor</code> | typedef | <code>src/utils/pageAssetRenderer.js:38</code> |  |
+| <code>PageAssetRendererOptions</code> | typedef | <code>src/utils/pageAssetRenderer.js:32</code> |  |
+| <code>RenderPageAssetOptions</code> | typedef | <code>src/utils/pageAssetRenderer.js:46</code> |  |
+| <code>PageAssetRenderer#renderPageAsset</code> | function | <code>src/utils/pageAssetRenderer.js:671</code> | Render one requested page asset. |
+| <code>PageAssetRenderer#renderPdfPageAssetBatch</code> | function | <code>src/utils/pageAssetRenderer.js:543</code> | Render a PDF page set through the PDF worker pool as one partitioned batch. |
+| <code>PageAssetRenderer#resolvePdfPageResolution</code> | function | <code>src/utils/pageAssetRenderer.js:793</code> | Read page geometry only when a persisted asset needs an exact resolution identity. |
 | <code>BlobLruCache</code> | class | <code>src/utils/pageAssetStore.js:172</code> |  |
 | <code>PageAssetStore#PageAssetStore</code> | class | <code>src/utils/pageAssetStore.js:221</code> |  |
 | <code>PageAssetStoreStats</code> | typedef | <code>src/utils/pageAssetStore.js:121</code> |  |
@@ -1512,26 +1533,28 @@
 | <code>selectBenchmarkPages</code> | function | <code>src/utils/pdfBenchmark.js:796</code> |  |
 | <code>summarizeBenchmarkTiming</code> | function | <code>src/utils/pdfBenchmark.js:672</code> |  |
 | <code>summarizeTaskDurations</code> | function | <code>src/utils/pdfBenchmark.js:628</code> |  |
+| <code>normalizePdfLayoutValue</code> | function | <code>src/utils/pdfLayout.js:3</code> | Normalize a non-negative PDF layout setting without treating numeric zero as missing. |
 | <code>PdfPageWorkerEntry</code> | typedef | <code>src/utils/pdfPageWorkerPool.js:50</code> |  |
 | <code>PdfPageWorkerPool#PdfPageWorkerPool</code> | class | <code>src/utils/pdfPageWorkerPool.js:66</code> |  |
 | <code>PdfPageWorkerPoolOptions</code> | typedef | <code>src/utils/pdfPageWorkerPool.js:43</code> |  |
-| <code>buildSelectedOptionDetails</code> | function | <code>src/utils/pdfPrebuildPlan.js:138</code> |  |
-| <code>clampInteger</code> | function | <code>src/utils/pdfPrebuildPlan.js:28</code> |  |
-| <code>createPdfPrebuildAllPagesVariants</code> | function | <code>src/utils/pdfPrebuildPlan.js:289</code> | Create all cacheable all-pages PDF variant descriptors for a runtime config. |
-| <code>createPdfPrebuildVariantKey</code> | function | <code>src/utils/pdfPrebuildPlan.js:334</code> |  |
-| <code>createPrintFormatVariant</code> | function | <code>src/utils/pdfPrebuildPlan.js:214</code> |  |
-| <code>createReasonVariants</code> | function | <code>src/utils/pdfPrebuildPlan.js:189</code> |  |
-| <code>getActiveLanguageKey</code> | function | <code>src/utils/pdfPrebuildPlan.js:254</code> |  |
-| <code>getPdfPrebuildAllPagesLanguageDependency</code> | function | <code>src/utils/pdfPrebuildPlan.js:269</code> | Return the language dependency that should invalidate an all-pages prebuild run. |
-| <code>getReasonOptions</code> | function | <code>src/utils/pdfPrebuildPlan.js:178</code> |  |
-| <code>isNonEmptyObject</code> | function | <code>src/utils/pdfPrebuildPlan.js:38</code> |  |
-| <code>normalizeCopyMarkerStates</code> | function | <code>src/utils/pdfPrebuildPlan.js:64</code> |  |
-| <code>normalizeLanguageList</code> | function | <code>src/utils/pdfPrebuildPlan.js:46</code> |  |
-| <code>normalizePdfOrientationMode</code> | function | <code>src/utils/pdfPrebuildPlan.js:88</code> |  |
-| <code>normalizePdfPrebuildAllPagesConfig</code> | function | <code>src/utils/pdfPrebuildPlan.js:156</code> |  |
-| <code>resolveOptionPrintText</code> | function | <code>src/utils/pdfPrebuildPlan.js:116</code> | Resolve the string that should be used on physical print output for an option. |
-| <code>resolvePrebuildPdfOrientation</code> | function | <code>src/utils/pdfPrebuildPlan.js:98</code> |  |
-| <code>resolveVariantLanguageContext</code> | function | <code>src/utils/pdfPrebuildPlan.js:245</code> |  |
+| <code>buildSelectedOptionDetails</code> | function | <code>src/utils/pdfPrebuildPlan.js:139</code> |  |
+| <code>clampInteger</code> | function | <code>src/utils/pdfPrebuildPlan.js:29</code> |  |
+| <code>createPdfPrebuildAllPagesVariants</code> | function | <code>src/utils/pdfPrebuildPlan.js:307</code> | Create all cacheable all-pages PDF variant descriptors for a runtime config. |
+| <code>createPdfPrebuildVariantKey</code> | function | <code>src/utils/pdfPrebuildPlan.js:353</code> |  |
+| <code>createPrintFormatVariant</code> | function | <code>src/utils/pdfPrebuildPlan.js:232</code> |  |
+| <code>createReasonVariants</code> | function | <code>src/utils/pdfPrebuildPlan.js:203</code> |  |
+| <code>getActiveLanguageKey</code> | function | <code>src/utils/pdfPrebuildPlan.js:272</code> |  |
+| <code>getPdfPrebuildAllPagesLanguageDependency</code> | function | <code>src/utils/pdfPrebuildPlan.js:287</code> | Return the language dependency that should invalidate an all-pages prebuild run. |
+| <code>getReasonOptions</code> | function | <code>src/utils/pdfPrebuildPlan.js:179</code> |  |
+| <code>isNonEmptyObject</code> | function | <code>src/utils/pdfPrebuildPlan.js:39</code> |  |
+| <code>isReasonFieldShown</code> | function | <code>src/utils/pdfPrebuildPlan.js:189</code> | Whether the print dialog shows the reason field; mirrors usePrintRangeConfig . |
+| <code>normalizeCopyMarkerStates</code> | function | <code>src/utils/pdfPrebuildPlan.js:65</code> |  |
+| <code>normalizeLanguageList</code> | function | <code>src/utils/pdfPrebuildPlan.js:47</code> |  |
+| <code>normalizePdfOrientationMode</code> | function | <code>src/utils/pdfPrebuildPlan.js:89</code> |  |
+| <code>normalizePdfPrebuildAllPagesConfig</code> | function | <code>src/utils/pdfPrebuildPlan.js:157</code> |  |
+| <code>resolveOptionPrintText</code> | function | <code>src/utils/pdfPrebuildPlan.js:117</code> | Resolve the string that should be used on physical print output for an option. |
+| <code>resolvePrebuildPdfOrientation</code> | function | <code>src/utils/pdfPrebuildPlan.js:99</code> |  |
+| <code>resolveVariantLanguageContext</code> | function | <code>src/utils/pdfPrebuildPlan.js:263</code> |  |
 | <code>canReuseGeneratedPdfPrint</code> | function | <code>src/utils/pdfPrintCacheKey.js:101</code> | Active-page PDF output is based on the current rendered surface, including transient client-side edits such as rotation, brightness and contrast. |
 | <code>getPdfPrintCacheKey</code> | function | <code>src/utils/pdfPrintCacheKey.js:75</code> | Compare the content-affecting print settings that determine whether an existing generated PDF can be reused. |
 | <code>getPdfPrintCacheKeyOptions</code> | function | <code>src/utils/pdfPrintCacheKey.js:31</code> |  |
@@ -1743,107 +1766,107 @@
 | <code>ParseResult</code> | typedef | <code>src/utils/printParse.js:15</code> | Result of parsing a custom pages string. |
 | <code>parsePrintSequence</code> | function | <code>src/utils/printParse.js:48</code> | Parse &amp;quot;Custom pages&amp;quot; into a sequence. |
 | <code>tr</code> | function | <code>src/utils/printParse.js:30</code> | Tiny helper to translate with safe fallback. |
-| <code>PdfPrintOptions</code> | typedef | <code>src/utils/printPdf.js:158</code> |  |
-| <code>PdfRichColumn</code> | typedef | <code>src/utils/printPdf.js:201</code> |  |
-| <code>PdfRichLine</code> | typedef | <code>src/utils/printPdf.js:209</code> |  |
-| <code>PdfRichSegment</code> | typedef | <code>src/utils/printPdf.js:193</code> |  |
-| <code>PdfTemplateCssStyleRule</code> | typedef | <code>src/utils/printPdf.js:187</code> |  |
-| <code>PdfTextStyleHints</code> | typedef | <code>src/utils/printPdf.js:177</code> |  |
-| <code>addImageWithFallback</code> | function | <code>src/utils/printPdf.js:993</code> |  |
-| <code>appendRichColumnLine</code> | function | <code>src/utils/printPdf.js:593</code> |  |
-| <code>appendRichLineBreak</code> | function | <code>src/utils/printPdf.js:554</code> |  |
-| <code>appendRichText</code> | function | <code>src/utils/printPdf.js:564</code> |  |
-| <code>asNumber</code> | function | <code>src/utils/printPdf.js:218</code> | Convert a value to a finite number for PDF layout calculations. |
-| <code>blobToDataUrl</code> | function | <code>src/utils/printPdf.js:2389</code> |  |
-| <code>buildPdfPagePlans</code> | function | <code>src/utils/printPdf.js:1600</code> |  |
-| <code>calculateOverlayReserve</code> | function | <code>src/utils/printPdf.js:1646</code> |  |
-| <code>canvasToBlob</code> | function | <code>src/utils/printPdf.js:2374</code> |  |
-| <code>canvasToPngDataUrl</code> | function | <code>src/utils/printPdf.js:2360</code> | Convert a canvas to a PNG data URL without using synchronous toDataURL when browser support for async toBlob is available. |
-| <code>clamp01</code> | function | <code>src/utils/printPdf.js:243</code> | Clamp a numeric value to the inclusive 0..1 range. |
-| <code>collectPrintablePdfSources</code> | function | <code>src/utils/printPdf.js:2245</code> | Collect printable page image URLs without creating or opening a PDF. |
-| <code>collectedSourceLeases</code> | constant | <code>src/utils/printPdf.js:2234</code> | Exact lease entries behind each array returned by collectPrintablePdfSources, so releasePrintablePdfSources releases what was leased rather than one per occurrence. |
-| <code>createAbortError</code> | function | <code>src/utils/printPdf.js:250</code> |  |
-| <code>createDefaultSegment</code> | function | <code>src/utils/printPdf.js:1184</code> |  |
-| <code>createJsPdfOptions</code> | function | <code>src/utils/printPdf.js:1081</code> |  |
-| <code>createPdfFromDocumentHandle</code> | function | <code>src/utils/printPdf.js:2285</code> |  |
-| <code>createPrintPdfBlob</code> | function | <code>src/utils/printPdf.js:1704</code> | Build a PDF blob from page image URLs and print metadata. |
-| <code>createPrintPdfBlobInWorker</code> | function | <code>src/utils/printPdf.js:1621</code> |  |
-| <code>describeImageSource</code> | function | <code>src/utils/printPdf.js:798</code> |  |
-| <code>describeModuleExports</code> | function | <code>src/utils/printPdf.js:1671</code> |  |
-| <code>describeValueType</code> | function | <code>src/utils/printPdf.js:824</code> |  |
-| <code>downloadPdfBlob</code> | function | <code>src/utils/printPdf.js:1856</code> |  |
-| <code>drawRichSegments</code> | function | <code>src/utils/printPdf.js:1400</code> |  |
-| <code>drawRichTextBlock</code> | function | <code>src/utils/printPdf.js:1423</code> |  |
-| <code>drawWatermark</code> | function | <code>src/utils/printPdf.js:1455</code> |  |
-| <code>drawWatermarkImage</code> | function | <code>src/utils/printPdf.js:1502</code> | Draw a prepared transparent PNG watermark, scaled to page width and centered. |
-| <code>elementMatchesClassSelectorPart</code> | function | <code>src/utils/printPdf.js:360</code> |  |
-| <code>ensureWritableRichLine</code> | function | <code>src/utils/printPdf.js:546</code> |  |
-| <code>escapeRegExp</code> | function | <code>src/utils/printPdf.js:30</code> | Escape regular-expression metacharacters in literal text. |
-| <code>executeOutputAction</code> | function | <code>src/utils/printPdf.js:2077</code> |  |
-| <code>fitRichSegmentTextToWidth</code> | function | <code>src/utils/printPdf.js:1195</code> |  |
-| <code>fitRichSegmentsToWidth</code> | function | <code>src/utils/printPdf.js:1225</code> |  |
-| <code>flattenRichLines</code> | function | <code>src/utils/printPdf.js:613</code> |  |
-| <code>getElementStyleHints</code> | function | <code>src/utils/printPdf.js:421</code> |  |
-| <code>getImageDimension</code> | function | <code>src/utils/printPdf.js:965</code> |  |
-| <code>getRichLineColumns</code> | function | <code>src/utils/printPdf.js:1114</code> |  |
-| <code>getSelectedPrintableDataUrls</code> | function | <code>src/utils/printPdf.js:2167</code> | Read printable page image URLs from the document renderer. |
-| <code>handlePdfCompareCurtain</code> | function | <code>src/utils/printPdf.js:2527</code> | Generate/print/download a ONE-page PDF of the curtain view: page A with page B clipped at the current border, each page with its own compare transform. |
-| <code>handlePdfCompareOverlay</code> | function | <code>src/utils/printPdf.js:2513</code> | Generate/print/download a ONE-page PDF of the overlay view: page B over page A \(or swapped\) at the current opacity, each page with its own compare transform. |
-| <code>handlePdfCurrent</code> | function | <code>src/utils/printPdf.js:2410</code> | Generate/print/download a PDF from the currently rendered active page surface. |
-| <code>handlePdfCurrentComparison</code> | function | <code>src/utils/printPdf.js:2441</code> | Generate/print/download a two-page PDF from the currently rendered comparison surfaces. |
-| <code>handlePdfOutput</code> | function | <code>src/utils/printPdf.js:2302</code> |  |
-| <code>htmlToRichLines</code> | function | <code>src/utils/printPdf.js:637</code> | Parse a small, print-template-oriented HTML subset into styled text lines for jsPDF. |
-| <code>imageElementUrl</code> | function | <code>src/utils/printPdf.js:2349</code> | Read the URL an surface currently displays \(empty for any other element\). |
-| <code>imageExtensionFromUrl</code> | function | <code>src/utils/printPdf.js:902</code> |  |
-| <code>imageFormatAttempts</code> | function | <code>src/utils/printPdf.js:976</code> |  |
-| <code>imageToPngDataUrl</code> | function | <code>src/utils/printPdf.js:923</code> | Convert image to a JPEG data URL only as a last-resort fallback when jsPDF cannot consume the original image element/format directly. |
-| <code>inferImageFormat</code> | function | <code>src/utils/printPdf.js:880</code> |  |
-| <code>isBlockNode</code> | function | <code>src/utils/printPdf.js:437</code> | Check whether an HTML node name should be treated as block-level in PDF text flow. |
-| <code>isBoldFontWeight</code> | function | <code>src/utils/printPdf.js:294</code> | Check whether a CSS font-weight value should be treated as bold text. |
-| <code>isLeasableSurfaceUrl</code> | function | <code>src/utils/printPdf.js:2110</code> | Only blob URLs can be revoked mid-print by the provider; data: and remote URLs need no lease \(releasing them is a no-op\). |
-| <code>layoutRichColumns</code> | function | <code>src/utils/printPdf.js:1269</code> |  |
-| <code>leaseSurfaceBlobUrls</code> | function | <code>src/utils/printPdf.js:2124</code> | Lease the live blob URL behind an already-rendered surface for the duration of a PDF flow. |
-| <code>loadImage</code> | function | <code>src/utils/printPdf.js:748</code> |  |
-| <code>loadImagesConcurrently</code> | function | <code>src/utils/printPdf.js:839</code> |  |
-| <code>loadJsPdf</code> | function | <code>src/utils/printPdf.js:1684</code> | Dynamically load the jsPDF constructor used by generated PDF output. |
-| <code>makeTokenContext</code> | function | <code>src/utils/printPdf.js:1536</code> |  |
-| <code>measureRichSegment</code> | function | <code>src/utils/printPdf.js:1163</code> |  |
-| <code>measureRichSegments</code> | function | <code>src/utils/printPdf.js:1175</code> |  |
-| <code>normalizePdfOrientationMode</code> | function | <code>src/utils/printPdf.js:1040</code> |  |
-| <code>normalizeQuality</code> | function | <code>src/utils/printPdf.js:230</code> | Normalize canvas/PDF image quality to the browser-supported 0..1 range. |
-| <code>normalizeRichLine</code> | function | <code>src/utils/printPdf.js:1138</code> |  |
-| <code>normalizeRichSegments</code> | function | <code>src/utils/printPdf.js:1097</code> |  |
-| <code>pageFormatForImage</code> | function | <code>src/utils/printPdf.js:1069</code> |  |
-| <code>pageNumberToIndex</code> | function | <code>src/utils/printPdf.js:2272</code> | Convert a 1-based printable page number into the matching 0-based data URL index. |
-| <code>parseTemplateCssClassSelector</code> | function | <code>src/utils/printPdf.js:336</code> | Parse a supported class-only selector into descendant selector parts. |
-| <code>parseTemplateCssStyleRules</code> | function | <code>src/utils/printPdf.js:399</code> | Parse only the small CSS subset used by trusted print header/footer templates. |
-| <code>parseTextStyleDeclarations</code> | function | <code>src/utils/printPdf.js:306</code> |  |
-| <code>pdfComposedComparison</code> | function | <code>src/utils/printPdf.js:2482</code> | Shared body of the overlay and curtain PDF output: the compared pages composed onto ONE page, then generated/printed/downloaded like the single active page. |
-| <code>printPdfBlob</code> | function | <code>src/utils/printPdf.js:1876</code> | Print a generated PDF through a hidden iframe. |
-| <code>printableSourceFromElement</code> | function | <code>src/utils/printPdf.js:2323</code> | Extract a safe printable image source from an already-rendered canvas or image element. |
-| <code>releasePrintableDataUrls</code> | function | <code>src/utils/printPdf.js:2146</code> | Release print URL leases held through the document renderer. |
-| <code>releasePrintablePdfSources</code> | function | <code>src/utils/printPdf.js:2259</code> | Release URL leases previously acquired through collectPrintablePdfSources when the consumer is done with them \(prebuild/benchmark keep the URLs only while rendering\). |
-| <code>renderOverlayRichLines</code> | function | <code>src/utils/printPdf.js:732</code> |  |
-| <code>reportProgress</code> | function | <code>src/utils/printPdf.js:1551</code> |  |
-| <code>resolveJsPdfConstructor</code> | function | <code>src/utils/printPdf.js:1658</code> | Resolve jsPDF from common ESM/CJS export shapes used by bundlers. |
-| <code>resolvePdfImageLoadConcurrency</code> | function | <code>src/utils/printPdf.js:1564</code> |  |
-| <code>resolvePdfOrientationMode</code> | function | <code>src/utils/printPdf.js:1050</code> |  |
-| <code>resolvePdfWorkerPlan</code> | function | <code>src/utils/printPdf.js:1577</code> | Resolve the generated-PDF worker plan. |
-| <code>richLineHasText</code> | function | <code>src/utils/printPdf.js:515</code> |  |
-| <code>richLineIsEmpty</code> | function | <code>src/utils/printPdf.js:523</code> |  |
-| <code>sanitizeDiagnosticText</code> | function | <code>src/utils/printPdf.js:811</code> |  |
-| <code>sanitizeParsedTemplateDocument</code> | function | <code>src/utils/printPdf.js:500</code> | Keep only the attributes used by the generated-PDF rich text subset. |
-| <code>sanitizeTemplateHtmlForPdf</code> | function | <code>src/utils/printPdf.js:486</code> | Keep generated-PDF print templates inside the small rich-text subset consumed below. |
-| <code>segmentFontStyle</code> | function | <code>src/utils/printPdf.js:1150</code> |  |
-| <code>selectPageContexts</code> | function | <code>src/utils/printPdf.js:2067</code> |  |
-| <code>stripDisallowedTemplateElements</code> | function | <code>src/utils/printPdf.js:449</code> | Remove elements that are never meaningful in generated PDF header/footer text. |
-| <code>swapRichLineBufferContents</code> | function | <code>src/utils/printPdf.js:535</code> | Replace one line buffer with another while preserving the original array object. |
-| <code>templateCssRuleMatchesElement</code> | function | <code>src/utils/printPdf.js:369</code> |  |
-| <code>throwIfAborted</code> | function | <code>src/utils/printPdf.js:267</code> | Stop PDF generation as soon as the caller cancels the operation. |
-| <code>htmlToRichLines~walk</code> | function | <code>src/utils/printPdf.js:652</code> |  |
-| <code>warnDeprecatedPrintableUrlExportAlias</code> | function | <code>src/utils/printPdf.js:2093</code> |  |
-| <code>wrapRichLines</code> | function | <code>src/utils/printPdf.js:1350</code> |  |
-| <code>yieldToBrowser</code> | function | <code>src/utils/printPdf.js:277</code> | Yield one browser paint opportunity so progress updates become visible before expensive synchronous jsPDF operations run on the main thread. |
+| <code>PdfPrintOptions</code> | typedef | <code>src/utils/printPdf.js:159</code> |  |
+| <code>PdfRichColumn</code> | typedef | <code>src/utils/printPdf.js:202</code> |  |
+| <code>PdfRichLine</code> | typedef | <code>src/utils/printPdf.js:210</code> |  |
+| <code>PdfRichSegment</code> | typedef | <code>src/utils/printPdf.js:194</code> |  |
+| <code>PdfTemplateCssStyleRule</code> | typedef | <code>src/utils/printPdf.js:188</code> |  |
+| <code>PdfTextStyleHints</code> | typedef | <code>src/utils/printPdf.js:178</code> |  |
+| <code>addImageWithFallback</code> | function | <code>src/utils/printPdf.js:994</code> |  |
+| <code>appendRichColumnLine</code> | function | <code>src/utils/printPdf.js:594</code> |  |
+| <code>appendRichLineBreak</code> | function | <code>src/utils/printPdf.js:555</code> |  |
+| <code>appendRichText</code> | function | <code>src/utils/printPdf.js:565</code> |  |
+| <code>asNumber</code> | function | <code>src/utils/printPdf.js:219</code> | Convert a value to a finite number for PDF layout calculations. |
+| <code>blobToDataUrl</code> | function | <code>src/utils/printPdf.js:2390</code> |  |
+| <code>buildPdfPagePlans</code> | function | <code>src/utils/printPdf.js:1601</code> |  |
+| <code>calculateOverlayReserve</code> | function | <code>src/utils/printPdf.js:1647</code> |  |
+| <code>canvasToBlob</code> | function | <code>src/utils/printPdf.js:2375</code> |  |
+| <code>canvasToPngDataUrl</code> | function | <code>src/utils/printPdf.js:2361</code> | Convert a canvas to a PNG data URL without using synchronous toDataURL when browser support for async toBlob is available. |
+| <code>clamp01</code> | function | <code>src/utils/printPdf.js:244</code> | Clamp a numeric value to the inclusive 0..1 range. |
+| <code>collectPrintablePdfSources</code> | function | <code>src/utils/printPdf.js:2246</code> | Collect printable page image URLs without creating or opening a PDF. |
+| <code>collectedSourceLeases</code> | constant | <code>src/utils/printPdf.js:2235</code> | Exact lease entries behind each array returned by collectPrintablePdfSources, so releasePrintablePdfSources releases what was leased rather than one per occurrence. |
+| <code>createAbortError</code> | function | <code>src/utils/printPdf.js:251</code> |  |
+| <code>createDefaultSegment</code> | function | <code>src/utils/printPdf.js:1185</code> |  |
+| <code>createJsPdfOptions</code> | function | <code>src/utils/printPdf.js:1082</code> |  |
+| <code>createPdfFromDocumentHandle</code> | function | <code>src/utils/printPdf.js:2286</code> |  |
+| <code>createPrintPdfBlob</code> | function | <code>src/utils/printPdf.js:1705</code> | Build a PDF blob from page image URLs and print metadata. |
+| <code>createPrintPdfBlobInWorker</code> | function | <code>src/utils/printPdf.js:1622</code> |  |
+| <code>describeImageSource</code> | function | <code>src/utils/printPdf.js:799</code> |  |
+| <code>describeModuleExports</code> | function | <code>src/utils/printPdf.js:1672</code> |  |
+| <code>describeValueType</code> | function | <code>src/utils/printPdf.js:825</code> |  |
+| <code>downloadPdfBlob</code> | function | <code>src/utils/printPdf.js:1857</code> |  |
+| <code>drawRichSegments</code> | function | <code>src/utils/printPdf.js:1401</code> |  |
+| <code>drawRichTextBlock</code> | function | <code>src/utils/printPdf.js:1424</code> |  |
+| <code>drawWatermark</code> | function | <code>src/utils/printPdf.js:1456</code> |  |
+| <code>drawWatermarkImage</code> | function | <code>src/utils/printPdf.js:1503</code> | Draw a prepared transparent PNG watermark, scaled to page width and centered. |
+| <code>elementMatchesClassSelectorPart</code> | function | <code>src/utils/printPdf.js:361</code> |  |
+| <code>ensureWritableRichLine</code> | function | <code>src/utils/printPdf.js:547</code> |  |
+| <code>escapeRegExp</code> | function | <code>src/utils/printPdf.js:31</code> | Escape regular-expression metacharacters in literal text. |
+| <code>executeOutputAction</code> | function | <code>src/utils/printPdf.js:2078</code> |  |
+| <code>fitRichSegmentTextToWidth</code> | function | <code>src/utils/printPdf.js:1196</code> |  |
+| <code>fitRichSegmentsToWidth</code> | function | <code>src/utils/printPdf.js:1226</code> |  |
+| <code>flattenRichLines</code> | function | <code>src/utils/printPdf.js:614</code> |  |
+| <code>getElementStyleHints</code> | function | <code>src/utils/printPdf.js:422</code> |  |
+| <code>getImageDimension</code> | function | <code>src/utils/printPdf.js:966</code> |  |
+| <code>getRichLineColumns</code> | function | <code>src/utils/printPdf.js:1115</code> |  |
+| <code>getSelectedPrintableDataUrls</code> | function | <code>src/utils/printPdf.js:2168</code> | Read printable page image URLs from the document renderer. |
+| <code>handlePdfCompareCurtain</code> | function | <code>src/utils/printPdf.js:2528</code> | Generate/print/download a ONE-page PDF of the curtain view: page A with page B clipped at the current border, each page with its own compare transform. |
+| <code>handlePdfCompareOverlay</code> | function | <code>src/utils/printPdf.js:2514</code> | Generate/print/download a ONE-page PDF of the overlay view: page B over page A \(or swapped\) at the current opacity, each page with its own compare transform. |
+| <code>handlePdfCurrent</code> | function | <code>src/utils/printPdf.js:2411</code> | Generate/print/download a PDF from the currently rendered active page surface. |
+| <code>handlePdfCurrentComparison</code> | function | <code>src/utils/printPdf.js:2442</code> | Generate/print/download a two-page PDF from the currently rendered comparison surfaces. |
+| <code>handlePdfOutput</code> | function | <code>src/utils/printPdf.js:2303</code> |  |
+| <code>htmlToRichLines</code> | function | <code>src/utils/printPdf.js:638</code> | Parse a small, print-template-oriented HTML subset into styled text lines for jsPDF. |
+| <code>imageElementUrl</code> | function | <code>src/utils/printPdf.js:2350</code> | Read the URL an surface currently displays \(empty for any other element\). |
+| <code>imageExtensionFromUrl</code> | function | <code>src/utils/printPdf.js:903</code> |  |
+| <code>imageFormatAttempts</code> | function | <code>src/utils/printPdf.js:977</code> |  |
+| <code>imageToPngDataUrl</code> | function | <code>src/utils/printPdf.js:924</code> | Convert image to a JPEG data URL only as a last-resort fallback when jsPDF cannot consume the original image element/format directly. |
+| <code>inferImageFormat</code> | function | <code>src/utils/printPdf.js:881</code> |  |
+| <code>isBlockNode</code> | function | <code>src/utils/printPdf.js:438</code> | Check whether an HTML node name should be treated as block-level in PDF text flow. |
+| <code>isBoldFontWeight</code> | function | <code>src/utils/printPdf.js:295</code> | Check whether a CSS font-weight value should be treated as bold text. |
+| <code>isLeasableSurfaceUrl</code> | function | <code>src/utils/printPdf.js:2111</code> | Only blob URLs can be revoked mid-print by the provider; data: and remote URLs need no lease \(releasing them is a no-op\). |
+| <code>layoutRichColumns</code> | function | <code>src/utils/printPdf.js:1270</code> |  |
+| <code>leaseSurfaceBlobUrls</code> | function | <code>src/utils/printPdf.js:2125</code> | Lease the live blob URL behind an already-rendered surface for the duration of a PDF flow. |
+| <code>loadImage</code> | function | <code>src/utils/printPdf.js:749</code> |  |
+| <code>loadImagesConcurrently</code> | function | <code>src/utils/printPdf.js:840</code> |  |
+| <code>loadJsPdf</code> | function | <code>src/utils/printPdf.js:1685</code> | Dynamically load the jsPDF constructor used by generated PDF output. |
+| <code>makeTokenContext</code> | function | <code>src/utils/printPdf.js:1537</code> |  |
+| <code>measureRichSegment</code> | function | <code>src/utils/printPdf.js:1164</code> |  |
+| <code>measureRichSegments</code> | function | <code>src/utils/printPdf.js:1176</code> |  |
+| <code>normalizePdfOrientationMode</code> | function | <code>src/utils/printPdf.js:1041</code> |  |
+| <code>normalizeQuality</code> | function | <code>src/utils/printPdf.js:231</code> | Normalize canvas/PDF image quality to the browser-supported 0..1 range. |
+| <code>normalizeRichLine</code> | function | <code>src/utils/printPdf.js:1139</code> |  |
+| <code>normalizeRichSegments</code> | function | <code>src/utils/printPdf.js:1098</code> |  |
+| <code>pageFormatForImage</code> | function | <code>src/utils/printPdf.js:1070</code> |  |
+| <code>pageNumberToIndex</code> | function | <code>src/utils/printPdf.js:2273</code> | Convert a 1-based printable page number into the matching 0-based data URL index. |
+| <code>parseTemplateCssClassSelector</code> | function | <code>src/utils/printPdf.js:337</code> | Parse a supported class-only selector into descendant selector parts. |
+| <code>parseTemplateCssStyleRules</code> | function | <code>src/utils/printPdf.js:400</code> | Parse only the small CSS subset used by trusted print header/footer templates. |
+| <code>parseTextStyleDeclarations</code> | function | <code>src/utils/printPdf.js:307</code> |  |
+| <code>pdfComposedComparison</code> | function | <code>src/utils/printPdf.js:2483</code> | Shared body of the overlay and curtain PDF output: the compared pages composed onto ONE page, then generated/printed/downloaded like the single active page. |
+| <code>printPdfBlob</code> | function | <code>src/utils/printPdf.js:1877</code> | Print a generated PDF through a hidden iframe. |
+| <code>printableSourceFromElement</code> | function | <code>src/utils/printPdf.js:2324</code> | Extract a safe printable image source from an already-rendered canvas or image element. |
+| <code>releasePrintableDataUrls</code> | function | <code>src/utils/printPdf.js:2147</code> | Release print URL leases held through the document renderer. |
+| <code>releasePrintablePdfSources</code> | function | <code>src/utils/printPdf.js:2260</code> | Release URL leases previously acquired through collectPrintablePdfSources when the consumer is done with them \(prebuild/benchmark keep the URLs only while rendering\). |
+| <code>renderOverlayRichLines</code> | function | <code>src/utils/printPdf.js:733</code> |  |
+| <code>reportProgress</code> | function | <code>src/utils/printPdf.js:1552</code> |  |
+| <code>resolveJsPdfConstructor</code> | function | <code>src/utils/printPdf.js:1659</code> | Resolve jsPDF from common ESM/CJS export shapes used by bundlers. |
+| <code>resolvePdfImageLoadConcurrency</code> | function | <code>src/utils/printPdf.js:1565</code> |  |
+| <code>resolvePdfOrientationMode</code> | function | <code>src/utils/printPdf.js:1051</code> |  |
+| <code>resolvePdfWorkerPlan</code> | function | <code>src/utils/printPdf.js:1578</code> | Resolve the generated-PDF worker plan. |
+| <code>richLineHasText</code> | function | <code>src/utils/printPdf.js:516</code> |  |
+| <code>richLineIsEmpty</code> | function | <code>src/utils/printPdf.js:524</code> |  |
+| <code>sanitizeDiagnosticText</code> | function | <code>src/utils/printPdf.js:812</code> |  |
+| <code>sanitizeParsedTemplateDocument</code> | function | <code>src/utils/printPdf.js:501</code> | Keep only the attributes used by the generated-PDF rich text subset. |
+| <code>sanitizeTemplateHtmlForPdf</code> | function | <code>src/utils/printPdf.js:487</code> | Keep generated-PDF print templates inside the small rich-text subset consumed below. |
+| <code>segmentFontStyle</code> | function | <code>src/utils/printPdf.js:1151</code> |  |
+| <code>selectPageContexts</code> | function | <code>src/utils/printPdf.js:2068</code> |  |
+| <code>stripDisallowedTemplateElements</code> | function | <code>src/utils/printPdf.js:450</code> | Remove elements that are never meaningful in generated PDF header/footer text. |
+| <code>swapRichLineBufferContents</code> | function | <code>src/utils/printPdf.js:536</code> | Replace one line buffer with another while preserving the original array object. |
+| <code>templateCssRuleMatchesElement</code> | function | <code>src/utils/printPdf.js:370</code> |  |
+| <code>throwIfAborted</code> | function | <code>src/utils/printPdf.js:268</code> | Stop PDF generation as soon as the caller cancels the operation. |
+| <code>htmlToRichLines~walk</code> | function | <code>src/utils/printPdf.js:653</code> |  |
+| <code>warnDeprecatedPrintableUrlExportAlias</code> | function | <code>src/utils/printPdf.js:2094</code> |  |
+| <code>wrapRichLines</code> | function | <code>src/utils/printPdf.js:1351</code> |  |
+| <code>yieldToBrowser</code> | function | <code>src/utils/printPdf.js:278</code> | Yield one browser paint opportunity so progress updates become visible before expensive synchronous jsPDF operations run on the main thread. |
 | <code>isSafeImageSrc</code> | function | <code>src/utils/printSanitize.js:16</code> | Allow-list image sources used for printing. |
 | <code>ODVPrintWindow</code> | typedef | <code>src/utils/printTemplate.js:451</code> | Window-level values optionally supplied by embedding hosts. |
 | <code>applyBraceTokensEscaped</code> | function | <code>src/utils/printTemplate.js:649</code> |  |
@@ -2203,4 +2226,3 @@
 | <code>PdfCacheEntry</code> | typedef | <code>src/workers/pdfPageWorker.js:21</code> |  |
 | <code>module:workers/pdfSignatureWorker~loadPdfjs</code> | function | <code>src/workers/pdfSignatureWorker.js:34</code> | The viewer&#39;s pdf.js build, loaded only when an appended revision needs the differential confirmation. |
 | <code>module:workers/pdfSignatureWorker</code> | module | <code>src/workers/pdfSignatureWorker.js:1</code> | Web worker entry for PDF signature inspection. |
-| <code>workerScope</code> | constant | <code>src/workers/pdfWorker.js:9</code> | OpenDocViewer - generated PDF worker. |

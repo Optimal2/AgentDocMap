@@ -1,12 +1,518 @@
 [
   {
+    "id": "createAccessLogger",
+    "name": "createAccessLogger",
+    "longname": "createAccessLogger",
+    "kind": "function",
+    "scope": "global",
+    "file": "server/accessLog.js",
+    "line": 26,
+    "description": "",
+    "params": [
+      {
+        "name": "options",
+        "type": "Object",
+        "optional": false,
+        "description": "write receives one finished line. morgan already writes control characters and the Unicode line separators in a field as escape sequences;..."
+      }
+    ],
+    "returns": [
+      {
+        "type": "function",
+        "description": "Express middleware."
+      }
+    ],
+    "examples": 0
+  },
+  {
+    "id": "normalizeClientAddress",
+    "name": "normalizeClientAddress",
+    "longname": "normalizeClientAddress",
+    "kind": "function",
+    "scope": "global",
+    "file": "server/clientAddress.js",
+    "line": 23,
+    "description": "A reverse proxy may add the client's source port to the address it forwards (IIS ARR does by default: &quot;203.0.113.5:49152&quot;, &quot;[2001:db8::1]:49152&quot;).",
+    "params": [
+      {
+        "name": "value",
+        "type": "*",
+        "optional": false,
+        "description": ""
+      }
+    ],
+    "returns": [
+      {
+        "type": "*",
+        "description": ""
+      }
+    ],
+    "examples": 0
+  },
+  {
+    "id": "decodeHeaderValue",
+    "name": "decodeHeaderValue",
+    "longname": "decodeHeaderValue",
+    "kind": "function",
+    "scope": "global",
+    "file": "server/headerText.js",
+    "line": 20,
+    "description": "Node hands header values over decoded as latin1, one character per byte.",
+    "params": [
+      {
+        "name": "value",
+        "type": "*",
+        "optional": false,
+        "description": ""
+      }
+    ],
+    "returns": [
+      {
+        "type": "*",
+        "description": "The decoded string, or the value unchanged when it is not a string."
+      }
+    ],
+    "examples": 0
+  },
+  {
+    "id": "strictUtf8",
+    "name": "strictUtf8",
+    "longname": "strictUtf8",
+    "kind": "constant",
+    "scope": "global",
+    "file": "server/headerText.js",
+    "line": 4,
+    "description": "Text of an HTTP header value as the sender wrote it.",
+    "params": [],
+    "returns": [],
+    "examples": 0
+  },
+  {
+    "id": "PRINT_LOG_RETENTION_DEFAULT_DAYS",
+    "name": "PRINT_LOG_RETENTION_DEFAULT_DAYS",
+    "longname": "PRINT_LOG_RETENTION_DEFAULT_DAYS",
+    "kind": "constant",
+    "scope": "global",
+    "file": "server/logRetention.js",
+    "line": 10,
+    "description": "Print records ( print-*.log ) are the audit trail of who printed what, and for whom.",
+    "params": [],
+    "returns": [],
+    "examples": 0
+  },
+  {
+    "id": "pruneRotatedLogs",
+    "name": "pruneRotatedLogs",
+    "longname": "pruneRotatedLogs",
+    "kind": "function",
+    "scope": "global",
+    "file": "server/logRetention.js",
+    "line": 36,
+    "description": "Delete rotated log files whose modification time is beyond the retention period.",
+    "params": [
+      {
+        "name": "options",
+        "type": "Object",
+        "optional": false,
+        "description": ""
+      }
+    ],
+    "returns": [
+      {
+        "type": "Promise.<void>",
+        "description": ""
+      }
+    ],
+    "examples": 0
+  },
+  {
+    "id": "resolvePrintLogRetentionDays",
+    "name": "resolvePrintLogRetentionDays",
+    "longname": "resolvePrintLogRetentionDays",
+    "kind": "function",
+    "scope": "global",
+    "file": "server/logRetention.js",
+    "line": 20,
+    "description": "Retention for the print records of the user log server.",
+    "params": [
+      {
+        "name": "env",
+        "type": "Record.<string, (string|undefined)>",
+        "optional": false,
+        "description": ""
+      }
+    ],
+    "returns": [
+      {
+        "type": "number",
+        "description": ""
+      }
+    ],
+    "examples": 0
+  },
+  {
+    "id": "scheduleLogRetention",
+    "name": "scheduleLogRetention",
+    "longname": "scheduleLogRetention",
+    "kind": "function",
+    "scope": "global",
+    "file": "server/logRetention.js",
+    "line": 59,
+    "description": "Repeat retention while a long-running service stays up.",
+    "params": [
+      {
+        "name": "prune",
+        "type": "function",
+        "optional": false,
+        "description": ""
+      },
+      {
+        "name": "intervalMs",
+        "type": "number",
+        "optional": false,
+        "description": ""
+      }
+    ],
+    "returns": [
+      {
+        "type": "NodeJS.Timeout",
+        "description": ""
+      }
+    ],
+    "examples": 0
+  },
+  {
+    "id": "createRejectionReporter",
+    "name": "createRejectionReporter",
+    "longname": "createRejectionReporter",
+    "kind": "function",
+    "scope": "global",
+    "file": "server/rateLimitConfig.js",
+    "line": 43,
+    "description": "Report a rejected client at most once per window, so that records lost to the rate limit are visible in the error log without one line per rejected request.",
+    "params": [
+      {
+        "name": "options",
+        "type": "Object",
+        "optional": false,
+        "description": ""
+      }
+    ],
+    "returns": [
+      {
+        "type": "function",
+        "description": "Call with the rate limit key and the client address (the key when omitted); true when a line was written."
+      }
+    ],
+    "examples": 0
+  },
+  {
+    "id": "resolveRateLimitPerMinute",
+    "name": "resolveRateLimitPerMinute",
+    "longname": "resolveRateLimitPerMinute",
+    "kind": "function",
+    "scope": "global",
+    "file": "server/rateLimitConfig.js",
+    "line": 19,
+    "description": "Read a requests-per-minute limit from an environment value.",
+    "params": [
+      {
+        "name": "name",
+        "type": "string",
+        "optional": false,
+        "description": "Name of the environment variable, for the warning."
+      },
+      {
+        "name": "raw",
+        "type": "string|undefined",
+        "optional": false,
+        "description": ""
+      },
+      {
+        "name": "defaultLimit",
+        "type": "number",
+        "optional": false,
+        "description": ""
+      }
+    ],
+    "returns": [
+      {
+        "type": "Object",
+        "description": ""
+      }
+    ],
+    "examples": 0
+  },
+  {
+    "id": "createRollingLog~appendConfirmed",
+    "name": "appendConfirmed",
+    "longname": "createRollingLog~appendConfirmed",
+    "kind": "function",
+    "scope": "inner",
+    "file": "server/rollingLog.js",
+    "line": 147,
+    "description": "Write one line and confirm that it is in the file at the log file's path.",
+    "params": [],
+    "returns": [],
+    "examples": 0
+  },
+  {
+    "id": "createRollingLog~closeAll",
+    "name": "closeAll",
+    "longname": "createRollingLog~closeAll",
+    "kind": "function",
+    "scope": "inner",
+    "file": "server/rollingLog.js",
+    "line": 249,
+    "description": "Close every open file (for a clean shutdown and for tests).",
+    "params": [],
+    "returns": [],
+    "examples": 0
+  },
+  {
+    "id": "createRollingLog",
+    "name": "createRollingLog",
+    "longname": "createRollingLog",
+    "kind": "function",
+    "scope": "global",
+    "file": "server/rollingLog.js",
+    "line": 63,
+    "description": "",
+    "params": [
+      {
+        "name": "options",
+        "type": "Object",
+        "optional": false,
+        "description": ""
+      }
+    ],
+    "returns": [],
+    "examples": 0
+  },
+  {
+    "id": "describeWriteError",
+    "name": "describeWriteError",
+    "longname": "describeWriteError",
+    "kind": "function",
+    "scope": "global",
+    "file": "server/rollingLog.js",
+    "line": 262,
+    "description": "What to put in the error log about a failed write: the error code and message, never the record that could not be written.",
+    "params": [
+      {
+        "name": "error",
+        "type": "*",
+        "optional": false,
+        "description": ""
+      }
+    ],
+    "returns": [
+      {
+        "type": "Object",
+        "description": ""
+      }
+    ],
+    "examples": 0
+  },
+  {
+    "id": "createRollingLog~drop",
+    "name": "drop",
+    "longname": "createRollingLog~drop",
+    "kind": "function",
+    "scope": "inner",
+    "file": "server/rollingLog.js",
+    "line": 75,
+    "description": "Stop using an open file.",
+    "params": [],
+    "returns": [],
+    "examples": 0
+  },
+  {
+    "id": "createRollingLog~entryFor",
+    "name": "entryFor",
+    "longname": "createRollingLog~entryFor",
+    "kind": "function",
+    "scope": "inner",
+    "file": "server/rollingLog.js",
+    "line": 91,
+    "description": "The open file for the prefix, opening it when needed.",
+    "params": [],
+    "returns": [],
+    "examples": 0
+  },
+  {
+    "id": "createRollingLog~givenUp",
+    "name": "givenUp",
+    "longname": "createRollingLog~givenUp",
+    "kind": "function",
+    "scope": "inner",
+    "file": "server/rollingLog.js",
+    "line": 84,
+    "description": "Thrown inside a write that was given up; its caller has been answered already.",
+    "params": [],
+    "returns": [],
+    "examples": 0
+  },
+  {
+    "id": "createRollingLog~isAtPath",
+    "name": "isAtPath",
+    "longname": "createRollingLog~isAtPath",
+    "kind": "function",
+    "scope": "inner",
+    "file": "server/rollingLog.js",
+    "line": 137,
+    "description": "Whether the file at the path is still the open file.",
+    "params": [],
+    "returns": [],
+    "examples": 0
+  },
+  {
+    "id": "resolveLogWriteTimeoutMs",
+    "name": "resolveLogWriteTimeoutMs",
+    "longname": "resolveLogWriteTimeoutMs",
+    "kind": "function",
+    "scope": "global",
+    "file": "server/rollingLog.js",
+    "line": 48,
+    "description": "Read the write timeout from an environment value: a whole number of milliseconds from 100 to 600000.",
+    "params": [
+      {
+        "name": "raw",
+        "type": "string|undefined",
+        "optional": false,
+        "description": ""
+      }
+    ],
+    "returns": [
+      {
+        "type": "Object",
+        "description": ""
+      }
+    ],
+    "examples": 0
+  },
+  {
+    "id": "createRollingLog~tails",
+    "name": "tails",
+    "longname": "createRollingLog~tails",
+    "kind": "constant",
+    "scope": "inner",
+    "file": "server/rollingLog.js",
+    "line": 70,
+    "description": "One chain of writes per file, so that lines keep the order of the calls.",
+    "params": [],
+    "returns": [],
+    "examples": 0
+  },
+  {
+    "id": "createRollingLog~toStderr",
+    "name": "toStderr",
+    "longname": "createRollingLog~toStderr",
+    "kind": "function",
+    "scope": "inner",
+    "file": "server/rollingLog.js",
+    "line": 211,
+    "description": "Last resort when a log line cannot be written to its file.",
+    "params": [],
+    "returns": [],
+    "examples": 0
+  },
+  {
+    "id": "createRollingLog~write",
+    "name": "write",
+    "longname": "createRollingLog~write",
+    "kind": "function",
+    "scope": "inner",
+    "file": "server/rollingLog.js",
+    "line": 178,
+    "description": "Append one line to today's file for the prefix.",
+    "params": [
+      {
+        "name": "prefix",
+        "type": "string",
+        "optional": false,
+        "description": "e.g. &quot;print&quot;, &quot;ingestion&quot;, &quot;access&quot;, &quot;error&quot;"
+      },
+      {
+        "name": "line",
+        "type": "string",
+        "optional": false,
+        "description": "Complete line including its line break."
+      }
+    ],
+    "returns": [
+      {
+        "type": "Promise.<void>",
+        "description": "Resolves when the line is in the file at the log file's path; rejects with the cause, or with code ELOGTIMEOUT when the timeout runs out fi..."
+      }
+    ],
+    "examples": 0
+  },
+  {
+    "id": "createRollingLog~writeBestEffort",
+    "name": "writeBestEffort",
+    "longname": "createRollingLog~writeBestEffort",
+    "kind": "function",
+    "scope": "inner",
+    "file": "server/rollingLog.js",
+    "line": 239,
+    "description": "Write a line whose loss is tolerable (an access-log line).",
+    "params": [
+      {
+        "name": "prefix",
+        "type": "string",
+        "optional": false,
+        "description": ""
+      },
+      {
+        "name": "line",
+        "type": "string",
+        "optional": false,
+        "description": ""
+      }
+    ],
+    "returns": [],
+    "examples": 0
+  },
+  {
+    "id": "createRollingLog~writeOrStderr",
+    "name": "writeOrStderr",
+    "longname": "createRollingLog~writeOrStderr",
+    "kind": "function",
+    "scope": "inner",
+    "file": "server/rollingLog.js",
+    "line": 223,
+    "description": "Write a line that must not be lost quietly (an error-log line).",
+    "params": [
+      {
+        "name": "prefix",
+        "type": "string",
+        "optional": false,
+        "description": ""
+      },
+      {
+        "name": "line",
+        "type": "string",
+        "optional": false,
+        "description": ""
+      }
+    ],
+    "returns": [
+      {
+        "type": "Promise.<boolean>",
+        "description": "true when the line reached the file."
+      }
+    ],
+    "examples": 0
+  },
+  {
     "id": "ALLOWED_ORIGINS",
     "name": "ALLOWED_ORIGINS",
     "longname": "ALLOWED_ORIGINS",
     "kind": "constant",
     "scope": "global",
     "file": "server/system-log-server.js",
-    "line": 141,
+    "line": 156,
     "description": "Optional CORS for /log",
     "params": [],
     "returns": [],
@@ -19,7 +525,7 @@
     "kind": "constant",
     "scope": "global",
     "file": "server/system-log-server.js",
-    "line": 135,
+    "line": 150,
     "description": "Token gate for /log",
     "params": [],
     "returns": [],
@@ -32,23 +538,41 @@
     "kind": "constant",
     "scope": "global",
     "file": "server/system-log-server.js",
-    "line": 128,
+    "line": 143,
     "description": "Trust proxy for accurate req.ip",
     "params": [],
     "returns": [],
     "examples": 0
   },
   {
-    "id": "logLimiter",
-    "name": "logLimiter",
-    "longname": "logLimiter",
+    "id": "rateLimitSetting",
+    "name": "rateLimitSetting",
+    "longname": "rateLimitSetting",
     "kind": "constant",
     "scope": "global",
     "file": "server/system-log-server.js",
-    "line": 165,
+    "line": 183,
     "description": "Rate limit for ingestion",
     "params": [],
     "returns": [],
+    "examples": 0
+  },
+  {
+    "id": "reportWriteFailure",
+    "name": "reportWriteFailure",
+    "longname": "reportWriteFailure",
+    "kind": "function",
+    "scope": "global",
+    "file": "server/system-log-server.js",
+    "line": 88,
+    "description": "Error-log line for a record that could not be written: which log and why, never the record.",
+    "params": [],
+    "returns": [
+      {
+        "type": "Promise.<boolean>",
+        "description": ""
+      }
+    ],
     "examples": 0
   },
   {
@@ -58,10 +582,41 @@
     "kind": "function",
     "scope": "global",
     "file": "server/system-log-server.js",
-    "line": 175,
+    "line": 223,
     "description": "Token auth middleware",
     "params": [],
     "returns": [],
+    "examples": 0
+  },
+  {
+    "id": "writeRolling",
+    "name": "writeRolling",
+    "longname": "writeRolling",
+    "kind": "function",
+    "scope": "global",
+    "file": "server/system-log-server.js",
+    "line": 82,
+    "description": "Write a line that must not be lost quietly (an error-log line).",
+    "params": [],
+    "returns": [],
+    "examples": 0
+  },
+  {
+    "id": "reportWriteFailure",
+    "name": "reportWriteFailure",
+    "longname": "reportWriteFailure",
+    "kind": "function",
+    "scope": "global",
+    "file": "server/user-log-server.js",
+    "line": 104,
+    "description": "Error-log line for a record that could not be written: which log and why, never the record.",
+    "params": [],
+    "returns": [
+      {
+        "type": "Promise.<boolean>",
+        "description": ""
+      }
+    ],
     "examples": 0
   },
   {
@@ -71,7 +626,7 @@
     "kind": "function",
     "scope": "global",
     "file": "server/user-log-server.js",
-    "line": 117,
+    "line": 150,
     "description": "Resolve user identity without cookies.",
     "params": [],
     "returns": [],
@@ -84,8 +639,97 @@
     "kind": "function",
     "scope": "global",
     "file": "server/user-log-server.js",
-    "line": 135,
+    "line": 169,
     "description": "Blocks cross-site requests using Origin/Referer/Sec-Fetch-Site signals.",
+    "params": [],
+    "returns": [],
+    "examples": 0
+  },
+  {
+    "id": "writeRolling",
+    "name": "writeRolling",
+    "longname": "writeRolling",
+    "kind": "function",
+    "scope": "global",
+    "file": "server/user-log-server.js",
+    "line": 98,
+    "description": "Write a line that must not be lost quietly (an error-log line).",
+    "params": [],
+    "returns": [],
+    "examples": 0
+  },
+  {
+    "id": "LOOPBACK_ADDRESSES",
+    "name": "LOOPBACK_ADDRESSES",
+    "longname": "LOOPBACK_ADDRESSES",
+    "kind": "constant",
+    "scope": "global",
+    "file": "server/userLogOrigin.js",
+    "line": 4,
+    "description": "Evaluate the browser origin signals used by the user print-log endpoint.",
+    "params": [],
+    "returns": [],
+    "examples": 0
+  },
+  {
+    "id": "resolveUserLogHosts",
+    "name": "resolveUserLogHosts",
+    "longname": "resolveUserLogHosts",
+    "kind": "function",
+    "scope": "global",
+    "file": "server/userLogOrigin.js",
+    "line": 15,
+    "description": "The hosts the browser may have addressed: the request's own Host header and, only when the request arrives over loopback, the X-Forwarded-Host that the reverse proxy on the same m...",
+    "params": [
+      {
+        "name": "request",
+        "type": "Object",
+        "optional": false,
+        "description": ""
+      }
+    ],
+    "returns": [
+      {
+        "type": "Array.<string>",
+        "description": ""
+      }
+    ],
+    "examples": 0
+  },
+  {
+    "id": "neutralizeForWhom",
+    "name": "neutralizeForWhom",
+    "longname": "neutralizeForWhom",
+    "kind": "function",
+    "scope": "global",
+    "file": "server/userLogPayload.js",
+    "line": 17,
+    "description": "The print log has never carried &quot;$&quot; or &quot;#&quot; in the recipient.",
+    "params": [
+      {
+        "name": "value",
+        "type": "*",
+        "optional": false,
+        "description": ""
+      }
+    ],
+    "returns": [
+      {
+        "type": "string",
+        "description": ""
+      }
+    ],
+    "examples": 0
+  },
+  {
+    "id": "readPrintLogFields",
+    "name": "readPrintLogFields",
+    "longname": "readPrintLogFields",
+    "kind": "function",
+    "scope": "global",
+    "file": "server/userLogPayload.js",
+    "line": 4,
+    "description": "Compatibility reader for form posts and the viewer's JSON print envelope.",
     "params": [],
     "returns": [],
     "examples": 0
@@ -2448,7 +3092,7 @@
     "kind": "function",
     "scope": "inner",
     "file": "src/components/DocumentLoader/DocumentLoader.js",
-    "line": 1608,
+    "line": 1610,
     "description": "",
     "params": [],
     "returns": [],
@@ -8529,7 +9173,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentToolbar/usePrintPipeline.js",
-    "line": 523,
+    "line": 525,
     "description": "Execute the actual print helper after the dialog has resolved the user's choices.",
     "params": [
       {
@@ -8560,7 +9204,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentToolbar/usePrintPipeline.js",
-    "line": 719,
+    "line": 721,
     "description": "Handle the dialog submit event and dispatch the correct print action.",
     "params": [
       {
@@ -8722,7 +9366,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentToolbar/usePrintPipeline.js",
-    "line": 749,
+    "line": 751,
     "description": "Compare-view entry: the same dialog, printing the view as one composed page.",
     "params": [
       {
@@ -8747,7 +9391,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentToolbar/usePrintPipeline.js",
-    "line": 739,
+    "line": 741,
     "description": "Toolbar entry: the dialog for the viewer's own pages.",
     "params": [],
     "returns": [],
@@ -9046,7 +9690,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentToolbar/usePrintRangeDialog.js",
-    "line": 521,
+    "line": 533,
     "description": "Restore the dialog state from the latest successfully prepared print.",
     "params": [
       {
@@ -9071,7 +9715,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentToolbar/usePrintRangeDialog.js",
-    "line": 510,
+    "line": 522,
     "description": "",
     "params": [],
     "returns": [
@@ -9089,7 +9733,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentToolbar/usePrintRangeDialog.js",
-    "line": 502,
+    "line": 514,
     "description": "",
     "params": [],
     "returns": [
@@ -9107,7 +9751,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentToolbar/usePrintRangeDialog.js",
-    "line": 505,
+    "line": 517,
     "description": "",
     "params": [],
     "returns": [
@@ -9125,7 +9769,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentToolbar/usePrintRangeDialog.js",
-    "line": 489,
+    "line": 501,
     "description": "",
     "params": [
       {
@@ -12274,7 +12918,7 @@
     "kind": "typedef",
     "scope": "global",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 483,
+    "line": 498,
     "description": "Sticky zoom modes used by the viewer (subset is used here).",
     "params": [],
     "returns": [],
@@ -12287,7 +12931,7 @@
     "kind": "typedef",
     "scope": "global",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 488,
+    "line": 503,
     "description": "Zoom state (mode + current numeric scale).",
     "params": [],
     "returns": [],
@@ -12300,7 +12944,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1547,
+    "line": 1554,
     "description": "Open compare mode when needed and make the right pane the default target.",
     "params": [],
     "returns": [
@@ -12318,7 +12962,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1539,
+    "line": 1546,
     "description": "",
     "params": [],
     "returns": [
@@ -12336,7 +12980,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1622,
+    "line": 1629,
     "description": "Mouse down handler for the thumbnail resizer; listens for mousemove/up on window.",
     "params": [
       {
@@ -12361,7 +13005,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 359,
+    "line": 374,
     "description": "",
     "params": [
       {
@@ -12448,7 +13092,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 437,
+    "line": 452,
     "description": "Build the visible-document grouping used by document-level navigation.",
     "params": [
       {
@@ -12510,7 +13154,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1575,
+    "line": 1582,
     "description": "Close compare mode without affecting the left page.",
     "params": [],
     "returns": [
@@ -12528,7 +13172,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 302,
+    "line": 317,
     "description": "Resolve the nearest visible page number for a requested original page index.",
     "params": [
       {
@@ -12559,7 +13203,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 735,
+    "line": 748,
     "description": "Resolve document-navigation state for the requested pane.",
     "params": [
       {
@@ -12584,7 +13228,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 411,
+    "line": 426,
     "description": "",
     "params": [
       {
@@ -12609,7 +13253,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1301,
+    "line": 1310,
     "description": "Jump to the first page of the first visible document.",
     "params": [
       {
@@ -12634,7 +13278,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1257,
+    "line": 1266,
     "description": "Jump to the first visible page in the requested target pane.",
     "params": [
       {
@@ -12659,7 +13303,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1313,
+    "line": 1322,
     "description": "Jump to the first page of the last visible document.",
     "params": [
       {
@@ -12684,7 +13328,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1266,
+    "line": 1275,
     "description": "Jump to the last visible page in the requested target pane.",
     "params": [
       {
@@ -12709,7 +13353,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1289,
+    "line": 1298,
     "description": "Jump to the first page of the next visible document.",
     "params": [
       {
@@ -12734,7 +13378,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1248,
+    "line": 1257,
     "description": "Move one page forward in the requested target pane.",
     "params": [
       {
@@ -12759,7 +13403,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1277,
+    "line": 1286,
     "description": "Jump to the first page of the previous visible document (or to the current document start when the active pane already points inside the first visible document).",
     "params": [
       {
@@ -12784,7 +13428,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1239,
+    "line": 1248,
     "description": "Move one page backward in the requested target pane.",
     "params": [
       {
@@ -12809,7 +13453,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1557,
+    "line": 1564,
     "description": "Toggle compare mode.",
     "params": [],
     "returns": [],
@@ -12822,7 +13466,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1155,
+    "line": 1164,
     "description": "Change the primary page using an original page number (or a visible-page updater function when called from navigation helpers).",
     "params": [
       {
@@ -12847,7 +13491,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1203,
+    "line": 1212,
     "description": "Keep requested-page state and the actually displayed page synchronized for diagnostics.",
     "params": [
       {
@@ -12872,7 +13516,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1164,
+    "line": 1173,
     "description": "Change the primary page by a visible page number from the thumbnail strip.",
     "params": [
       {
@@ -12928,7 +13572,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1030,
+    "line": 1041,
     "description": "Immediately exclude every page that belongs to the same document as the provided original page index.",
     "params": [
       {
@@ -12953,7 +13597,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 992,
+    "line": 1005,
     "description": "Immediately exclude a page from the active selection and apply the filtered session.",
     "params": [
       {
@@ -13034,6 +13678,37 @@
     "returns": [
       {
         "type": "boolean",
+        "description": ""
+      }
+    ],
+    "examples": 0
+  },
+  {
+    "id": "normalizeCustomPrintSelectionState",
+    "name": "normalizeCustomPrintSelectionState",
+    "longname": "normalizeCustomPrintSelectionState",
+    "kind": "function",
+    "scope": "global",
+    "file": "src/components/DocumentViewer/useDocumentViewer.js",
+    "line": 302,
+    "description": "Normalize a custom selection while preserving an explicitly empty selection.",
+    "params": [
+      {
+        "name": "sequence",
+        "type": "*",
+        "optional": false,
+        "description": ""
+      },
+      {
+        "name": "total",
+        "type": "number",
+        "optional": false,
+        "description": ""
+      }
+    ],
+    "returns": [
+      {
+        "type": "Array<number>|null",
         "description": ""
       }
     ],
@@ -13164,7 +13839,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 501,
+    "line": 516,
     "description": "Normalize any pane key into the viewer's two supported navigation targets.",
     "params": [
       {
@@ -13189,7 +13864,7 @@
     "kind": "function",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1708,
+    "line": 1715,
     "description": "",
     "params": [
       {
@@ -13209,7 +13884,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 342,
+    "line": 357,
     "description": "Resolve a page's 1-based page number within the current document-selection group.",
     "params": [
       {
@@ -13283,7 +13958,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 813,
+    "line": 826,
     "description": "",
     "params": [
       {
@@ -13339,7 +14014,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 326,
+    "line": 341,
     "description": "Resolve either a direct visible-page value or a React setState-style updater function.",
     "params": [
       {
@@ -13376,7 +14051,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1107,
+    "line": 1116,
     "description": "Resolve the next original 1-based page number from a visible-page update.",
     "params": [
       {
@@ -13407,7 +14082,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1590,
+    "line": 1597,
     "description": "Select a page for the right-hand compare pane.",
     "params": [
       {
@@ -13444,7 +14119,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1532,
+    "line": 1539,
     "description": "Set the default pane for compare-aware navigation and editing actions.",
     "params": [
       {
@@ -13469,7 +14144,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1191,
+    "line": 1200,
     "description": "Change the compare page using an original page number (or a visible-page updater function when called from compare navigation helpers).",
     "params": [
       {
@@ -13494,7 +14169,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1520,
+    "line": 1527,
     "description": "Setter for the editing controls visibility.",
     "params": [
       {
@@ -13514,7 +14189,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1177,
+    "line": 1186,
     "description": "Change the compare page by a visible page number from the toolbar page field.",
     "params": [
       {
@@ -13539,7 +14214,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1427,
+    "line": 1434,
     "description": "Set zoom mode directly ('FIT_PAGE'|'FIT_WIDTH'|'FIT_CUSTOM'|'ACTUAL_SIZE'|'CUSTOM').",
     "params": [],
     "returns": [],
@@ -13552,7 +14227,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1231,
+    "line": 1240,
     "description": "The thumbnail pane should react immediately when the user changes page.",
     "params": [],
     "returns": [],
@@ -13565,7 +14240,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1504,
+    "line": 1511,
     "description": "Toggle between the two fit modes from the page surface.",
     "params": [],
     "returns": [],
@@ -13578,7 +14253,7 @@
     "kind": "constant",
     "scope": "inner",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 1130,
+    "line": 1139,
     "description": "Generic primary/compare page setter that accepts either a visible-page updater function or a concrete original page number.",
     "params": [
       {
@@ -13609,7 +14284,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/components/DocumentViewer/useDocumentViewer.js",
-    "line": 522,
+    "line": 537,
     "description": "Hook that centralizes viewer UI state and event handlers.",
     "params": [],
     "returns": [
@@ -20477,7 +21152,7 @@
     "kind": "constant",
     "scope": "global",
     "file": "src/index.jsx",
-    "line": 52,
+    "line": 58,
     "description": "Mount the app into #root.",
     "params": [],
     "returns": [],
@@ -20490,7 +21165,7 @@
     "kind": "constant",
     "scope": "global",
     "file": "src/index.jsx",
-    "line": 42,
+    "line": 44,
     "description": "Determine environment and set a sensible client-side log level.",
     "params": [],
     "returns": [],
@@ -21686,12 +22361,37 @@
     "kind": "function",
     "scope": "global",
     "file": "src/integrations/sessionUrl.js",
-    "line": 94,
+    "line": 118,
     "description": "Read and fetch a session payload URL from the viewer query string.",
     "params": [],
     "returns": [
       {
         "type": "Promise.<(SessionUrlResult|null)>",
+        "description": ""
+      }
+    ],
+    "examples": 0
+  },
+  {
+    "id": "utf8ByteLength",
+    "name": "utf8ByteLength",
+    "longname": "utf8ByteLength",
+    "kind": "function",
+    "scope": "global",
+    "file": "src/integrations/sessionUrl.js",
+    "line": 74,
+    "description": "UTF-8 byte length of a string, without allocating an encoded copy.",
+    "params": [
+      {
+        "name": "text",
+        "type": "string",
+        "optional": false,
+        "description": ""
+      }
+    ],
+    "returns": [
+      {
+        "type": "number",
         "description": ""
       }
     ],
@@ -21792,218 +22492,6 @@
     "returns": [
       {
         "type": "UrlParamsResult|null",
-        "description": ""
-      }
-    ],
-    "examples": 1
-  },
-  {
-    "id": "ODVEventHandler",
-    "name": "ODVEventHandler",
-    "longname": "ODVEventHandler",
-    "kind": "typedef",
-    "scope": "global",
-    "file": "src/integrations/viewerEvents.js",
-    "line": 29,
-    "description": "Listener signature for ODV events.",
-    "params": [
-      {
-        "name": "event",
-        "type": "Event",
-        "optional": false,
-        "description": ""
-      },
-      {
-        "name": "detail",
-        "type": "*",
-        "optional": false,
-        "description": ""
-      }
-    ],
-    "returns": [
-      {
-        "type": "void",
-        "description": ""
-      }
-    ],
-    "examples": 0
-  },
-  {
-    "id": "OnceEventResult",
-    "name": "OnceEventResult",
-    "longname": "OnceEventResult",
-    "kind": "typedef",
-    "scope": "global",
-    "file": "src/integrations/viewerEvents.js",
-    "line": 43,
-    "description": "Result returned by onceODVEvent when the event fires.",
-    "params": [],
-    "returns": [],
-    "examples": 0
-  },
-  {
-    "id": "OnceOptions",
-    "name": "OnceOptions",
-    "longname": "OnceOptions",
-    "kind": "typedef",
-    "scope": "global",
-    "file": "src/integrations/viewerEvents.js",
-    "line": 37,
-    "description": "Options for onceODVEvent.",
-    "params": [],
-    "returns": [],
-    "examples": 0
-  },
-  {
-    "id": "clearTimeoutSafe",
-    "name": "clearTimeoutSafe",
-    "longname": "clearTimeoutSafe",
-    "kind": "function",
-    "scope": "global",
-    "file": "src/integrations/viewerEvents.js",
-    "line": 187,
-    "description": "Clear a timer if it exists (tiny helper).",
-    "params": [
-      {
-        "name": "t",
-        "type": "*",
-        "optional": false,
-        "description": ""
-      }
-    ],
-    "returns": [
-      {
-        "type": "void",
-        "description": ""
-      }
-    ],
-    "examples": 0
-  },
-  {
-    "id": "createCustomEvent",
-    "name": "createCustomEvent",
-    "longname": "createCustomEvent",
-    "kind": "function",
-    "scope": "global",
-    "file": "src/integrations/viewerEvents.js",
-    "line": 56,
-    "description": "Create a CustomEvent with best-effort fallback for older browsers.",
-    "params": [
-      {
-        "name": "name",
-        "type": "string",
-        "optional": false,
-        "description": ""
-      },
-      {
-        "name": "detail",
-        "type": "*",
-        "optional": false,
-        "description": ""
-      }
-    ],
-    "returns": [
-      {
-        "type": "CustomEvent",
-        "description": ""
-      }
-    ],
-    "examples": 0
-  },
-  {
-    "id": "emitODVEvent",
-    "name": "emitODVEvent",
-    "longname": "emitODVEvent",
-    "kind": "function",
-    "scope": "global",
-    "file": "src/integrations/viewerEvents.js",
-    "line": 79,
-    "description": "Emit a namespaced OpenDocViewer event with an optional detail payload.",
-    "params": [
-      {
-        "name": "name",
-        "type": "string",
-        "optional": false,
-        "description": "Event name (recommend a namespace like &quot;odv:*&quot;)."
-      },
-      {
-        "name": "detail",
-        "type": "Object.<string, *>",
-        "optional": true,
-        "description": "Structured payload for listeners."
-      }
-    ],
-    "returns": [
-      {
-        "type": "boolean",
-        "description": "True if dispatched, false if window unavailable."
-      }
-    ],
-    "examples": 1
-  },
-  {
-    "id": "onODVEvent",
-    "name": "onODVEvent",
-    "longname": "onODVEvent",
-    "kind": "function",
-    "scope": "global",
-    "file": "src/integrations/viewerEvents.js",
-    "line": 110,
-    "description": "Attach a listener for a given OpenDocViewer event.",
-    "params": [
-      {
-        "name": "name",
-        "type": "string",
-        "optional": false,
-        "description": ""
-      },
-      {
-        "name": "handler",
-        "type": "ODVEventHandler",
-        "optional": false,
-        "description": ""
-      },
-      {
-        "name": "options",
-        "type": "*|boolean",
-        "optional": true,
-        "description": "addEventListener options (e.g., { passive: true })"
-      }
-    ],
-    "returns": [
-      {
-        "type": "function",
-        "description": "Unsubscribe function"
-      }
-    ],
-    "examples": 1
-  },
-  {
-    "id": "onceODVEvent",
-    "name": "onceODVEvent",
-    "longname": "onceODVEvent",
-    "kind": "function",
-    "scope": "global",
-    "file": "src/integrations/viewerEvents.js",
-    "line": 152,
-    "description": "Wait for a single occurrence of an event and resolve with { event, detail } .",
-    "params": [
-      {
-        "name": "name",
-        "type": "string",
-        "optional": false,
-        "description": ""
-      },
-      {
-        "name": "opts",
-        "type": "OnceOptions",
-        "optional": true,
-        "description": ""
-      }
-    ],
-    "returns": [
-      {
-        "type": "Promise.<OnceEventResult>",
         "description": ""
       }
     ],
@@ -22724,7 +23212,7 @@
     "kind": "typedef",
     "scope": "global",
     "file": "src/logging/userLogger.js",
-    "line": 37,
+    "line": 42,
     "description": "",
     "params": [],
     "returns": [],
@@ -22737,7 +23225,7 @@
     "kind": "typedef",
     "scope": "global",
     "file": "src/logging/userLogger.js",
-    "line": 43,
+    "line": 48,
     "description": "",
     "params": [],
     "returns": [],
@@ -22750,7 +23238,7 @@
     "kind": "typedef",
     "scope": "global",
     "file": "src/logging/userLogger.js",
-    "line": 31,
+    "line": 36,
     "description": "",
     "params": [],
     "returns": [],
@@ -22763,7 +23251,7 @@
     "kind": "constant",
     "scope": "global",
     "file": "src/logging/userLogger.js",
-    "line": 61,
+    "line": 68,
     "description": "True when running in dev (for debug logging only).",
     "params": [],
     "returns": [],
@@ -22776,7 +23264,7 @@
     "kind": "function",
     "scope": "instance",
     "file": "src/logging/userLogger.js",
-    "line": 170,
+    "line": 184,
     "description": "Internal: hash document.cookie once (non-blocking).",
     "params": [],
     "returns": [],
@@ -22789,7 +23277,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/logging/userLogger.js",
-    "line": 112,
+    "line": 126,
     "description": "Base64 from ArrayBuffer (for cookie fingerprint).",
     "params": [],
     "returns": [],
@@ -22802,7 +23290,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/logging/userLogger.js",
-    "line": 64,
+    "line": 71,
     "description": "Dev-only logger.",
     "params": [],
     "returns": [],
@@ -22815,7 +23303,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/logging/userLogger.js",
-    "line": 73,
+    "line": 80,
     "description": "Safely read runtime config from window.",
     "params": [],
     "returns": [],
@@ -22828,7 +23316,7 @@
     "kind": "function",
     "scope": "instance",
     "file": "src/logging/userLogger.js",
-    "line": 162,
+    "line": 176,
     "description": "Initialize context near iframe/viewer creation.",
     "params": [
       {
@@ -22853,8 +23341,21 @@
     "kind": "function",
     "scope": "global",
     "file": "src/logging/userLogger.js",
-    "line": 93,
+    "line": 100,
     "description": "Determine if the target URL is same-origin with current document.",
+    "params": [],
+    "returns": [],
+    "examples": 0
+  },
+  {
+    "id": "nonEmptyString",
+    "name": "nonEmptyString",
+    "longname": "nonEmptyString",
+    "kind": "function",
+    "scope": "global",
+    "file": "src/logging/userLogger.js",
+    "line": 119,
+    "description": "Trimmed non-empty string, or null.",
     "params": [],
     "returns": [],
     "examples": 0
@@ -22866,7 +23367,7 @@
     "kind": "function",
     "scope": "instance",
     "file": "src/logging/userLogger.js",
-    "line": 144,
+    "line": 158,
     "description": "Optional identity resolver supplied by host app.",
     "params": [
       {
@@ -22886,7 +23387,7 @@
     "kind": "function",
     "scope": "instance",
     "file": "src/logging/userLogger.js",
-    "line": 152,
+    "line": 166,
     "description": "Optional viewer version to add in meta.viewerVersion.",
     "params": [
       {
@@ -22906,7 +23407,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/logging/userLogger.js",
-    "line": 122,
+    "line": 136,
     "description": "Async SHA-256 of a string → &quot;sha256- &quot; (or null).",
     "params": [],
     "returns": [],
@@ -22919,7 +23420,7 @@
     "kind": "function",
     "scope": "instance",
     "file": "src/logging/userLogger.js",
-    "line": 191,
+    "line": 205,
     "description": "Submit a &quot;print&quot; user-log event.",
     "params": [
       {
@@ -22939,7 +23440,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/logging/userLogger.js",
-    "line": 84,
+    "line": 91,
     "description": "Make absolute using document.baseURI when available.",
     "params": [],
     "returns": [],
@@ -22952,7 +23453,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/logging/userLogger.js",
-    "line": 102,
+    "line": 109,
     "description": "Return timezone offset as &quot;+HH:MM&quot; or &quot;-HH:MM&quot;.",
     "params": [],
     "returns": [],
@@ -22965,7 +23466,7 @@
     "kind": "constant",
     "scope": "global",
     "file": "src/logging/userLogger.js",
-    "line": 309,
+    "line": 325,
     "description": "Export singleton instance.",
     "params": [],
     "returns": [],
@@ -27842,19 +28343,6 @@
     "examples": 0
   },
   {
-    "id": "CreateBundleResult",
-    "name": "CreateBundleResult",
-    "longname": "CreateBundleResult",
-    "kind": "typedef",
-    "scope": "global",
-    "file": "src/schemas/portableBundle.js",
-    "line": 82,
-    "description": "Result object for createPortableBundle",
-    "params": [],
-    "returns": [],
-    "examples": 0
-  },
-  {
     "id": "PORTABLE_BUNDLE_SCHEMA_VERSION",
     "name": "PORTABLE_BUNDLE_SCHEMA_VERSION",
     "longname": "PORTABLE_BUNDLE_SCHEMA_VERSION",
@@ -27917,300 +28405,6 @@
     "description": "Session context for a bundle.",
     "params": [],
     "returns": [],
-    "examples": 0
-  },
-  {
-    "id": "ValidateReport",
-    "name": "ValidateReport",
-    "longname": "ValidateReport",
-    "kind": "typedef",
-    "scope": "global",
-    "file": "src/schemas/portableBundle.js",
-    "line": 74,
-    "description": "Validation report for a bundle.",
-    "params": [],
-    "returns": [],
-    "examples": 0
-  },
-  {
-    "id": "createPortableBundle",
-    "name": "createPortableBundle",
-    "longname": "createPortableBundle",
-    "kind": "function",
-    "scope": "global",
-    "file": "src/schemas/portableBundle.js",
-    "line": 343,
-    "description": "Convenience constructor: normalize → (optionally validate) → freeze.",
-    "params": [
-      {
-        "name": "input",
-        "type": "*",
-        "optional": false,
-        "description": ""
-      },
-      {
-        "name": "opts",
-        "type": "Object",
-        "optional": true,
-        "description": ""
-      }
-    ],
-    "returns": [
-      {
-        "type": "CreateBundleResult",
-        "description": ""
-      }
-    ],
-    "examples": 0
-  },
-  {
-    "id": "extFromString",
-    "name": "extFromString",
-    "longname": "extFromString",
-    "kind": "function",
-    "scope": "global",
-    "file": "src/schemas/portableBundle.js",
-    "line": 107,
-    "description": "Extract lowercase file extension from a string (best-effort).",
-    "params": [
-      {
-        "name": "s",
-        "type": "string",
-        "optional": false,
-        "description": ""
-      }
-    ],
-    "returns": [
-      {
-        "type": "string|undefined",
-        "description": ""
-      }
-    ],
-    "examples": 0
-  },
-  {
-    "id": "freezePortableBundle",
-    "name": "freezePortableBundle",
-    "longname": "freezePortableBundle",
-    "kind": "function",
-    "scope": "global",
-    "file": "src/schemas/portableBundle.js",
-    "line": 326,
-    "description": "Create a shallow, immutable copy of a normalized bundle (Object.freeze tree).",
-    "params": [
-      {
-        "name": "bundle",
-        "type": "PortableDocumentBundle",
-        "optional": false,
-        "description": ""
-      }
-    ],
-    "returns": [
-      {
-        "type": "PortableDocumentBundle",
-        "description": ""
-      }
-    ],
-    "examples": 0
-  },
-  {
-    "id": "normalizeDocumentEntry",
-    "name": "normalizeDocumentEntry",
-    "longname": "normalizeDocumentEntry",
-    "kind": "function",
-    "scope": "global",
-    "file": "src/schemas/portableBundle.js",
-    "line": 225,
-    "description": "Normalize a single document entry.",
-    "params": [
-      {
-        "name": "input",
-        "type": "*",
-        "optional": false,
-        "description": ""
-      }
-    ],
-    "returns": [
-      {
-        "type": "PortableDocumentEntry",
-        "description": ""
-      }
-    ],
-    "examples": 0
-  },
-  {
-    "id": "normalizeDocumentFile",
-    "name": "normalizeDocumentFile",
-    "longname": "normalizeDocumentFile",
-    "kind": "function",
-    "scope": "global",
-    "file": "src/schemas/portableBundle.js",
-    "line": 197,
-    "description": "Normalize a file entry.",
-    "params": [
-      {
-        "name": "input",
-        "type": "string|PortableDocumentFile",
-        "optional": false,
-        "description": ""
-      }
-    ],
-    "returns": [
-      {
-        "type": "PortableDocumentFile",
-        "description": ""
-      }
-    ],
-    "examples": 0
-  },
-  {
-    "id": "normalizeMetadataAliasDetails",
-    "name": "normalizeMetadataAliasDetails",
-    "longname": "normalizeMetadataAliasDetails",
-    "kind": "function",
-    "scope": "global",
-    "file": "src/schemas/portableBundle.js",
-    "line": 150,
-    "description": "Preserve a richer semantic alias object map without trying to deeply validate every property.",
-    "params": [
-      {
-        "name": "input",
-        "type": "*",
-        "optional": false,
-        "description": ""
-      }
-    ],
-    "returns": [
-      {
-        "type": "Object<string, Object>|undefined",
-        "description": ""
-      }
-    ],
-    "examples": 0
-  },
-  {
-    "id": "normalizeMetadataAliases",
-    "name": "normalizeMetadataAliases",
-    "longname": "normalizeMetadataAliases",
-    "kind": "function",
-    "scope": "global",
-    "file": "src/schemas/portableBundle.js",
-    "line": 126,
-    "description": "Normalize an alias-based metadata object to a predictable string map.",
-    "params": [
-      {
-        "name": "input",
-        "type": "*",
-        "optional": false,
-        "description": ""
-      }
-    ],
-    "returns": [
-      {
-        "type": "Object<string, string>|undefined",
-        "description": ""
-      }
-    ],
-    "examples": 0
-  },
-  {
-    "id": "normalizeMetadataIndex",
-    "name": "normalizeMetadataIndex",
-    "longname": "normalizeMetadataIndex",
-    "kind": "function",
-    "scope": "global",
-    "file": "src/schemas/portableBundle.js",
-    "line": 172,
-    "description": "Preserve a raw metadata lookup map without imposing a rigid record schema here.",
-    "params": [
-      {
-        "name": "input",
-        "type": "*",
-        "optional": false,
-        "description": ""
-      }
-    ],
-    "returns": [
-      {
-        "type": "Object<string, Object>|undefined",
-        "description": ""
-      }
-    ],
-    "examples": 0
-  },
-  {
-    "id": "normalizePortableBundle",
-    "name": "normalizePortableBundle",
-    "longname": "normalizePortableBundle",
-    "kind": "function",
-    "scope": "global",
-    "file": "src/schemas/portableBundle.js",
-    "line": 253,
-    "description": "Normalize a bundle to a predictable, minimally validated shape: Ensures session.id and stringifies known fields.",
-    "params": [
-      {
-        "name": "input",
-        "type": "*",
-        "optional": false,
-        "description": ""
-      }
-    ],
-    "returns": [
-      {
-        "type": "PortableDocumentBundle",
-        "description": ""
-      }
-    ],
-    "examples": 0
-  },
-  {
-    "id": "toObject",
-    "name": "toObject",
-    "longname": "toObject",
-    "kind": "function",
-    "scope": "global",
-    "file": "src/schemas/portableBundle.js",
-    "line": 98,
-    "description": "Coerce unknown input to a plain object (or return null).",
-    "params": [
-      {
-        "name": "v",
-        "type": "*",
-        "optional": false,
-        "description": ""
-      }
-    ],
-    "returns": [
-      {
-        "type": "Object<string, *>|null",
-        "description": ""
-      }
-    ],
-    "examples": 0
-  },
-  {
-    "id": "validatePortableBundle",
-    "name": "validatePortableBundle",
-    "longname": "validatePortableBundle",
-    "kind": "function",
-    "scope": "global",
-    "file": "src/schemas/portableBundle.js",
-    "line": 283,
-    "description": "Validate a normalized (or raw) bundle.",
-    "params": [
-      {
-        "name": "input",
-        "type": "*",
-        "optional": false,
-        "description": ""
-      }
-    ],
-    "returns": [
-      {
-        "type": "ValidateReport",
-        "description": ""
-      }
-    ],
     "examples": 0
   },
   {
@@ -33989,6 +34183,139 @@
     "examples": 0
   },
   {
+    "id": "OLDER_NAMES",
+    "name": "OLDER_NAMES",
+    "longname": "OLDER_NAMES",
+    "kind": "constant",
+    "scope": "global",
+    "file": "src/utils/olderConfigNameWarnings.js",
+    "line": 32,
+    "description": "Each entry answers whether its older name is set to a value that the reader accepts, which is exactly when the older name decides the result.",
+    "params": [],
+    "returns": [],
+    "examples": 0
+  },
+  {
+    "id": "OlderConfigName",
+    "name": "OlderConfigName",
+    "longname": "OlderConfigName",
+    "kind": "typedef",
+    "scope": "global",
+    "file": "src/utils/olderConfigNameWarnings.js",
+    "line": 17,
+    "description": "",
+    "params": [],
+    "returns": [],
+    "examples": 0
+  },
+  {
+    "id": "findOlderConfigNamesInUse",
+    "name": "findOlderConfigNamesInUse",
+    "longname": "findOlderConfigNamesInUse",
+    "kind": "function",
+    "scope": "global",
+    "file": "src/utils/olderConfigNameWarnings.js",
+    "line": 68,
+    "description": "The older names that are in use in a runtime configuration.",
+    "params": [
+      {
+        "name": "runtimeConfig",
+        "type": "*",
+        "optional": false,
+        "description": ""
+      }
+    ],
+    "returns": [
+      {
+        "type": "Array.<OlderConfigName>",
+        "description": ""
+      }
+    ],
+    "examples": 0
+  },
+  {
+    "id": "formatOlderConfigNameWarning",
+    "name": "formatOlderConfigNameWarning",
+    "longname": "formatOlderConfigNameWarning",
+    "kind": "function",
+    "scope": "global",
+    "file": "src/utils/olderConfigNameWarnings.js",
+    "line": 102,
+    "description": "",
+    "params": [
+      {
+        "name": "name",
+        "type": "OlderConfigName",
+        "optional": false,
+        "description": ""
+      }
+    ],
+    "returns": [
+      {
+        "type": "string",
+        "description": ""
+      }
+    ],
+    "examples": 0
+  },
+  {
+    "id": "reported",
+    "name": "reported",
+    "longname": "reported",
+    "kind": "constant",
+    "scope": "global",
+    "file": "src/utils/olderConfigNameWarnings.js",
+    "line": 108,
+    "description": "Older names already reported during this page load.",
+    "params": [],
+    "returns": [],
+    "examples": 0
+  },
+  {
+    "id": "resetOlderConfigNameWarnings",
+    "name": "resetOlderConfigNameWarnings",
+    "longname": "resetOlderConfigNameWarnings",
+    "kind": "function",
+    "scope": "global",
+    "file": "src/utils/olderConfigNameWarnings.js",
+    "line": 140,
+    "description": "For tests: forget what has been reported, as a new page load would.",
+    "params": [],
+    "returns": [],
+    "examples": 0
+  },
+  {
+    "id": "warnAboutOlderConfigNames",
+    "name": "warnAboutOlderConfigNames",
+    "longname": "warnAboutOlderConfigNames",
+    "kind": "function",
+    "scope": "global",
+    "file": "src/utils/olderConfigNameWarnings.js",
+    "line": 117,
+    "description": "Warn in the browser console about each older name in use, once per page load and per name.",
+    "params": [
+      {
+        "name": "runtimeConfig",
+        "type": "*",
+        "optional": false,
+        "description": ""
+      },
+      {
+        "name": "warn",
+        "type": "function",
+        "optional": true,
+        "description": ""
+      }
+    ],
+    "returns": [
+      {
+        "type": "Array.<OlderConfigName>",
+        "description": "The names reported by this call."
+      }
+    ],
+    "examples": 0
+  },
+  {
     "id": "OdvThemeMode",
     "name": "OdvThemeMode",
     "longname": "OdvThemeMode",
@@ -34454,7 +34781,7 @@
     "kind": "typedef",
     "scope": "global",
     "file": "src/utils/pageAssetRenderer.js",
-    "line": 36,
+    "line": 38,
     "description": "",
     "params": [],
     "returns": [],
@@ -34467,7 +34794,7 @@
     "kind": "typedef",
     "scope": "global",
     "file": "src/utils/pageAssetRenderer.js",
-    "line": 30,
+    "line": 32,
     "description": "",
     "params": [],
     "returns": [],
@@ -34480,7 +34807,7 @@
     "kind": "typedef",
     "scope": "global",
     "file": "src/utils/pageAssetRenderer.js",
-    "line": 44,
+    "line": 46,
     "description": "",
     "params": [],
     "returns": [],
@@ -34493,7 +34820,7 @@
     "kind": "function",
     "scope": "instance",
     "file": "src/utils/pageAssetRenderer.js",
-    "line": 669,
+    "line": 671,
     "description": "Render one requested page asset.",
     "params": [
       {
@@ -34524,7 +34851,7 @@
     "kind": "function",
     "scope": "instance",
     "file": "src/utils/pageAssetRenderer.js",
-    "line": 541,
+    "line": 543,
     "description": "Render a PDF page set through the PDF worker pool as one partitioned batch.",
     "params": [
       {
@@ -34555,7 +34882,7 @@
     "kind": "function",
     "scope": "instance",
     "file": "src/utils/pageAssetRenderer.js",
-    "line": 791,
+    "line": 793,
     "description": "Read page geometry only when a persisted asset needs an exact resolution identity.",
     "params": [],
     "returns": [],
@@ -36714,6 +37041,19 @@
     "examples": 0
   },
   {
+    "id": "normalizePdfLayoutValue",
+    "name": "normalizePdfLayoutValue",
+    "longname": "normalizePdfLayoutValue",
+    "kind": "function",
+    "scope": "global",
+    "file": "src/utils/pdfLayout.js",
+    "line": 3,
+    "description": "Normalize a non-negative PDF layout setting without treating numeric zero as missing.",
+    "params": [],
+    "returns": [],
+    "examples": 0
+  },
+  {
     "id": "PdfPageWorkerEntry",
     "name": "PdfPageWorkerEntry",
     "longname": "PdfPageWorkerEntry",
@@ -36766,7 +37106,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/pdfPrebuildPlan.js",
-    "line": 138,
+    "line": 139,
     "description": "",
     "params": [
       {
@@ -36809,7 +37149,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/pdfPrebuildPlan.js",
-    "line": 28,
+    "line": 29,
     "description": "",
     "params": [
       {
@@ -36852,7 +37192,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/pdfPrebuildPlan.js",
-    "line": 289,
+    "line": 307,
     "description": "Create all cacheable all-pages PDF variant descriptors for a runtime config.",
     "params": [
       {
@@ -36883,7 +37223,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/pdfPrebuildPlan.js",
-    "line": 334,
+    "line": 353,
     "description": "",
     "params": [
       {
@@ -36908,7 +37248,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/pdfPrebuildPlan.js",
-    "line": 214,
+    "line": 232,
     "description": "",
     "params": [
       {
@@ -36945,7 +37285,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/pdfPrebuildPlan.js",
-    "line": 189,
+    "line": 203,
     "description": "",
     "params": [
       {
@@ -36965,6 +37305,12 @@
         "type": "string|Object|null",
         "optional": false,
         "description": ""
+      },
+      {
+        "name": "reasonShown",
+        "type": "boolean",
+        "optional": true,
+        "description": ""
       }
     ],
     "returns": [
@@ -36982,7 +37328,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/pdfPrebuildPlan.js",
-    "line": 254,
+    "line": 272,
     "description": "",
     "params": [
       {
@@ -37007,7 +37353,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/pdfPrebuildPlan.js",
-    "line": 269,
+    "line": 287,
     "description": "Return the language dependency that should invalidate an all-pages prebuild run.",
     "params": [
       {
@@ -37038,7 +37384,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/pdfPrebuildPlan.js",
-    "line": 178,
+    "line": 179,
     "description": "",
     "params": [
       {
@@ -37063,11 +37409,36 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/pdfPrebuildPlan.js",
-    "line": 38,
+    "line": 39,
     "description": "",
     "params": [
       {
         "name": "value",
+        "type": "*",
+        "optional": false,
+        "description": ""
+      }
+    ],
+    "returns": [
+      {
+        "type": "boolean",
+        "description": ""
+      }
+    ],
+    "examples": 0
+  },
+  {
+    "id": "isReasonFieldShown",
+    "name": "isReasonFieldShown",
+    "longname": "isReasonFieldShown",
+    "kind": "function",
+    "scope": "global",
+    "file": "src/utils/pdfPrebuildPlan.js",
+    "line": 189,
+    "description": "Whether the print dialog shows the reason field; mirrors usePrintRangeConfig .",
+    "params": [
+      {
+        "name": "cfg",
         "type": "*",
         "optional": false,
         "description": ""
@@ -37088,7 +37459,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/pdfPrebuildPlan.js",
-    "line": 64,
+    "line": 65,
     "description": "",
     "params": [
       {
@@ -37113,7 +37484,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/pdfPrebuildPlan.js",
-    "line": 46,
+    "line": 47,
     "description": "",
     "params": [
       {
@@ -37138,7 +37509,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/pdfPrebuildPlan.js",
-    "line": 88,
+    "line": 89,
     "description": "",
     "params": [
       {
@@ -37169,7 +37540,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/pdfPrebuildPlan.js",
-    "line": 156,
+    "line": 157,
     "description": "",
     "params": [
       {
@@ -37194,7 +37565,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/pdfPrebuildPlan.js",
-    "line": 116,
+    "line": 117,
     "description": "Resolve the string that should be used on physical print output for an option.",
     "params": [
       {
@@ -37231,7 +37602,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/pdfPrebuildPlan.js",
-    "line": 98,
+    "line": 99,
     "description": "",
     "params": [
       {
@@ -37256,7 +37627,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/pdfPrebuildPlan.js",
-    "line": 245,
+    "line": 263,
     "description": "",
     "params": [
       {
@@ -42479,7 +42850,7 @@
     "kind": "typedef",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 158,
+    "line": 159,
     "description": "",
     "params": [],
     "returns": [],
@@ -42492,7 +42863,7 @@
     "kind": "typedef",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 201,
+    "line": 202,
     "description": "",
     "params": [],
     "returns": [],
@@ -42505,7 +42876,7 @@
     "kind": "typedef",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 209,
+    "line": 210,
     "description": "",
     "params": [],
     "returns": [],
@@ -42518,7 +42889,7 @@
     "kind": "typedef",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 193,
+    "line": 194,
     "description": "",
     "params": [],
     "returns": [],
@@ -42531,7 +42902,7 @@
     "kind": "typedef",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 187,
+    "line": 188,
     "description": "",
     "params": [],
     "returns": [],
@@ -42544,7 +42915,7 @@
     "kind": "typedef",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 177,
+    "line": 178,
     "description": "",
     "params": [],
     "returns": [],
@@ -42557,7 +42928,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 993,
+    "line": 994,
     "description": "",
     "params": [
       {
@@ -42618,7 +42989,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 593,
+    "line": 594,
     "description": "",
     "params": [
       {
@@ -42649,7 +43020,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 554,
+    "line": 555,
     "description": "",
     "params": [
       {
@@ -42674,7 +43045,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 564,
+    "line": 565,
     "description": "",
     "params": [
       {
@@ -42711,7 +43082,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 218,
+    "line": 219,
     "description": "Convert a value to a finite number for PDF layout calculations.",
     "params": [
       {
@@ -42736,7 +43107,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 2389,
+    "line": 2390,
     "description": "",
     "params": [
       {
@@ -42761,7 +43132,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1600,
+    "line": 1601,
     "description": "",
     "params": [
       {
@@ -42792,7 +43163,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1646,
+    "line": 1647,
     "description": "",
     "params": [
       {
@@ -42835,7 +43206,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 2374,
+    "line": 2375,
     "description": "",
     "params": [
       {
@@ -42866,7 +43237,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 2360,
+    "line": 2361,
     "description": "Convert a canvas to a PNG data URL without using synchronous toDataURL when browser support for async toBlob is available.",
     "params": [
       {
@@ -42891,7 +43262,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 243,
+    "line": 244,
     "description": "Clamp a numeric value to the inclusive 0..1 range.",
     "params": [
       {
@@ -42916,7 +43287,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 2245,
+    "line": 2246,
     "description": "Collect printable page image URLs without creating or opening a PDF.",
     "params": [
       {
@@ -42953,7 +43324,7 @@
     "kind": "constant",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 2234,
+    "line": 2235,
     "description": "Exact lease entries behind each array returned by collectPrintablePdfSources, so releasePrintablePdfSources releases what was leased rather than one per occurrence.",
     "params": [],
     "returns": [],
@@ -42966,7 +43337,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 250,
+    "line": 251,
     "description": "",
     "params": [],
     "returns": [
@@ -42984,7 +43355,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1184,
+    "line": 1185,
     "description": "",
     "params": [
       {
@@ -43009,7 +43380,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1081,
+    "line": 1082,
     "description": "",
     "params": [
       {
@@ -43046,7 +43417,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 2285,
+    "line": 2286,
     "description": "",
     "params": [
       {
@@ -43083,7 +43454,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1704,
+    "line": 1705,
     "description": "Build a PDF blob from page image URLs and print metadata.",
     "params": [
       {
@@ -43114,7 +43485,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1621,
+    "line": 1622,
     "description": "",
     "params": [
       {
@@ -43157,7 +43528,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 798,
+    "line": 799,
     "description": "",
     "params": [
       {
@@ -43182,7 +43553,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1671,
+    "line": 1672,
     "description": "",
     "params": [
       {
@@ -43207,7 +43578,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 824,
+    "line": 825,
     "description": "",
     "params": [
       {
@@ -43232,7 +43603,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1856,
+    "line": 1857,
     "description": "",
     "params": [
       {
@@ -43263,7 +43634,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1400,
+    "line": 1401,
     "description": "",
     "params": [
       {
@@ -43306,7 +43677,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1423,
+    "line": 1424,
     "description": "",
     "params": [
       {
@@ -43373,7 +43744,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1455,
+    "line": 1456,
     "description": "",
     "params": [
       {
@@ -43416,7 +43787,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1502,
+    "line": 1503,
     "description": "Draw a prepared transparent PNG watermark, scaled to page width and centered.",
     "params": [
       {
@@ -43459,7 +43830,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 360,
+    "line": 361,
     "description": "",
     "params": [
       {
@@ -43490,7 +43861,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 546,
+    "line": 547,
     "description": "",
     "params": [
       {
@@ -43515,7 +43886,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 30,
+    "line": 31,
     "description": "Escape regular-expression metacharacters in literal text.",
     "params": [
       {
@@ -43540,7 +43911,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 2077,
+    "line": 2078,
     "description": "",
     "params": [
       {
@@ -43577,7 +43948,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1195,
+    "line": 1196,
     "description": "",
     "params": [
       {
@@ -43620,7 +43991,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1225,
+    "line": 1226,
     "description": "",
     "params": [
       {
@@ -43663,7 +44034,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 613,
+    "line": 614,
     "description": "",
     "params": [
       {
@@ -43688,7 +44059,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 421,
+    "line": 422,
     "description": "",
     "params": [
       {
@@ -43719,7 +44090,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 965,
+    "line": 966,
     "description": "",
     "params": [
       {
@@ -43750,7 +44121,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1114,
+    "line": 1115,
     "description": "",
     "params": [
       {
@@ -43775,7 +44146,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 2167,
+    "line": 2168,
     "description": "Read printable page image URLs from the document renderer.",
     "params": [
       {
@@ -43812,7 +44183,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 2527,
+    "line": 2528,
     "description": "Generate/print/download a ONE-page PDF of the curtain view: page A with page B clipped at the current border, each page with its own compare transform.",
     "params": [
       {
@@ -43855,7 +44226,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 2513,
+    "line": 2514,
     "description": "Generate/print/download a ONE-page PDF of the overlay view: page B over page A (or swapped) at the current opacity, each page with its own compare transform.",
     "params": [
       {
@@ -43898,7 +44269,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 2410,
+    "line": 2411,
     "description": "Generate/print/download a PDF from the currently rendered active page surface.",
     "params": [
       {
@@ -43929,7 +44300,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 2441,
+    "line": 2442,
     "description": "Generate/print/download a two-page PDF from the currently rendered comparison surfaces.",
     "params": [
       {
@@ -43966,7 +44337,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 2302,
+    "line": 2303,
     "description": "",
     "params": [
       {
@@ -44003,7 +44374,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 637,
+    "line": 638,
     "description": "Parse a small, print-template-oriented HTML subset into styled text lines for jsPDF.",
     "params": [
       {
@@ -44034,7 +44405,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 2349,
+    "line": 2350,
     "description": "Read the URL an surface currently displays (empty for any other element).",
     "params": [
       {
@@ -44059,7 +44430,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 902,
+    "line": 903,
     "description": "",
     "params": [
       {
@@ -44084,7 +44455,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 976,
+    "line": 977,
     "description": "",
     "params": [
       {
@@ -44109,7 +44480,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 923,
+    "line": 924,
     "description": "Convert image to a JPEG data URL only as a last-resort fallback when jsPDF cannot consume the original image element/format directly.",
     "params": [
       {
@@ -44140,7 +44511,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 880,
+    "line": 881,
     "description": "",
     "params": [
       {
@@ -44165,7 +44536,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 437,
+    "line": 438,
     "description": "Check whether an HTML node name should be treated as block-level in PDF text flow.",
     "params": [
       {
@@ -44190,7 +44561,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 294,
+    "line": 295,
     "description": "Check whether a CSS font-weight value should be treated as bold text.",
     "params": [
       {
@@ -44215,7 +44586,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 2110,
+    "line": 2111,
     "description": "Only blob URLs can be revoked mid-print by the provider; data: and remote URLs need no lease (releasing them is a no-op).",
     "params": [
       {
@@ -44240,7 +44611,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1269,
+    "line": 1270,
     "description": "",
     "params": [
       {
@@ -44283,7 +44654,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 2124,
+    "line": 2125,
     "description": "Lease the live blob URL behind an already-rendered surface for the duration of a PDF flow.",
     "params": [
       {
@@ -44320,7 +44691,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 748,
+    "line": 749,
     "description": "",
     "params": [
       {
@@ -44351,7 +44722,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 839,
+    "line": 840,
     "description": "",
     "params": [
       {
@@ -44394,7 +44765,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1684,
+    "line": 1685,
     "description": "Dynamically load the jsPDF constructor used by generated PDF output.",
     "params": [],
     "returns": [
@@ -44412,7 +44783,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1536,
+    "line": 1537,
     "description": "",
     "params": [
       {
@@ -44437,7 +44808,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1163,
+    "line": 1164,
     "description": "",
     "params": [
       {
@@ -44474,7 +44845,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1175,
+    "line": 1176,
     "description": "",
     "params": [
       {
@@ -44511,7 +44882,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1040,
+    "line": 1041,
     "description": "",
     "params": [
       {
@@ -44542,7 +44913,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 230,
+    "line": 231,
     "description": "Normalize canvas/PDF image quality to the browser-supported 0..1 range.",
     "params": [
       {
@@ -44579,7 +44950,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1138,
+    "line": 1139,
     "description": "",
     "params": [
       {
@@ -44604,7 +44975,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1097,
+    "line": 1098,
     "description": "",
     "params": [
       {
@@ -44629,7 +45000,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1069,
+    "line": 1070,
     "description": "",
     "params": [
       {
@@ -44666,7 +45037,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 2272,
+    "line": 2273,
     "description": "Convert a 1-based printable page number into the matching 0-based data URL index.",
     "params": [
       {
@@ -44697,7 +45068,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 336,
+    "line": 337,
     "description": "Parse a supported class-only selector into descendant selector parts.",
     "params": [
       {
@@ -44722,7 +45093,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 399,
+    "line": 400,
     "description": "Parse only the small CSS subset used by trusted print header/footer templates.",
     "params": [
       {
@@ -44747,7 +45118,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 306,
+    "line": 307,
     "description": "",
     "params": [
       {
@@ -44772,7 +45143,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 2482,
+    "line": 2483,
     "description": "Shared body of the overlay and curtain PDF output: the compared pages composed onto ONE page, then generated/printed/downloaded like the single active page.",
     "params": [
       {
@@ -44827,7 +45198,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1876,
+    "line": 1877,
     "description": "Print a generated PDF through a hidden iframe.",
     "params": [
       {
@@ -44852,7 +45223,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 2323,
+    "line": 2324,
     "description": "Extract a safe printable image source from an already-rendered canvas or image element.",
     "params": [
       {
@@ -44877,7 +45248,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 2146,
+    "line": 2147,
     "description": "Release print URL leases held through the document renderer.",
     "params": [
       {
@@ -44908,7 +45279,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 2259,
+    "line": 2260,
     "description": "Release URL leases previously acquired through collectPrintablePdfSources when the consumer is done with them (prebuild/benchmark keep the URLs only while rendering).",
     "params": [
       {
@@ -44939,7 +45310,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 732,
+    "line": 733,
     "description": "",
     "params": [
       {
@@ -44982,7 +45353,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1551,
+    "line": 1552,
     "description": "",
     "params": [
       {
@@ -45013,7 +45384,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1658,
+    "line": 1659,
     "description": "Resolve jsPDF from common ESM/CJS export shapes used by bundlers.",
     "params": [
       {
@@ -45038,7 +45409,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1564,
+    "line": 1565,
     "description": "",
     "params": [
       {
@@ -45063,7 +45434,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1050,
+    "line": 1051,
     "description": "",
     "params": [
       {
@@ -45088,7 +45459,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1577,
+    "line": 1578,
     "description": "Resolve the generated-PDF worker plan.",
     "params": [
       {
@@ -45119,7 +45490,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 515,
+    "line": 516,
     "description": "",
     "params": [
       {
@@ -45144,7 +45515,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 523,
+    "line": 524,
     "description": "",
     "params": [
       {
@@ -45169,7 +45540,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 811,
+    "line": 812,
     "description": "",
     "params": [
       {
@@ -45194,7 +45565,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 500,
+    "line": 501,
     "description": "Keep only the attributes used by the generated-PDF rich text subset.",
     "params": [
       {
@@ -45219,7 +45590,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 486,
+    "line": 487,
     "description": "Keep generated-PDF print templates inside the small rich-text subset consumed below.",
     "params": [
       {
@@ -45244,7 +45615,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1150,
+    "line": 1151,
     "description": "",
     "params": [
       {
@@ -45269,7 +45640,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 2067,
+    "line": 2068,
     "description": "",
     "params": [
       {
@@ -45300,7 +45671,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 449,
+    "line": 450,
     "description": "Remove elements that are never meaningful in generated PDF header/footer text.",
     "params": [
       {
@@ -45325,7 +45696,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 535,
+    "line": 536,
     "description": "Replace one line buffer with another while preserving the original array object.",
     "params": [
       {
@@ -45356,7 +45727,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 369,
+    "line": 370,
     "description": "",
     "params": [
       {
@@ -45387,7 +45758,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 267,
+    "line": 268,
     "description": "Stop PDF generation as soon as the caller cancels the operation.",
     "params": [
       {
@@ -45412,7 +45783,7 @@
     "kind": "function",
     "scope": "inner",
     "file": "src/utils/printPdf.js",
-    "line": 652,
+    "line": 653,
     "description": "",
     "params": [
       {
@@ -45443,7 +45814,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 2093,
+    "line": 2094,
     "description": "",
     "params": [
       {
@@ -45468,7 +45839,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 1350,
+    "line": 1351,
     "description": "",
     "params": [
       {
@@ -45517,7 +45888,7 @@
     "kind": "function",
     "scope": "global",
     "file": "src/utils/printPdf.js",
-    "line": 277,
+    "line": 278,
     "description": "Yield one browser paint opportunity so progress updates become visible before expensive synchronous jsPDF operations run on the main thread.",
     "params": [
       {
@@ -54350,19 +54721,6 @@
     "file": "src/workers/pdfSignatureWorker.js",
     "line": 1,
     "description": "Web worker entry for PDF signature inspection.",
-    "params": [],
-    "returns": [],
-    "examples": 0
-  },
-  {
-    "id": "workerScope",
-    "name": "workerScope",
-    "longname": "workerScope",
-    "kind": "constant",
-    "scope": "global",
-    "file": "src/workers/pdfWorker.js",
-    "line": 9,
-    "description": "OpenDocViewer - generated PDF worker.",
     "params": [],
     "returns": [],
     "examples": 0

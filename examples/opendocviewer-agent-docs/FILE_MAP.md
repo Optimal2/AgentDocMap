@@ -4,17 +4,25 @@ Files are sorted by path. Incoming imports and doclet counts are useful signals 
 
 | File | Lines | In | JSDoc | Confidence | Summary |
 | --- | ---: | ---: | ---: | --- | --- |
-| <code>server/system-log-server.js</code> | 237 | 0 | 5 | high | System Log Server — standalone Express endpoint for structured system logs. |
-| <code>server/user-log-server.js</code> | 271 | 0 | 2 | high | User Action Log Server — standalone Express endpoint for print/user-action audit events. |
+| <code>server/accessLog.js</code> | 33 | 2 | 1 | high | HTTP access log of the log servers: the &quot;combined&quot; line, with a clean address and one line. |
+| <code>server/clientAddress.js</code> | 38 | 3 | 1 | high | The client&#39;s address without a port, for the rate limit key and the log records. |
+| <code>server/headerText.js</code> | 35 | 3 | 2 | high | Text of an HTTP header value as the sender wrote it. |
+| <code>server/logRetention.js</code> | 64 | 2 | 4 | high | Shared best-effort retention for the optional standalone log servers. |
+| <code>server/rateLimitConfig.js</code> | 69 | 2 | 2 | high | Settings and reporting for the per-client rate limits of the log servers. |
+| <code>server/rollingLog.js</code> | 268 | 2 | 14 | high | Daily rotating log files for the log servers, with a write that reports its outcome. |
+| <code>server/system-log-server.js</code> | 294 | 0 | 7 | high | System Log Server — standalone Express endpoint for structured system logs. |
+| <code>server/user-log-server.js</code> | 334 | 0 | 4 | high | User Action Log Server — standalone Express endpoint for print/user-action audit events. |
+| <code>server/userLogOrigin.js</code> | 45 | 1 | 2 | high | Evaluate the browser origin signals used by the user print-log endpoint. |
+| <code>server/userLogPayload.js</code> | 20 | 1 | 2 | high | Compatibility reader for form posts and the viewer&#39;s JSON print envelope. |
 | <code>src/ErrorBoundary.jsx</code> | 297 | 1 | 12 | high | OpenDocViewer — React Error Boundary - Catch unexpected render/runtime errors in descendant components. |
 | <code>src/PerformanceMonitor.jsx</code> | 1346 | 1 | 20 | high | src/PerformanceMonitor.jsx OpenDocViewer — Lightweight Performance HUD - Provide optional, low-impact visibility into runtime performance and viewer state. |
-| <code>src/app/AppBootstrap.jsx</code> | 436 | 1 | 10 | high | Application bootstrap React component. |
+| <code>src/app/AppBootstrap.jsx</code> | 446 | 1 | 10 | high | Application bootstrap React component. |
 | <code>src/app/OpenDocViewer.jsx</code> | 193 | 1 | 5 | high | src/app/OpenDocViewer.jsx Main application shell for the viewer. |
 | <code>src/app/bootConfig.js</code> | 193 | 0 | 6 | high | Runtime boot loader that resolves configuration scripts before React starts. |
 | <code>src/components/CanvasRenderer.jsx</code> | 98 | 1 | 1 | high | OpenDocViewer — Absolute-positioned Canvas Renderer Render a &lt;canvas&gt; element for a single page at a specified zoom factor. |
 | <code>src/components/DocumentConsumerWrapper.jsx</code> | 172 | 1 | 2 | high | OpenDocViewer — Consumer Wrapper for Loader + Viewer Orchestrates the document loading pipeline and the main viewer UI: • Pattern mode: { folder, extension, endNumber } • Explicit-list: { sourceList: \[{ url, ext?, fileIn |
 | <code>src/components/DocumentLoader/DemoControls.jsx</code> | 101 | 0 | 1 | high | OpenDocViewer — Demo Controls for “one-file-per-format” demo mode - Provide a simple control bar: &quot;Total pages/files&quot; + JPG/PNG/TIF/PDF buttons + a new &quot;Mix&quot; button. |
-| <code>src/components/DocumentLoader/DocumentLoader.js</code> | 2196 | 2 | 58 | high | OpenDocViewer — Document loader orchestrator. |
+| <code>src/components/DocumentLoader/DocumentLoader.js</code> | 2198 | 2 | 58 | high | OpenDocViewer — Document loader orchestrator. |
 | <code>src/components/DocumentLoader/LoadPressureDialog.jsx</code> | 172 | 1 | 4 | medium | Large-load warning dialog shown before / during very heavy loading runs. |
 | <code>src/components/DocumentLoader/batchHandler.js</code> | 226 | 0 | 7 | high | OpenDocViewer — Minimal, fair worker-batch scheduler Distribute image-decoding jobs across a pool of Web Workers without monopolizing the main thread. |
 | <code>src/components/DocumentLoader/documentLoaderUtils.js</code> | 389 | 3 | 8 | high | OpenDocViewer — Loader Utilities Helper utilities used by the DocumentLoader pipeline: • Build document URL lists \(pattern mode and demo mode\) • Fetch as ArrayBuffer \(with optional AbortSignal\) • Page counting \(PDF / TIF |
@@ -45,8 +53,8 @@ Files are sorted by path. Incoming imports and doclet counts are useful signals 
 | <code>src/components/DocumentToolbar/printFieldLabels.js</code> | 22 | 1 | 1 | high | Visible label for an optional/required print-dialog field. |
 | <code>src/components/DocumentToolbar/printRangeDialogHelpers.js</code> | 149 | 2 | 9 | high | Pure helpers and shared constants for the print-range dialog. |
 | <code>src/components/DocumentToolbar/usePdfPrebuildAllPages.js</code> | 367 | 1 | 8 | high | Background prebuild/cache for configured &quot;all pages&quot; generated-PDF variants. |
-| <code>src/components/DocumentToolbar/usePrintPipeline.js</code> | 800 | 2 | 20 | high | File: src/components/DocumentToolbar/usePrintPipeline.js The ONE print pipeline of the viewer: print dialog target, print options, user print log, the direct-versus-generated-PDF... |
-| <code>src/components/DocumentToolbar/usePrintRangeDialog.js</code> | 671 | 1 | 15 | high | Hook + helpers for PrintRangeDialog. |
+| <code>src/components/DocumentToolbar/usePrintPipeline.js</code> | 802 | 2 | 20 | high | File: src/components/DocumentToolbar/usePrintPipeline.js The ONE print pipeline of the viewer: print dialog target, print options, user print log, the direct-versus-generated-PDF... |
+| <code>src/components/DocumentToolbar/usePrintRangeDialog.js</code> | 683 | 1 | 15 | high | Hook + helpers for PrintRangeDialog. |
 | <code>src/components/DocumentViewer/CompareCurtainButton.jsx</code> | 55 | 2 | 1 | high | Entry to the curtain view \(CompareCurtainView.jsx\), shown in the compare toolbar and in the overlay view&#39;s toolbar. |
 | <code>src/components/DocumentViewer/CompareCurtainView.jsx</code> | 445 | 1 | 5 | high | Curtain view of the compare mode: the two calibrated pages in one coordinate space, page A \(left/primary\) below and page B \(right/compare\) above, page B clipped to one side of a draggable border. |
 | <code>src/components/DocumentViewer/CompareOverlayView.jsx</code> | 560 | 1 | 5 | high | Overlay view of the compare mode: the two compared pages stacked in one coordinate space, page A \(left/primary\) below and page B \(right/compare\) above, so differences show through. |
@@ -63,7 +71,7 @@ Files are sorted by path. Incoming imports and doclet counts are useful signals 
 | <code>src/components/DocumentViewer/hooks/useViewerEffects.js</code> | 123 | 4 | 8 | high | File: src/components/DocumentViewer/hooks/useViewerEffects.js Cross-cutting viewer effects. |
 | <code>src/components/DocumentViewer/hooks/useViewerKeyboardNavigation.js</code> | 311 | 1 | 10 | high | Global keyboard navigation, zoom, rotation, and selection shortcuts for DocumentViewer. |
 | <code>src/components/DocumentViewer/hooks/useViewerZoomEffects.js</code> | 162 | 1 | 4 | high | Zoom, resize, wheel, print-shortcut, and initial-fit effects for DocumentViewer. |
-| <code>src/components/DocumentViewer/useDocumentViewer.js</code> | 1918 | 1 | 58 | high | Primary viewer-state hook. |
+| <code>src/components/DocumentViewer/useDocumentViewer.js</code> | 1925 | 1 | 59 | high | Primary viewer-state hook. |
 | <code>src/components/ImageRenderer.jsx</code> | 121 | 1 | 2 | high | OpenDocViewer — Absolute-positioned Image Renderer Render a single page image at a specified zoom factor. |
 | <code>src/components/KeyTips.jsx</code> | 103 | 1 | 5 | high | Key tips: hold \`?\` and every toolbar button shows its name in a small label under it, so the icons can be learnt without hovering them one by one; release the key and the labels go. |
 | <code>src/components/LoadingMessage.jsx</code> | 90 | 1 | 1 | high | OpenDocViewer — Loading / Error Message Simple, accessible message block that reflects the current page load status. |
@@ -80,7 +88,7 @@ Files are sorted by path. Incoming imports and doclet counts are useful signals 
 | <code>src/components/SignatureDetailsDialog.jsx</code> | 684 | 1 | 14 | high | Signature details dialog \(browser integrity\). |
 | <code>src/components/SignatureOverviewButton.jsx</code> | 68 | 1 | 2 | high | Toolbar signature overview button. |
 | <code>src/components/SignatureOverviewDialog.jsx</code> | 302 | 1 | 3 | high | Signature overview dialog, opened from the toolbar overview button. |
-| <code>src/components/SignatureStatusBadge.jsx</code> | 110 | 1 | 2 | high | Small signature symbol shown next to a document&#39;s &quot;DOK n&quot; label \(variant \`document\`, aggregated over all files of the document\) and on every page thumbnail of a signed file \(variant \`thumbnail\`\). |
+| <code>src/components/SignatureStatusBadge.jsx</code> | 110 | 1 | 2 | high | Small signature symbol shown next to a document&#39;s &quot;Dok {document}&quot; label \(variant \`document\`, aggregated over all files of the document\) and on every page thumbnail of a signed file \(variant \`thumbnail\`\). |
 | <code>src/components/SignatureTime.jsx</code> | 33 | 2 | 1 | high | Local-time rendering of a signature-related ISO time \(signing, validation, certificate validity\) for the signature dialogs: &quot;2022-04-27 19:55&quot; as text, the exact UTC ISO value in the title attribute and \`dateTime\`. |
 | <code>src/components/ViewerProblemNotice.jsx</code> | 285 | 1 | 4 | high | OpenDocViewer — configurable viewer-level problem notice. |
 | <code>src/components/common/StatusLed.jsx</code> | 36 | 3 | 1 | high | Small reusable LED-style status indicator. |
@@ -102,18 +110,17 @@ Files are sorted by path. Incoming imports and doclet counts are useful signals 
 | <code>src/hooks/usePdfSignatureReports.js</code> | 119 | 1 | 3 | high | Browser PDF signature inspection. |
 | <code>src/hooks/useReadAloud.js</code> | 242 | 1 | 5 | high | Read the selected recognised text aloud: the state behind the page&#39;s context menu entry and the toolbar&#39;s &quot;Reading language&quot; section \(contexts/readAloudContext.js\). |
 | <code>src/i18n.js</code> | 567 | 3 | 21 | high | i18n bootstrap for OpenDocViewer. |
-| <code>src/index.jsx</code> | 67 | 0 | 2 | high | OpenDocViewer — Application Entry - Load global styles \(CSS variables + layout\). |
+| <code>src/index.jsx</code> | 73 | 0 | 2 | high | OpenDocViewer — Application Entry - Load global styles \(CSS variables + layout\). |
 | <code>src/integrations/bootstrapRuntime.js</code> | 457 | 1 | 12 | high | Startup mode detection and host-integration entry point. |
-| <code>src/integrations/integrationSettings.js</code> | 232 | 3 | 12 | high | Per-integration settings carried by a Portable Document Bundle. |
+| <code>src/integrations/integrationSettings.js</code> | 232 | 4 | 12 | high | Per-integration settings carried by a Portable Document Bundle. |
 | <code>src/integrations/normalizePortableBundle.js</code> | 833 | 1 | 9 | high | Normalizes multiple host payload shapes into the project&#39;s neutral portable bundle shape. |
 | <code>src/integrations/ompThemeBridge.js</code> | 203 | 1 | 7 | high | Opt-in cross-origin theme bridge for the shared OMP theme preference. |
 | <code>src/integrations/parentBridge.js</code> | 182 | 1 | 9 | high | Same-origin parent-window bootstrap adapter. |
 | <code>src/integrations/sessionToken.js</code> | 142 | 1 | 6 | high | OpenDocViewer — Session Token Reader \(Browser-only\) Decode an optional Base64/URL-safe Base64 JSON payload provided via the query string: ?sessiondata=&lt;base64&gt; This enables hosts to pass a compact, self-contained “portab |
-| <code>src/integrations/sessionUrl.js</code> | 166 | 1 | 4 | high | Fetch a host-prepared Portable Document Bundle from a short URL query value. |
+| <code>src/integrations/sessionUrl.js</code> | 201 | 1 | 5 | high | Fetch a host-prepared Portable Document Bundle from a short URL query value. |
 | <code>src/integrations/urlParams.js</code> | 110 | 1 | 5 | high | OpenDocViewer — URL Parameter Reader \(Browser-only\) Read a minimal set of query parameters to bootstrap the viewer in “pattern mode”, i.e. |
-| <code>src/integrations/viewerEvents.js</code> | 192 | 0 | 8 | high | OpenDocViewer — Tiny Event Emitter/Listener Utilities \(Browser-only\) Lightweight helpers for broadcasting and listening to app-level DOM events. |
-| <code>src/logging/systemLogger.js</code> | 471 | 47 | 31 | high | src/logging/systemLogger.js OpenDocViewer — Frontend Logging Controller \(ESM\) - Provide a small, dependency-light logging facade for the browser app. |
-| <code>src/logging/userLogger.js</code> | 311 | 2 | 17 | high | UserLogController — client-side controller for **user** print logs \(backend-agnostic\). |
+| <code>src/logging/systemLogger.js</code> | 471 | 46 | 31 | high | src/logging/systemLogger.js OpenDocViewer — Frontend Logging Controller \(ESM\) - Provide a small, dependency-light logging facade for the browser app. |
+| <code>src/logging/userLogger.js</code> | 327 | 2 | 18 | high | UserLogController — client-side controller for **user** print logs \(backend-agnostic\). |
 | <code>src/manual-page/ManualPage.jsx</code> | 111 | 1 | 3 | high | The stand-alone manual page \(served as \`&lt;ODV base&gt;/manual/\`\): a header with the page title and the viewer&#39;s own theme and language menus, and the shared manual view filling the rest. |
 | <code>src/manual-page/main.jsx</code> | 27 | 0 | 0 | high | Entry of the stand-alone manual page \(manual/index.html\). |
 | <code>src/manual-page/mountManualPage.jsx</code> | 40 | 1 | 1 | high | Mount the stand-alone manual page into a container, the way src/index.jsx mounts the viewer: apply the shared theme and toolbar density to the document before the first render, then render the page inside the viewer&#39;s Th |
@@ -140,7 +147,7 @@ Files are sorted by path. Incoming imports and doclet counts are useful signals 
 | <code>src/ocr/resultCache.js</code> | 96 | 0 | 3 | high | In-memory cache of OCR outcomes, one entry per document page. |
 | <code>src/ocr/setup.js</code> | 172 | 1 | 6 | high | Builds an OCR engine from the runtime configuration and reports configuration problems once. |
 | <code>src/ocr/window.js</code> | 73 | 0 | 4 | high | Which pages are queued for OCR: the visible page\(s\) and a fixed number of neighbours, and, when the site asks for the whole document, the rest after them. |
-| <code>src/schemas/portableBundle.js</code> | 363 | 0 | 18 | high | OpenDocViewer — Portable Document Bundle Schema &amp; Helpers \(ESM\) Define the canonical shape for a portable, serializable set of documents and provide minimal, dependency-free helpers to validate and normalize input. |
+| <code>src/schemas/portableBundle.js</code> | 73 | 0 | 5 | high | OpenDocViewer — Portable Document Bundle Schema \(ESM\) Define the canonical shape \(JSDoc typedefs\) and the schema version for a portable, serializable set of documents. |
 | <code>src/types/jsdoc-types.js</code> | 102 | 0 | 13 | high | Centralized JSDoc-only type and callback definitions. |
 | <code>src/utils/canvasBitmapSize.js</code> | 31 | 1 | 1 | high | Resize the bitmap of a canvas only when the requested size differs from its current size. |
 | <code>src/utils/compareCurtain.js</code> | 187 | 2 | 13 | high | File: src/utils/compareCurtain.js Curtain view of the compare mode: the two calibrated pages in one coordinate space, page A \(left/primary\) below and page B \(right/compare\) above,... |
@@ -170,13 +177,15 @@ Files are sorted by path. Incoming imports and doclet counts are useful signals 
 | <code>src/utils/ocrSearchPlacement.js</code> | 258 | 1 | 16 | high | Where the toolbar&#39;s OCR search field goes and how wide it is \(components/DocumentToolbar/OcrSearchBar.jsx\): inline in the toolbar, grown out of the button to the right into the room the toolbar&#39;s spacer leaves, or, when |
 | <code>src/utils/ocrStatus.js</code> | 108 | 1 | 4 | high | The per-page OCR status the toolbar&#39;s search button shows \(components/DocumentToolbar/OcrSearchBar.jsx\): one key per outcome state, its English fallback text \(public/locales/&lt;lng&gt;/common.json, \`ocr.status\`\) and the LED s |
 | <code>src/utils/ocrTextLayout.js</code> | 283 | 3 | 13 | high | Geometry of the OCR text layer \(components/OcrTextLayer.jsx\): the recognised words grouped into lines, where each line and word goes inside the page frame, and how the invisible text is fitted to the recognised boxes. |
+| <code>src/utils/olderConfigNameWarnings.js</code> | 143 | 1 | 7 | high | Console warnings for the older configuration names that still take precedence over the documented key. |
 | <code>src/utils/ompThemePreference.js</code> | 390 | 4 | 22 | high | Shared OMP theme preference adapter \(OMP_THEME_PREFERENCE\). |
-| <code>src/utils/pageAssetRenderer.js</code> | 929 | 2 | 6 | high | OpenDocViewer — hybrid page-asset renderer. |
+| <code>src/utils/pageAssetRenderer.js</code> | 931 | 2 | 6 | high | OpenDocViewer — hybrid page-asset renderer. |
 | <code>src/utils/pageAssetStore.js</code> | 751 | 1 | 33 | high | OpenDocViewer — Browser-side rendered page-asset storage. |
 | <code>src/utils/pageAssetWorkerPool.js</code> | 322 | 1 | 15 | high | OpenDocViewer — Page-asset worker pool. |
 | <code>src/utils/pdfBenchmark.js</code> | 970 | 1 | 36 | high | Opt-in generated-PDF benchmark tooling. |
+| <code>src/utils/pdfLayout.js</code> | 8 | 2 | 1 | high | Normalize a non-negative PDF layout setting without treating numeric zero as missing. |
 | <code>src/utils/pdfPageWorkerPool.js</code> | 479 | 2 | 3 | high | OpenDocViewer - PDF page-image worker pool. |
-| <code>src/utils/pdfPrebuildPlan.js</code> | 343 | 2 | 17 | high | OpenDocViewer - generated-PDF prebuild planning. |
+| <code>src/utils/pdfPrebuildPlan.js</code> | 362 | 2 | 18 | high | OpenDocViewer - generated-PDF prebuild planning. |
 | <code>src/utils/pdfPrintCacheKey.js</code> | 117 | 4 | 8 | high | Generated-PDF cache key helpers. |
 | <code>src/utils/pdfResolution.js</code> | 133 | 6 | 7 | high | Pure, per-page PDF display resolution policy shared by browser and worker renderers. |
 | <code>src/utils/pdfResolutionRuntime.js</code> | 51 | 6 | 4 | high | Browser measurements and diagnostic state kept outside the pure PDF resolution policy. |
@@ -192,7 +201,7 @@ Files are sorted by path. Incoming imports and doclet counts are useful signals 
 | <code>src/utils/printCore.js</code> | 1058 | 3 | 39 | high | Core print coordinator for the frontend. |
 | <code>src/utils/printDom.js</code> | 473 | 1 | 19 | high | OpenDocViewer — Print DOM Builder Safely construct the print iframe’s DOM using DOM APIs \(no doc.write\), wait until images reach a terminal state, then trigger window.print\(\). |
 | <code>src/utils/printParse.js</code> | 103 | 1 | 3 | high | OpenDocViewer — Print Sequence Parser Parse a user-entered &quot;Custom pages&quot; string into a sequence of page indices. |
-| <code>src/utils/printPdf.js</code> | 2530 | 3 | 101 | high | OpenDocViewer — Generated PDF print backend. |
+| <code>src/utils/printPdf.js</code> | 2531 | 3 | 101 | high | OpenDocViewer — Generated PDF print backend. |
 | <code>src/utils/printSanitize.js</code> | 23 | 4 | 1 | high | OpenDocViewer — Print Sanitization Helpers Small helpers for URL and HTML value safety used by printing modules. |
 | <code>src/utils/printTemplate.js</code> | 809 | 3 | 34 | high | OpenDocViewer — Print Templating &amp; Tokens Provide token context generation and safe token substitution where values are HTML-escaped before insertion into admin-authored print header/footer templates. |
 | <code>src/utils/printUtils.js</code> | 138 | 2 | 18 | high | OpenDocViewer — Print Utilities Facade Re-export the stable print API and parser from the internal modules. |
@@ -202,7 +211,7 @@ Files are sorted by path. Incoming imports and doclet counts are useful signals 
 | <code>src/utils/reloadCacheIdentity.js</code> | 158 | 2 | 7 | high | Stable identities for the opt-in reload/document cache. |
 | <code>src/utils/renderDecodeBenchmark.js</code> | 1212 | 1 | 28 | high | Opt-in render/decode benchmark tooling for the already loaded document session. |
 | <code>src/utils/renderSurfaceBounds.js</code> | 52 | 2 | 2 | high | OpenDocViewer — conservative raster surface bounds. |
-| <code>src/utils/runtimeConfig.js</code> | 1311 | 37 | 91 | high | Runtime configuration helpers. |
+| <code>src/utils/runtimeConfig.js</code> | 1311 | 38 | 91 | high | Runtime configuration helpers. |
 | <code>src/utils/sourceTempStore.js</code> | 913 | 1 | 40 | high | OpenDocViewer — Browser-side temporary source storage. |
 | <code>src/utils/speech.js</code> | 225 | 1 | 10 | high | Reading text aloud with the browser&#39;s speech synthesis \(Web Speech API, \`window.speechSynthesis\`\). |
 | <code>src/utils/standardManual.js</code> | 569 | 1 | 25 | high | Filter and sanitize the bundled standard manual for a supplied runtime config. |
@@ -214,7 +223,7 @@ Files are sorted by path. Incoming imports and doclet counts are useful signals 
 | <code>src/workers/imageWorker.js</code> | 513 | 0 | 1 | high | OpenDocViewer — image / TIFF worker. |
 | <code>src/workers/pdfPageWorker.js</code> | 441 | 0 | 1 | high | OpenDocViewer - PDF page image worker. |
 | <code>src/workers/pdfSignatureWorker.js</code> | 80 | 0 | 2 | high | Web worker entry for PDF signature inspection. |
-| <code>src/workers/pdfWorker.js</code> | 673 | 0 | 1 | high | OpenDocViewer - generated PDF worker. |
+| <code>src/workers/pdfWorker.js</code> | 675 | 0 | 0 | high | OpenDocViewer - generated PDF worker. |
 
 ## Parse Errors
 

@@ -2,10 +2,16 @@
 
 ## server
 
-File count: 2. Line count: 508. JSDoc symbol count: 7.
+File count: 10. Line count: 1200. JSDoc symbol count: 39.
 
-- `server/system-log-server.js` - System Log Server — standalone Express endpoint for structured system logs.
-- `server/user-log-server.js` - User Action Log Server — standalone Express endpoint for print/user\-action audit events.
+- `server/rollingLog.js` - Daily rotating log files for the log servers, with a write that reports its outcome.
+- `server/logRetention.js` - Shared best\-effort retention for the optional standalone log servers.
+- `server/headerText.js` - Text of an HTTP header value as the sender wrote it.
+- `server/clientAddress.js` - The client's address without a port, for the rate limit key and the log records.
+- `server/rateLimitConfig.js` - Settings and reporting for the per\-client rate limits of the log servers.
+- `server/accessLog.js` - HTTP access log of the log servers: the "combined" line, with a clean address and one line.
+- `server/userLogOrigin.js` - Evaluate the browser origin signals used by the user print\-log endpoint.
+- `server/userLogPayload.js` - Compatibility reader for form posts and the viewer's JSON print envelope.
 
 ## src/ErrorBoundary.jsx
 
@@ -21,7 +27,7 @@ File count: 1. Line count: 1346. JSDoc symbol count: 20.
 
 ## src/app
 
-File count: 3. Line count: 822. JSDoc symbol count: 21.
+File count: 3. Line count: 832. JSDoc symbol count: 21.
 
 - `src/app/AppBootstrap.jsx` - Application bootstrap React component.
 - `src/app/OpenDocViewer.jsx` - src/app/OpenDocViewer.jsx Main application shell for the viewer.
@@ -42,7 +48,7 @@ File count: 22. Line count: 8637. JSDoc symbol count: 121.
 
 ## src/components/DocumentLoader
 
-File count: 8. Line count: 4133. JSDoc symbol count: 106.
+File count: 8. Line count: 4135. JSDoc symbol count: 106.
 
 - `src/components/DocumentLoader/documentLoaderUtils.js` - OpenDocViewer — Loader Utilities Helper utilities used by the DocumentLoader pipeline: • Build document URL lists \(pattern mode and demo mode\) • Fetch as ArrayBuffer \(with optional AbortSignal\) • Page counting \(PDF / TIF
 - `src/components/DocumentLoader/DocumentLoader.js` - OpenDocViewer — Document loader orchestrator.
@@ -55,7 +61,7 @@ File count: 8. Line count: 4133. JSDoc symbol count: 106.
 
 ## src/components/DocumentToolbar
 
-File count: 21. Line count: 8229. JSDoc symbol count: 117.
+File count: 21. Line count: 8243. JSDoc symbol count: 117.
 
 - `src/components/DocumentToolbar/printRangeDialogHelpers.js` - Pure helpers and shared constants for the print\-range dialog.
 - `src/components/DocumentToolbar/usePrintPipeline.js` - File: src/components/DocumentToolbar/usePrintPipeline.js The ONE print pipeline of the viewer: print dialog target, print options, user print log, the direct\-versus\-generated\-PDF...
@@ -68,7 +74,7 @@ File count: 21. Line count: 8229. JSDoc symbol count: 117.
 
 ## src/components/DocumentViewer
 
-File count: 17. Line count: 7787. JSDoc symbol count: 157.
+File count: 17. Line count: 7794. JSDoc symbol count: 158.
 
 - `src/components/DocumentViewer/hooks/useViewerEffects.js` - File: src/components/DocumentViewer/hooks/useViewerEffects.js Cross\-cutting viewer effects.
 - `src/components/DocumentViewer/useDocumentViewer.js` - Primary viewer\-state hook.
@@ -132,26 +138,26 @@ File count: 1. Line count: 567. JSDoc symbol count: 21.
 
 ## src/index.jsx
 
-File count: 1. Line count: 67. JSDoc symbol count: 2.
+File count: 1. Line count: 73. JSDoc symbol count: 2.
 
 - `src/index.jsx` - OpenDocViewer — Application Entry \- Load global styles \(CSS variables \+ layout\).
 
 ## src/integrations
 
-File count: 9. Line count: 2517. JSDoc symbol count: 72.
+File count: 8. Line count: 2360. JSDoc symbol count: 65.
 
 - `src/integrations/integrationSettings.js` - Per\-integration settings carried by a Portable Document Bundle.
 - `src/integrations/ompThemeBridge.js` - Opt\-in cross\-origin theme bridge for the shared OMP theme preference.
 - `src/integrations/parentBridge.js` - Same\-origin parent\-window bootstrap adapter.
 - `src/integrations/normalizePortableBundle.js` - Normalizes multiple host payload shapes into the project's neutral portable bundle shape.
 - `src/integrations/bootstrapRuntime.js` - Startup mode detection and host\-integration entry point.
-- `src/integrations/viewerEvents.js` - OpenDocViewer — Tiny Event Emitter/Listener Utilities \(Browser\-only\) Lightweight helpers for broadcasting and listening to app\-level DOM events.
 - `src/integrations/sessionToken.js` - OpenDocViewer — Session Token Reader \(Browser\-only\) Decode an optional Base64/URL\-safe Base64 JSON payload provided via the query string: ?sessiondata\=&lt;base64&gt; This enables hosts to pass a compact, self\-contained “portab
 - `src/integrations/sessionUrl.js` - Fetch a host\-prepared Portable Document Bundle from a short URL query value.
+- `src/integrations/urlParams.js` - OpenDocViewer — URL Parameter Reader \(Browser\-only\) Read a minimal set of query parameters to bootstrap the viewer in “pattern mode”, i.e.
 
 ## src/logging
 
-File count: 2. Line count: 782. JSDoc symbol count: 48.
+File count: 2. Line count: 798. JSDoc symbol count: 49.
 
 - `src/logging/systemLogger.js` - src/logging/systemLogger.js OpenDocViewer — Frontend Logging Controller \(ESM\) \- Provide a small, dependency\-light logging facade for the browser app.
 - `src/logging/userLogger.js` - UserLogController — client\-side controller for \*\*user\*\* print logs \(backend\-agnostic\).
@@ -179,9 +185,9 @@ File count: 23. Line count: 4963. JSDoc symbol count: 209.
 
 ## src/schemas
 
-File count: 1. Line count: 363. JSDoc symbol count: 18.
+File count: 1. Line count: 73. JSDoc symbol count: 5.
 
-- `src/schemas/portableBundle.js` - OpenDocViewer — Portable Document Bundle Schema & Helpers \(ESM\) Define the canonical shape for a portable, serializable set of documents and provide minimal, dependency\-free helpers to validate and normalize input.
+- `src/schemas/portableBundle.js` - OpenDocViewer — Portable Document Bundle Schema \(ESM\) Define the canonical shape \(JSDoc typedefs\) and the schema version for a portable, serializable set of documents.
 
 ## src/types
 
@@ -191,7 +197,7 @@ File count: 1. Line count: 102. JSDoc symbol count: 13.
 
 ## src/utils
 
-File count: 69. Line count: 24993. JSDoc symbol count: 1041.
+File count: 71. Line count: 25166. JSDoc symbol count: 1050.
 
 - `src/utils/runtimeConfig.js` - Runtime configuration helpers.
 - `src/utils/documentLoadingConfig.js` - OpenDocViewer — runtime helpers for fetch/render/memory policies.
@@ -204,9 +210,9 @@ File count: 69. Line count: 24993. JSDoc symbol count: 1041.
 
 ## src/workers
 
-File count: 4. Line count: 1707. JSDoc symbol count: 5.
+File count: 4. Line count: 1709. JSDoc symbol count: 4.
 
-- `src/workers/pdfWorker.js` - OpenDocViewer \- generated PDF worker.
 - `src/workers/imageWorker.js` - OpenDocViewer — image / TIFF worker.
 - `src/workers/pdfPageWorker.js` - OpenDocViewer \- PDF page image worker.
 - `src/workers/pdfSignatureWorker.js` - Web worker entry for PDF signature inspection.
+- `src/workers/pdfWorker.js` - OpenDocViewer \- generated PDF worker.

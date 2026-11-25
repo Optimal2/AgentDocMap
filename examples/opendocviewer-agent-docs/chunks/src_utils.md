@@ -1,6 +1,6 @@
 # OpenDocViewer / src/utils
 
-File count: 69. Line count: 24993. JSDoc symbol count: 1041.
+File count: 71. Line count: 25166. JSDoc symbol count: 1050.
 
 ## src/utils/canvasBitmapSize.js
 
@@ -462,6 +462,22 @@ Symbols:
 - `layoutOcrLines` (function) - Place the words of an outcome inside an unrotated frame of frameWidth × frameHeight CSS px, grouped into lines.
 - `isOcrLayerSelection` (function) - Whether a selection lies within OCR text layers only \(one or several pages\), so that its text can be read line by line and a copy of it replaced.
 
+## src/utils/olderConfigNameWarnings.js
+
+Console warnings for the older configuration names that still take precedence over the documented key.
+
+Exports: `findOlderConfigNamesInUse`, `formatOlderConfigNameWarning`, `warnAboutOlderConfigNames`, `resetOlderConfigNameWarnings`
+
+Symbols:
+
+- `OlderConfigName` (typedef) - No description.
+- `OLDER_NAMES` (constant) - Each entry answers whether its older name is set to a value that the reader accepts, which is exactly when the older name decides the result.
+- `findOlderConfigNamesInUse` (function) - The older names that are in use in a runtime configuration.
+- `formatOlderConfigNameWarning` (function) - No description.
+- `reported` (constant) - Older names already reported during this page load.
+- `warnAboutOlderConfigNames` (function) - Warn in the browser console about each older name in use, once per page load and per name.
+- `resetOlderConfigNameWarnings` (function) - For tests: forget what has been reported, as a new page load would.
+
 ## src/utils/ompThemePreference.js
 
 Shared OMP theme preference adapter \(OMP\_THEME\_PREFERENCE\).
@@ -571,6 +587,16 @@ Symbols:
 - `createScenarioLabel` (function) - No description.
 - `createScenarioKey` (function) - No description.
 
+## src/utils/pdfLayout.js
+
+Normalize a non\-negative PDF layout setting without treating numeric zero as missing.
+
+Exports: `normalizePdfLayoutValue`
+
+Symbols:
+
+- `normalizePdfLayoutValue` (function) - Normalize a non\-negative PDF layout setting without treating numeric zero as missing.
+
 ## src/utils/pdfPageWorkerPool.js
 
 OpenDocViewer \- PDF page\-image worker pool.
@@ -591,7 +617,7 @@ OpenDocViewer \- generated\-PDF prebuild planning.
 
 Exports: `normalizePdfPrebuildAllPagesConfig`, `getPdfPrebuildAllPagesLanguageDependency`, `createPdfPrebuildAllPagesVariants`, `createPdfPrebuildVariantKey`
 
-Local imports: `src/utils/localizedValue.js`, `src/utils/pdfPrintCacheKey.js`
+Local imports: `src/utils/localizedValue.js`, `src/utils/pdfPrintCacheKey.js`, `src/integrations/integrationSettings.js`
 
 Symbols:
 
@@ -605,8 +631,8 @@ Symbols:
 - `buildSelectedOptionDetails` (function) - No description.
 - `normalizePdfPrebuildAllPagesConfig` (function) - No description.
 - `getReasonOptions` (function) - No description.
+- `isReasonFieldShown` (function) - Whether the print dialog shows the reason field; mirrors usePrintRangeConfig .
 - `createReasonVariants` (function) - No description.
-- `createPrintFormatVariant` (function) - No description.
 
 ## src/utils/pdfPrintCacheKey.js
 
@@ -892,7 +918,7 @@ OpenDocViewer — Generated PDF print backend.
 
 Exports: `createPrintPdfBlob`, `downloadPdfBlob`, `printPdfBlob`, `collectPrintablePdfSources`, `releasePrintablePdfSources`, `createPdfFromDocumentHandle`, `handlePdfOutput`, `handlePdfCurrent`, `handlePdfCurrentComparison`, `handlePdfCompareOverlay`, `handlePdfCompareCurtain`
 
-Local imports: `src/logging/systemLogger.js`, `src/utils/printTemplate.js`, `src/utils/localizedValue.js`, `src/utils/printSanitize.js`, `src/utils/printWatermark.js`, `src/utils/documentLoadingConfig.js`, `src/utils/pdfWorkerDispatcher.js`, `src/utils/printCore.js`, `src/utils/objectUrlRegistry.js`
+Local imports: `src/logging/systemLogger.js`, `src/utils/printTemplate.js`, `src/utils/localizedValue.js`, `src/utils/printSanitize.js`, `src/utils/printWatermark.js`, `src/utils/documentLoadingConfig.js`, `src/utils/pdfWorkerDispatcher.js`, `src/utils/printCore.js`, `src/utils/objectUrlRegistry.js`, `src/utils/pdfLayout.js`
 
 Symbols:
 

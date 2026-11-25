@@ -22,23 +22,27 @@
 - `dev:user-log`: `cross-env NODE_ENV=development PORT=3002 node server/user-log-server.js`
 - `dev:logs`: `concurrently -n sys,user -c auto "npm run dev:system-log" "npm run dev:user-log"`
 - `dev:both`: `concurrently -n app,logs -c auto "npm run dev" "npm run dev:logs"`
-- `// release helpers`: `Run one of the release:* scripts, then push with --follow-tags.`
-- `release:patch`: `npm version patch -m "chore(release): %s"`
-- `release:minor`: `npm version minor -m "chore(release): %s"`
-- `release:major`: `npm version major -m "chore(release): %s"`
 
 ## Runtime Entrypoints
 
+- `server/accessLog.js` - HTTP access log of the log servers: the "combined" line, with a clean address and one line.
+- `server/clientAddress.js` - The client's address without a port, for the rate limit key and the log records.
+- `server/headerText.js` - Text of an HTTP header value as the sender wrote it.
+- `server/logRetention.js` - Shared best\-effort retention for the optional standalone log servers.
+- `server/rateLimitConfig.js` - Settings and reporting for the per\-client rate limits of the log servers.
+- `server/rollingLog.js` - Daily rotating log files for the log servers, with a write that reports its outcome.
 - `server/system-log-server.js` - System Log Server — standalone Express endpoint for structured system logs.
 - `server/user-log-server.js` - User Action Log Server — standalone Express endpoint for print/user\-action audit events.
+- `server/userLogOrigin.js` - Evaluate the browser origin signals used by the user print\-log endpoint.
+- `server/userLogPayload.js` - Compatibility reader for form posts and the viewer's JSON print envelope.
 - `src/index.jsx` - OpenDocViewer — Application Entry \- Load global styles \(CSS variables \+ layout\).
 - `src/manual-page/main.jsx` - Entry of the stand\-alone manual page \(manual/index.html\).
 - `src/ocr/index.js` - Entry point of the OCR module: the file the viewer imports while OCR is on, and only through \`src/utils/ocrLoader.js\` with \`import\(\)\` after \`isOcrEnabled\(\)\` returned true.
 
 ## Import Hubs
 
-- `src/logging/systemLogger.js`: 47 incoming local imports
-- `src/utils/runtimeConfig.js`: 37 incoming local imports
+- `src/logging/systemLogger.js`: 46 incoming local imports
+- `src/utils/runtimeConfig.js`: 38 incoming local imports
 - `src/utils/documentLoadingConfig.js`: 14 incoming local imports
 - `src/contexts/viewerContext.js`: 13 incoming local imports
 - `src/utils/compareTransform.js`: 13 incoming local imports
@@ -54,6 +58,6 @@
 - `src/utils/supportDiagnostics.js`: 5 incoming local imports
 - `src/components/DocumentViewer/hooks/useViewerEffects.js`: 4 incoming local imports
 - `src/contexts/readAloudContext.js`: 4 incoming local imports
+- `src/integrations/integrationSettings.js`: 4 incoming local imports
 - `src/utils/compareOverlay.js`: 4 incoming local imports
 - `src/utils/objectUrlRegistry.js`: 4 incoming local imports
-- `src/utils/ompThemePreference.js`: 4 incoming local imports
